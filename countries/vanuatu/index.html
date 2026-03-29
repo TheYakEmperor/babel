@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Languages of Vanuatu — Babel</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search languages, families, texts..." id="search-input">
+        <div class="search-results" id="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+                <h3>Navigate</h3>
+                <ul>
+                    <li><a href="../../">Home</a></li>
+                    <li><a href="../../texts-index.html">All Texts</a></li>
+                    <li><a href="../../languages/">Languages</a></li>
+                    <li><a href="../../works/">Works Index</a></li>
+                    <li><a href="../../authors/">Authors</a></li>
+                    <li><a href="../../sources/">Sources</a></li>
+                    <li><a href="../../provenances/">Provenances</a></li>
+                    <li><a href="../../collections/">Collections</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-header">
+            <img src="https://flagcdn.com/w160/vu.png" 
+                 alt="Vanuatu flag" 
+                 class="country-flag-large">
+            <h1>Languages of Vanuatu</h1>
+        </div>
+        
+        <div class="metadata">
+            <p><strong>Languages:</strong> 130</p>
+            <p><strong>Language Families:</strong> 6</p>
+        </div>
+
+        <div class="locality-section">
+            <h3>Location</h3>
+            <div id="country-map-vu" class="country-map"></div>
+        </div>
+        <script>
+            (function() {
+                var map = L.map('country-map-vu').setView([-15.376706, 166.959158], 4);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap',
+                    maxZoom: 19,
+                    minZoom: 2
+                }).addTo(map);
+                L.circleMarker([-15.376706, 166.959158], {
+                    radius: 8,
+                    fillColor: '#B85A4F',
+                    color: '#8B4530',
+                    weight: 2.5,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(map).bindPopup('<b>Vanuatu</b>');
+                setTimeout(function() { map.invalidateSize(); }, 150);
+            })();
+        </script>
+        <div class="tree-controls">
+            <h2>Languages by Family</h2>
+            <div class="tree-buttons">
+                <button onclick="expandAll()" class="tree-btn">Expand All</button>
+                <button onclick="collapseAll()" class="tree-btn">Collapse All</button>
+            </div>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/artificial-language/index.html">Artificial Language</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/artificial-language/index.html">Artificial Language</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/artificial-language/efate-group-based-artificial-language/index.html">Efate-group-based Artificial Language</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/artificial-language/efate-group-based-artificial-language/efatese/index.html">Efatese</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/austronesian/index.html">Austronesian</a></h3>
+                <span class="family-count">(125 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/austronesian/index.html">Austronesian</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/austronesian/malayo-polynesian/index.html">Malayo-Polynesian</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/index.html">Eastern Malayo-Polynesian</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/index.html">Oceanic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/central-pacific-linkage/index.html">Central Pacific linkage</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/central-pacific-linkage/tokalau-fijian/index.html">Tokalau Fijian</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/central-pacific-linkage/tokalau-fijian/polynesian/index.html">Polynesian</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/central-pacific-linkage/tokalau-fijian/polynesian/nuclear-polynesian/index.html">Nuclear Polynesian</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/central-pacific-linkage/tokalau-fijian/polynesian/nuclear-polynesian/vanuatu-loyalty-outliers/index.html">Vanuatu-Loyalty Outliers</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/central-pacific-linkage/tokalau-fijian/polynesian/nuclear-polynesian/vanuatu-loyalty-outliers/emae/index.html">Emae</a>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/central-pacific-linkage/tokalau-fijian/polynesian/nuclear-polynesian/vanuatu-loyalty-outliers/mele-futuna/index.html">Mele-Futuna</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/central-pacific-linkage/tokalau-fijian/polynesian/nuclear-polynesian/vanuatu-loyalty-outliers/mele-futuna/futuna-aniwa/index.html">Futuna-Aniwa</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/central-pacific-linkage/tokalau-fijian/polynesian/nuclear-polynesian/vanuatu-loyalty-outliers/mele-futuna/mele-fila/index.html">Mele-Fila</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/index.html">North and Central Vanuatu</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/index.html">Central Vanuatu</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/ambrym/index.html">Ambrym</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/ambrym/lonwolwol/index.html">Lonwolwol</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/ambrym/north-ambrym/index.html">North Ambrym</a>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/ambrym/orkon-west-ambrym/index.html">Orkon-West Ambrym</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/ambrym/orkon-west-ambrym/orkon-fanbak/index.html">Orkon-Fanbak</a>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/ambrym/orkon-west-ambrym/west-ambrym/index.html">West Ambrym</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/ambrym/orkon-west-ambrym/west-ambrym/dalkalaen/index.html">Dalkalaen</a>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/ambrym/orkon-west-ambrym/west-ambrym/southwest-ambrym/index.html">Southwest Ambrym</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/ambrym/orkon-west-ambrym/west-ambrym/southwest-ambrym/daakie/index.html">Daakie</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/ambrym/orkon-west-ambrym/west-ambrym/southwest-ambrym/dakaka/index.html">Dakaka</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/ambrym/southeast-ambrym/index.html">Southeast Ambrym</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/index.html">Epi-Efate</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/efate/index.html">Efate</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/efate/north-efatic/index.html">North Efatic</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/efate/north-efatic/lelepa/index.html">Lelepa</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/efate/north-efatic/north-efate/index.html">North Efate</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/efate/south-efatic/index.html">South Efatic</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/efate/south-efatic/eton-vanuatu/index.html">Eton (Vanuatu)</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/efate/south-efatic/nafsan/index.html">Nafsan</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/epi/index.html">Epi</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/epi/baki-bierebo/index.html">Baki-Bierebo</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/epi/baki-bierebo/baki/index.html">Baki</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/epi/baki-bierebo/bierebo/index.html">Bierebo</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/epi/bieria-maii/index.html">Bieria-Maii</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/epi/bieria-maii/bieria/index.html">Bieria</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-dialect target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/epi/bieria-maii/bieria/vovo/index.html">Vovo</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/epi/bieria-maii/maii/index.html">Maii</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/epi/lamenu-lewo/index.html">Lamenu-Lewo</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/epi/lamenu-lewo/lamenu/index.html">Lamenu</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/epi-efate/epi/lamenu-lewo/lewo/index.html">Lewo</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/index.html">Malakula</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/index.html">Eastern Malakula linkage</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/index.html">Central-Southeast Malakula</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/aulua/index.html">Aulua</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/burmbar/index.html">Burmbar</a>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/southeastern-malakula-linkage/index.html">Southeastern Malakula linkage</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/southeastern-malakula-linkage/bwenelang/index.html">Bwenelang</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/southeastern-malakula-linkage/maskelynes/index.html">Maskelynes</a>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/southeastern-malakula-linkage/nasvang-nisvai/index.html">Nasvang-Nisvai</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/southeastern-malakula-linkage/nasvang-nisvai/nasvang/index.html">Nasvang</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/southeastern-malakula-linkage/nasvang-nisvai/nisvai/index.html">Nisvai</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/southeastern-malakula-linkage/port-sandwich-axamb-avok/index.html">Port Sandwich-Axamb-Avok</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/southeastern-malakula-linkage/port-sandwich-axamb-avok/avok/index.html">Avok</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/southeastern-malakula-linkage/port-sandwich-axamb-avok/axamb/index.html">Axamb</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/southeastern-malakula-linkage/port-sandwich-axamb-avok/port-sandwich/index.html">Port Sandwich</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/unua-pangkumu/index.html">Unua-Pangkumu</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/unua-pangkumu/rerep/index.html">Rerep</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/central-southeast-malakula/unua-pangkumu/unua/index.html">Unua</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/eastern-malakula-linkage/uripiv-wala-rano-atchin/index.html">Uripiv-Wala-Rano-Atchin</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/northern-malakula/index.html">Northern Malakula</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/northern-malakula/malua-tepërav/index.html">Malua-Tepërav</a>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/northern-malakula/north-coast-malakula/index.html">North Coast Malakula</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/northern-malakula/north-coast-malakula/botovro-vovo-vao/index.html">Botovro-Vovo-Vao</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/northern-malakula/north-coast-malakula/botovro-vovo-vao/mpotovoro/index.html">Mpotovoro</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/northern-malakula/north-coast-malakula/botovro-vovo-vao/vao-vovo/index.html">Vao-Vovo</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/northern-malakula/north-coast-malakula/nese/index.html">Nese</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-dialect target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/northern-malakula/north-coast-malakula/nese/najit/index.html">Najit</a>
+                                                                                                </li>
+                                                                                                <li class="level-dialect target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/northern-malakula/north-coast-malakula/nese/njav/index.html">Njav</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/index.html">Western Malakula linkage</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/central-western-malakula/index.html">Central-Western Malakula</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/central-western-malakula/larevat/index.html">Larevat</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/central-western-malakula/naman/index.html">Naman</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/central-western-malakula/neveei/index.html">Neve'ei</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/central-western-malakula/neverver/index.html">Neverver</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/index.html">Peripheral Western Malakula</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/ninde-nati/index.html">Ninde-Nati</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/ninde-nati/nati/index.html">Nati</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/ninde-nati/ninde/index.html">Ninde</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/northwestern-malakula/index.html">Northwestern Malakula</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/northwestern-malakula/big-nambas/index.html">Big Nambas</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/northwestern-malakula/maragus/index.html">Maragus</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/northwestern-malakula/tirax/index.html">Tirax</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/index.html">Southwestern Malakula</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/avava/index.html">Avava</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-dialect target-language ">
+                                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/avava/nivat/index.html">Nivat</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/dixon-reef/index.html">Dixon Reef</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/letemboi-repanbitip/index.html">Letemboi-Repanbitip</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-dialect target-language ">
+                                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/letemboi-repanbitip/repanbitip/index.html">Repanbitip</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/nasarian/index.html">Nasarian</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/navwien/index.html">Navwien</a>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/southwest-coastal-malekula/index.html">Southwest Coastal Malekula</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/southwest-coastal-malekula/naahai/index.html">Na'ahai</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/southwest-coastal-malekula/nahavaq/index.html">Nahavaq</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/unclassified-southwestern-malakula/index.html">Unclassified Southwestern Malakula</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/unclassified-southwestern-malakula/nititi-vivti/index.html">Nititi-Vivti</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/unclassified-southwestern-malakula/nititi-vivti/nitita/index.html">Nitita</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/malakula/western-malakula-linkage/peripheral-western-malakula/southwestern-malakula/unclassified-southwestern-malakula/nititi-vivti/vivti/index.html">Vivti</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/namakura/index.html">Namakura</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/paama/index.html">Paama</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/south-pentecost/index.html">South Pentecost</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/south-pentecost/apma/index.html">Apma</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/south-pentecost/sa/index.html">Sa</a>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/south-pentecost/seke-sowa/index.html">Seke-Sowa</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/south-pentecost/seke-sowa/seke-vanuatu/index.html">Seke (Vanuatu)</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/central-vanuatu/south-pentecost/seke-sowa/sowa/index.html">† Sowa</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/index.html">Northern Vanuatu</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/ambae/index.html">Ambae</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/ambae/east-ambae/index.html">East Ambae</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/ambae/west-ambae/index.html">West Ambae</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/index.html">Espiritu Santo</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/index.html">Nuclear Santo</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/east-santo/index.html">East Santo</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/east-santo/mafea-tutuba/index.html">Mafea-Tutuba</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/east-santo/mafea-tutuba/mafea/index.html">Mafea</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/east-santo/mafea-tutuba/tutuba/index.html">Tutuba</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/east-santo/southeast-santo/index.html">Southeast Santo</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/east-santo/southeast-santo/farafi/index.html">Farafi</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/east-santo/southeast-santo/polonombauk/index.html">Polonombauk</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/east-santo/southeast-santo/tambotalo/index.html">Tambotalo</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/shark-bayic/index.html">Shark Bayic</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/shark-bayic/nethalp/index.html">† Nethalp</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/shark-bayic/ngen/index.html">Ngen</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/south-santo/index.html">South Santo</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/south-santo/aore/index.html">† Aore</a>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/south-santo/araki-tangoa/index.html">Araki-Tangoa</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/south-santo/araki-tangoa/araki/index.html">Araki</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/south-santo/araki-tangoa/movono/index.html">Movono</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/south-santo/mores/index.html">Mores</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/south-santo/tamambo/index.html">Tamambo</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/nuclear-santo/south-santo/wanohe/index.html">Wanohe</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/index.html">West Santo</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/cape-cumberland/index.html">Cape Cumberland</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/cape-cumberland/nokuku/index.html">Nokuku</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/cape-cumberland/piamatsina/index.html">Piamatsina</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/cape-cumberland/tasmate/index.html">Tasmate</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/cape-cumberland/valpei/index.html">Valpei</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/cape-cumberland/vunapu/index.html">Vunapu</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/central-santo/index.html">Central Santo</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/central-santo/merei/index.html">Merei</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/central-santo/navut/index.html">Navut</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-dialect target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/central-santo/navut/bura-espiritu-santo/index.html">Bura (Espiritu Santo)</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/central-santo/tiale/index.html">Tiale</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/kiai/index.html">Kiai</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/kula-vanuatu/index.html">Kula (Vanuatu)</a>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/south-central-santo/index.html">South-Central Santo</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/south-central-santo/amblong/index.html">Amblong</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/south-central-santo/ande/index.html">Ande</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/south-central-santo/narango/index.html">Narango</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/southwest-santo/index.html">Southwest Santo</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/southwest-santo/akei/index.html">Akei</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/southwest-santo/ale/index.html">Ale</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/espiritu-santo/west-santo/tolomako/index.html">Tolomako</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/hano/index.html">Hano</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/maewo/index.html">Maewo</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/maewo/baetora/index.html">Baetora</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/maewo/central-maewo/index.html">Central Maewo</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/maewo/sunwadia/index.html">Sunwadia</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/index.html">Torres-Banks linkage</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/dorig/index.html">Dorig</a>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/hiw-lo-toga/index.html">Hiw-Lo-Toga</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/hiw-lo-toga/hiw/index.html">Hiw</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/hiw-lo-toga/lo-toga/index.html">Lo-Toga</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/koto-olrat-lakon/index.html">Koto-Olrat-Lakon</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/koto-olrat-lakon/koro-olrat/index.html">Koro-Olrat</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-dialect target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/koto-olrat-lakon/koro-olrat/olrat/index.html">Olrat</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/koto-olrat-lakon/lakon/index.html">Lakon</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/lehali/index.html">Lehali</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/lehalurup/index.html">Lehalurup</a>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/lemerig-veraa/index.html">Lemerig-Veraa</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/lemerig-veraa/lemerig/index.html">Lemerig</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/lemerig-veraa/veraa/index.html">Vera'a</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/merlav/index.html">Merlav</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/mota/index.html">Mota</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/mwotlap/index.html">Mwotlap</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/nume/index.html">Nume</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/north-and-central-vanuatu/northern-vanuatu/torres-banks-linkage/vurës/index.html">Vurës</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/index.html">Southern Melanesian</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/index.html">Southern Vanuatu</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/aneityum/index.html">Aneityum</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/erromanga/index.html">Erromanga</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/erromanga/ifo/index.html">† Ifo</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/erromanga/sie/index.html">Sie</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/erromanga/ura-vanuatu/index.html">Ura (Vanuatu)</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/tanna/index.html">Tanna</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/tanna/northern-tanna-linkage/index.html">Northern Tanna linkage</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/tanna/northern-tanna-linkage/lenakel/index.html">Lenakel</a>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/tanna/northern-tanna-linkage/whitesands-north-tanna-linkage/index.html">Whitesands-North Tanna linkage</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/tanna/northern-tanna-linkage/whitesands-north-tanna-linkage/north-tanna/index.html">North Tanna</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/tanna/northern-tanna-linkage/whitesands-north-tanna-linkage/whitesands/index.html">Whitesands</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/tanna/southern-tanna/index.html">Southern Tanna</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/tanna/southern-tanna/kwamera/index.html">Kwamera</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/southern-melanesian/southern-vanuatu/tanna/southern-tanna/southwest-tanna/index.html">Southwest Tanna</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/bookkeeping/index.html">Bookkeeping</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/bookkeeping/index.html">Bookkeeping</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/vatrata/index.html">Vatrata</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/indo-european/index.html">Indo-European</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/indo-european/index.html">Indo-European</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/indo-european/classical-indo-european/index.html">Classical Indo-European</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/indo-european/classical-indo-european/germanic/index.html">Germanic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/index.html">Northwest Germanic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/index.html">West Germanic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/north-sea-germanic/index.html">North Sea Germanic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/north-sea-germanic/anglo-frisian/index.html">Anglo-Frisian</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/north-sea-germanic/anglo-frisian/anglic/index.html">Anglic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/north-sea-germanic/anglo-frisian/anglic/later-anglic/index.html">Later Anglic</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/north-sea-germanic/anglo-frisian/anglic/later-anglic/middle-modern-english/index.html">Middle-Modern English</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/north-sea-germanic/anglo-frisian/anglic/later-anglic/middle-modern-english/macro-english/index.html">Macro-English</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/north-sea-germanic/anglo-frisian/anglic/later-anglic/middle-modern-english/macro-english/pacific-creole-english/index.html">Pacific Creole English</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/north-sea-germanic/anglo-frisian/anglic/later-anglic/middle-modern-english/macro-english/pacific-creole-english/early-melanesian-pidgin/index.html">Early Melanesian Pidgin</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/north-sea-germanic/anglo-frisian/anglic/later-anglic/middle-modern-english/macro-english/pacific-creole-english/early-melanesian-pidgin/bislama/index.html">Bislama</a>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/sign-language/index.html">Sign Language</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/sign-language/index.html">Sign Language</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sign-language/l1-sign-language/index.html">L1 Sign Language</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sign-language/l1-sign-language/mavea-sign-language/index.html">Mavea Sign Language</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/unattested/index.html">Unattested</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/unattested/index.html">Unattested</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unattested/sorsorian/index.html">Sorsorian</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <!-- Tree toggle functionality -->
+    <script>
+        function toggleTree(toggle) {
+            const li = toggle.parentElement;
+            const subtree = li.querySelector('.language-subtree');
+            if (subtree) {
+                if (toggle.classList.contains('expanded')) {
+                    toggle.classList.remove('expanded');
+                    toggle.classList.add('collapsed');
+                    toggle.textContent = '▶';
+                    subtree.style.display = 'none';
+                } else {
+                    toggle.classList.remove('collapsed');
+                    toggle.classList.add('expanded');
+                    toggle.textContent = '▼';
+                    subtree.style.display = 'block';
+                }
+            }
+        }
+        
+        function expandAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('collapsed');
+                toggle.classList.add('expanded');
+                toggle.textContent = '▼';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'block';
+            });
+        }
+        
+        function collapseAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('expanded');
+                toggle.classList.add('collapsed');
+                toggle.textContent = '▶';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'none';
+            });
+        }
+    </script>
+    
+    <!-- Search functionality -->
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+</body>
+</html>

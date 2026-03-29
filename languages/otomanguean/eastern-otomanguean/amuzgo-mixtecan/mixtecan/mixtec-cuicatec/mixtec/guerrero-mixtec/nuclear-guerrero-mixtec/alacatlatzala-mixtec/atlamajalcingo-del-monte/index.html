@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlamajalcingo del Monte</title>
+    <link rel="icon" type="image/webp" href="../../../../../../../../../../../favicon.webp">
+    <link rel="stylesheet" href="../../../../../../../../../../../style.css">
+    <!-- Stylesheet injected by update_family_trees.py -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+function initMap(elementId, latitude, longitude) {
+    const container = document.getElementById(elementId);
+    if (!container) return;
+    const map = L.map(elementId).setView([latitude, longitude], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+        minZoom: 2
+    }).addTo(map);
+    const countryCodes = JSON.parse(container.dataset.countries || '[]');
+    
+    // Draw country boundaries if available
+    if (countryCodes && countryCodes.length > 0) {
+        fetch('https://cdn.jsdelivr.net/npm/world-geojson/countries.geojson')
+            .then(r => r.json())
+            .then(geojson => {
+                const countryFeatures = geojson.features.filter(f => {
+                    const code = f.properties.ISO_A2 || f.properties.ADMIN || '';
+                    return countryCodes.includes(code);
+                });
+                L.geoJSON({
+                    type: 'FeatureCollection',
+                    features: countryFeatures
+                }, {
+                    style: {
+                        color: '#B85A4F',
+                        weight: 1.5,
+                        opacity: 0.5,
+                        fillOpacity: 0.08
+                    }
+                }).addTo(map);
+            })
+            .catch(e => console.log(''));
+    }
+
+    // Center point marker
+    L.circleMarker([latitude, longitude], {
+        radius: 8,
+        fillColor: '#B85A4F',
+        color: '#8B4530',
+        weight: 2.5,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`${latitude.toFixed(4)}°, ${longitude.toFixed(4)}°`);
+    
+    setTimeout(() => { map.invalidateSize(); }, 150);
+}
+
+function toggleLargeList(btn) {
+    const list = btn.closest('h3').nextElementSibling;
+    if (list.style.display === 'none') {
+        list.style.display = '';
+        btn.textContent = 'Hide';
+    } else {
+        list.style.display = 'none';
+        btn.textContent = 'Show';
+    }
+}
+    </script>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../../../../../../../../../../" class="header-logo"><img src="../../../../../../../../../../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../../../../../../../../../../" class="sidebar-logo">
+                <img src="../../../../../../../../../../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../../../../../../../../../../">Home</a></li>
+                <li><a href="../../../../../../../../../../../texts-index.html">All Texts</a></li>
+                <li><a href="../../../../../../../../../../../languages/">Languages</a></li>
+                <li><a href="../../../../../../../../../../../works/">Works Index</a></li>
+                <li><a href="../../../../../../../../../../../authors/">Authors</a></li>
+                <li><a href="../../../../../../../../../../../sources/">Sources</a></li>
+                <li><a href="../../../../../../../../../../../provenances/">Provenances</a></li>
+                <li><a href="../../../../../../../../../../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
+        <h1>Atlamajalcingo del Monte</h1>
+        
+        <div class="metadata">
+            <p><strong>Type:</strong> <span class="level-tag dialect">Dialect</span></p>
+            <p><strong>Glottolog ID:</strong> atla1271</p>
+            
+        </div>
+        
+        <section>
+            <h2>Language Family</h2>
+<div class="breadcrumb-tree">
+    <a href="../../../../../../../../../index.html">Otomanguean</a> / <a href="../../../../../../../../index.html">Eastern Otomanguean</a> / <a href="../../../../../../../index.html">Amuzgo-Mixtecan</a> / <a href="../../../../../../index.html">Mixtecan</a> / <a href="../../../../../index.html">Mixtec-Cuicatec</a> / <a href="../../../../index.html">Mixtec</a> / <a href="../../../index.html">Guerrero Mixtec</a> / <a href="../../index.html">Nuclear Guerrero Mixtec</a> / <a href="../index.html">Alacatlatzala Mixtec</a> / <span class="current">Atlamajalcingo del Monte</span>
+</div>
+        </section>
+        <section>
+<div class="locality-section">
+    <h3>Geographic Location</h3>
+    <div id="map-atla1271" class="language-map" data-countries='[]'></div>
+    <div class="geographic-info">
+        <p><strong>Countries:</strong> Location not specified</p>
+        <p><strong>Coordinates:</strong> 17.3117°, -98.6076°</p>
+    </div>
+</div>
+    <script>
+    // Initialize map for atla1271
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap('map-atla1271', 17.311733, -98.607579);
+        });
+    } else {
+        initMap('map-atla1271', 17.311733, -98.607579);
+    }
+</script>
+        </section>
+        <section>
+            <h2>Information</h2>
+            <p>This page is for the Atlamajalcingo del Monte language/dialect.</p>
+            <p>Data sourced from <a href="https://glottolog.org">Glottolog</a>, a comprehensive reference information for the world's languages.</p>
+        </section>
+        
+        <section>
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="https://glottolog.org/resource/languoid/id/atla1271">View on Glottolog</a></li>
+                <li><a href="https://www.wals.info">World Atlas of Language Structures (WALS)</a></li>
+                <li><a href="https://www.ethnologue.com">Ethnologue</a></li>
+            </ul>
+        </section>
+        
+        <hr>
+        <footer>
+            <p><small>Generated from Glottolog 5.2 data. Last updated: January 12, 2026</small></p>
+        </footer>
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <script src="../../../../../../../../../../../search-index.js"></script>
+    <script src="../../../../../../../../../../../search.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "id": "BM-EA-71305",
+  "title": "British Museum EA 71305",
+  "author": "Anonymous",
+  "source": "British Museum",
+  "provenance": "Qasr Ibrim",
+  "date": "800–1000",
+  "country": "SD",
+  "language": "oldn1245",
+  "pages": [
+    {
+      "works": [
+        {
+          "id": "investiture-archangel-michael",
+          "title": "Investitute of the Archangel Michael",
+          "viewerPage": 1
+        }
+      ]
+    },
+    {
+      "id": "001 1",
+      "label": "001 1",
+      "regions": [
+        {
+          "x": 0.25704449152542375,
+          "y": 0.18728833128078817,
+          "width": 0.6542372881355932,
+          "height": 0.7068965517241379,
+          "title": "",
+          "text": "<div><span style=\"font-size: 14px;\">ⲟⲩⲇⲇⲟⲗⲟ ⲟⲩⲥⲕⲣ︦ⲧⲁⲕⲟⲛⲁ ⲥⲟⲩⲇⲇⲟⲩⲙⲉ...</span></div><div><span style=\"font-size: 14px;\">ⲗⲕ̅ⲕⲧⲓⲛⲁ ⲅⲟⲩⲉⲓⲟⲩ ⲉⲟⲓ[]ⳝⲣⲉⲛⲛⲗ̅· ⲙⲟⲥ...</span></div><div><span style=\"font-size: 14px;\">ⲧⲟⲩⲇⳟⲓⲧⲓⲛⲗ̅ ⲁⲡⲟⲕⲁⲗⲁⲙⲟⲛ ⲡ[]ⲕ...</span></div><div><span style=\"font-size: 14px;\">ⲛⲁⲩⲉⲛⲗ̅· ⲙⲓⲭⲁⲡⲗⲓ ⲅⲗⲗ̅ⲉⲛ[] ⲧⲓⲇⲧ̅[]ⲁ...</span></div><div><span style=\"font-size: 14px;\">ⲥⲁⲛⲁ· ⲟⲇⲣⲟⲩⲁⲧⲧⲟⲕⲟⲛ ⲥⲟⳟⲟⳝⳝⲓⲛⲕ...</span></div><div><span style=\"font-size: 14px;\">ⲧⲛ[]ⲗⲟⲩⲧⲗ̅ ⲟⲩⲁⲛⲥⲟ· ⲡⲗ̅ⲗⲇⲇⲇⲗ̅ ⲡⲅⲁⲓ...</span></div><div><span style=\"font-size: 14px;\">ⲁⲟⲩ̅ⲣ ⲥⲟⲩⲁⲉⲛ̅ ⲗⲓⲙⲉⲇⲟⲩⲉⲓⲧⲓⲛⲛ̅·...</span></div><div><span style=\"font-size: 14px;\">ⲕⲟⲥⲙⲟⲥⲓⲥⲟⲗⲟⲧⲛ̅ ⲡⲥ̅ⲕⲁⲛⲉⲗⲇⲱⲉⲓⲟⲛ...&nbsp;</span></div><div><span style=\"font-size: 14px;\">ⲅⲟⳡⲧⲁⲕⲥⲛⲁ ϩⲁⲣⲙⲗ̅ⲇⲱⲛⲓⲅⲟⲩⲛⲁ· ⲟⲛ...</span></div><div><span style=\"font-size: 14px;\">ⲥⲕⲧⲗ̅ⲇⲱⲛⲓⳟⲟⲩⲛⲁ· ⲅⲟⲩⲗⲟⲩⲁⲙⲛ̅ⲛ[̅ⲛ]...&nbsp;</span></div><div><span style=\"font-size: 14px;\">ⲙⲁⲕⲓⲁⲗ ⲥⲥⲕⲁⲱ ⲡⲙ̅ⲟⲛⲛⲟⲛ ⲙ...</span></div><div><span style=\"font-size: 14px;\">ⲣ[]ⲓⲗⲱ ⲙⲓⲭⲁⲡⲁⲓⲕⲁ· ⲥⲗⳟⲟⳝ...</span></div><div><span style=\"font-size: 14px;\">ⲅⲣⲁ ⲅⲟⲩⲗⲣⲓⲙ...</span></div><div><span style=\"font-size: 14px;\">ⲗⲛ̅ ⲧⲟⲩ...</span></div><div><span style=\"font-size: 14px;\">ⲇⲟⲩⲕⲕ...</span></div><div><span style=\"font-size: 14px;\">ⲕⲉⲗⲉ...</span></div><div><span style=\"font-size: 14px;\">ⲁⲡⲉⲗⲟⲥⲅ[ⲟ]...</span></div>",
+          "workId": "investiture-archangel-michael"
+        }
+      ]
+    }
+  ]
+}

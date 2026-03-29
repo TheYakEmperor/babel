@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookkeeping</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Stylesheet injected by update_family_trees.py -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+function initMap(elementId, latitude, longitude) {
+    const container = document.getElementById(elementId);
+    if (!container) return;
+    const map = L.map(elementId).setView([latitude, longitude], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+        minZoom: 2
+    }).addTo(map);
+    const countryCodes = JSON.parse(container.dataset.countries || '[]');
+    
+    // Draw country boundaries if available
+    if (countryCodes && countryCodes.length > 0) {
+        fetch('https://cdn.jsdelivr.net/npm/world-geojson/countries.geojson')
+            .then(r => r.json())
+            .then(geojson => {
+                const countryFeatures = geojson.features.filter(f => {
+                    const code = f.properties.ISO_A2 || f.properties.ADMIN || '';
+                    return countryCodes.includes(code);
+                });
+                L.geoJSON({
+                    type: 'FeatureCollection',
+                    features: countryFeatures
+                }, {
+                    style: {
+                        color: '#B85A4F',
+                        weight: 1.5,
+                        opacity: 0.5,
+                        fillOpacity: 0.08
+                    }
+                }).addTo(map);
+            })
+            .catch(e => console.log(''));
+    }
+
+    // Center point marker
+    L.circleMarker([latitude, longitude], {
+        radius: 8,
+        fillColor: '#B85A4F',
+        color: '#8B4530',
+        weight: 2.5,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`${latitude.toFixed(4)}°, ${longitude.toFixed(4)}°`);
+    
+    setTimeout(() => { map.invalidateSize(); }, 150);
+}
+
+function toggleLargeList(btn) {
+    const list = btn.closest('h3').nextElementSibling;
+    if (list.style.display === 'none') {
+        list.style.display = '';
+        btn.textContent = 'Hide';
+    } else {
+        list.style.display = 'none';
+        btn.textContent = 'Show';
+    }
+}
+    </script>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../">Home</a></li>
+                <li><a href="../../texts-index.html">All Texts</a></li>
+                <li><a href="../../languages/">Languages</a></li>
+                <li><a href="../../works/">Works Index</a></li>
+                <li><a href="../../authors/">Authors</a></li>
+                <li><a href="../../sources/">Sources</a></li>
+                <li><a href="../../provenances/">Provenances</a></li>
+                <li><a href="../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-flags"><a href="../../countries/afghanistan/index.html" title="Afghanistan"><img src="https://flagcdn.com/w40/af.png" alt="Afghanistan" class="country-flag"></a><a href="../../countries/angola/index.html" title="Angola"><img src="https://flagcdn.com/w40/ao.png" alt="Angola" class="country-flag"></a><a href="../../countries/australia/index.html" title="Australia"><img src="https://flagcdn.com/w40/au.png" alt="Australia" class="country-flag"></a><a href="../../countries/azerbaijan/index.html" title="Azerbaijan"><img src="https://flagcdn.com/w40/az.png" alt="Azerbaijan" class="country-flag"></a><a href="../../countries/brazil/index.html" title="Brazil"><img src="https://flagcdn.com/w40/br.png" alt="Brazil" class="country-flag"></a><a href="../../countries/bhutan/index.html" title="Bhutan"><img src="https://flagcdn.com/w40/bt.png" alt="Bhutan" class="country-flag"></a><a href="../../countries/canada/index.html" title="Canada"><img src="https://flagcdn.com/w40/ca.png" alt="Canada" class="country-flag"></a><a href="../../countries/democratic-republic-of-the-congo/index.html" title="Democratic Republic of the Congo"><img src="https://flagcdn.com/w40/cd.png" alt="Democratic Republic of the Congo" class="country-flag"></a><a href="../../countries/central-african-republic/index.html" title="Central African Republic"><img src="https://flagcdn.com/w40/cf.png" alt="Central African Republic" class="country-flag"></a><a href="../../countries/côte-divoire/index.html" title="Côte d'Ivoire"><img src="https://flagcdn.com/w40/ci.png" alt="Côte d'Ivoire" class="country-flag"></a><a href="../../countries/chile/index.html" title="Chile"><img src="https://flagcdn.com/w40/cl.png" alt="Chile" class="country-flag"></a><a href="../../countries/cameroon/index.html" title="Cameroon"><img src="https://flagcdn.com/w40/cm.png" alt="Cameroon" class="country-flag"></a><a href="../../countries/china/index.html" title="China"><img src="https://flagcdn.com/w40/cn.png" alt="China" class="country-flag"></a><a href="../../countries/colombia/index.html" title="Colombia"><img src="https://flagcdn.com/w40/co.png" alt="Colombia" class="country-flag"></a><a href="../../countries/costa-rica/index.html" title="Costa Rica"><img src="https://flagcdn.com/w40/cr.png" alt="Costa Rica" class="country-flag"></a><a href="../../countries/ecuador/index.html" title="Ecuador"><img src="https://flagcdn.com/w40/ec.png" alt="Ecuador" class="country-flag"></a><a href="../../countries/spain/index.html" title="Spain"><img src="https://flagcdn.com/w40/es.png" alt="Spain" class="country-flag"></a><a href="../../countries/ethiopia/index.html" title="Ethiopia"><img src="https://flagcdn.com/w40/et.png" alt="Ethiopia" class="country-flag"></a><a href="../../countries/france/index.html" title="France"><img src="https://flagcdn.com/w40/fr.png" alt="France" class="country-flag"></a><a href="../../countries/gabon/index.html" title="Gabon"><img src="https://flagcdn.com/w40/ga.png" alt="Gabon" class="country-flag"></a><a href="../../countries/united-kingdom/index.html" title="United Kingdom"><img src="https://flagcdn.com/w40/gb.png" alt="United Kingdom" class="country-flag"></a><a href="../../countries/guinea/index.html" title="Guinea"><img src="https://flagcdn.com/w40/gn.png" alt="Guinea" class="country-flag"></a><a href="../../countries/guatemala/index.html" title="Guatemala"><img src="https://flagcdn.com/w40/gt.png" alt="Guatemala" class="country-flag"></a><a href="../../countries/guinea-bissau/index.html" title="Guinea-Bissau"><img src="https://flagcdn.com/w40/gw.png" alt="Guinea-Bissau" class="country-flag"></a><a href="../../countries/guyana/index.html" title="Guyana"><img src="https://flagcdn.com/w40/gy.png" alt="Guyana" class="country-flag"></a><a href="../../countries/indonesia/index.html" title="Indonesia"><img src="https://flagcdn.com/w40/id.png" alt="Indonesia" class="country-flag"></a><a href="../../countries/israel/index.html" title="Israel"><img src="https://flagcdn.com/w40/il.png" alt="Israel" class="country-flag"></a><a href="../../countries/india/index.html" title="India"><img src="https://flagcdn.com/w40/in.png" alt="India" class="country-flag"></a><a href="../../countries/iran/index.html" title="Iran"><img src="https://flagcdn.com/w40/ir.png" alt="Iran" class="country-flag"></a><a href="../../countries/cambodia/index.html" title="Cambodia"><img src="https://flagcdn.com/w40/kh.png" alt="Cambodia" class="country-flag"></a><a href="../../countries/laos/index.html" title="Laos"><img src="https://flagcdn.com/w40/la.png" alt="Laos" class="country-flag"></a><a href="../../countries/morocco/index.html" title="Morocco"><img src="https://flagcdn.com/w40/ma.png" alt="Morocco" class="country-flag"></a><a href="../../countries/madagascar/index.html" title="Madagascar"><img src="https://flagcdn.com/w40/mg.png" alt="Madagascar" class="country-flag"></a><a href="../../countries/mali/index.html" title="Mali"><img src="https://flagcdn.com/w40/ml.png" alt="Mali" class="country-flag"></a><a href="../../countries/myanmar/index.html" title="Myanmar"><img src="https://flagcdn.com/w40/mm.png" alt="Myanmar" class="country-flag"></a><a href="../../countries/mongolia/index.html" title="Mongolia"><img src="https://flagcdn.com/w40/mn.png" alt="Mongolia" class="country-flag"></a><a href="../../countries/mauritania/index.html" title="Mauritania"><img src="https://flagcdn.com/w40/mr.png" alt="Mauritania" class="country-flag"></a><a href="../../countries/mexico/index.html" title="Mexico"><img src="https://flagcdn.com/w40/mx.png" alt="Mexico" class="country-flag"></a><a href="../../countries/malaysia/index.html" title="Malaysia"><img src="https://flagcdn.com/w40/my.png" alt="Malaysia" class="country-flag"></a><a href="../../countries/namibia/index.html" title="Namibia"><img src="https://flagcdn.com/w40/na.png" alt="Namibia" class="country-flag"></a><a href="../../countries/nigeria/index.html" title="Nigeria"><img src="https://flagcdn.com/w40/ng.png" alt="Nigeria" class="country-flag"></a><a href="../../countries/nepal/index.html" title="Nepal"><img src="https://flagcdn.com/w40/np.png" alt="Nepal" class="country-flag"></a><a href="../../countries/peru/index.html" title="Peru"><img src="https://flagcdn.com/w40/pe.png" alt="Peru" class="country-flag"></a><a href="../../countries/papua-new-guinea/index.html" title="Papua New Guinea"><img src="https://flagcdn.com/w40/pg.png" alt="Papua New Guinea" class="country-flag"></a><a href="../../countries/philippines/index.html" title="Philippines"><img src="https://flagcdn.com/w40/ph.png" alt="Philippines" class="country-flag"></a><a href="../../countries/pakistan/index.html" title="Pakistan"><img src="https://flagcdn.com/w40/pk.png" alt="Pakistan" class="country-flag"></a><a href="../../countries/paraguay/index.html" title="Paraguay"><img src="https://flagcdn.com/w40/py.png" alt="Paraguay" class="country-flag"></a><a href="../../countries/russia/index.html" title="Russia"><img src="https://flagcdn.com/w40/ru.png" alt="Russia" class="country-flag"></a><a href="../../countries/solomon-islands/index.html" title="Solomon Islands"><img src="https://flagcdn.com/w40/sb.png" alt="Solomon Islands" class="country-flag"></a><a href="../../countries/sudan/index.html" title="Sudan"><img src="https://flagcdn.com/w40/sd.png" alt="Sudan" class="country-flag"></a><a href="../../countries/singapore/index.html" title="Singapore"><img src="https://flagcdn.com/w40/sg.png" alt="Singapore" class="country-flag"></a><a href="../../countries/senegal/index.html" title="Senegal"><img src="https://flagcdn.com/w40/sn.png" alt="Senegal" class="country-flag"></a><a href="../../countries/suriname/index.html" title="Suriname"><img src="https://flagcdn.com/w40/sr.png" alt="Suriname" class="country-flag"></a><a href="../../countries/chad/index.html" title="Chad"><img src="https://flagcdn.com/w40/td.png" alt="Chad" class="country-flag"></a><a href="../../countries/thailand/index.html" title="Thailand"><img src="https://flagcdn.com/w40/th.png" alt="Thailand" class="country-flag"></a><a href="../../countries/timor-leste/index.html" title="Timor-Leste"><img src="https://flagcdn.com/w40/tl.png" alt="Timor-Leste" class="country-flag"></a><a href="../../countries/tanzania/index.html" title="Tanzania"><img src="https://flagcdn.com/w40/tz.png" alt="Tanzania" class="country-flag"></a><a href="../../countries/uganda/index.html" title="Uganda"><img src="https://flagcdn.com/w40/ug.png" alt="Uganda" class="country-flag"></a><a href="../../countries/united-states/index.html" title="United States"><img src="https://flagcdn.com/w40/us.png" alt="United States" class="country-flag"></a><a href="../../countries/venezuela/index.html" title="Venezuela"><img src="https://flagcdn.com/w40/ve.png" alt="Venezuela" class="country-flag"></a><a href="../../countries/vietnam/index.html" title="Vietnam"><img src="https://flagcdn.com/w40/vn.png" alt="Vietnam" class="country-flag"></a><a href="../../countries/vanuatu/index.html" title="Vanuatu"><img src="https://flagcdn.com/w40/vu.png" alt="Vanuatu" class="country-flag"></a><a href="../../countries/south-africa/index.html" title="South Africa"><img src="https://flagcdn.com/w40/za.png" alt="South Africa" class="country-flag"></a><a href="../../countries/zambia/index.html" title="Zambia"><img src="https://flagcdn.com/w40/zm.png" alt="Zambia" class="country-flag"></a></div>
+<h1>Bookkeeping</h1>
+<p class="alternate-names"><strong>Also known as:</strong> Book keeping</p>
+        
+        <div class="metadata">
+            <p><strong>Type:</strong> <span class="level-tag family">Family</span></p>
+            <p><strong>Glottolog ID:</strong> book1242</p>
+            
+        </div>
+        
+        <section>
+            <h2>Language Family</h2>
+<div class="breadcrumb-tree">
+    <span class="current">Bookkeeping</span>
+</div>
+        </section>
+        <section>
+<div class="locality-section">
+    <h3>Geographic Information</h3>
+    <div class="geographic-info">
+        <p><strong>Countries:</strong> Afghanistan, Angola, Australia, Azerbaijan, Brazil, Bhutan, Canada, Democratic Republic of the Congo, Central African Republic, Côte d'Ivoire, Chile, Cameroon, China, Colombia, Costa Rica, Ecuador, Spain, Ethiopia, France, Gabon, United Kingdom, Guinea, Guatemala, Guinea-Bissau, Guyana, Indonesia, Israel, India, Iran, Cambodia, Laos, Morocco, Madagascar, Mali, Myanmar, Mongolia, Mauritania, Mexico, Malaysia, Namibia, Nigeria, Nepal, Peru, Papua New Guinea, Philippines, Pakistan, Paraguay, Russia, Solomon Islands, Sudan, Singapore, Senegal, Suriname, Chad, Thailand, Timor-Leste, Tanzania, Uganda, United States, Venezuela, Vietnam, Vanuatu, South Africa, Zambia</p>
+    </div>
+</div>
+        </section>
+        <section>
+<div class="children-section">
+<h3>Sub-families [1]</h3>
+<ul class="children-list">
+<li><a href="pending-report-release/index.html">Pending Report Release</a></li>
+</ul>
+<h3>Languages [371] <button class="tree-btn" onclick="toggleLargeList(this)">Show</button></h3>
+<ul class="children-list large-list" style="display: none;">
+<li><a href="oung/index.html">!O!ung</a></li>
+<li><a href="aariya/index.html">Aariya</a></li>
+<li><a href="achi-cubulco/index.html">Achi', Cubulco</a></li>
+<li><a href="adabe/index.html">Adabe</a></li>
+<li><a href="adap/index.html">Adap</a></li>
+<li><a href="aduge/index.html">Aduge</a></li>
+<li><a href="adzera-retired/index.html">Adzera (Retired)</a></li>
+<li><a href="aghu-tharnggalu-retired/index.html">† Aghu Tharnggalu (Retired)</a></li>
+<li><a href="ahe/index.html">Ahe</a></li>
+<li><a href="ahirani/index.html">Ahirani</a></li>
+<li><a href="aiku/index.html">Aiku</a></li>
+<li><a href="alaguilac/index.html">Alaguilac</a></li>
+<li><a href="amapá-creole/index.html">Amapá Creole</a></li>
+<li><a href="amerax/index.html">Amerax</a></li>
+<li><a href="amikoana/index.html">Amikoana</a></li>
+<li><a href="anasi/index.html">Anasi</a></li>
+<li><a href="arakanese/index.html">Arakanese</a></li>
+<li><a href="arakwal/index.html">† Arakwal</a></li>
+<li><a href="aramanik/index.html">† Aramanik</a></li>
+<li><a href="atuence/index.html">Atuence</a></li>
+<li><a href="auvergnat/index.html">Auvergnat</a></li>
+<li><a href="ayi-china/index.html">Ayi (China)</a></li>
+<li><a href="babalia-creole-arabic/index.html">Babalia Creole Arabic</a></li>
+<li><a href="baga-kaloum/index.html">† Baga Kaloum</a></li>
+<li><a href="baga-sobané/index.html">† Baga Sobané</a></li>
+<li><a href="bahau-river-kenyah/index.html">Bahau River Kenyah</a></li>
+<li><a href="bainouk-samik/index.html">Bainouk-Samik</a></li>
+<li><a href="bakung-kenyah/index.html">Bakung Kenyah</a></li>
+<li><a href="balau/index.html">Balau</a></li>
+<li><a href="banawá/index.html">Banawá</a></li>
+<li><a href="bandjigali/index.html">Bandjigali</a></li>
+<li><a href="belgian-sign-language/index.html">Belgian Sign Language</a></li>
+<li><a href="bemba-democratic-republic-of-congo/index.html">Bemba (Democratic Republic of Congo)</a></li>
+<li><a href="beti-cameroon/index.html">Beti (Cameroon)</a></li>
+<li><a href="bhalay/index.html">Bhalay</a></li>
+<li><a href="bhatola/index.html">Bhatola</a></li>
+<li><a href="bikaru-bragge/index.html">Bikaru-Bragge</a></li>
+<li><a href="bisu-retired/index.html">Bisu (Retired)</a></li>
+<li><a href="borna-democratic-republic-of-congo/index.html">Borna (Democratic Republic of Congo)</a></li>
+<li><a href="bubia/index.html">Bubia</a></li>
+<li><a href="bugan-retired/index.html">Bugan (Retired)</a></li>
+<li><a href="bumang/index.html">Bumang</a></li>
+<li><a href="buraka/index.html">Buraka</a></li>
+<li><a href="buso/index.html">Buso</a></li>
+<li><a href="buxinhua/index.html">Buxinhua</a></li>
+<li><a href="buya/index.html">Buya</a></li>
+<li><a href="cagua/index.html">† Cagua</a></li>
+<li><a href="calo/index.html">Calo</a></li>
+<li><a href="carútana/index.html">Carútana</a></li>
+<li><a href="cataelano-mandaya/index.html">Cataelano Mandaya</a></li>
+<li><a href="cauca/index.html">† Cauca</a></li>
+<li><a href="chakato/index.html">Chakato</a></li>
+<li><a href="chamari/index.html">Chamari</a></li>
+<li><a href="chaungtha/index.html">Chaungtha</a></li>
+<li><a href="chetco/index.html">† Chetco</a></li>
+<li><a href="chilean-quechua/index.html">Chilean Quechua</a></li>
+<li><a href="chipiajes/index.html">† Chipiajes</a></li>
+<li><a href="chittagonian-retired/index.html">Chittagonian (Retired)</a></li>
+<li><a href="chol-tila/index.html">Chol, Tila</a></li>
+<li><a href="chorotega/index.html">† Chorotega</a></li>
+<li><a href="chuj-ixtatán/index.html">Chuj, Ixtatán</a></li>
+<li><a href="chumash/index.html">Chumash</a></li>
+<li><a href="con/index.html">Con</a></li>
+<li><a href="coxima/index.html">† Coxima</a></li>
+<li><a href="coyaima/index.html">† Coyaima</a></li>
+<li><a href="cumeral/index.html">† Cumeral</a></li>
+<li><a href="dafla/index.html">Dafla</a></li>
+<li><a href="darang-deng/index.html">Darang Deng</a></li>
+<li><a href="dayao-yi/index.html">Dayao Yi</a></li>
+<li><a href="degaru/index.html">Degaru</a></li>
+<li><a href="desiya/index.html">Desiya</a></li>
+<li><a href="dhanwar-india/index.html">Dhanwar (India)</a></li>
+<li><a href="dororo/index.html">† Dororo</a></li>
+<li><a href="dume/index.html">Dume</a></li>
+<li><a href="elpaputih/index.html">Elpaputih</a></li>
+<li><a href="emok/index.html">† Emok</a></li>
+<li><a href="europanto/index.html">Europanto</a></li>
+<li><a href="falam-chin-retired/index.html">Falam Chin (Retired)</a></li>
+<li><a href="foia-foia/index.html">Foia Foia</a></li>
+<li><a href="foma/index.html">Foma</a></li>
+<li><a href="forest-maninka/index.html">Forest Maninka</a></li>
+<li><a href="fum/index.html">Fum</a></li>
+<li><a href="gabutamon/index.html">Gabutamon</a></li>
+<li><a href="gamo-gofa-dawro/index.html">Gamo-Gofa-Dawro</a></li>
+<li><a href="garreh-ajuran/index.html">Garreh-Ajuran</a></li>
+<li><a href="gascon-retired/index.html">Gascon (Retired)</a></li>
+<li><a href="gbati-ri/index.html">Gbati-ri</a></li>
+<li><a href="gelao/index.html">Gelao</a></li>
+<li><a href="geman-deng/index.html">Geman Deng</a></li>
+<li><a href="gengle/index.html">Gengle</a></li>
+<li><a href="gey/index.html">Gey</a></li>
+<li><a href="gowlan/index.html">Gowlan</a></li>
+<li><a href="gowli/index.html">Gowli</a></li>
+<li><a href="gugu-mini/index.html">† Gugu Mini</a></li>
+<li><a href="guliguli/index.html">† Guliguli</a></li>
+<li><a href="hmong-njua-retired/index.html">Hmong Njua (Retired)</a></li>
+<li><a href="horuru/index.html">Horuru</a></li>
+<li><a href="huastec-san-luís-potosí/index.html">Huastec, San Luís Potosí</a></li>
+<li><a href="huastec-southeastern/index.html">Huastec, Southeastern</a></li>
+<li><a href="iapama/index.html">Iapama</a></li>
+<li><a href="ibilo/index.html">Ibilo</a></li>
+<li><a href="idesa/index.html">Idesa</a></li>
+<li><a href="ihievbe/index.html">Ihievbe</a></li>
+<li><a href="ija-zuba/index.html">Ija-Zuba</a></li>
+<li><a href="imeraguen/index.html">Imeraguen</a></li>
+<li><a href="ipeka-tapuia/index.html">Ipeka-Tapuia</a></li>
+<li><a href="ir/index.html">Ir</a></li>
+<li><a href="itutang/index.html">Itutang</a></li>
+<li><a href="izere-retired/index.html">Izere (Retired)</a></li>
+<li><a href="jakalteko-western/index.html">Jakalteko, Western</a></li>
+<li><a href="jaruára/index.html">Jaruára</a></li>
+<li><a href="jiarong/index.html">Jiarong</a></li>
+<li><a href="judeo-berber/index.html">† Judeo-Berber</a></li>
+<li><a href="kiche-cunén/index.html">K'iche', Cunén</a></li>
+<li><a href="kiche-eastern/index.html">K'iche', Eastern</a></li>
+<li><a href="kiche-joyabaj/index.html">K'iche', Joyabaj</a></li>
+<li><a href="kiche-san-andrés/index.html">K'iche', San Andrés</a></li>
+<li><a href="kiche-west-central/index.html">K'iche', West Central</a></li>
+<li><a href="kabixí/index.html">† Kabixí</a></li>
+<li><a href="kahayan/index.html">Kahayan</a></li>
+<li><a href="kahumamahon-saluan/index.html">Kahumamahon Saluan</a></li>
+<li><a href="kakauhua/index.html">† Kakauhua</a></li>
+<li><a href="kakihum/index.html">Kakihum</a></li>
+<li><a href="kamba-brazil/index.html">Kamba (Brazil)</a></li>
+<li><a href="kang/index.html">Kang</a></li>
+<li><a href="kaqchikel-akatenango-southwestern/index.html">Kaqchikel, Akatenango Southwestern</a></li>
+<li><a href="kaqchikel-eastern/index.html">Kaqchikel, Eastern</a></li>
+<li><a href="kaqchikel-northern/index.html">Kaqchikel, Northern</a></li>
+<li><a href="kaqchikel-santa-maría-de-jesús/index.html">Kaqchikel, Santa María de Jesús</a></li>
+<li><a href="kaqchikel-santo-domingo-xenacoj/index.html">Kaqchikel, Santo Domingo Xenacoj</a></li>
+<li><a href="kaqchikel-south-central/index.html">Kaqchikel, South Central</a></li>
+<li><a href="kaqchikel-southern/index.html">Kaqchikel, Southern</a></li>
+<li><a href="kaqchikel-western/index.html">Kaqchikel, Western</a></li>
+<li><a href="kaqchikel-yepocapa-southwestern/index.html">Kaqchikel, Yepocapa Southwestern</a></li>
+<li><a href="karipuna-do-amapa/index.html">† Karipuna do Amapa</a></li>
+<li><a href="katingan/index.html">Katingan</a></li>
+<li><a href="katukína/index.html">† Katukína</a></li>
+<li><a href="kayan-river-kenyah/index.html">Kayan River Kenyah</a></li>
+<li><a href="kayort/index.html">Kayort</a></li>
+<li><a href="kayu-agung/index.html">Kayu Agung</a></li>
+<li><a href="kemiehua/index.html">Kemiehua</a></li>
+<li><a href="khalaj/index.html">Khalaj</a></li>
+<li><a href="khamla/index.html">Khamla</a></li>
+<li><a href="khao/index.html">Khao</a></li>
+<li><a href="khiamniungan-naga-retired/index.html">Khiamniungan Naga (Retired)</a></li>
+<li><a href="khlor/index.html">Khlor</a></li>
+<li><a href="khua/index.html">Khua</a></li>
+<li><a href="khuai/index.html">Khuai</a></li>
+<li><a href="khumi-awa-chin/index.html">Khumi Awa Chin</a></li>
+<li><a href="kiorr/index.html">Kiorr</a></li>
+<li><a href="kisankasa/index.html">Kisankasa</a></li>
+<li><a href="kofa/index.html">Kofa</a></li>
+<li><a href="kohoroxitari/index.html">Kohoroxitari</a></li>
+<li><a href="koko-babangk/index.html">† Koko Babangk</a></li>
+<li><a href="kolum-so-dogon/index.html">Kolum So Dogon</a></li>
+<li><a href="kon-keu/index.html">Kon Keu</a></li>
+<li><a href="kosena/index.html">Kosena</a></li>
+<li><a href="kpatili/index.html">Kpatili</a></li>
+<li><a href="kuanhua/index.html">Kuanhua</a></li>
+<li><a href="kukna/index.html">Kukna</a></li>
+<li><a href="kuku-mangk/index.html">† Kuku-Mangk</a></li>
+<li><a href="kukura/index.html">† Kukura</a></li>
+<li><a href="kumbaran/index.html">Kumbaran</a></li>
+<li><a href="kunfal/index.html">Kunfal</a></li>
+<li><a href="kunggara/index.html">Kunggara</a></li>
+<li><a href="kurumba-kannada/index.html">Kurumba, Kannada</a></li>
+<li><a href="kwak/index.html">Kwak</a></li>
+<li><a href="laba/index.html">Laba</a></li>
+<li><a href="lachirioag-zapotec/index.html">Lachirioag Zapotec</a></li>
+<li><a href="lahta-karen/index.html">Lahta Karen</a></li>
+<li><a href="lahu-shi-retired/index.html">Lahu Shi (Retired)</a></li>
+<li><a href="lama-myanmar/index.html">Lama (Myanmar)</a></li>
+<li><a href="lamam/index.html">Lamam</a></li>
+<li><a href="lambichhong/index.html">Lambichhong</a></li>
+<li><a href="land-dayak-retired/index.html">Land Dayak (Retired)</a></li>
+<li><a href="lange/index.html">Lang'e</a></li>
+<li><a href="languedocien/index.html">Languedocien</a></li>
+<li><a href="laopang/index.html">Laopang</a></li>
+<li><a href="laos-sign-language/index.html">Laos Sign Language</a></li>
+<li><a href="lematang/index.html">Lematang</a></li>
+<li><a href="limousin/index.html">Limousin</a></li>
+<li><a href="lingaayat/index.html">Lingaayat</a></li>
+<li><a href="loarki/index.html">Loarki</a></li>
+<li><a href="lopi/index.html">Lopi</a></li>
+<li><a href="lower-pokomo/index.html">Lower Pokomo</a></li>
+<li><a href="lua/index.html">Lua'</a></li>
+<li><a href="lui/index.html">† Lui</a></li>
+<li><a href="lumba-yakkha/index.html">Lumba-Yakkha</a></li>
+<li><a href="lyons-sign-language/index.html">Lyons Sign Language</a></li>
+<li><a href="madang-malaysia/index.html">Madang (Malaysia)</a></li>
+<li><a href="mahakam-kenyah/index.html">Mahakam Kenyah</a></li>
+<li><a href="mahei/index.html">Mahei</a></li>
+<li><a href="malakhel/index.html">Malakhel</a></li>
+<li><a href="malay-individual-language/index.html">Malay (individual language)</a></li>
+<li><a href="maligo/index.html">Maligo</a></li>
+<li><a href="malinguat/index.html">Malinguat</a></li>
+<li><a href="mam-central/index.html">Mam, Central</a></li>
+<li><a href="mam-southern/index.html">Mam, Southern</a></li>
+<li><a href="mam-tajumulco/index.html">Mam, Tajumulco</a></li>
+<li><a href="mam-todos-santos-cuchumatán/index.html">Mam, Todos Santos Cuchumatán</a></li>
+<li><a href="maramba/index.html">Maramba</a></li>
+<li><a href="maskoy-pidgin/index.html">Maskoy Pidgin</a></li>
+<li><a href="mawakwa/index.html">† Mawakwa</a></li>
+<li><a href="mawayana/index.html">† Mawayana</a></li>
+<li><a href="maya-chan-santa-cruz/index.html">Maya, Chan Santa Cruz</a></li>
+<li><a href="mediak/index.html">Mediak</a></li>
+<li><a href="mimi/index.html">Mimi</a></li>
+<li><a href="mina-india/index.html">Mina (India)</a></li>
+<li><a href="mirgan/index.html">Mirgan</a></li>
+<li><a href="moinba/index.html">Moinba</a></li>
+<li><a href="muji-yi/index.html">Muji Yi</a></li>
+<li><a href="munaseli-pandai/index.html">Munaseli Pandai</a></li>
+<li><a href="munda/index.html">Munda</a></li>
+<li><a href="mundari-retired/index.html">Mundari (Retired)</a></li>
+<li><a href="nand/index.html">Nand</a></li>
+<li><a href="narau/index.html">Narau</a></li>
+<li><a href="natagaimas/index.html">† Natagaimas</a></li>
+<li><a href="natügu-retired/index.html">Natügu (Retired)</a></li>
+<li><a href="naxi-retired/index.html">Naxi (Retired)</a></li>
+<li><a href="nde-gbite/index.html">Nde-Gbite</a></li>
+<li><a href="ndonde-hamba/index.html">Ndonde Hamba</a></li>
+<li><a href="ngarla-on-the-ashburton-river-south-of-the-hamersley-range/index.html">Ngarla on the Ashburton river south of the Hamersley range</a></li>
+<li><a href="ngombe-central-african-republic/index.html">Ngombe (Central African Republic)</a></li>
+<li><a href="ngong/index.html">Ngong</a></li>
+<li><a href="nijadali/index.html">Nijadali</a></li>
+<li><a href="nocamán/index.html">† Nocamán</a></li>
+<li><a href="nootka/index.html">Nootka</a></li>
+<li><a href="norra/index.html">† Norra</a></li>
+<li><a href="north-korowai/index.html">North Korowai</a></li>
+<li><a href="northern-nambikuára/index.html">Northern Nambikuára</a></li>
+<li><a href="northern-zhuang/index.html">Northern Zhuang</a></li>
+<li><a href="northwestern-fars/index.html">Northwestern Fars</a></li>
+<li><a href="northwestern-tamang/index.html">Northwestern Tamang</a></li>
+<li><a href="nupbikha/index.html">Nupbikha</a></li>
+<li><a href="nyadu/index.html">Nyadu</a></li>
+<li><a href="nyeng/index.html">Nyeng</a></li>
+<li><a href="occidental/index.html">Occidental</a></li>
+<li><a href="odut/index.html">Odut</a></li>
+<li><a href="old-indic/index.html">† Old Indic</a></li>
+<li><a href="old-persian/index.html">Old Persian</a></li>
+<li><a href="old-turkish/index.html">† Old Turkish</a></li>
+<li><a href="olkol/index.html">Olkol</a></li>
+<li><a href="omati/index.html">Omati</a></li>
+<li><a href="omejes/index.html">† Omejes</a></li>
+<li><a href="ontenu/index.html">Ontenu</a></li>
+<li><a href="orokaiva-retired/index.html">Orokaiva (Retired)</a></li>
+<li><a href="oropom/index.html">Oropom</a></li>
+<li><a href="palpa/index.html">† Palpa</a></li>
+<li><a href="palu/index.html">Palu</a></li>
+<li><a href="pamona-retired/index.html">Pamona (Retired)</a></li>
+<li><a href="panang/index.html">Panang</a></li>
+<li><a href="pao/index.html">Pao</a></li>
+<li><a href="parsi/index.html">Parsi</a></li>
+<li><a href="parsi-dari/index.html">Parsi-Dari</a></li>
+<li><a href="patla-chicontla-totonac/index.html">Patla-Chicontla Totonac</a></li>
+<li><a href="phangduwali/index.html">Phangduwali</a></li>
+<li><a href="piru/index.html">Piru</a></li>
+<li><a href="ponares/index.html">† Ponares</a></li>
+<li><a href="pongyong/index.html">Pongyong</a></li>
+<li><a href="poqomam-eastern/index.html">Poqomam, Eastern</a></li>
+<li><a href="poqomam-southern/index.html">Poqomam, Southern</a></li>
+<li><a href="poqomchi-western/index.html">Poqomchi', Western</a></li>
+<li><a href="pray-3/index.html">Pray 3</a></li>
+<li><a href="provençal-retired/index.html">Provençal (Retired)</a></li>
+<li><a href="pu-ko/index.html">Pu Ko</a></li>
+<li><a href="puimei-naga/index.html">Puimei Naga</a></li>
+<li><a href="pula-yi/index.html">Pula Yi</a></li>
+<li><a href="punan-merap/index.html">Punan Merap</a></li>
+<li><a href="purum-retired/index.html">Purum (Retired)</a></li>
+<li><a href="putoh/index.html">Putoh</a></li>
+<li><a href="puwa-yi/index.html">Puwa Yi</a></li>
+<li><a href="quetzaltepec-mixe/index.html">Quetzaltepec Mixe</a></li>
+<li><a href="rajbanshi-retired/index.html">Rajbanshi (Retired)</a></li>
+<li><a href="ranau-retired/index.html">Ranau (Retired)</a></li>
+<li><a href="ranya/index.html">Ranya</a></li>
+<li><a href="rawas-retired/index.html">Rawas (Retired)</a></li>
+<li><a href="rien/index.html">Rien</a></li>
+<li><a href="rufiji/index.html">Rufiji</a></li>
+<li><a href="sakan/index.html">Sakan</a></li>
+<li><a href="salchuq/index.html">† Salchuq</a></li>
+<li><a href="salumá/index.html">Salumá</a></li>
+<li><a href="samre-of-siem-reap/index.html">Samre of Siem Reap</a></li>
+<li><a href="sanapaná-retired/index.html">Sanapaná (Retired)</a></li>
+<li><a href="sangab-mandaya/index.html">Sangab Mandaya</a></li>
+<li><a href="sansu/index.html">Sansu</a></li>
+<li><a href="sara-dunjo/index.html">Sara Dunjo</a></li>
+<li><a href="sarawak-bisaya/index.html">Sarawak Bisaya</a></li>
+<li><a href="savara/index.html">Savara</a></li>
+<li><a href="selako/index.html">Selako</a></li>
+<li><a href="seru/index.html">† Seru</a></li>
+<li><a href="shakara/index.html">Shakara</a></li>
+<li><a href="shuadit/index.html">† Shuadit</a></li>
+<li><a href="sierra-negra-nahuatl-southeastern-puebla-nahuatl/index.html">Sierra Negra Nahuatl-Southeastern Puebla Nahuatl</a></li>
+<li><a href="sikiana/index.html">Sikiana</a></li>
+<li><a href="silte-retired/index.html">Silt'e (Retired)</a></li>
+<li><a href="sindang-kelingi/index.html">Sindang Kelingi</a></li>
+<li><a href="singapore-sign-language/index.html">Singapore Sign Language</a></li>
+<li><a href="songa/index.html">Songa</a></li>
+<li><a href="souletin-basque/index.html">Souletin Basque</a></li>
+<li><a href="south-wemale/index.html">South Wemale</a></li>
+<li><a href="southern-betsimisaraka-malagasy-retired/index.html">Southern Betsimisaraka Malagasy (Retired)</a></li>
+<li><a href="southern-marakwet/index.html">Southern Marakwet</a></li>
+<li><a href="southern-pesisir/index.html">Southern Pesisir</a></li>
+<li><a href="southern-zhuang/index.html">Southern Zhuang</a></li>
+<li><a href="southwest-gbaya-retired/index.html">Southwest Gbaya (Retired)</a></li>
+<li><a href="southwestern-nisu/index.html">Southwestern Nisu</a></li>
+<li><a href="southwestern-tamang/index.html">Southwestern Tamang</a></li>
+<li><a href="suba-retired/index.html">Suba (Retired)</a></li>
+<li><a href="sufrai/index.html">Sufrai</a></li>
+<li><a href="sungkai-indonesia/index.html">Sungkai (Indonesia)</a></li>
+<li><a href="tacanec/index.html">Tacanec</a></li>
+<li><a href="taensa/index.html">Taensa</a></li>
+<li><a href="tai-pao-retired/index.html">Tai Pao (Retired)</a></li>
+<li><a href="takpa-retired/index.html">Takpa (Retired)</a></li>
+<li><a href="tanda/index.html">Tanda</a></li>
+<li><a href="tangshewi/index.html">Tangshewi</a></li>
+<li><a href="tanjong/index.html">Tanjong</a></li>
+<li><a href="tapeba/index.html">† Tapeba</a></li>
+<li><a href="tareng/index.html">Tareng</a></li>
+<li><a href="tasmanian/index.html">† Tasmanian</a></li>
+<li><a href="tawang-monpa/index.html">Tawang Monpa</a></li>
+<li><a href="tetete/index.html">† Tetete</a></li>
+<li><a href="the/index.html">The</a></li>
+<li><a href="thu-lao/index.html">Thu Lao</a></li>
+<li><a href="thudam/index.html">Thudam</a></li>
+<li><a href="tijuana-sign-language/index.html">Tijuana Sign Language</a></li>
+<li><a href="tingal/index.html">Tingal</a></li>
+<li><a href="tingui-boto/index.html">† Tingui-Boto</a></li>
+<li><a href="tlalitzlipa-nahuatl/index.html">Tlalitzlipa Nahuatl</a></li>
+<li><a href="toala/index.html">Toala'</a></li>
+<li><a href="tomedes/index.html">† Tomedes</a></li>
+<li><a href="tomyang/index.html">Tomyang</a></li>
+<li><a href="tunen-retired/index.html">Tunen (Retired)</a></li>
+<li><a href="tushan-names/index.html">† Tushan Names</a></li>
+<li><a href="tutong-1/index.html">Tutong 1</a></li>
+<li><a href="tzutujil-western/index.html">Tz'utujil, Western</a></li>
+<li><a href="tzeltal-bachajón/index.html">Tzeltal, Bachajón</a></li>
+<li><a href="tzotzil-chamula/index.html">Tzotzil, Chamula</a></li>
+<li><a href="tzotzil-chenalhó/index.html">Tzotzil, Chenalhó</a></li>
+<li><a href="tzotzil-huixtán/index.html">Tzotzil, Huixtán</a></li>
+<li><a href="tzotzil-san-andrés-larrainzar/index.html">Tzotzil, San Andrés Larrainzar</a></li>
+<li><a href="tzotzil-zinacantán/index.html">Tzotzil, Zinacantán</a></li>
+<li><a href="uokha/index.html">Uokha</a></li>
+<li><a href="upper-baram-kenyah/index.html">Upper Baram Kenyah</a></li>
+<li><a href="upper-tanudan-kalinga/index.html">Upper Tanudan Kalinga</a></li>
+<li><a href="uradhi/index.html">† Uradhi</a></li>
+<li><a href="vatrata/index.html">Vatrata</a></li>
+<li><a href="wagawaga-retired/index.html">Wagawaga (Retired)</a></li>
+<li><a href="wahau-kayan/index.html">Wahau Kayan</a></li>
+<li><a href="walo-kumbe-dogon/index.html">Walo Kumbe Dogon</a></li>
+<li><a href="warduji/index.html">Warduji</a></li>
+<li><a href="wasulu-retired/index.html">Wasulu (Retired)</a></li>
+<li><a href="welaung/index.html">Welaung</a></li>
+<li><a href="western-frisian-retired/index.html">Western Frisian (Retired)</a></li>
+<li><a href="wirangu-nauo/index.html">Wirangu-Nauo</a></li>
+<li><a href="wumeng-yi/index.html">Wumeng Yi</a></li>
+<li><a href="yamongeri/index.html">Yamongeri</a></li>
+<li><a href="yamphe/index.html">Yamphe</a></li>
+<li><a href="yangbye/index.html">Yangbye</a></li>
+<li><a href="yangho/index.html">Yangho</a></li>
+<li><a href="yarsun/index.html">Yarsun</a></li>
+<li><a href="yarí/index.html">Yarí</a></li>
+<li><a href="yauma/index.html">Yauma</a></li>
+<li><a href="yendang-retired/index.html">Yendang (Retired)</a></li>
+<li><a href="yiddish-sign-language/index.html">Yiddish Sign Language</a></li>
+<li><a href="yinglish/index.html">Yinglish</a></li>
+<li><a href="yos/index.html">Yos</a></li>
+<li><a href="yuanjiang-mojiang-yi/index.html">Yuanjiang-Mojiang Yi</a></li>
+<li><a href="yugh-retired/index.html">† Yugh (Retired)</a></li>
+<li><a href="zarphatic/index.html">† Zarphatic</a></li>
+<li><a href="áncá/index.html">Áncá</a></li>
+</ul>
+</div>
+        </section>
+        <section>
+            <h2>Information</h2>
+            <p>This page is for the Bookkeeping language/dialect.</p>
+            <p>Data sourced from <a href="https://glottolog.org">Glottolog</a>, a comprehensive reference information for the world's languages.</p>
+        </section>
+        
+        <section>
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="https://glottolog.org/resource/languoid/id/book1242">View on Glottolog</a></li>
+                <li><a href="https://www.wals.info">World Atlas of Language Structures (WALS)</a></li>
+                <li><a href="https://www.ethnologue.com">Ethnologue</a></li>
+            </ul>
+        </section>
+        
+        <hr>
+        <footer>
+            <p><small>Generated from Glottolog 5.2 data. Last updated: January 12, 2026</small></p>
+        </footer>
+    </div></div>
+        
+    </div>
+</div>
+
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italian</title>
+    <link rel="icon" type="image/webp" href="../../../../../../../../../../../../favicon.webp">
+    <link rel="stylesheet" href="../../../../../../../../../../../../style.css">
+    <!-- Stylesheet injected by update_family_trees.py -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+function initMap(elementId, latitude, longitude) {
+    const container = document.getElementById(elementId);
+    if (!container) return;
+    const map = L.map(elementId).setView([latitude, longitude], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+        minZoom: 2
+    }).addTo(map);
+    const countryCodes = JSON.parse(container.dataset.countries || '[]');
+    
+    // Draw country boundaries if available
+    if (countryCodes && countryCodes.length > 0) {
+        fetch('https://cdn.jsdelivr.net/npm/world-geojson/countries.geojson')
+            .then(r => r.json())
+            .then(geojson => {
+                const countryFeatures = geojson.features.filter(f => {
+                    const code = f.properties.ISO_A2 || f.properties.ADMIN || '';
+                    return countryCodes.includes(code);
+                });
+                L.geoJSON({
+                    type: 'FeatureCollection',
+                    features: countryFeatures
+                }, {
+                    style: {
+                        color: '#B85A4F',
+                        weight: 1.5,
+                        opacity: 0.5,
+                        fillOpacity: 0.08
+                    }
+                }).addTo(map);
+            })
+            .catch(e => console.log(''));
+    }
+
+    // Center point marker
+    L.circleMarker([latitude, longitude], {
+        radius: 8,
+        fillColor: '#B85A4F',
+        color: '#8B4530',
+        weight: 2.5,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`${latitude.toFixed(4)}°, ${longitude.toFixed(4)}°`);
+    
+    setTimeout(() => { map.invalidateSize(); }, 150);
+}
+
+function toggleLargeList(btn) {
+    const list = btn.closest('h3').nextElementSibling;
+    if (list.style.display === 'none') {
+        list.style.display = '';
+        btn.textContent = 'Hide';
+    } else {
+        list.style.display = 'none';
+        btn.textContent = 'Show';
+    }
+}
+    </script>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../../../../../../../../../../../" class="header-logo"><img src="../../../../../../../../../../../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../../../../../../../../../../../" class="sidebar-logo">
+                <img src="../../../../../../../../../../../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../../../../../../../../../../../">Home</a></li>
+                <li><a href="../../../../../../../../../../../../texts-index.html">All Texts</a></li>
+                <li><a href="../../../../../../../../../../../../languages/">Languages</a></li>
+                <li><a href="../../../../../../../../../../../../works/">Works Index</a></li>
+                <li><a href="../../../../../../../../../../../../authors/">Authors</a></li>
+                <li><a href="../../../../../../../../../../../../sources/">Sources</a></li>
+                <li><a href="../../../../../../../../../../../../provenances/">Provenances</a></li>
+                <li><a href="../../../../../../../../../../../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-flags"><a href="../../../../../../../../../../../../countries/italy/index.html" title="Italy"><img src="https://flagcdn.com/w40/it.png" alt="Italy" class="country-flag"></a><a href="../../../../../../../../../../../../countries/austria/index.html" title="Austria"><img src="https://flagcdn.com/w40/at.png" alt="Austria" class="country-flag"></a><a href="../../../../../../../../../../../../countries/switzerland/index.html" title="Switzerland"><img src="https://flagcdn.com/w40/ch.png" alt="Switzerland" class="country-flag"></a><a href="../../../../../../../../../../../../countries/france/index.html" title="France"><img src="https://flagcdn.com/w40/fr.png" alt="France" class="country-flag"></a><a href="../../../../../../../../../../../../countries/croatia/index.html" title="Croatia"><img src="https://flagcdn.com/w40/hr.png" alt="Croatia" class="country-flag"></a><a href="../../../../../../../../../../../../countries/slovenia/index.html" title="Slovenia"><img src="https://flagcdn.com/w40/si.png" alt="Slovenia" class="country-flag"></a><a href="../../../../../../../../../../../../countries/san-marino/index.html" title="San Marino"><img src="https://flagcdn.com/w40/sm.png" alt="San Marino" class="country-flag"></a><a href="../../../../../../../../../../../../countries/vatican-city/index.html" title="Vatican City"><img src="https://flagcdn.com/w40/va.png" alt="Vatican City" class="country-flag"></a></div>
+<h1>Italian</h1>
+<p class="language-status">Not Endangered</p>
+<p class="alternate-names"><strong>Also known as:</strong> An Iodáilis, Bahasa Itali, Bahasa Italia, Basa Itali, Basa Italia, Eadailtis, Eidaleg, Gjuha italiane, Iddaalish, Idioma italiano, Idioma italián, Initalyano, IsItalian, Itaalia keel, Itala lingvo, Italek, Italia-gí, Italiaans, Italian (Fiorentino), Italian (Roman)<span class="hidden-names" id="hidden-ital1282" style="display: none;">, Italian kieli, Italian language, Italian leid, Italiana linguo, Italianeg, Italiano, Italiany, Italiaons, Italieensch, Italien, Italienisch, Italienische Sprache, Italiensk, Italiensk språk, Italienska, Italiera, Italiian, Italijanski jezik, Italijanščina, Italisc sprǣc, Italià, Italjaansk, Italo-Romance, Italsko godka, Italu kalba, Italya simi, Italština, Italšćina, Italų kalba, Itáliagiella, Itāļu valoda, Język włoski, Kiitalia, Lenga italian-a, Lenghe taliane, Lengua italiana, Limba italiana, Limba italiană, Limba italichescã, Lingua Italiana, Lingua italian, Lingua italiana, Lingua taliana, Lingwa Taljana, Luenga italiana, Lèngoa italiann-a, Língua italiana, Olasz nyelv, Pinulongang Italyanhon, Reo ’Itāria, Taliančina, Talijanski jezik, Tiếng Ý, Tok Itali, Tuscan, Wikang Italyano, Yi-thai-li-ngî, Zimanê îtalî, italien, Étalien, Ítalska, İtalyan dili, İtalyan tili, İtalyanca, Łéngua itałiana, Ιταλική γλώσσα, Італьянская мова, Італійська мова, Забони итолиявӣ, Итал чĕлхи, Итали хэл, Италиаг æвзаг, Италиански език, Италиень кяль, Италия кыв, Италијански јазик, Италијански језик, Итальян йылме, Итальян теле, Итальянский язык, Իտալերեն, איטאליעניש, איטלקית, ئىتاليان تىلى, اطالوی, زبان ایتالیایی, لغة إيطالية, لغه طليانى, އިޓަލީ, इटालियन भाषा, इतालवी भाषा, ইতালীয় ঠার, ইতালীয় ভাষা, இத்தாலிய மொழி, ಇಟಲಿಯ ಭಾಷೆ, ഇറ്റാലിയൻ ഭാഷ, ภาษาอิตาลี, ཡི་ཏ་ལིའི་སྐད།, იტალიური ენა, イタリア語, 意大利話, 意大利語, 意大利语, 이탈리아어</span> <a href="javascript:void(0)" class="names-toggle" id="toggle-ital1282" data-count="104">and 104 more...</a></p>
+<script>
+document.getElementById('toggle-ital1282').addEventListener('click', function() {
+    var hidden = document.getElementById('hidden-ital1282');
+    var count = this.getAttribute('data-count');
+    if (hidden.style.display === 'none') {
+        hidden.style.display = 'inline';
+        this.textContent = 'show less';
+    } else {
+        hidden.style.display = 'none';
+        this.textContent = 'and ' + count + ' more...';
+    }
+});
+</script>
+        
+        <div class="metadata">
+            <p><strong>Type:</strong> <span class="level-tag language">Language</span></p>
+            <p><strong>Glottolog ID:</strong> ital1282</p>
+            <p><strong>ISO 639-3 Code:</strong> ita</p>
+        </div>
+        
+        <section>
+            <h2>Language Family</h2>
+<div class="breadcrumb-tree">
+    <a href="../../../../../../../../../../index.html">Indo-European</a> / <a href="../../../../../../../../../index.html">Classical Indo-European</a> / <a href="../../../../../../../../index.html">Italic</a> / <a href="../../../../../../../index.html">Latino-Faliscan</a> / <a href="../../../../../../index.html">Latinic</a> / <a href="../../../../../index.html">Imperial Latin</a> / <a href="../../../../index.html">Romance</a> / <a href="../../../index.html">Italo-Western Romance</a> / <a href="../../index.html">Italo-Dalmatian</a> / <a href="../index.html">Italian Romance</a> / <span class="current">Italian</span>
+</div>
+        </section>
+        <section>
+<div class="locality-section">
+    <h3>Geographic Location</h3>
+    <div id="map-ital1282" class="language-map" data-countries='["AT", "CH", "FR", "HR", "IT", "SI", "SM", "VA"]'></div>
+    <div class="geographic-info">
+        <p><strong>Countries:</strong> Austria, Switzerland, France, Croatia, Italy, Slovenia, San Marino, Vatican City</p>
+        <p><strong>Coordinates:</strong> 43.0464°, 12.6489°</p>
+    </div>
+</div>
+    <script>
+    // Initialize map for ital1282
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap('map-ital1282', 43.0464, 12.6489);
+        });
+    } else {
+        initMap('map-ital1282', 43.0464, 12.6489);
+    }
+</script>
+        </section>
+        <section>
+<div class="dialects-section">
+<h3>Dialects [4]</h3>
+<ul class="dialects-list">
+<li><a href="cicolano-reatino-aquilano/index.html">Cicolano-Reatino-Aquilano</a></li>
+<li><a href="fiorentino/index.html">Fiorentino</a></li>
+<li><a href="laziale/index.html">Laziale</a></li>
+<li><a href="old-italian/index.html">Old Italian</a></li>
+</ul>
+</div>
+        </section>
+        <section>
+            <h2>Information</h2>
+            <p>This page is for the Italian language/dialect.</p>
+            <p>Data sourced from <a href="https://glottolog.org">Glottolog</a>, a comprehensive reference information for the world's languages.</p>
+        </section>
+        
+        <section>
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="https://glottolog.org/resource/languoid/id/ital1282">View on Glottolog</a></li>
+                <li><a href="https://www.wals.info">World Atlas of Language Structures (WALS)</a></li>
+                <li><a href="https://www.ethnologue.com">Ethnologue</a></li>
+            </ul>
+        </section>
+        
+        <hr>
+        <footer>
+            <p><small>Generated from Glottolog 5.2 data. Last updated: January 12, 2026</small></p>
+        </footer>
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <script src="../../../../../../../../../../../../search-index.js"></script>
+    <script src="../../../../../../../../../../../../search.js"></script>
+</body>
+</html>

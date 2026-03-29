@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Languages of Italy — Babel</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search languages, families, texts..." id="search-input">
+        <div class="search-results" id="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+                <h3>Navigate</h3>
+                <ul>
+                    <li><a href="../../">Home</a></li>
+                    <li><a href="../../texts-index.html">All Texts</a></li>
+                    <li><a href="../../languages/">Languages</a></li>
+                    <li><a href="../../works/">Works Index</a></li>
+                    <li><a href="../../authors/">Authors</a></li>
+                    <li><a href="../../sources/">Sources</a></li>
+                    <li><a href="../../provenances/">Provenances</a></li>
+                    <li><a href="../../collections/">Collections</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-header">
+            <img src="https://flagcdn.com/w160/it.png" 
+                 alt="Italy flag" 
+                 class="country-flag-large">
+            <h1>Languages of Italy</h1>
+        </div>
+        
+        <div class="metadata">
+            <p><strong>Languages:</strong> 70</p>
+            <p><strong>Language Families:</strong> 5</p>
+        </div>
+
+        <div class="locality-section">
+            <h3>Location</h3>
+            <div id="country-map-it" class="country-map"></div>
+        </div>
+        <script>
+            (function() {
+                var map = L.map('country-map-it').setView([41.87194, 12.56738], 4);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap',
+                    maxZoom: 19,
+                    minZoom: 2
+                }).addTo(map);
+                L.circleMarker([41.87194, 12.56738], {
+                    radius: 8,
+                    fillColor: '#B85A4F',
+                    color: '#8B4530',
+                    weight: 2.5,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(map).bindPopup('<b>Italy</b>');
+                setTimeout(function() { map.invalidateSize(); }, 150);
+            })();
+        </script>
+        <div class="tree-controls">
+            <h2>Languages by Family</h2>
+            <div class="tree-buttons">
+                <button onclick="expandAll()" class="tree-btn">Expand All</button>
+                <button onclick="collapseAll()" class="tree-btn">Collapse All</button>
+            </div>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/afro-asiatic/index.html">Afro-Asiatic</a></h3>
+                <span class="family-count">(2 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/afro-asiatic/index.html">Afro-Asiatic</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/afro-asiatic/semitic/index.html">Semitic</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/afro-asiatic/semitic/west-semitic/index.html">West Semitic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/afro-asiatic/semitic/west-semitic/central-semitic/index.html">Central Semitic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/afro-asiatic/semitic/west-semitic/central-semitic/arabian/index.html">Arabian</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/afro-asiatic/semitic/west-semitic/central-semitic/arabian/arabic/index.html">Arabic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/afro-asiatic/semitic/west-semitic/central-semitic/arabian/arabic/north-african-arabic/index.html">North African Arabic</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/afro-asiatic/semitic/west-semitic/central-semitic/arabian/arabic/north-african-arabic/judeo-tripolitanian-arabic/index.html">Judeo-Tripolitanian Arabic</a>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/afro-asiatic/semitic/west-semitic/central-semitic/arabian/arabic/north-african-arabic/malta-tunisian-arabic/index.html">Malta-Tunisian Arabic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/afro-asiatic/semitic/west-semitic/central-semitic/arabian/arabic/north-african-arabic/malta-tunisian-arabic/tunisian-arabic/index.html">Tunisian Arabic</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-dialect target-language ">
+                                                                                            <a href="../../languages/afro-asiatic/semitic/west-semitic/central-semitic/arabian/arabic/north-african-arabic/malta-tunisian-arabic/tunisian-arabic/judeo-tunisian-arabic/index.html">Judeo-Tunisian Arabic</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/etruscan/index.html">† Etruscan</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/etruscan/index.html">† Etruscan</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/indo-european/index.html">Indo-European</a></h3>
+                <span class="family-count">(59 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/indo-european/index.html">Indo-European</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/indo-european/classical-indo-european/index.html">Classical Indo-European</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/indo-european/classical-indo-european/albanian/index.html">Albanian</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/albanian/albanian-tosk/index.html">Albanian-Tosk</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/albanian/albanian-tosk/southern-tosk/index.html">Southern Tosk</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/indo-european/classical-indo-european/albanian/albanian-tosk/southern-tosk/arbëreshë-albanian/index.html">Arbëreshë Albanian</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/indo-european/classical-indo-european/balto-slavic/index.html">Balto-Slavic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/balto-slavic/slavic/index.html">Slavic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/balto-slavic/slavic/south-slavic/index.html">South Slavic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/indo-european/classical-indo-european/balto-slavic/slavic/south-slavic/western-south-slavic/index.html">Western South Slavic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/indo-european/classical-indo-european/balto-slavic/slavic/south-slavic/western-south-slavic/serbian-croatian-bosnian/index.html">Serbian-Croatian-Bosnian</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-dialect intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/balto-slavic/slavic/south-slavic/western-south-slavic/serbian-croatian-bosnian/shtokavski/index.html">Shtokavski</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-dialect intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/balto-slavic/slavic/south-slavic/western-south-slavic/serbian-croatian-bosnian/shtokavski/new-shtokavian/index.html">New Shtokavian</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-dialect intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/balto-slavic/slavic/south-slavic/western-south-slavic/serbian-croatian-bosnian/shtokavski/new-shtokavian/eastern-herzegovinian-shtokavian/index.html">Eastern Herzegovinian Shtokavian</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-dialect target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/balto-slavic/slavic/south-slavic/western-south-slavic/serbian-croatian-bosnian/shtokavski/new-shtokavian/eastern-herzegovinian-shtokavian/croatian-standard/index.html">Croatian Standard</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/indo-european/classical-indo-european/balto-slavic/slavic/south-slavic/western-south-slavic/slavomolisano/index.html">Slavomolisano</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/indo-european/classical-indo-european/balto-slavic/slavic/south-slavic/western-south-slavic/slovenian/index.html">Slovenian</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/indo-european/classical-indo-european/celtic/index.html">Celtic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/celtic/nuclear-celtic/index.html">Nuclear Celtic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/celtic/nuclear-celtic/cisalpine-celtic/index.html">Cisalpine Celtic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/indo-european/classical-indo-european/celtic/nuclear-celtic/cisalpine-celtic/cisalpine-gaulish/index.html">† Cisalpine Gaulish</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/indo-european/classical-indo-european/germanic/index.html">Germanic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/index.html">Northwest Germanic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/index.html">West Germanic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/index.html">High German</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/index.html">Upper German</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/index.html">Middle-Modern High German</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/index.html">Modern High German</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/alemannic/index.html">Alemannic</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/alemannic/south-alemannic/index.html">South Alemannic</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/alemannic/south-alemannic/central-alemannic/index.html">Central Alemannic</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/alemannic/south-alemannic/walser/index.html">Walser</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/bairisch/index.html">Bairisch</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/bairisch/bavarian/index.html">Bavarian</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-dialect target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/bairisch/bavarian/south-bavarian/index.html">South Bavarian</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/bairisch/global-south-bavarian/index.html">Global South Bavarian</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/bairisch/global-south-bavarian/cimbrian/index.html">Cimbrian</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-dialect target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/bairisch/global-south-bavarian/cimbrian/lusernese-cimbrian/index.html">Lusernese Cimbrian</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-dialect target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/bairisch/global-south-bavarian/cimbrian/sette-comuni-cimbrian/index.html">Sette Comuni Cimbrian</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-dialect target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/bairisch/global-south-bavarian/cimbrian/tredici-communi-cimbrian/index.html">Tredici Communi Cimbrian</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/bairisch/global-south-bavarian/mòcheno/index.html">Mòcheno</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-dialect target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/bairisch/global-south-bavarian/mòcheno/fierozzo/index.html">Fierozzo</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-dialect target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/bairisch/global-south-bavarian/mòcheno/frassilongo/index.html">Frassilongo</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-dialect target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/bairisch/global-south-bavarian/mòcheno/palù/index.html">Palù</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/upper-franconian/index.html">Upper Franconian</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/upper-franconian/global-german/index.html">Global German</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/high-german/upper-german/middle-modern-high-german/modern-high-german/upper-franconian/global-german/german/index.html">German</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/indo-european/classical-indo-european/graeco-phrygian/index.html">Graeco-Phrygian</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/graeco-phrygian/greek/index.html">Greek</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/graeco-phrygian/greek/south-greek/index.html">South Greek</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/indo-european/classical-indo-european/graeco-phrygian/greek/south-greek/central-greek/index.html">Central Greek</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/indo-european/classical-indo-european/graeco-phrygian/greek/south-greek/central-greek/koineic-greek/index.html">Koineic Greek</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/graeco-phrygian/greek/south-greek/central-greek/koineic-greek/modern-koineic-greek/index.html">Modern Koineic Greek</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/graeco-phrygian/greek/south-greek/central-greek/koineic-greek/modern-koineic-greek/nuclear-modern-greek/index.html">Nuclear Modern Greek</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/graeco-phrygian/greek/south-greek/central-greek/koineic-greek/modern-koineic-greek/nuclear-modern-greek/modern-greek/index.html">Modern Greek</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/index.html">Indo-Iranian</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/index.html">Indo-Aryan</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/index.html">Middle-Modern Indo-Aryan</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/index.html">Continental Indo-Aryan</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/index.html">Midlands Indo-Aryan</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/index.html">Shaurasenic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/index.html">Indo-Aryan Central zone</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/romani/index.html">Romani</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/romani/anglo-northwestern-romani/index.html">Anglo-Northwestern Romani</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/romani/anglo-northwestern-romani/northwestern-romani/index.html">Northwestern Romani</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/romani/anglo-northwestern-romani/northwestern-romani/sinte-manus-romani/index.html">Sinte-Manus Romani</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/romani/balkan-romani/index.html">Balkan Romani</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/romani/central-romani/index.html">Central Romani</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/romani/vlax-romani/index.html">Vlax Romani</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/indo-european/classical-indo-european/italic/index.html">Italic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/index.html">Latino-Faliscan</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/faliscan/index.html">† Faliscan</a>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/index.html">Latinic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/index.html">Imperial Latin</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/index.html">Romance</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/index.html">Italo-Western Romance</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/italo-dalmatian/index.html">Italo-Dalmatian</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/italo-dalmatian/italian-romance/index.html">Italian Romance</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/italo-dalmatian/italian-romance/continental-southern-italian/index.html">Continental Southern Italian</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-dialect target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/italo-dalmatian/italian-romance/continental-southern-italian/castelmezzano/index.html">Castelmezzano</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/italo-dalmatian/italian-romance/italian/index.html">Italian</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/italo-dalmatian/italian-romance/sicilian/index.html">Sicilian</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/index.html">Western Romance</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/index.html">Shifted Western Romance</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/index.html">Northwestern Shifted Romance</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-italian/index.html">Gallo-Italian</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-italian/emiliano-romagnolo/index.html">Emiliano-Romagnolo</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-italian/emiliano-romagnolo/emiliano/index.html">Emiliano</a>
+                                                                                                                        </li>
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-italian/emiliano-romagnolo/romagnol/index.html">Romagnol</a>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-italian/judeo-italian/index.html">Judeo-Italian</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-italian/ligurian/index.html">Ligurian</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-italian/piemontese-lombard/index.html">Piemontese-Lombard</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-italian/piemontese-lombard/lombard/index.html">Lombard</a>
+                                                                                                                        </li>
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-italian/piemontese-lombard/piemontese/index.html">Piemontese</a>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-italian/sassarese-sardinian/index.html">Sassarese Sardinian</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-italian/venetian/index.html">Venetian</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/index.html">Gallo-Rhaetian</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/friulian/index.html">Friulian</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/ladin/index.html">Ladin</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/index.html">Oil</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/central-oil/index.html">Central Oil</a>
+                                                                                                                            <ul class="language-subtree">
+                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/central-oil/macro-french/index.html">Macro-French</a>
+                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/central-oil/macro-french/global-french/index.html">Global French</a>
+                                                                                                                                            <ul class="language-subtree">
+                                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/central-oil/macro-french/global-french/french/index.html">French</a>
+                                                                                                                                                </li>
+                                                                                                                                            </ul>
+                                                                                                                                        </li>
+                                                                                                                                    </ul>
+                                                                                                                                </li>
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/francoprovencalic/index.html">Francoprovencalic</a>
+                                                                                                                            <ul class="language-subtree">
+                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/francoprovencalic/arpitan/index.html">Arpitan</a>
+                                                                                                                                </li>
+                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/francoprovencalic/faeto-and-celle-san-vito-francoprovencal/index.html">Faeto and Celle San Vito Francoprovencal</a>
+                                                                                                                                </li>
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/romansh/index.html">Romansh</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/index.html">Southwestern Shifted Romance</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/catalan/index.html">Catalan</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-dialect intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/catalan/català-oriental/index.html">Català Oriental</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-dialect target-language ">
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/catalan/català-oriental/algherese/index.html">Algherese</a>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/occitanic/index.html">Occitanic</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/occitanic/gardiol/index.html">Gardiol</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/occitanic/occitan/index.html">Occitan</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-dialect intermediate-node has-children">
+                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/occitanic/occitan/northern-occitan/index.html">Northern Occitan</a>
+                                                                                                                            <ul class="language-subtree">
+                                                                                                                                <li class="level-dialect target-language ">
+                                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/occitanic/occitan/northern-occitan/vivaro-alpine-occitan/index.html">Vivaro-Alpine Occitan</a>
+                                                                                                                                </li>
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/southern-romance/index.html">Southern Romance</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/southern-romance/sardo-corsican/index.html">Sardo-Corsican</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/southern-romance/sardo-corsican/corsic/index.html">Corsic</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/southern-romance/sardo-corsican/corsic/corsican/index.html">Corsican</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/southern-romance/sardo-corsican/corsic/gallurese-sardinian/index.html">Gallurese Sardinian</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/southern-romance/sardo-corsican/sardinian/index.html">Sardinian</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/southern-romance/sardo-corsican/sardinian/campidanese-sardinian/index.html">Campidanese Sardinian</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/southern-romance/sardo-corsican/sardinian/logudorese-sardinian/index.html">Logudorese Sardinian</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/southern-romance/south-lucanian/index.html">South Lucanian</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/old-latin/index.html">† Old Latin</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/italic/sabellic/index.html">Sabellic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/italic/sabellic/old-sabellic/index.html">† Old Sabellic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-dialect target-language ">
+                                                            <a href="../../languages/indo-european/classical-indo-european/italic/sabellic/old-sabellic/sabine/index.html">† Sabine</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/indo-european/classical-indo-european/italic/sabellic/oscan/index.html">† Oscan</a>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/indo-european/classical-indo-european/italic/sabellic/umbrian/index.html">† Umbrian</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/indo-european/classical-indo-european/italic/venetic/index.html">† Venetic</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/indo-european/unclassified-indo-european/index.html">Unclassified Indo-European</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/indo-european/unclassified-indo-european/messapic/index.html">† Messapic</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/sign-language/index.html">Sign Language</a></h3>
+                <span class="family-count">(2 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/sign-language/index.html">Sign Language</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sign-language/l1-sign-language/index.html">L1 Sign Language</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/index.html">LSFic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sign-language/l1-sign-language/lsfic/italian-sign/index.html">Italian Sign</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/italian-sign/italian-sign-language/index.html">Italian Sign Language</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sign-language/pidgin-sign-language/index.html">Pidgin Sign Language</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sign-language/pidgin-sign-language/international-sign/index.html">† International Sign</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/unclassifiable/index.html">Unclassifiable</a></h3>
+                <span class="family-count">(6 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/unclassifiable/index.html">Unclassifiable</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/ancient-ligurian/index.html">† Ancient Ligurian</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/camunic/index.html">† Camunic</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/elymian/index.html">† Elymian</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/raetic/index.html">† Raetic</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/sicana/index.html">† Sicana</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/sicula/index.html">† Sicula</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <!-- Tree toggle functionality -->
+    <script>
+        function toggleTree(toggle) {
+            const li = toggle.parentElement;
+            const subtree = li.querySelector('.language-subtree');
+            if (subtree) {
+                if (toggle.classList.contains('expanded')) {
+                    toggle.classList.remove('expanded');
+                    toggle.classList.add('collapsed');
+                    toggle.textContent = '▶';
+                    subtree.style.display = 'none';
+                } else {
+                    toggle.classList.remove('collapsed');
+                    toggle.classList.add('expanded');
+                    toggle.textContent = '▼';
+                    subtree.style.display = 'block';
+                }
+            }
+        }
+        
+        function expandAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('collapsed');
+                toggle.classList.add('expanded');
+                toggle.textContent = '▼';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'block';
+            });
+        }
+        
+        function collapseAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('expanded');
+                toggle.classList.add('collapsed');
+                toggle.textContent = '▶';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'none';
+            });
+        }
+    </script>
+    
+    <!-- Search functionality -->
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+</body>
+</html>

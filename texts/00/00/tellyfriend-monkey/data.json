@@ -1,0 +1,102 @@
+{
+  "id": "tellyfriend-monkey",
+  "title": "MUNKEH",
+  "author": "ITV Digital",
+  "date": "2001",
+  "country": "GB",
+  "language": "stan1293",
+  "pages": [
+    {
+      "id": "munk1",
+      "label": "munk1",
+      "regions": [
+        {
+          "x": 0.18375651041666669,
+          "y": 0.215632697044335,
+          "width": 0.10677083333333331,
+          "height": 0.07635467980295564,
+          "title": "",
+          "text": "<div style=\"text-align: center;\"><span style=\"font-size: 28px;\">Now you</span></div><div style=\"text-align: center;\"><span style=\"font-size: 28px;\">can be like</span></div><div style=\"text-align: center;\"><span style=\"font-size: 28px;\">Al too!</span></div><div style=\"text-align: center;\"><span style=\"font-size: 12px;\">(Look at the back</span></div><div style=\"text-align: center;\"><span style=\"font-size: 12px;\">for more details)</span></div>"
+        },
+        {
+          "x": 0.14476351351351352,
+          "y": 0.5210514162561576,
+          "width": 0.6216216216216217,
+          "height": 0.1945812807881773,
+          "title": "",
+          "text": "<span style=\"font-size: 28px;\"><span style=\"font-size: 32px;\"><span style=\"font-size: 40px;\">MONKEY</span></span></span><br><span style=\"font-size: 12px;\"><span style=\"font-size: 10px;\"><span style=\"font-size: 16px;\"><span style=\"font-size: 14px;\"><span style=\"font-size: 11px;\">THE ULTIMATE TELLYFRIEND</span></span></span></span></span>"
+        },
+        {
+          "x": 0.07989864864864865,
+          "y": 0.8609528940886699,
+          "width": 0.23513513513513518,
+          "height": 0.05418719211822663,
+          "title": "",
+          "text": "<span style=\"font-size: 16px;\">Special Edition</span>"
+        }
+      ]
+    },
+    {
+      "id": "munk2",
+      "label": "munk2",
+      "regions": [
+        {
+          "x": 0.12444605745721271,
+          "y": 0.3215440270935961,
+          "width": 0.17114914425427868,
+          "height": 0.10591133004926104,
+          "title": "",
+          "text": "<div style=\"text-align: center;\"><span style=\"font-size: 20px;\">Now you</span></div><div style=\"text-align: center;\"><span style=\"font-size: 20px;\">can be like</span></div><div style=\"text-align: center;\"><span style=\"font-size: 20px;\">Al too!</span></div>"
+        },
+        {
+          "x": 0.3298250305623472,
+          "y": 0.25011545566502463,
+          "width": 0.5941320293398533,
+          "height": 0.20935960591133004,
+          "title": "",
+          "text": "<div style=\"text-align: justify;\"><span style=\"font-size: 16px;\">Recreate the hilarious life of TV’s newest</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 16px;\">stars - Al and Monkey from the ITV Digital</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 16px;\">adverts. You get to role-play ‘Al’ with this</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 16px;\">Special Edition ‘rare as hens teeth’ Replica</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 16px;\">Monkey. Watching TV will never be the</span></div><div><span style=\"font-size: 16px;\">same again. It will be somewhat better.</span></div>"
+        },
+        {
+          "x": 0.11466610635696821,
+          "y": 0.6860760467980296,
+          "width": 0.4572127139364303,
+          "height": 0.07389162561576355,
+          "title": "",
+          "text": "<div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">To share the ‘Al experience’, simply put Monkey in a lazy-boy armchair (picture), and place</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">yourself next to him. If you don’t have a lazy-boy armchair, then this is your chance to get</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">one. If you’re without the recommended armchair you won’t be at too much of a</span></div><div><span style=\"font-size: 14px;\">disadvantage. For now your old sofa will do.</span></div>"
+        },
+        {
+          "x": 0.13911598410757947,
+          "y": 0.8584898399014779,
+          "width": 0.20293398533007334,
+          "height": 0.06403940886699508,
+          "title": "",
+          "text": "<div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">Now you can watch as much TV as you like.</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">You’ll never get tired with Monkey as a</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">companion. But if you find yourself laughing</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">at his jokes, then you’ve probably exceeded</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">your telly-watching limit. You’ve gone mad.</span></div><div style=\"\"><span style=\"font-size: 14px;\">Remember, your Monkey is just a replica.</span></div>"
+        },
+        {
+          "x": 0.34938493276283616,
+          "y": 0.8584898399014779,
+          "width": 0.21026894865525672,
+          "height": 0.054187192118226604,
+          "title": "",
+          "text": "<div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">With Monkey safely stationed next to you</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">in a lazy-boy armchair (you’ve got one</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">by now, surely?), you’ll be able to gorge</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">your self with crisps. Starts with 5-8 bags a</span></div><div><span style=\"font-size: 14px;\">day, then increase.</span></div>"
+        },
+        {
+          "x": 0.5987736858190709,
+          "y": 0.6146474753694581,
+          "width": 0.23471882640586797,
+          "height": 0.06157635467980296,
+          "title": "",
+          "text": "<div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">Now you can put your feet up on the table.</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">Monkey won’t mind. He won’t judge you and</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">he won’t disagree when you choose</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">to watch questionable programmes at</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">ridiculous hours of the day. Now, do you know</span></div><div><span style=\"font-size: 14px;\">anyone you can honestly say that about?</span></div>"
+        },
+        {
+          "x": 0.5694338325183375,
+          "y": 0.8043026477832512,
+          "width": 0.22249388753056235,
+          "height": 0.0960591133004926,
+          "title": "",
+          "text": "<div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">The real Al’s bodyshape is something you’d</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">need to work very hard to achieve. Therefore,</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">how about taking on Al’s voice instead.</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">In Al-speak, ‘Monkey’ becomes ‘Munkeh’.</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">A phrase such as ‘I don’t believe you’ becomes</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">‘You Munkeh liar’. With regular practice at</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">work, in the playground, or the little boys</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">room, you will pick up ‘Al’ in no time. Health</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">and Safety guidelines suggest you be ‘Al’ for</span></div><div style=\"text-align: justify;\"><span style=\"font-size: 14px;\">no longer than 8 hours everyday. 10 at a</span></div><div><span style=\"font-size: 14px;\"><span style=\"font-size: 14px;\">push, 12 if you really must.</span></span></div>"
+        }
+      ]
+    }
+  ]
+}

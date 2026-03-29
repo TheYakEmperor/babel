@@ -1,0 +1,12 @@
+Updating image references to Backblaze B2...
+
+=== Updating data.json files ===
+
+=== Updating index.html files ===
+
+=== DONE ===
+Updated 0 data.json files
+Updated 0 index.html files
+
+You can now delete the local images/ folders in texts/ to save space.
+Run: find texts/ -type d -name "images" -exec rm -rf {} +

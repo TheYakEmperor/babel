@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="LANGUAGE_CODE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOUR_TITLE — Text Archive</title>
+    <link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" class="search-bar" id="searchInput" placeholder="Search languages..." autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+    
+    <div class="container">
+        <nav class="breadcrumb-tree">
+            <a href="../../../../index.html">Encyclopedia</a> ›
+            <a href="../../../../texts-index.html">Text Archive</a> ›
+            <span>TEXT_ID_HERE</span>
+        </nav>
+
+        <!-- ================================================================
+             FILL IN THE BLANKS
+             
+             1. Replace YOUR_TITLE with your text's title
+             2. Replace LANGUAGE_NAME with the language (e.g., "Sumerian")
+             3. Replace LANGUAGE_PATH with the folder path (e.g., "sumerian")
+             4. Replace GLOTTOLOG_ID with the ID (e.g., "sume1241")
+             5. Fill in author, source, date (or delete those lines)
+             6. Put your text in the <poem> section
+             
+             To find LANGUAGE_PATH: look in the languages/ folder
+             To find GLOTTOLOG_ID: it's on the language's page
+             ================================================================ -->
+
+        <h1>YOUR_TITLE</h1>
+        
+        <p class="language-status">Text in <a href="../../../../languages/LANGUAGE_PATH/index.html"><strong>LANGUAGE_NAME</strong></a></p>
+        
+        <div class="metadata">
+            <p><strong>Title:</strong> YOUR_TITLE <em>(ENGLISH_TRANSLATION)</em></p>
+            <p><strong>Source:</strong> SOURCE_INFO</p>
+            <p><strong>Date:</strong> DATE_INFO</p>
+            <p><strong>Text ID:</strong> <code>TEXT_ID_HERE</code></p>
+            <p><strong>Glottolog:</strong> <a href="https://glottolog.org/resource/languoid/id/GLOTTOLOG_ID">GLOTTOLOG_ID</a></p>
+        </div>
+
+        <!-- ================================================================
+             TEXT CONTENT - Put your transcription in the <poem> tags
+             ================================================================ -->
+
+        <section>
+            <h2>Transcription</h2>
+            
+            <div class="text-body">
+                <div class="text-page" id="page-1" data-page-label="1">
+                    <div class="text-work" id="work-1" data-work-id="work" data-work-title="Work Title">
+                    <!-- For subworks inside a superwork, add: data-superwork-title="Superwork Name" data-superwork-id="superwork-id" -->
+                    <poem>
+YOUR TEXT HERE
+
+Line by line
+As needed
+</poem>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="../../../../search-index.js"></script>
+    <script src="../../../../search.js"></script>
+    <script src="../../../../text-reader.js"></script>
+</body>
+</html>

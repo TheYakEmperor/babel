@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Languages of Burundi — Babel</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search languages, families, texts..." id="search-input">
+        <div class="search-results" id="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+                <h3>Navigate</h3>
+                <ul>
+                    <li><a href="../../">Home</a></li>
+                    <li><a href="../../texts-index.html">All Texts</a></li>
+                    <li><a href="../../languages/">Languages</a></li>
+                    <li><a href="../../works/">Works Index</a></li>
+                    <li><a href="../../authors/">Authors</a></li>
+                    <li><a href="../../sources/">Sources</a></li>
+                    <li><a href="../../provenances/">Provenances</a></li>
+                    <li><a href="../../collections/">Collections</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-header">
+            <img src="https://flagcdn.com/w160/bi.png" 
+                 alt="Burundi flag" 
+                 class="country-flag-large">
+            <h1>Languages of Burundi</h1>
+        </div>
+        
+        <div class="metadata">
+            <p><strong>Languages:</strong> 10</p>
+            <p><strong>Language Families:</strong> 3</p>
+        </div>
+
+        <div class="locality-section">
+            <h3>Location</h3>
+            <div id="country-map-bi" class="country-map"></div>
+        </div>
+        <script>
+            (function() {
+                var map = L.map('country-map-bi').setView([-3.373056, 29.918886], 4);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap',
+                    maxZoom: 19,
+                    minZoom: 2
+                }).addTo(map);
+                L.circleMarker([-3.373056, 29.918886], {
+                    radius: 8,
+                    fillColor: '#B85A4F',
+                    color: '#8B4530',
+                    weight: 2.5,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(map).bindPopup('<b>Burundi</b>');
+                setTimeout(function() { map.invalidateSize(); }, 150);
+            })();
+        </script>
+        <div class="tree-controls">
+            <h2>Languages by Family</h2>
+            <div class="tree-buttons">
+                <button onclick="expandAll()" class="tree-btn">Expand All</button>
+                <button onclick="collapseAll()" class="tree-btn">Collapse All</button>
+            </div>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/atlantic-congo/index.html">Atlantic-Congo</a></h3>
+                <span class="family-count">(8 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/atlantic-congo/index.html">Atlantic-Congo</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/atlantic-congo/volta-congo/index.html">Volta-Congo</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/index.html">Benue-Congo</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/index.html">Bantoid</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/index.html">Southern Bantoid</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/index.html">Narrow Bantu</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/index.html">East Bantu</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/index.html">Northeast Savanna Bantu</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/index.html">Great Lakes Bantu</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/index.html">Western Lakes Bantu</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/index.html">Kivu</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/forest-kivu/index.html">Forest Kivu</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/forest-kivu/fuliiric/index.html">Fuliiric</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/forest-kivu/fuliiric/fuliiru-vira/index.html">Fuliiru-Vira</a>
+                                                                                                                            <ul class="language-subtree">
+                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/forest-kivu/fuliiric/fuliiru-vira/fuliiru/index.html">Fuliiru</a>
+                                                                                                                                </li>
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/forest-kivu/shi/index.html">Shi</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/west-highlands-kivu/index.html">West Highlands Kivu</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/west-highlands-kivu/kinyarwanda/index.html">Kinyarwanda</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/west-highlands-kivu/rundic/index.html">Rundic</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/west-highlands-kivu/rundic/ha/index.html">Ha</a>
+                                                                                                                        </li>
+                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/west-highlands-kivu/rundic/hangaza-shubi/index.html">Hangaza-Shubi</a>
+                                                                                                                            <ul class="language-subtree">
+                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/west-highlands-kivu/rundic/hangaza-shubi/hangaza/index.html">Hangaza</a>
+                                                                                                                                </li>
+                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/west-highlands-kivu/rundic/hangaza-shubi/shubi/index.html">Shubi</a>
+                                                                                                                                </li>
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/great-lakes-bantu/western-lakes-bantu/kivu/west-highlands-kivu/rundic/rundi/index.html">Rundi</a>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/northeast-coastal-bantu/index.html">Northeast Coastal Bantu</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/northeast-coastal-bantu/coastal-nec-bantu/index.html">Coastal NEC Bantu</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/northeast-coastal-bantu/coastal-nec-bantu/sabaki-swahili/index.html">Sabaki-Swahili</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/northeast-coastal-bantu/coastal-nec-bantu/sabaki-swahili/swahili-g40/index.html">Swahili (G.40)</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/northeast-coastal-bantu/coastal-nec-bantu/sabaki-swahili/swahili-g40/mombasa-lamu-inland-swahili/index.html">Mombasa-Lamu-Inland Swahili</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/east-bantu/northeast-savanna-bantu/northeast-coastal-bantu/coastal-nec-bantu/sabaki-swahili/swahili-g40/mombasa-lamu-inland-swahili/swahili/index.html">Swahili</a>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/pidgin/index.html">Pidgin</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/pidgin/index.html">Pidgin</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/pidgin/french-based-pidgin/index.html">French-based pidgin</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/pidgin/french-based-pidgin/burundi-pidgin-french/index.html">Burundi Pidgin French</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/sign-language/index.html">Sign Language</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/sign-language/index.html">Sign Language</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sign-language/l1-sign-language/index.html">L1 Sign Language</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/index.html">LSFic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/index.html">ASLic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/american-sign/index.html">American Sign</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/american-sign/american-sign-language/index.html">American Sign Language</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-dialect target-language ">
+                                                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/american-sign/american-sign-language/burundi-sign-language/index.html">Burundi Sign Language</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <!-- Tree toggle functionality -->
+    <script>
+        function toggleTree(toggle) {
+            const li = toggle.parentElement;
+            const subtree = li.querySelector('.language-subtree');
+            if (subtree) {
+                if (toggle.classList.contains('expanded')) {
+                    toggle.classList.remove('expanded');
+                    toggle.classList.add('collapsed');
+                    toggle.textContent = '▶';
+                    subtree.style.display = 'none';
+                } else {
+                    toggle.classList.remove('collapsed');
+                    toggle.classList.add('expanded');
+                    toggle.textContent = '▼';
+                    subtree.style.display = 'block';
+                }
+            }
+        }
+        
+        function expandAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('collapsed');
+                toggle.classList.add('expanded');
+                toggle.textContent = '▼';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'block';
+            });
+        }
+        
+        function collapseAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('expanded');
+                toggle.classList.add('collapsed');
+                toggle.textContent = '▶';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'none';
+            });
+        }
+    </script>
+    
+    <!-- Search functionality -->
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+</body>
+</html>

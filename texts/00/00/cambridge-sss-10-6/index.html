@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <link rel="icon" type="image/webp" href="../../../../favicon.webp">
+    <link rel="stylesheet" href="../../../../style.css">
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" class="search-bar" id="searchInput" placeholder="Search languages..." autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+    
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../../../" class="header-logo"><img src="../../../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../../../" class="sidebar-logo">
+                <img src="../../../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+                <h3>Navigate</h3>
+                <ul>
+                    <li><a href="../../../../">Home</a></li>
+                    <li><a href="../../../../texts-index.html">All Texts</a></li>
+                    <li><a href="../../../../languages/">Languages</a></li>
+                    <li><a href="../../../../works/">Works Index</a></li>
+                    <li><a href="../../../../authors/">Authors</a></li>
+                    <li><a href="../../../../sources/">Sources</a></li>
+                    <li><a href="../../../../provenances/">Provenances</a></li>
+                    <li><a href="../../../../collections/">Collections</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="main-content">
+        <h1 id="page-title">Loading...</h1>
+        
+        <p class="language-status" id="language-status"></p>
+        
+<div class="metadata" id="metadata"></div>
+
+                        <!-- Page Image Viewer (populated by JS if images exist) -->
+        <div class="page-viewer" id="page-viewer" style="display: none;">
+            <div class="page-viewer-header">
+                <h3 id="pv-title">Page Viewer</h3>
+                <div class="page-viewer-controls">
+                    <button class="pv-view-toggle" id="pv-dual-toggle" title="Toggle dual-page view">Dual</button>
+                    <button class="pv-view-toggle" id="pv-fullscreen-toggle" title="Toggle fullscreen">Fullscreen</button>
+                    <button class="page-viewer-btn" id="pv-prev" disabled>◀ Prev</button>
+                    <span class="page-viewer-count" id="pv-count">1 / 1</span>
+                    <button class="page-viewer-btn" id="pv-next">Next ▶</button>
+                </div>
+            </div>
+            <div class="page-viewer-main" id="pv-main">
+                <div class="page-viewer-spread" id="pv-spread">
+                    <div class="page-viewer-image-container" id="pv-container-1">
+                        <img class="page-viewer-image" id="pv-image" src="" alt="Page image">
+                    </div>
+                    <div class="page-viewer-image-container" id="pv-container-2" style="display: none;">
+                        <img class="page-viewer-image" id="pv-image-2" src="" alt="Page image">
+                    </div>
+                </div>
+                <div class="page-viewer-zoom-controls">
+                    <button class="page-viewer-zoom-btn" id="pv-zoom-out" title="Zoom out">−</button>
+                    <span class="page-viewer-zoom-level" id="pv-zoom-level">100%</span>
+                    <button class="page-viewer-zoom-btn" id="pv-zoom-in" title="Zoom in">+</button>
+                    <button class="page-viewer-zoom-reset" id="pv-zoom-reset">Reset</button>
+                </div>
+            </div>
+            <div class="page-viewer-thumbnails" id="pv-thumbnails"></div>
+        </div>
+
+        <section>
+            <h2>Transcription</h2>
+            <div class="text-body" id="text-body"></div>
+        </section>
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    
+</div>
+
+    <script src="../../../../search-index.js"></script>
+    <script src="../../../../search.js"></script>
+    <script src="../../../../text-reader.js"></script>
+    <script src="../../../../page-viewer.js"></script>
+    <script>
+    // Lookup language info from search index by Glottolog ID
+    function lookupLanguage(langId) {
+        const entry = LANGUAGE_INDEX.find(e => e.id === langId && e.level !== 'text' && e.level !== 'work');
+        if (entry) {
+            return {
+                id: entry.id,
+                name: entry.name.replace(/^† /, ''), // Remove extinct marker
+                path: 'languages/' + entry.url
+            };
+        }
+        return { id: langId, name: langId, path: null };
+    }
+    
+    // Format language(s) for display - supports single string, array of strings, or object/array of objects
+    function formatLanguages(langData) {
+        // Normalize to array
+        const langs = Array.isArray(langData) ? langData : [langData];
+        
+        const langInfos = langs.map(lang => {
+            if (typeof lang === 'string') {
+                return lookupLanguage(lang);
+            } else {
+                // Object format - fill in missing info from lookup
+                const lookup = lookupLanguage(lang.id);
+                return {
+                    id: lang.id,
+                    name: lang.name || lookup.name,
+                    path: lang.path || lookup.path
+                };
+            }
+        });
+        
+        // Build display HTML
+        const links = langInfos.map(lang => {
+            const link = lang.path ? 
+                `<a href="../../../../${lang.path}"><strong>${lang.name}</strong></a>` :
+                `<strong>${lang.name}</strong>`;
+            return link;
+        });
+        
+        // Join with "and" for multiple
+        let html;
+        if (links.length === 1) {
+            html = links[0];
+        } else if (links.length === 2) {
+            html = links[0] + ' and ' + links[1];
+        } else {
+            html = links.slice(0, -1).join(', ') + ', and ' + links[links.length - 1];
+        }
+        return { html: html, ids: langInfos.map(l => l.id), names: langInfos.map(l => l.name) };
+    }
+    
+    // Build hierarchical works list for metadata - TABLE OF CONTENTS style
+    function buildWorksHtml(works, indent = 0) {
+        if (!works || works.length === 0) return '';
+        
+        const items = works.map(work => {
+            const elemId = work.elementId || work.id;
+            let linkHtml;
+            // Page-only works: link jumps to page viewer
+            if (work.viewerPage !== undefined && !work.content) {
+                linkHtml = `<a href="javascript:void(0)" data-viewer-page="${work.viewerPage}" class="viewer-page-link">${work.title}</a>`;
+            } else {
+                linkHtml = `<a href="#${elemId}">${work.title}</a>`;
+            }
+            
+            // Page number display - use firstPage or viewerPage as fallback
+            const pageLabel = work.firstPage || (work.viewerPage !== undefined ? work.viewerPage : '');
+            const pageHtml = `<span class="toc-page">${pageLabel}</span>`;
+            
+            // Build this item - page number fixed left, link indented
+            let itemHtml = `<div class="toc-item">${pageHtml}<span class="toc-title" style="padding-left: ${indent * 30 + 12}px">${linkHtml}</span></div>`;
+            
+            // Recursively add children (unified subworks + chapters, preserves order)
+            if (work.children && work.children.length > 0) {
+                itemHtml += buildWorksHtml(work.children, indent + 1);
+            }
+            // Backward compatibility: also check old separate arrays
+            if (work.subworks && work.subworks.length > 0) {
+                itemHtml += buildWorksHtml(work.subworks, indent + 1);
+            }
+            if (work.chapters && work.chapters.length > 0) {
+                itemHtml += buildWorksHtml(work.chapters, indent + 1);
+            }
+            return itemHtml;
+        });
+        return items.join('');
+    }
+    
+    // Collect all top-level works from all pages, merging subworks and tracking first page
+    function collectTopLevelWorks(pages) {
+        const workMap = new Map(); // id -> merged work object
+        
+        function mergeSubworks(existing, incoming) {
+            if (!incoming || incoming.length === 0) return existing || [];
+            if (!existing || existing.length === 0) return incoming;
+            
+            const subMap = new Map();
+            // Add existing subworks - key by work_id (NOT override)
+            existing.forEach(sw => subMap.set(sw.id, {...sw}));
+            // Merge incoming subworks
+            incoming.forEach(sw => {
+                if (subMap.has(sw.id)) {
+                    const existingSw = subMap.get(sw.id);
+                    existingSw.subworks = mergeSubworks(existingSw.subworks, sw.subworks);
+                    // Keep earliest firstPage
+                } else {
+                    subMap.set(sw.id, {...sw});
+                }
+            });
+            return Array.from(subMap.values());
+        }
+        
+        pages.forEach(page => {
+            if (!page.works) return; // Skip pages with only images
+            const pageLabel = page.label || page.id;
+            page.works.forEach(work => {
+                // Add firstPage to this work occurrence
+                const workWithPage = {...work, firstPage: pageLabel};
+                
+                // Also add firstPage to all subworks in this occurrence
+                function addPageToChildren(w, label) {
+                    if (w.children) { w.children = w.children.map(ch => { const chWithPage = {...ch, firstPage: ch.firstPage || label}; addPageToChildren(chWithPage, label); return chWithPage; }); } if (w.subworks) {
+                        w.subworks = w.subworks.map(sw => {
+                            const swWithPage = {...sw, firstPage: sw.firstPage || label};
+                            addPageToChildren(swWithPage, label);
+                            return swWithPage;
+                        });
+                    }
+                }
+                addPageToChildren(workWithPage, pageLabel);
+                
+                if (workMap.has(work.id)) {
+                    // Merge subworks from this occurrence
+                    const existing = workMap.get(work.id);
+                    existing.subworks = mergeSubworks(existing.subworks, workWithPage.subworks);
+                    existing.children = mergeSubworks(existing.children, workWithPage.children);
+                    // Keep earliest firstPage
+                } else {
+                    // Deep clone to avoid mutating original
+                    workMap.set(work.id, JSON.parse(JSON.stringify(workWithPage)));
+                }
+            });
+        });
+        return Array.from(workMap.values());
+    }
+    
+    // Load and render text from data.json
+    fetch('data.json')
+        .then(r => r.json())
+        .then(data => {
+            // Update page title
+            document.title = data.title;
+            document.getElementById('page-title').textContent = data.title;
+            document.getElementById('pv-title').textContent = data.title;
+            
+            // Language(s) - support string, array of strings, object, or array of objects
+            const langResult = formatLanguages(data.language);
+            document.getElementById('language-status').innerHTML = `Text in ${langResult.html}`;
+            
+            // Set data attributes on html for other scripts
+            document.documentElement.dataset.languageId = langResult.ids.join(',');
+            document.documentElement.dataset.languageName = langResult.names.join(', ');
+            document.documentElement.dataset.textId = data.id;
+            
+            // Build hierarchical works list
+            const topWorks = collectTopLevelWorks(data.pages);
+            const worksHtml = buildWorksHtml(topWorks);
+            
+            // Metadata
+            let metaHtml = '';
+            const titleDisplay = data.titleTranslation ? 
+                `${data.title} <em>(${data.titleTranslation})</em>` : data.title;
+            metaHtml += `<p><strong>Title:</strong> ${titleDisplay}</p>`;
+            // Author(s) - look up from author.json
+            // Slugify author name to match directory structure
+            const slugifyAuthor = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+            if (data.author) {
+                const authors = Array.isArray(data.author) ? data.author : [data.author];
+                Promise.all(authors.map(authorRaw => {
+                    const authorSlug = slugifyAuthor(authorRaw);
+                    return fetch(`../../../../authors/${authorSlug}/author.json`)
+                        .then(r => r.ok ? r.json() : null)
+                        .then(authorData => ({
+                            id: authorSlug,
+                            name: authorData ? authorData.name : authorRaw
+                        }))
+                        .catch(() => ({ id: authorSlug, name: authorRaw }));
+                })).then(authorInfos => {
+                    const authorLinks = authorInfos.map(a => 
+                        `<a href="../../../../authors/${a.id}/index.html">${a.name}</a>`
+                    ).join(', ');
+                    const label = authorInfos.length > 1 ? 'Authors' : 'Author';
+                    const authorP = document.createElement('p');
+                    authorP.innerHTML = `<strong>${label}:</strong> ${authorLinks}`;
+                    const metaDiv = document.getElementById('metadata');
+                    const titleP = metaDiv.querySelector('p');
+                    if (titleP) titleP.after(authorP);
+                });
+            }
+            if (data.country) {
+                const flags = countriesToFlags(data.country);
+                metaHtml += `<p><strong>Country:</strong> ${flags}</p>`;
+            }
+            // Sources - look up from source.json for proper names
+            const sourceList = data.sources || (data.source ? [data.source] : []);
+            if (sourceList.length > 0) {
+                Promise.all(sourceList.map(srcId => {
+                    const sourceSlug = srcId.toLowerCase()
+                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-+|-+$/g, '')
+                        .substring(0, 50);
+                    return fetch(`../../../../sources/${sourceSlug}/source.json`)
+                        .then(r => r.ok ? r.json() : null)
+                        .then(srcData => ({
+                            id: sourceSlug,
+                            name: srcData ? srcData.name : srcId
+                        }))
+                        .catch(() => ({ id: sourceSlug, name: srcId }));
+                })).then(sourceInfos => {
+                    const sourceLinks = sourceInfos.map(s => 
+                        `<a href="../../../../sources/${s.id}/index.html">${s.name}</a>`
+                    ).join(', ');
+                    const srcLabel = sourceInfos.length > 1 ? 'Sources' : 'Source';
+                    const srcP = document.createElement('p');
+                    srcP.innerHTML = `<strong>${srcLabel}:</strong> ${sourceLinks}`;
+                    srcP.id = 'meta-sources';
+                    const metaDiv = document.getElementById('metadata');
+                    const countryP = metaDiv.querySelector('p:has(.country-flag)') || metaDiv.querySelector('p:nth-child(2)');
+                    if (countryP) countryP.after(srcP);
+                    else metaDiv.appendChild(srcP);
+                });
+            }
+            // Provenances - look up from provenance.json for proper names
+            const provList = data.provenances || (data.provenance ? [data.provenance] : []);
+            if (provList.length > 0) {
+                Promise.all(provList.map(provId => {
+                    const provSlug = provId.toLowerCase()
+                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-+|-+$/g, '')
+                        .substring(0, 50);
+                    return fetch(`../../../../provenances/${provSlug}/provenance.json`)
+                        .then(r => r.ok ? r.json() : null)
+                        .then(provData => ({
+                            id: provSlug,
+                            name: provData ? provData.name : provId
+                        }))
+                        .catch(() => ({ id: provSlug, name: provId }));
+                })).then(provInfos => {
+                    const provLinks = provInfos.map(p => 
+                        `<a href="../../../../provenances/${p.id}/index.html">${p.name}</a>`
+                    ).join(', ');
+                    const provLabel = provInfos.length > 1 ? 'Provenances' : 'Provenance';
+                    const provP = document.createElement('p');
+                    provP.innerHTML = `<strong>${provLabel}:</strong> ${provLinks}`;
+                    provP.id = 'meta-provenances';
+                    const metaDiv = document.getElementById('metadata');
+                    const srcP = document.getElementById('meta-sources') || metaDiv.querySelector('p:has(.country-flag)') || metaDiv.querySelector('p:nth-child(2)');
+                    if (srcP) srcP.after(provP);
+                    else metaDiv.appendChild(provP);
+                });
+            }
+            // Collections - look up from collection.json for proper names
+            const collList = data.collections || (data.collection ? [data.collection] : []);
+            if (collList.length > 0) {
+                Promise.all(collList.map(collId => {
+                    const collSlug = collId.toLowerCase()
+                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-+|-+$/g, '')
+                        .substring(0, 50);
+                    return fetch(`../../../../collections/${collSlug}/collection.json`)
+                        .then(r => r.ok ? r.json() : null)
+                        .then(collData => ({
+                            id: collSlug,
+                            name: collData ? collData.name : collId
+                        }))
+                        .catch(() => ({ id: collSlug, name: collId }));
+                })).then(collInfos => {
+                    const collLinks = collInfos.map(c => 
+                        `<a href="../../../../collections/${c.id}/index.html">${c.name}</a>`
+                    ).join(', ');
+                    const collLabel = collInfos.length > 1 ? 'Collections' : 'Collection';
+                    const collP = document.createElement('p');
+                    collP.innerHTML = `<strong>${collLabel}:</strong> ${collLinks}`;
+                    collP.id = 'meta-collections';
+                    const metaDiv = document.getElementById('metadata');
+                    const provP = document.getElementById('meta-provenances') || document.getElementById('meta-sources') || metaDiv.querySelector('p:has(.country-flag)') || metaDiv.querySelector('p:nth-child(2)');
+                    if (provP) provP.after(collP);
+                    else metaDiv.appendChild(collP);
+                });
+            }
+            if (data.date) metaHtml += `<p><strong>Date:</strong> ${data.date}</p>`;
+            metaHtml += `<p><strong>Text ID:</strong> <code>${data.id}</code></p>`;
+            
+            // Glottolog links for all languages
+            const glottoLinks = langResult.ids.map(id => 
+                `<a href="https://glottolog.org/resource/languoid/id/${id}">${id}</a>`
+            ).join(', ');
+            metaHtml += `<p><strong>Glottolog:</strong> ${glottoLinks}</p>`;
+            
+            // Works (hierarchical)
+            if (worksHtml) {
+                metaHtml += `<div class="works-toc collapsed">
+                    <div class="works-toc-header" onclick="this.parentElement.classList.toggle('collapsed')">
+                        <span class="works-toc-toggle">▼</span> Contents
+                    </div>
+                    <div class="works-toc-content">${worksHtml}</div>
+                </div>`;
+            }
+            document.getElementById('metadata').innerHTML = metaHtml;
+            
+            // Add click handlers for viewer page links
+            document.querySelectorAll('.viewer-page-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-viewer-page');
+                    if (window.goToViewerPageByLabel) {
+                        window.goToViewerPageByLabel(page);
+                    }
+                });
+            });
+            
+            // Helper to render works recursively (for nested subworks)
+            function renderWork(work, parentTitle, parentId) {
+                let html = '';
+                const elemId = work.elementId || work.id;
+                // workPage determines which work page to link to (can be overridden)
+                const workPage = work.override || work.id;
+                
+                // Render this work if it has content OR music (both go in same gold box)
+                if (work.content || work.music) {
+                    const superworkAttr = parentTitle ? ` data-superwork-title="${parentTitle}" data-superwork-id="${parentId}"` : '';
+                    // Add data-language if the work specifies a language
+                    const langAttr = work.language ? ` data-language="${work.language}"` : '';
+                    // Add data-viewer-page if work specifies which page it starts on
+                    const viewerPageAttr = work.viewerPage !== undefined ? ` data-viewer-page="${work.viewerPage}"` : '';
+                    html += `<div class="text-work" id="${elemId}" data-work-id="${work.id}" data-work-page="${workPage}" data-work-title="${work.title}"${superworkAttr}${langAttr}${viewerPageAttr}>`;
+                    
+                    // Render sheet music inside the work if present
+                    if (work.music) {
+                        const musicId = elemId + '-music';
+                        html += `<div class="work-music" id="${musicId}" data-music-file="${work.music}">`;
+                        html += '<div class="music-loading">Loading sheet music...</div>';
+                        html += '</div>';
+                    }
+                    
+                    // Render text content if present
+                    if (work.content) {
+                        html += work.content;
+                    }
+                    
+                    html += '</div>';
+                } else if (work.viewerPage !== undefined) {
+                    // Page-only work - just add anchor span, Works: link jumps to viewer
+                    html += `<span id="${elemId}"></span>`;
+                } else if (work.subworks || work.children) {
+                    // Container work - add anchor span so links can target it
+                    html += `<span id="${elemId}"></span>`;
+                }
+                // Render subworks/children - pass this work's title and id as the parent
+                const childWorks = work.subworks || work.children;
+                if (childWorks) {
+                    const nextParentTitle = parentTitle || work.title;
+                    const nextParentId = parentId || work.id;
+                    childWorks.forEach(subwork => {
+                        html += renderWork(subwork, nextParentTitle, nextParentId);
+                    });
+                }
+                return html;
+            }
+            
+            // Render pages and works (skip if pages only have images, no works)
+            let bodyHtml = '';
+            data.pages.forEach((page, i) => {
+                if (page.works) {
+                    bodyHtml += `<div class="text-page" id="${page.id || 'page-' + i}" data-page-label="${page.label || i}">`;
+                    page.works.forEach(work => {
+                        bodyHtml += renderWork(work, null, null);
+                    });
+                    bodyHtml += '</div>';
+                }
+            });
+            document.getElementById('text-body').innerHTML = bodyHtml;
+
+            // Initialize page viewer if images exist
+            initPageViewer(data.pages);
+            
+            // Build work-to-page mapping for viewer navigation
+            window.workPageMap = {};
+            function buildWorkPageMap(works) {
+                if (!works) return;
+                works.forEach(work => {
+                    if (work.viewerPage !== undefined) {
+                        const elemId = work.elementId || work.id;
+                        window.workPageMap[elemId] = work.viewerPage;
+                    }
+                    if (work.subworks) buildWorkPageMap(work.subworks);
+                    if (work.children) buildWorkPageMap(work.children);
+                });
+            }
+            data.pages.forEach(page => {
+                if (page.works) buildWorkPageMap(page.works);
+            });
+            
+            // Jump to page viewer when clicking work or navigating via hash
+            function jumpToWorkPage(hash) {
+                if (!hash) return;
+                const id = hash.replace('#', '');
+                const pageLabel = window.workPageMap[id];
+                if (pageLabel !== undefined && window.goToViewerPageByLabel) {
+                    window.goToViewerPageByLabel(pageLabel);
+                }
+            }
+            
+            // Handle hash on load and hashchange
+            if (window.location.hash) {
+                setTimeout(() => jumpToWorkPage(window.location.hash), 500);
+            }
+            window.addEventListener('hashchange', () => {
+                jumpToWorkPage(window.location.hash);
+            });
+            
+            // Scroll to hash anchor after content is rendered
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    target.scrollIntoView();
+                }
+            }
+            
+        })
+        .catch(err => {
+            console.error('Failed to load data.json:', err);
+            document.getElementById('page-title').textContent = 'Error loading text';
+        });
+
+    </script>
+</body>
+</html>

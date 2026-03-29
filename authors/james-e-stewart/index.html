@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>James E. Stewart</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+    
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
+    <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../">Home</a></li>
+                <li><a href="../../texts-index.html">All Texts</a></li>
+                <li><a href="../../languages/">Languages</a></li>
+                <li><a href="../../works/">Works Index</a></li>
+                <li><a href="../../authors/">Authors</a></li>
+                <li><a href="../../sources/">Sources</a></li>
+                <li><a href="../../provenances/">Provenances</a></li>
+                <li><a href="../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
+        <h1>James E. Stewart</h1>
+
+        <div class="metadata">
+            <p><strong>Author ID:</strong> <code>james-e-stewart</code></p>
+            <p><strong>Associated with:</strong> <a href="../j-l-peters/index.html">J. L. Peters</a> and <a href="../frank-dumont/index.html">Frank Dumont</a></p>
+            <p><strong>Works:</strong> 1</p>
+        </div>
+
+        <section class="children-section">
+            <h2>Works</h2>
+            <div class="sort-controls" id="works-sort-controls">
+                <span>Sort by:</span>
+                <button class="sort-btn active" data-sort="alpha" data-target="works-list">A-Z</button>
+                <button class="sort-btn" data-sort="date" data-target="works-list">Date</button>
+                <button class="sort-btn" data-sort="lang" data-target="works-list">Language</button>
+            </div>
+            <ul class="children-list sortable-list" id="works-list">
+                <li class="child-language" data-title="Angel Gabriel" data-date="1875" data-langs="English|Earlier African American Vernacular English|African American Vernacular English" data-lang-paths="{&quot;English&quot;: &quot;languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/north-sea-germanic/anglo-frisian/anglic/later-anglic/middle-modern-english/macro-english/english/index.html&quot;, &quot;Earlier African American Vernacular English&quot;: &quot;languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/north-sea-germanic/anglo-frisian/anglic/later-anglic/middle-modern-english/macro-english/english/north-american-english/southeast-american-english/southern-american-english/african-american-vernacular-english/earlier-african-american-vernacular-english/index.html&quot;, &quot;African American Vernacular English&quot;: &quot;languages/indo-european/classical-indo-european/germanic/northwest-germanic/west-germanic/north-sea-germanic/anglo-frisian/anglic/later-anglic/middle-modern-english/macro-english/english/north-american-english/southeast-american-english/southern-american-english/african-american-vernacular-english/index.html&quot;}">
+                    <a href="../../works/angel-gabriel/index.html">Angel Gabriel</a> (1875)
+                </li>
+            </ul>
+        </section>
+
+</div>
+        <aside class="left-sidebar"></aside>
+    </div>
+</div>
+
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+    <script>
+    // Sort functionality for both texts and works lists
+    var originalHTMLMap = {};
+    var flatItemsMap = {};
+    
+    document.querySelectorAll('.sort-controls').forEach(function(controls) {
+        var targetId = controls.querySelector('.sort-btn').dataset.target;
+        var list = targetId ? document.getElementById(targetId) : controls.parentElement.querySelector('.sortable-list');
+        if (!list) return;
+        
+        controls.querySelectorAll('.sort-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // Update active state only within this control group
+                controls.querySelectorAll('.sort-btn').forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                
+                var sortBy = btn.dataset.sort;
+                var listId = list.id || 'default';
+                
+                // Store original HTML (with hierarchy) on first interaction
+                if (!originalHTMLMap[listId]) {
+                    originalHTMLMap[listId] = list.innerHTML;
+                    // Also store flat list of items for non-alpha sorting
+                    flatItemsMap[listId] = Array.from(list.querySelectorAll('li.child-language')).map(function(li) {
+                        return li.cloneNode(true);
+                    });
+                }
+                
+                // For alpha sort, restore original hierarchical HTML
+                if (sortBy === 'alpha') {
+                    list.innerHTML = originalHTMLMap[listId];
+                    return;
+                }
+                
+                var originalItems = flatItemsMap[listId];
+                list.innerHTML = '';
+                
+                if (sortBy === 'lang') {
+                    // Group by language with hierarchy support
+                    var langPaths = {};
+                    var itemLangs = [];
+                    
+                    // First pass: collect all language paths and item associations
+                    originalItems.forEach(function(item, idx) {
+                        var langs = (item.dataset.langs || 'Unknown').split('|');
+                        var paths = {};
+                        try { paths = JSON.parse(item.dataset.langPaths || '{}'); } catch(e) {}
+                        
+                        itemLangs[idx] = [];
+                        langs.forEach(function(lang) {
+                            if (!lang) lang = 'Unknown';
+                            var path = paths[lang] || '';
+                            itemLangs[idx].push({ name: lang, path: path });
+                            if (!langPaths[lang]) langPaths[lang] = path;
+                        });
+                    });
+                    
+                    // For each item, find the most specific language
+                    var itemBestLang = [];
+                    originalItems.forEach(function(item, idx) {
+                        var langs = itemLangs[idx];
+                        if (langs.length === 1) {
+                            itemBestLang[idx] = langs[0];
+                        } else {
+                            var best = langs[0];
+                            for (var i = 0; i < langs.length; i++) {
+                                var isChild = false;
+                                for (var j = 0; j < langs.length; j++) {
+                                    if (i !== j && langs[i].path && langs[j].path) {
+                                        if (langs[i].path.indexOf(langs[j].path) === 0 && langs[i].path.length > langs[j].path.length) {
+                                            isChild = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (isChild) {
+                                    best = langs[i];
+                                    break;
+                                }
+                            }
+                            if (best === langs[0]) {
+                                langs.forEach(function(l) {
+                                    if (l.path.length > best.path.length) best = l;
+                                });
+                            }
+                            itemBestLang[idx] = best;
+                        }
+                    });
+                    
+                    // Build hierarchy: find parent languages for each language
+                    var langParent = {};
+                    var allLangs = Object.keys(langPaths);
+                    allLangs.forEach(function(lang) {
+                        var path = langPaths[lang];
+                        if (!path) return;
+                        // Get directory path (strip /index.html)
+                        var dir = path.replace(/\/index\.html$/, '') + '/';
+                        allLangs.forEach(function(other) {
+                            if (lang === other) return;
+                            var otherPath = langPaths[other];
+                            if (!otherPath) return;
+                            // Get other directory path
+                            var otherDir = otherPath.replace(/\/index\.html$/, '') + '/';
+                            // Check if this lang's dir starts with other's dir (meaning other is ancestor)
+                            if (dir.indexOf(otherDir) === 0 && dir.length > otherDir.length) {
+                                // Keep the closest parent (longest path)
+                                if (!langParent[lang] || langPaths[langParent[lang]].length < otherPath.length) {
+                                    langParent[lang] = other;
+                                }
+                            }
+                        });
+                    });
+                    
+                    // Group items by their best language
+                    var groups = {};
+                    originalItems.forEach(function(item, idx) {
+                        var lang = itemBestLang[idx].name;
+                        if (!groups[lang]) groups[lang] = [];
+                        groups[lang].push(item.cloneNode(true));
+                    });
+                    
+                    // Find top-level languages and build child map
+                    var childLangs = {};
+                    var topLangs = [];
+                    Object.keys(groups).forEach(function(lang) {
+                        var parent = langParent[lang];
+                        if (parent && langPaths[parent]) {
+                            if (!childLangs[parent]) childLangs[parent] = [];
+                            childLangs[parent].push(lang);
+                            // Make sure the parent is a top-level lang
+                            if (topLangs.indexOf(parent) === -1) {
+                                topLangs.push(parent);
+                            }
+                        } else {
+                            topLangs.push(lang);
+                        }
+                    });
+                    
+                    topLangs.sort();
+                    
+                    function renderLangGroup(lang, indent) {
+                        var header = document.createElement('li');
+                        header.className = 'lang-group-header' + (indent ? ' lang-subgroup' : '');
+                        if (langPaths[lang]) {
+                            header.innerHTML = '<strong><a href="../../' + langPaths[lang] + '" class="lang-group-link">' + lang + '</a></strong>';
+                        } else {
+                            header.innerHTML = '<strong>' + lang + '</strong>';
+                        }
+                        list.appendChild(header);
+                        
+                        if (childLangs[lang]) {
+                            childLangs[lang].sort().forEach(function(child) {
+                                renderLangGroup(child, true);
+                            });
+                        }
+                        
+                        if (groups[lang]) {
+                            groups[lang].forEach(function(item) {
+                                if (indent) item.classList.add('lang-subitem');
+                                list.appendChild(item);
+                            });
+                        }
+                    }
+                    
+                    topLangs.forEach(function(lang) {
+                        renderLangGroup(lang, false);
+                    });
+                } else if (sortBy === 'date') {
+                    var items = originalItems.map(function(item) { return item.cloneNode(true); });
+                    
+                    items.sort(function(a, b) {
+                        var dateA = parseInt(a.dataset.date) || 9999;
+                        var dateB = parseInt(b.dataset.date) || 9999;
+                        return dateA - dateB;
+                    });
+                    
+                    items.forEach(function(item) { list.appendChild(item); });
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>

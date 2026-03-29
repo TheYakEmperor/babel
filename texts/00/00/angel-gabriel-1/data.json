@@ -1,0 +1,23 @@
+{
+  "id": "LoC 2023822867",
+  "title": "LoC 2023822867",
+  "titleTranslation": "",
+  "author": "j-l-peters",
+  "source": "Library of Congress",
+  "date": "1875",
+  "language": ["stan1293","earl1247"],
+  "pages": [
+    {
+      "id": "page-1",
+      "label": "1",
+      "works": [
+        {
+          "id": "angel-gabriel",
+          "elementId": "angel-gabriel-1",
+          "title": "Angel Gabriel",
+          "content": ""
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "0000000000000001",
+  "title": "ISBN 1 85902 817 9",
+  "author": "gomer-press",
+  "sources": [
+    "llyfrgell-coleg-meirion-dwyfor"
+  ],
+  "provenances": [
+    "llandysul-ceredigion"
+  ],
+  "date": "1999",
+  "country": "GB",
+  "language": "wels1247",
+  "pages": [
+    {
+      "works": [
+        {
+          "id": "cerddir-troad",
+          "title": "Cerddi'r Troad — Barddoniaeth Newydd i'r Mileniwm",
+          "viewerPage": "#1",
+          "subworks": [
+            {
+              "id": "meini-wrth-y-neraig",
+              "title": "Meini Wrth Y Neraig",
+              "viewerPage": "1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

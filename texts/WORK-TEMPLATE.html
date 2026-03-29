@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORK_TITLE — Work Archive</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" class="search-bar" id="searchInput" placeholder="Search languages..." autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+    
+    <div class="container">
+        <nav class="breadcrumb-tree">
+            <a href="../index.html">Encyclopedia</a> ›
+            <a href="../texts-index.html">Text Archive</a> ›
+            <span>WORK_TITLE</span>
+        </nav>
+
+        <!-- ================================================================
+             FILL IN THE BLANKS
+             
+             1. Replace WORK_TITLE with the work's title
+             2. Replace WORK_ID with a URL-safe identifier (lowercase, hyphens)
+             3. Fill in author, date, language info as applicable
+             4. Add links to texts containing this work in the Texts section
+             ================================================================ -->
+
+        <h1>WORK_TITLE</h1>
+        
+        <p class="language-status">Work</p>
+        
+        <div class="metadata">
+            <p><strong>Title:</strong> WORK_TITLE <em>(ENGLISH_TRANSLATION)</em></p>
+            <p><strong>Author:</strong> AUTHOR_NAME</p>
+            <p><strong>Language:</strong> <a href="../languages/LANGUAGE_PATH/index.html">LANGUAGE_NAME</a></p>
+            <p><strong>Date:</strong> DATE_INFO</p>
+            <p><strong>Work ID:</strong> <code>WORK_ID</code></p>
+        </div>
+
+        <!-- ================================================================
+             DESCRIPTION - Optional background info about the work
+             ================================================================ -->
+
+        <section>
+            <h2>About</h2>
+            <p>DESCRIPTION_OF_WORK</p>
+        </section>
+
+        <!-- ================================================================
+             TEXTS - Link to all texts containing this work
+             Add one list item per text, linking to the specific work anchor
+             ================================================================ -->
+
+        <section class="children-section">
+            <h2>Texts</h2>
+            <p>This work appears in the following text archive entries:</p>
+            <ul class="children-list">
+                <li class="child-language">
+                    <a href="00/00/TEXT_ID/index.html#WORK_ELEMENT_ID">TEXT_TITLE</a> — BRIEF_DESCRIPTION
+                </li>
+                <!-- Add more texts as needed:
+                <li class="child-language">
+                    <a href="00/00/ANOTHER_TEXT_ID/index.html#WORK_ELEMENT_ID">ANOTHER_TEXT_TITLE</a> — DESCRIPTION
+                </li>
+                -->
+            </ul>
+        </section>
+    </div>
+
+    <script src="../search-index.js"></script>
+    <script src="../search.js"></script>
+</body>
+</html>

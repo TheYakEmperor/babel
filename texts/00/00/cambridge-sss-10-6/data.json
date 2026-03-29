@@ -1,0 +1,118 @@
+{
+  "id": "SSS.10.6",
+  "title": "Cambridge University Library SSS.10.6",
+  "author": [
+    "isaac-jaggard",
+    "william-jaggard",
+    "edward-blount"
+  ],
+  "sources": [
+    "Cambridge University Library"
+  ],
+  "date": "1623",
+  "country": "GB",
+  "language": "stan1293",
+  "pages": [
+    {
+      "works": [
+        {
+          "id": "first-folio",
+          "title": "Mr. VVILLIAM / SHAKESPEARES / COMEDIES, / HISTORIES, & / TRAGEDIES.",
+          "viewerPage": 10,
+          "subworks": [
+            {
+              "id": "the-tempest",
+              "title": "THE / TEMPEST.",
+              "viewerPage": 27
+            },
+            {
+              "id": "two-gentlemen-of-verona",
+              "title": "THE / Two Gentlemen of Verona.",
+              "viewerPage": 46
+            },
+            {
+              "id": "merry-wives-of-windsor",
+              "title": "THE / Merry Wiues of Windſor.",
+              "viewerPage": 65
+            },
+            {
+              "id": "measure-for-measure",
+              "title": "MEASVRE, / For Meaſure.",
+              "viewerPage": "087 87"
+            },
+            {
+              "id": "comedy-of-errors",
+              "title": "The Comedie of Errors.",
+              "viewerPage": "111 111"
+            },
+            {
+              "id": "much-ado-about-nothing",
+              "title": "Much adoe about Nothing.",
+              "viewerPage": "127 127"
+            },
+            {
+              "id": "loves-labours-lost",
+              "title": "Loues Labour's loſt.",
+              "viewerPage": "148 148"
+            },
+            {
+              "id": "midsummer-nights-dream",
+              "title": "A / MIDSOMMER / Nights Dreame.",
+              "viewerPage": "171 171"
+            },
+            {
+              "id": "merchant-of-venice",
+              "title": "The Merchant of Venice.",
+              "viewerPage": "189 189"
+            },
+            {
+              "id": "as-you-like-it",
+              "title": "As you Like it.",
+              "viewerPage": "211 211"
+            },
+            {
+              "id": "taming-of-the-shrew",
+              "title": "THE / Taming of the Shrew.",
+              "viewerPage": "234 234"
+            },
+            {
+              "id": "alls-well-that-ends-well",
+              "title": "ALL'S / Well, that Ends Well.",
+              "viewerPage": "256 256"
+            },
+            {
+              "id": "twelfth-night",
+              "title": "Twelfe Night, Or what you will.",
+              "viewerPage": "281 281"
+            },
+            {
+              "id": "winters-tale",
+              "title": "The Winters Tale.",
+              "viewerPage": "303 303"
+            },
+            {
+              "id": "shakespeare-king-john",
+              "title": "The life and death of King Iohn.",
+              "viewerPage": "331 331"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "781 781",
+      "label": "781 781",
+      "regions": [
+        {
+          "x": 0.1478587962962963,
+          "y": 0.7648745381773399,
+          "width": 0.33333333333333337,
+          "height": 0.09605911330049265,
+          "title": "Soliloquy",
+          "text": "<div style=\"text-align: center;\"><i><font size=\"3\">Enter Hamlet.</font></i></div><div style=\"text-align: left;\"><font size=\"3\"><i>&nbsp; &nbsp; Ham.</i>&nbsp;To be, or not to be, that is the Que<span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">ſ</span>tion:</font></div><div style=\"text-align: left;\"><font size=\"3\">Whether 'tis Nobler in the minde to&nbsp;<span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">ſuffer</span></font></div><div style=\"text-align: left;\"><span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\"><font size=\"3\">The Slings and Arrowes of outragious Fortune,</font></span></div><div style=\"text-align: left;\"><font size=\"3\"><span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">Or to take Armes again</span><span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">ſt a Sea of troubles,</span></font></div><div style=\"text-align: left;\"><font size=\"3\"><span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">And by oppo</span><span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">ſing end them : to dye, to </span><span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">ſleepe</span></font></div><div style=\"text-align: left;\"><font size=\"3\"><span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">No more ; and by a </span><span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">ſleepe, to </span><span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">ſay we end</span></font></div><div style=\"text-align: left;\"><font size=\"3\"><span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">The Heart-ake, and the thou</span><span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">ſand Naturall </span><span style=\"background-color: rgb(254, 254, 254); font-family: Junicode, &quot;EB Garamond&quot;, serif; text-align: center; white-space: pre;\">ſhockes</span></font></div>",
+          "workId": "first-folio"
+        }
+      ]
+    }
+  ]
+}

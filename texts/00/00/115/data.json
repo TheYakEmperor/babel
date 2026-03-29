@@ -1,0 +1,96 @@
+{
+  "id": "115",
+  "title": "Doctrina christiana, y cathecismo en lengua mexicana.",
+  "titleTranslation": "Christian Doctrine and Catechism in the Mexican Language",
+  "author": "Alonso de Molina",
+  "source": "...",
+  "date": "1585",
+  "language": ["stan1288", "lati1261", "clas1250"],
+  "pages": [
+    {
+      "id": "page-14",
+      "label": "14",
+      "works": [
+        {
+          "id": "doctrina-christiana",
+          "title": "Doctrina christiana, y cathecismo en lengua mexicana.",
+          "subworks": [
+            {
+              "id": "thing1288",
+              "elementId": "thing1288-2",
+              "title": "Thing",
+              "content": "<poem>momanahuilizque ynin huicpa, toyaohuan\ntlatlacatecolotl.\n<b>P.</b> Ac yehuatzin ynoncan moyetztica initizin-\nco Santiſſimo Sacramento?\n<b>R.</b> Canocan meyeztica in to Teuiyo Jeſu·Chriſto\nin huelnelli Teotl, yhuan huelnelli oquichtzintli\n[ininn] moyeztica ylhuicac itic. Amen Jeſus.</poem>"
+            },
+            {
+              "id": "persignarse",
+              "elementId": "persignarse",
+              "title": "Per Signum Crucis",
+              "language": ["lati1261", "clas1250"],
+              "content": "<poem style=\"text-align:center\">EL PERSIGNARSE EN LATIN, Y EN\nLengua Mexicana.\n\n<b>P</b><em>ER ſignum Crucis</em>: <em>De inimicis noſtris</em>: <em>Libera nos</em>\n<em>Domine Deus noſter</em>: <em>In nomine Patris, & Filij, &</em>\n<em>Spiritu Sani. Amen.</em>\n<b>Y</b> Caymachio in Cruz: Yninhuicpatoyaohuan-\nmaxitechmomaquixtili to Tecuiyo è Dios:\nY caitocatzin Tetatzin yhuan Ypiltzin, yhuan\nEſpiritu Santo. Mayuhmochihua.</poem>"
+            },
+            {
+              "id": "paternoster",
+              "elementId": "paternoster",
+              "title": "Lord's Prayer",
+              "language": ["lati1261"],
+              "content": "<poem style=\"text-align:center\">EL PATER NOSTER EN LATIN, Y EN\nLengua Mexicana.\n\n<b>P</b><em>ATER noſter, qui eſt in Cælis ſanificetur nomen</em>\n<em>tuum ad veniat Regnum tuum, fiat voluntas tua</em>\n<em>ſicut in Cælo, & in terra</em>: <em>Panem noſtrum quotidianum</em>\n<em>da nobis hodie</em>: <em>& dimitte nobis debita noſtra ſicut,</em>\n<em>& nos dimittmus debitoribus noſtris. Et ne nos inducas</em>\n<em>in tentationem</em>: <em>Sed libera nos â malo.</em></poem>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "page-15",
+      "label": "15",
+      "works": [
+        {
+          "id": "doctrina-christiana",
+          "title": "Doctrina christiana, y cathecismo en lengua mexicana.",
+          "subworks": [
+            {
+              "id": "paternoster",
+              "elementId": "paternoster-2",
+              "title": "Lord's Prayer",
+              "language": ["clas1250"],
+              "content": "<poem style=\"text-align:center\">IZCATQUI CUEPA IN\nPater noſter.\n<b>T</b>Otatzinè, inilhuicac timoyeſtica mayeè-\nnehualo in motocatzin, mahualauh in mo-\ntlatocayotztin machihualo in tlaticpac in motla-\nnequilitzin yuhchihualo in ilhuicac in totlaxcal\nmomoztlae totechmonequi, ma axcan xiteh-\nmomaquili maxitechpopolhuili in totlatlacol\nin inhtiquinpopolhuilia intechtlatlacalhuia ma-\ncamo xitechmomacahuili, inimaco ipan tihuct[-]\nzizque in teneyeyecoltiliztli çayexitechmoma[-]\nquixtili in yhuicpa in amo qualli.\nMayuhmochihua.</poem>"
+            },
+            {
+              "id": "avemaria",
+              "elementId": "avemaria",
+              "title": "Hail Mary",
+              "language": ["lati1261", "clas1250"],
+              "content": "<poem style=\"text-align:center\">EL AVE MARIRA, EN LATIN, Y EN LA\nLengua Mexicana.\n<b>A</b><em>VE MARIA gratia plena, Dominus tecum</em>: <em>Be-</em>\n<em>nedia tu in mulieribus, & Benedius fruus</em>\n<em>Ventris tui JESUS</em>: <em>Sana Maria Virgo Mater</em>\n<em>Dei</em>: <em>Ora pro nobis peccatoribus, nunc & in hora</em>\n<em>mortis noſtræ. Amen</em>\nIZCATQUI INCUEPA IN\nAve Maria.\n<b>M</b>Axicmopaquiltitie Sãta Mariatzinè in tim[]\ntemiltitica inçenquizca yeiliztica graci[]\nmotlantzinco moyetztica in Tlatoani Dios çen\nca tiyeenehualoni intlan in ixquichtin Cihua,\nyhuan çencayeenehualoni in itla aquillo moxi[]\nIlantzin Jeſus: Sta. Mariatzinè, mochipa huelne</poem>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "page-16",
+      "label": "16",
+      "works": [
+        {
+          "id": "doctrina-christiana",
+          "title": "Doctrina christiana, y cathecismo en lengua mexicana.",
+          "subworks": [
+            {
+              "id": "avemaria",
+              "elementId": "avemaria-2",
+              "title": "Hail Mary",
+              "language": ["clas1250"],
+              "content": "<poem style=\"text-align:center\">hpochtle Dios inantzine ma topan ximotlatolti\ntitlatlacoanime in axcan yhuan iniquac yeto-\nmiquilliz tempan. Mayuhmochihua.</poem>"
+            },
+            {
+              "id": "paternoster-3",
+              "override": "paternoster",
+              "elementId": "paternoster-3",
+              "title": "Lord's Prayer",
+              "language": ["lati1261"],
+              "content": "<poem style=\"text-align:center\">EL PATER NOSTER EN LATIN, Y EN\nLengua Mexicana.\n\n<b>P</b><em>ATER noſter, qui eſt in Cælis ſanificetur nomen</em>\n<em>tuum ad veniat Regnum tuum, fiat voluntas tua</em>\n<em>ſicut in Cælo, & in terra</em>: <em>Panem noſtrum quotidianum</em>\n<em>da nobis hodie</em>: <em>& dimitte nobis debita noſtra ſicut,</em>\n<em>& nos dimittmus debitoribus noſtris. Et ne nos inducas</em>\n<em>in tentationem</em>: <em>Sed libera nos â malo.</em></poem>"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

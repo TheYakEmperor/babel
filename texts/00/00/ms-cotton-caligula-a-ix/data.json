@@ -1,0 +1,38 @@
+{
+  "id": "ms-cotton-caligula-a-ix",
+  "title": "Cotton MS Caligula A.ix",
+  "source": "British Museum",
+  "collections": [
+    "cotton-library"
+  ],
+  "date": "1250",
+  "country": "GB",
+  "language": [
+    "midd1317",
+    "angl1258"
+  ],
+  "pages": [
+    {
+      "id": "011 f. 1r",
+      "label": "011 f. 1r",
+      "regions": [
+        {
+          "x": 0.3293167372881356,
+          "y": 0.06783020320197045,
+          "width": 0.35593220338983056,
+          "height": 0.056650246305418706,
+          "title": "",
+          "text": "<div style=\"text-align: center;\">Elenchus contentorum<br><i>in hoc codice.</i></div>"
+        },
+        {
+          "x": 0.17338453389830508,
+          "y": 0.39541641009852213,
+          "width": 0.5186440677966103,
+          "height": 0.019704433497536984,
+          "title": "",
+          "text": "<b>5</b> <i>De die</i> etc."
+        }
+      ]
+    }
+  ]
+}

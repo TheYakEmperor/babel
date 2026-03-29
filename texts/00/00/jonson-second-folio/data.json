@@ -1,0 +1,25 @@
+{
+  "id": "jonson-second-folio",
+  "title": "The Workes of Benjamin Jonson (2nd folio)",
+  "author": "richard-meighen",
+  "provenances": [
+    "london"
+  ],
+  "date": "1640",
+  "country": "GB",
+  "language": [
+    "stan1293",
+    "lati1261"
+  ],
+  "pages": [
+    {
+      "works": [
+        {
+          "id": "jonson-second-folio",
+          "title": "The VVorkes of Benjamin Jonson. The ſecond Volume.",
+          "viewerPage": "0005"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "2-SIZE M1978.A5 D524x",
+  "title": "2-SIZE M1978.A5 D524x",
+  "titleTranslation": "",
+  "author": "j-w-dick-co",
+  "source": "John Hay Library: Sheet Music Collection",
+  "date": "1897",
+  "language": ["stan1293","earl1247"],
+  "pages": [
+    {
+      "id": "page-1",
+      "label": "1",
+      "works": [
+        {
+          "id": "nigger-moon",
+          "elementId": "nigger-moon-1",
+          "title": "There's a nigger in the moon",
+          "content": "<poem style=\"text-align:center\"><small>THE LATEST COON SPASM!\nAS SUNG NIGHTLY WITH\nGREAT SUCCESS BY\nGENARO & BAILEY IN RAY'S\n''A HOT OLD TIME''</small>\n<big><big><big><big><big><big><strong>THERE'S A\nNIGGER IN\nTHE MOON</strong></big></big></big></big></big></big>\n</poem><poem style=\"text-align:right\"><big>By</big>  \n<big><big><strong>J.W. Dick</strong></big></big>\n</poem><poem style=\"text-align:left\"><small>AUTHOR AND COMPOSER OF·····</small>\n</poem><poem style=\"text-align:right\">''THE OLD ORCHARD SWING''\n''DELLA'' <small>ETC. ETC.</small>\n</poem><poem style=\"text-align:left\">PUBLISHED BY\n</poem><poem style=\"text-align:center\"><big><strong>J.W. DICK CO.</strong></big>\n379 MAIN ST.\n<big><strong>WORCESTER, MASS.</strong></big>\n</poem><poem style=\"text-align:right\"><small><small>Copyright 1897 by J.W. Dick.</small></small></poem>"
+        }
+      ]
+    },
+    {
+      "id": "page-2",
+      "label": "2",
+      "works": [
+        {
+          "id": "nigger-moon",
+          "elementId": "nigger-moon-2",
+          "override": "nigger-moon",
+          "title": "There's a nigger in the moon",
+          "music": "score.musicxml"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Languages of Peru — Babel</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search languages, families, texts..." id="search-input">
+        <div class="search-results" id="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+                <h3>Navigate</h3>
+                <ul>
+                    <li><a href="../../">Home</a></li>
+                    <li><a href="../../texts-index.html">All Texts</a></li>
+                    <li><a href="../../languages/">Languages</a></li>
+                    <li><a href="../../works/">Works Index</a></li>
+                    <li><a href="../../authors/">Authors</a></li>
+                    <li><a href="../../sources/">Sources</a></li>
+                    <li><a href="../../provenances/">Provenances</a></li>
+                    <li><a href="../../collections/">Collections</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-header">
+            <img src="https://flagcdn.com/w160/pe.png" 
+                 alt="Peru flag" 
+                 class="country-flag-large">
+            <h1>Languages of Peru</h1>
+        </div>
+        
+        <div class="metadata">
+            <p><strong>Languages:</strong> 136</p>
+            <p><strong>Language Families:</strong> 31</p>
+        </div>
+
+        <div class="locality-section">
+            <h3>Location</h3>
+            <div id="country-map-pe" class="country-map"></div>
+        </div>
+        <script>
+            (function() {
+                var map = L.map('country-map-pe').setView([-9.189967, -75.015152], 4);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap',
+                    maxZoom: 19,
+                    minZoom: 2
+                }).addTo(map);
+                L.circleMarker([-9.189967, -75.015152], {
+                    radius: 8,
+                    fillColor: '#B85A4F',
+                    color: '#8B4530',
+                    weight: 2.5,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(map).bindPopup('<b>Peru</b>');
+                setTimeout(function() { map.invalidateSize(); }, 150);
+            })();
+        </script>
+        <div class="tree-controls">
+            <h2>Languages by Family</h2>
+            <div class="tree-buttons">
+                <button onclick="expandAll()" class="tree-btn">Expand All</button>
+                <button onclick="collapseAll()" class="tree-btn">Collapse All</button>
+            </div>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/aewa/index.html">† Aewa</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/aewa/index.html">† Aewa</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/arawakan/index.html">Arawakan</a></h3>
+                <span class="family-count">(20 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/arawakan/index.html">Arawakan</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/arawakan/japura-colombia/index.html">Japura-Colombia</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/arawakan/japura-colombia/nuclear-japura-colombia/index.html">Nuclear Japura-Colombia</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/arawakan/japura-colombia/nuclear-japura-colombia/caqueta/index.html">Caqueta</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/arawakan/japura-colombia/nuclear-japura-colombia/caqueta/resígaro/index.html">Resígaro</a>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/arawakan/japura-colombia/nuclear-japura-colombia/caqueta/yucuna/index.html">Yucuna</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/arawakan/southern-maipuran/index.html">Southern Maipuran</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/index.html">Kampa-Amuesha</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/index.html">Pre-Andine Maipuran</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/index.html">Asha-Ashe-Kak-Matsi-Nan</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/asha-ashe-kak/index.html">Asha-Ashe-Kak</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/asha-ashe-kak/ashe-asha/index.html">Ashe-Asha</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/asha-ashe-kak/ashe-asha/ashe-asha-norte/index.html">Ashe-Asha Norte</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/asha-ashe-kak/ashe-asha/ashe-asha-norte/ajyíninka-apurucayali/index.html">Ajyíninka Apurucayali</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/asha-ashe-kak/ashe-asha/ashe-asha-norte/ashéninka-perené/index.html">Ashéninka Perené</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/asha-ashe-kak/ashe-asha/ashe-asha-norte/pichis-ashéninka/index.html">Pichis Ashéninka</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/asha-ashe-kak/ashe-asha/ashe-asha-norte/ucayali-yurúa-ashéninka/index.html">Ucayali-Yurúa Ashéninka</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/asha-ashe-kak/ashe-asha/asheninka/index.html">Asheninka</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/asha-ashe-kak/ashe-asha/asheninka/ashéninka-pajonal/index.html">Ashéninka Pajonal</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/asha-ashe-kak/ashe-asha/asheninka/south-ucayali-ashéninka/index.html">South Ucayali Ashéninka</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/asha-ashe-kak/ashe-asha/asháninka/index.html">Asháninka</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/asha-ashe-kak/caquinte/index.html">Caquinte</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/matsi-nan/index.html">Matsi-Nan</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/matsi-nan/machiguenga/index.html">Machiguenga</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/asha-ashe-kak-matsi-nan/matsi-nan/nanti/index.html">Nanti</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/pre-andine-maipuran/nomatsiguenga/index.html">Nomatsiguenga</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/arawakan/southern-maipuran/kampa-amuesha/yanesha/index.html">Yanesha'</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/arawakan/southern-maipuran/purus-chamicuro/index.html">Purus-Chamicuro</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/arawakan/southern-maipuran/purus-chamicuro/chamicuro-morike/index.html">Chamicuro-Morike</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/arawakan/southern-maipuran/purus-chamicuro/chamicuro-morike/chamicuro/index.html">† Chamicuro</a>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/arawakan/southern-maipuran/purus-chamicuro/chamicuro-morike/morike/index.html">† Morike</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/arawakan/southern-maipuran/purus-chamicuro/purus/index.html">Purus</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/arawakan/southern-maipuran/purus-chamicuro/purus/iñapari/index.html">Iñapari</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-dialect target-language ">
+                                                            <a href="../../languages/arawakan/southern-maipuran/purus-chamicuro/purus/iñapari/modern-iñapari/index.html">Modern Iñapari</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/arawakan/southern-maipuran/purus-chamicuro/purus/yineic/index.html">Yineic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/arawakan/southern-maipuran/purus-chamicuro/purus/yineic/western-yineic/index.html">Western Yineic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/arawakan/southern-maipuran/purus-chamicuro/purus/yineic/western-yineic/mashco-piro/index.html">Mashco Piro</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/arawakan/southern-maipuran/purus-chamicuro/purus/yineic/western-yineic/yine/index.html">Yine</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/arawan/index.html">Arawan</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/arawan/index.html">Arawan</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/arawan/madi-madiha/index.html">Madi-Madiha</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/arawan/madi-madiha/madiha/index.html">Madiha</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/arawan/madi-madiha/madiha/culina/index.html">Culina</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/aymaran/index.html">Aymaran</a></h3>
+                <span class="family-count">(4 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/aymaran/index.html">Aymaran</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/aymaran/central-southern-aymara/index.html">Central-Southern Aymara</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/aymaran/central-southern-aymara/central-aymara/index.html">Central Aymara</a>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/aymaran/central-southern-aymara/southern-aymara/index.html">Southern Aymara</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/aymaran/tupe/index.html">Tupe</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/aymaran/tupe/cauqui-of-cachuy/index.html">Cauqui of Cachuy</a>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/aymaran/tupe/jaqaru/index.html">Jaqaru</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/bookkeeping/index.html">Bookkeeping</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/bookkeeping/index.html">Bookkeeping</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/nocamán/index.html">† Nocamán</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/boran/index.html">Boran</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/boran/index.html">Boran</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/boran/bora/index.html">Bora</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/cahuapanan/index.html">Cahuapanan</a></h3>
+                <span class="family-count">(3 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/cahuapanan/index.html">Cahuapanan</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/cahuapanan/jebero/index.html">Jebero</a>
+                        </li>
+                        <li class="level-language target-language has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/cahuapanan/shawi/index.html">Shawi</a>
+                            <ul class="language-subtree">
+                                <li class="level-dialect target-language ">
+                                    <a href="../../languages/cahuapanan/shawi/jesuit-maynas/index.html">† Jesuit-Maynas</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/candoshi-shapra/index.html">Candoshi-Shapra</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/candoshi-shapra/index.html">Candoshi-Shapra</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/chicham/index.html">Chicham</a></h3>
+                <span class="family-count">(4 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/chicham/index.html">Chicham</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/chicham/aguaruna/index.html">Aguaruna</a>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/chicham/shuaric/index.html">Shuaric</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/chicham/shuaric/achuar-shiwiar/index.html">Achuar-Shiwiar</a>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/chicham/shuaric/huambisa-shuar/index.html">Huambisa-Shuar</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/chicham/shuaric/huambisa-shuar/huambisa/index.html">Huambisa</a>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/chicham/shuaric/huambisa-shuar/shuar/index.html">Shuar</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/culli/index.html">† Culli</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/culli/index.html">† Culli</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/harakmbut/index.html">Harakmbut</a></h3>
+                <span class="family-count">(2 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/harakmbut/index.html">Harakmbut</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/harakmbut/amarakaeri/index.html">Amarakaeri</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/harakmbut/huachipaeri/index.html">Huachipaeri</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/hibito-cholon/index.html">Hibito-Cholon</a></h3>
+                <span class="family-count">(2 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/hibito-cholon/index.html">Hibito-Cholon</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/hibito-cholon/cholón/index.html">† Cholón</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/hibito-cholon/hibito/index.html">† Hibito</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/huitotoan/index.html">Huitotoan</a></h3>
+                <span class="family-count">(5 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/huitotoan/index.html">Huitotoan</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/huitotoan/nonuya-ocaina/index.html">Nonuya-Ocaina</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/huitotoan/nonuya-ocaina/nonuya/index.html">† Nonuya</a>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/huitotoan/nonuya-ocaina/ocaina/index.html">Ocaina</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/huitotoan/nuclear-witotoan/index.html">Nuclear Witotoan</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/huitotoan/nuclear-witotoan/minica-murui/index.html">Minica-Murui</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/huitotoan/nuclear-witotoan/minica-murui/minica-huitoto/index.html">Minica Huitoto</a>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/huitotoan/nuclear-witotoan/minica-murui/murui-huitoto/index.html">Murui Huitoto</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/huitotoan/nuclear-witotoan/nüpode-huitoto/index.html">Nüpode Huitoto</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/indo-european/index.html">Indo-European</a></h3>
+                <span class="family-count">(3 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/indo-european/index.html">Indo-European</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/indo-european/classical-indo-european/index.html">Classical Indo-European</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/indo-european/classical-indo-european/italic/index.html">Italic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/index.html">Latino-Faliscan</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/index.html">Latinic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/index.html">Imperial Latin</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/index.html">Romance</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/index.html">Italo-Western Romance</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/index.html">Western Romance</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/index.html">Shifted Western Romance</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/index.html">Southwestern Shifted Romance</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/index.html">West Ibero-Romance</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/castilic/index.html">Castilic</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/castilic/south-castilic/index.html">South Castilic</a>
+                                                                                                                            <ul class="language-subtree">
+                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/castilic/south-castilic/peruvian-amazonian-spanish/index.html">Peruvian Amazonian Spanish</a>
+                                                                                                                                </li>
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/castilic/spanish/index.html">Spanish</a>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/galician-romance/index.html">Galician Romance</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/galician-romance/macro-portuguese/index.html">Macro-Portuguese</a>
+                                                                                                                            <ul class="language-subtree">
+                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/galician-romance/macro-portuguese/brazil-portugal-portuguese/index.html">Brazil-Portugal Portuguese</a>
+                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                        <li class="level-language target-language ">
+                                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/galician-romance/macro-portuguese/brazil-portugal-portuguese/portuguese/index.html">Portuguese</a>
+                                                                                                                                        </li>
+                                                                                                                                    </ul>
+                                                                                                                                </li>
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/mochica/index.html">† Mochica</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/mochica/index.html">† Mochica</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/muniche/index.html">† Muniche</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/muniche/index.html">† Muniche</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/omurano/index.html">† Omurano</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/omurano/index.html">† Omurano</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/pano-tacanan/index.html">Pano-Tacanan</a></h3>
+                <span class="family-count">(18 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/pano-tacanan/index.html">Pano-Tacanan</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/pano-tacanan/panoan/index.html">Panoan</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/pano-tacanan/panoan/mainline-pano/index.html">Mainline Pano</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/pano-tacanan/panoan/mainline-pano/cashibo-cacataibo/index.html">Cashibo-Cacataibo</a>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/index.html">Pano Nawa</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/chama-subgroup/index.html">Chama subgroup</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/chama-subgroup/panobo/index.html">† Panobo</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/chama-subgroup/sensi/index.html">† Sensi</a>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/chama-subgroup/shipibo-konibo-kapanawa/index.html">Shipibo-Konibo-Kapanawa</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/chama-subgroup/shipibo-konibo-kapanawa/capanahua/index.html">Capanahua</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/chama-subgroup/shipibo-konibo-kapanawa/shipibo-conibo/index.html">Shipibo-Conibo</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/headwaters-pano/index.html">Headwaters Pano</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/headwaters-pano/amahuaca/index.html">Amahuaca</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/headwaters-pano/cashinahua/index.html">Cashinahua</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/headwaters-pano/remo-of-the-moa-river/index.html">† Remo of the Moa river</a>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/headwaters-pano/yaminawa-complex/index.html">Yaminawa Complex</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/headwaters-pano/yaminawa-complex/sharanahua/index.html">Sharanahua</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/headwaters-pano/yaminawa-complex/yaminahua/index.html">Yaminahua</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/headwaters-pano/yaminawa-complex/yora/index.html">Yora</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/madre-de-dios-pano/index.html">Madre de Dios Pano</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/madre-de-dios-pano/arazaire/index.html">† Arazaire</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/madre-de-dios-pano/atsahuaca/index.html">† Atsahuaca</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/poyanawa-subgroup/index.html">Poyanawa Subgroup</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/poyanawa-subgroup/isconahua/index.html">Isconahua</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/pano-tacanan/panoan/mainline-pano/pano-nawa/remo-of-the-blanco-river/index.html">† Remo of the Blanco river</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/pano-tacanan/panoan/mayoruna-branch/index.html">Mayoruna Branch</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/pano-tacanan/panoan/mayoruna-branch/mayo-group/index.html">Mayo Group</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/pano-tacanan/panoan/mayoruna-branch/mayo-group/matses-subgroup/index.html">Matses subgroup</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/pano-tacanan/panoan/mayoruna-branch/mayo-group/matses-subgroup/matsés/index.html">Matsés</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/pano-tacanan/tacanan/index.html">Tacanan</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/pano-tacanan/tacanan/takanik-chamik/index.html">Takanik-Chamik</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/pano-tacanan/tacanan/takanik-chamik/ese-ejja/index.html">Ese Ejja</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/pano-tacanan/tacanan/unclassified-tacanan/index.html">Unclassified Tacanan</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/pano-tacanan/tacanan/unclassified-tacanan/mabenaro/index.html">† Mabenaro</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/peba-yagua/index.html">Peba-Yagua</a></h3>
+                <span class="family-count">(3 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/peba-yagua/index.html">Peba-Yagua</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/peba-yagua/peba-yameo/index.html">Peba-Yameo</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/peba-yagua/peba-yameo/peba/index.html">† Peba</a>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/peba-yagua/peba-yameo/yameo/index.html">† Yameo</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/peba-yagua/yagua/index.html">Yagua</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/quechuan/index.html">Quechuan</a></h3>
+                <span class="family-count">(36 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/quechuan/index.html">Quechuan</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/quechuan/cajamarca-lambayeque-quechua/index.html">Cajamarca-Lambayeque Quechua</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/quechuan/cajamarca-lambayeque-quechua/cajamarca-quechua/index.html">Cajamarca Quechua</a>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/quechuan/cajamarca-lambayeque-quechua/lambayeque-quechua/index.html">Lambayeque Quechua</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/quechuan/classical-quechua/index.html">† Classical Quechua</a>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/quechuan/colombia-ecuador-quechua/index.html">Colombia-Ecuador Quechua</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/quechuan/colombia-ecuador-quechua/ecuadorian-quechua-b/index.html">Ecuadorian Quechua B</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/quechuan/colombia-ecuador-quechua/ecuadorian-quechua-b/imbabura-colombia-oriente-quechua/index.html">Imbabura-Colombia-Oriente Quechua</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/quechuan/colombia-ecuador-quechua/ecuadorian-quechua-b/imbabura-colombia-oriente-quechua/colombia-oriente-quechua/index.html">Colombia-Oriente Quechua</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/quechuan/colombia-ecuador-quechua/ecuadorian-quechua-b/imbabura-colombia-oriente-quechua/colombia-oriente-quechua/oriente-quechua/index.html">Oriente Quechua</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/quechuan/colombia-ecuador-quechua/ecuadorian-quechua-b/imbabura-colombia-oriente-quechua/colombia-oriente-quechua/oriente-quechua/napo-lowland-quechua/index.html">Napo Lowland Quechua</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/quechuan/colombia-ecuador-quechua/ecuadorian-quechua-b/imbabura-colombia-oriente-quechua/colombia-oriente-quechua/oriente-quechua/pastaza-quechua/index.html">Pastaza Quechua</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/quechuan/colombia-ecuador-quechua/ecuadorian-quechua-b/imbabura-colombia-oriente-quechua/colombia-oriente-quechua/oriente-quechua/pastaza-quechua/northern-pastaza-quichua/index.html">Northern Pastaza Quichua</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/quechuan/colombia-ecuador-quechua/ecuadorian-quechua-b/imbabura-colombia-oriente-quechua/colombia-oriente-quechua/oriente-quechua/pastaza-quechua/southern-pastaza-quechua/index.html">Southern Pastaza Quechua</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/quechuan/quechua-i/index.html">Quechua I</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/index.html">Central Quechua I</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/quechuan/quechua-i/central-quechua-i/ap-am-ah/index.html">AP-AM-AH</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/ap-am-ah/cajatambo-north-lima-quechua/index.html">Cajatambo North Lima Quechua</a>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/ap-am-ah/chiquián-ancash-quechua/index.html">Chiquián Ancash Quechua</a>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/ap-am-ah/huallaga-huánuco-quechua/index.html">Huallaga Huánuco Quechua</a>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/ap-am-ah/panao-union/index.html">Panao-Union</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/quechuan/quechua-i/central-quechua-i/ap-am-ah/panao-union/margos-yarowilca-lauricocha-quechua/index.html">Margos-Yarowilca-Lauricocha Quechua</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/quechuan/quechua-i/central-quechua-i/ap-am-ah/panao-union/panao-huánuco-quechua/index.html">Panao Huánuco Quechua</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/quechuan/quechua-i/central-quechua-i/huaylay/index.html">Huaylay</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/huaylay/conchucos/index.html">Conchucos</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/quechuan/quechua-i/central-quechua-i/huaylay/conchucos/northern-conchucos-ancash-quechua/index.html">Northern Conchucos Ancash Quechua</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/quechuan/quechua-i/central-quechua-i/huaylay/conchucos/southern-conchucos-ancash-quechua/index.html">Southern Conchucos Ancash Quechua</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/huaylay/corongo-sihuas/index.html">Corongo-Sihuas</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/quechuan/quechua-i/central-quechua-i/huaylay/corongo-sihuas/corongo-ancash-quechua/index.html">Corongo Ancash Quechua</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/quechuan/quechua-i/central-quechua-i/huaylay/corongo-sihuas/sihuas-ancash-quechua/index.html">Sihuas Ancash Quechua</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/huaylay/huamalíes-dos-de-mayo-huánuco-quechua/index.html">Huamalíes-Dos de Mayo Huánuco Quechua</a>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/huaylay/huaylas-ancash-quechua/index.html">Huaylas Ancash Quechua</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/quechuan/quechua-i/central-quechua-i/jauja-huanca/index.html">Jauja-Huanca</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/jauja-huanca/huaylla-wanca-quechua/index.html">Huaylla Wanca Quechua</a>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/jauja-huanca/jauja-wanca-quechua/index.html">Jauja Wanca Quechua</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/quechuan/quechua-i/central-quechua-i/yaru-quechua/index.html">Yaru Quechua</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/yaru-quechua/ambo-pasco-quechua/index.html">Ambo-Pasco Quechua</a>
+                                                </li>
+                                                <li class="level-language target-language has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/yaru-quechua/chaupihuaranga-quechua/index.html">Chaupihuaranga Quechua</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-dialect target-language ">
+                                                            <a href="../../languages/quechuan/quechua-i/central-quechua-i/yaru-quechua/chaupihuaranga-quechua/santa-ana-de-tusi-pasco-quechua/index.html">Santa Ana de Tusi Pasco Quechua</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/quechuan/quechua-i/central-quechua-i/yaru-quechua/north-junín-quechua/index.html">North Junín Quechua</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/quechuan/quechua-i/pacaraos-quechua/index.html">Pacaraos Quechua</a>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/quechuan/quechua-i/yauyosic/index.html">Yauyosic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/quechuan/quechua-i/yauyosic/chincha-quechua/index.html">Chincha Quechua</a>
+                                        </li>
+                                        <li class="level-language target-language has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/quechuan/quechua-i/yauyosic/yauyos-quechua/index.html">Yauyos Quechua</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-dialect target-language ">
+                                                    <a href="../../languages/quechuan/quechua-i/yauyosic/yauyos-quechua/laraos/index.html">Laraos</a>
+                                                </li>
+                                                <li class="level-dialect intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/quechuan/quechua-i/yauyosic/yauyos-quechua/southern-yauyos/index.html">Southern Yauyos</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-dialect target-language ">
+                                                            <a href="../../languages/quechuan/quechua-i/yauyosic/yauyos-quechua/southern-yauyos/tana-lincha/index.html">Tana-Lincha</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/quechuan/san-martin-amazonas-quechua/index.html">San Martin-Amazonas Quechua</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/quechuan/san-martin-amazonas-quechua/chachapoyas-quechua/index.html">Chachapoyas Quechua</a>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/quechuan/san-martin-amazonas-quechua/san-martín-quechua/index.html">San Martín Quechua</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/quechuan/southern-quechua/index.html">Southern Quechua</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/quechuan/southern-quechua/ayacuchan-quechua/index.html">Ayacuchan Quechua</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/quechuan/southern-quechua/ayacuchan-quechua/arequipa-la-unión-quechua/index.html">Arequipa-La Unión Quechua</a>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/quechuan/southern-quechua/ayacuchan-quechua/ayacucho-quechua/index.html">Ayacucho Quechua</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/quechuan/southern-quechua/bolivian-argentinian-quechua/index.html">Bolivian-Argentinian Quechua</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/quechuan/southern-quechua/bolivian-argentinian-quechua/north-bolivian-quechua/index.html">North Bolivian Quechua</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/quechuan/southern-quechua/cuscan-quechua/index.html">Cuscan Quechua</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/quechuan/southern-quechua/cuscan-quechua/cusco-quechua/index.html">Cusco Quechua</a>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/quechuan/southern-quechua/cuscan-quechua/eastern-apurímac-quechua/index.html">Eastern Apurímac Quechua</a>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/quechuan/southern-quechua/cuscan-quechua/puno-quechua/index.html">Puno Quechua</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/sechuran/index.html">† Sechuran</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/sechuran/index.html">† Sechuran</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/sign-language/index.html">Sign Language</a></h3>
+                <span class="family-count">(4 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/sign-language/index.html">Sign Language</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sign-language/l1-sign-language/index.html">L1 Sign Language</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/index.html">LSFic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/index.html">ASLic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/west-central-south-american-sign/index.html">West-Central South American Sign</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/west-central-south-american-sign/peruvian-inmaculada-sign/index.html">Peruvian-Inmaculada Sign</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/west-central-south-american-sign/peruvian-inmaculada-sign/inmaculada-sign-language/index.html">Inmaculada Sign Language</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/west-central-south-american-sign/peruvian-inmaculada-sign/peruvian-sign-language/index.html">Peruvian Sign Language</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sign-language/l1-sign-language/nueva-vida-maijuna-sign-language/index.html">Nueva Vida Maijuna Sign Language</a>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sign-language/l1-sign-language/sivia-sign-language/index.html">Sivia Sign Language</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/tallán/index.html">† Tallán</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/tallán/index.html">† Tallán</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/taushiro/index.html">Taushiro</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/taushiro/index.html">Taushiro</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/ticuna-yuri/index.html">Ticuna-Yuri</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/ticuna-yuri/index.html">Ticuna-Yuri</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/ticuna-yuri/ticuna/index.html">Ticuna</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/tucanoan/index.html">Tucanoan</a></h3>
+                <span class="family-count">(2 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/tucanoan/index.html">Tucanoan</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/tucanoan/western-tucanoan/index.html">Western Tucanoan</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/tucanoan/western-tucanoan/napo-tucanoan/index.html">Napo Tucanoan</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/tucanoan/western-tucanoan/napo-tucanoan/maijiki/index.html">Maijiki</a>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/tucanoan/western-tucanoan/napo-tucanoan/siona-secoya/index.html">Siona-Secoya</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/tucanoan/western-tucanoan/napo-tucanoan/siona-secoya/secoya/index.html">Secoya</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/tupian/index.html">Tupian</a></h3>
+                <span class="family-count">(2 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/tupian/index.html">Tupian</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/tupian/eastern-tupian/index.html">Eastern Tupian</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/tupian/eastern-tupian/maweti-guarani/index.html">Maweti-Guarani</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/tupian/eastern-tupian/maweti-guarani/aweti-guarani/index.html">Aweti-Guarani</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/tupian/eastern-tupian/maweti-guarani/aweti-guarani/tupi-guarani/index.html">Tupi-Guarani</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/tupian/eastern-tupian/maweti-guarani/aweti-guarani/tupi-guarani/southern-tupi-guarani/index.html">Southern Tupi-Guarani</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/tupian/eastern-tupian/maweti-guarani/aweti-guarani/tupi-guarani/southern-tupi-guarani/tupi-guarani-subgroup-iii/index.html">Tupi-Guarani Subgroup III</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/tupian/eastern-tupian/maweti-guarani/aweti-guarani/tupi-guarani/southern-tupi-guarani/tupi-guarani-subgroup-iii/omagua-kokama/index.html">Omagua-Kokama</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/tupian/eastern-tupian/maweti-guarani/aweti-guarani/tupi-guarani/southern-tupi-guarani/tupi-guarani-subgroup-iii/omagua-kokama/cocama-cocamilla/index.html">Cocama-Cocamilla</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/tupian/eastern-tupian/maweti-guarani/aweti-guarani/tupi-guarani/southern-tupi-guarani/tupi-guarani-subgroup-iii/omagua-kokama/omagua/index.html">† Omagua</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/unattested/index.html">Unattested</a></h3>
+                <span class="family-count">(2 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/unattested/index.html">Unattested</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/unattested/arawakan-unattested/index.html">Arawakan (Unattested)</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/unattested/arawakan-unattested/aguano/index.html">† Aguano</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/unattested/pano-tacanan-unattested/index.html">Pano-Tacanan (Unattested)</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/unattested/pano-tacanan-unattested/pisabo/index.html">Pisabo</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/unclassifiable/index.html">Unclassifiable</a></h3>
+                <span class="family-count">(6 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/unclassifiable/index.html">Unclassifiable</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/chacha/index.html">† Chacha</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/copallen/index.html">† Copallen</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/patagon/index.html">† Patagon</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/quignam/index.html">† Quignam</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/sacata/index.html">† Sacata</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/tabancal/index.html">† Tabancal</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/urarina/index.html">Urarina</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/urarina/index.html">Urarina</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/zaparoan/index.html">Zaparoan</a></h3>
+                <span class="family-count">(6 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/zaparoan/index.html">Zaparoan</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/zaparoan/iquito-arabela/index.html">Iquito-Arabela</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/zaparoan/iquito-arabela/arabela-andoa/index.html">Arabela-Andoa</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/zaparoan/iquito-arabela/arabela-andoa/andoa/index.html">† Andoa</a>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/zaparoan/iquito-arabela/arabela-andoa/arabela/index.html">Arabela</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/zaparoan/iquito-arabela/cahuarano-iquito/index.html">Cahuarano-Iquito</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/zaparoan/iquito-arabela/cahuarano-iquito/cahuarano/index.html">† Cahuarano</a>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/zaparoan/iquito-arabela/cahuarano-iquito/iquito/index.html">Iquito</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/zaparoan/zaparo-abishira/index.html">Zaparo-Abishira</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/zaparoan/zaparo-abishira/aushiri/index.html">† Aushiri</a>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/zaparoan/zaparo-abishira/záparo/index.html">Záparo</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <!-- Tree toggle functionality -->
+    <script>
+        function toggleTree(toggle) {
+            const li = toggle.parentElement;
+            const subtree = li.querySelector('.language-subtree');
+            if (subtree) {
+                if (toggle.classList.contains('expanded')) {
+                    toggle.classList.remove('expanded');
+                    toggle.classList.add('collapsed');
+                    toggle.textContent = '▶';
+                    subtree.style.display = 'none';
+                } else {
+                    toggle.classList.remove('collapsed');
+                    toggle.classList.add('expanded');
+                    toggle.textContent = '▼';
+                    subtree.style.display = 'block';
+                }
+            }
+        }
+        
+        function expandAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('collapsed');
+                toggle.classList.add('expanded');
+                toggle.textContent = '▼';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'block';
+            });
+        }
+        
+        function collapseAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('expanded');
+                toggle.classList.add('collapsed');
+                toggle.textContent = '▶';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'none';
+            });
+        }
+    </script>
+    
+    <!-- Search functionality -->
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+</body>
+</html>

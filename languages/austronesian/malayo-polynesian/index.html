@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malayo-Polynesian</title>
+    <link rel="icon" type="image/webp" href="../../../favicon.webp">
+    <link rel="stylesheet" href="../../../style.css">
+    <!-- Stylesheet injected by update_family_trees.py -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+function initMap(elementId, latitude, longitude) {
+    const container = document.getElementById(elementId);
+    if (!container) return;
+    const map = L.map(elementId).setView([latitude, longitude], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+        minZoom: 2
+    }).addTo(map);
+    const countryCodes = JSON.parse(container.dataset.countries || '[]');
+    
+    // Draw country boundaries if available
+    if (countryCodes && countryCodes.length > 0) {
+        fetch('https://cdn.jsdelivr.net/npm/world-geojson/countries.geojson')
+            .then(r => r.json())
+            .then(geojson => {
+                const countryFeatures = geojson.features.filter(f => {
+                    const code = f.properties.ISO_A2 || f.properties.ADMIN || '';
+                    return countryCodes.includes(code);
+                });
+                L.geoJSON({
+                    type: 'FeatureCollection',
+                    features: countryFeatures
+                }, {
+                    style: {
+                        color: '#B85A4F',
+                        weight: 1.5,
+                        opacity: 0.5,
+                        fillOpacity: 0.08
+                    }
+                }).addTo(map);
+            })
+            .catch(e => console.log(''));
+    }
+
+    // Center point marker
+    L.circleMarker([latitude, longitude], {
+        radius: 8,
+        fillColor: '#B85A4F',
+        color: '#8B4530',
+        weight: 2.5,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`${latitude.toFixed(4)}°, ${longitude.toFixed(4)}°`);
+    
+    setTimeout(() => { map.invalidateSize(); }, 150);
+}
+
+function toggleLargeList(btn) {
+    const list = btn.closest('h3').nextElementSibling;
+    if (list.style.display === 'none') {
+        list.style.display = '';
+        btn.textContent = 'Hide';
+    } else {
+        list.style.display = 'none';
+        btn.textContent = 'Show';
+    }
+}
+    </script>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../../" class="header-logo"><img src="../../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../../" class="sidebar-logo">
+                <img src="../../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../../">Home</a></li>
+                <li><a href="../../../texts-index.html">All Texts</a></li>
+                <li><a href="../../../languages/">Languages</a></li>
+                <li><a href="../../../works/">Works Index</a></li>
+                <li><a href="../../../authors/">Authors</a></li>
+                <li><a href="../../../sources/">Sources</a></li>
+                <li><a href="../../../provenances/">Provenances</a></li>
+                <li><a href="../../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-flags"><a href="../../../countries/american-samoa/index.html" title="American Samoa"><img src="https://flagcdn.com/w40/as.png" alt="American Samoa" class="country-flag"></a><a href="../../../countries/australia/index.html" title="Australia"><img src="https://flagcdn.com/w40/au.png" alt="Australia" class="country-flag"></a><a href="../../../countries/brunei/index.html" title="Brunei"><img src="https://flagcdn.com/w40/bn.png" alt="Brunei" class="country-flag"></a><a href="../../../countries/cocos-islands/index.html" title="Cocos Islands"><img src="https://flagcdn.com/w40/cc.png" alt="Cocos Islands" class="country-flag"></a><a href="../../../countries/cook-islands/index.html" title="Cook Islands"><img src="https://flagcdn.com/w40/ck.png" alt="Cook Islands" class="country-flag"></a><a href="../../../countries/chile/index.html" title="Chile"><img src="https://flagcdn.com/w40/cl.png" alt="Chile" class="country-flag"></a><a href="../../../countries/china/index.html" title="China"><img src="https://flagcdn.com/w40/cn.png" alt="China" class="country-flag"></a><a href="../../../countries/fiji/index.html" title="Fiji"><img src="https://flagcdn.com/w40/fj.png" alt="Fiji" class="country-flag"></a><a href="../../../countries/micronesia/index.html" title="Micronesia"><img src="https://flagcdn.com/w40/fm.png" alt="Micronesia" class="country-flag"></a><a href="../../../countries/france/index.html" title="France"><img src="https://flagcdn.com/w40/fr.png" alt="France" class="country-flag"></a><a href="../../../countries/french-guiana/index.html" title="French Guiana"><img src="https://flagcdn.com/w40/gf.png" alt="French Guiana" class="country-flag"></a><a href="../../../countries/guam/index.html" title="Guam"><img src="https://flagcdn.com/w40/gu.png" alt="Guam" class="country-flag"></a><a href="../../../countries/indonesia/index.html" title="Indonesia"><img src="https://flagcdn.com/w40/id.png" alt="Indonesia" class="country-flag"></a><a href="../../../countries/cambodia/index.html" title="Cambodia"><img src="https://flagcdn.com/w40/kh.png" alt="Cambodia" class="country-flag"></a><a href="../../../countries/kiribati/index.html" title="Kiribati"><img src="https://flagcdn.com/w40/ki.png" alt="Kiribati" class="country-flag"></a><a href="../../../countries/sri-lanka/index.html" title="Sri Lanka"><img src="https://flagcdn.com/w40/lk.png" alt="Sri Lanka" class="country-flag"></a><a href="../../../countries/madagascar/index.html" title="Madagascar"><img src="https://flagcdn.com/w40/mg.png" alt="Madagascar" class="country-flag"></a><a href="../../../countries/marshall-islands/index.html" title="Marshall Islands"><img src="https://flagcdn.com/w40/mh.png" alt="Marshall Islands" class="country-flag"></a><a href="../../../countries/myanmar/index.html" title="Myanmar"><img src="https://flagcdn.com/w40/mm.png" alt="Myanmar" class="country-flag"></a><a href="../../../countries/northern-mariana-islands/index.html" title="Northern Mariana Islands"><img src="https://flagcdn.com/w40/mp.png" alt="Northern Mariana Islands" class="country-flag"></a><a href="../../../countries/malaysia/index.html" title="Malaysia"><img src="https://flagcdn.com/w40/my.png" alt="Malaysia" class="country-flag"></a><a href="../../../countries/new-caledonia/index.html" title="New Caledonia"><img src="https://flagcdn.com/w40/nc.png" alt="New Caledonia" class="country-flag"></a><a href="../../../countries/netherlands/index.html" title="Netherlands"><img src="https://flagcdn.com/w40/nl.png" alt="Netherlands" class="country-flag"></a><a href="../../../countries/nauru/index.html" title="Nauru"><img src="https://flagcdn.com/w40/nr.png" alt="Nauru" class="country-flag"></a><a href="../../../countries/niue/index.html" title="Niue"><img src="https://flagcdn.com/w40/nu.png" alt="Niue" class="country-flag"></a><a href="../../../countries/new-zealand/index.html" title="New Zealand"><img src="https://flagcdn.com/w40/nz.png" alt="New Zealand" class="country-flag"></a><a href="../../../countries/french-polynesia/index.html" title="French Polynesia"><img src="https://flagcdn.com/w40/pf.png" alt="French Polynesia" class="country-flag"></a><a href="../../../countries/papua-new-guinea/index.html" title="Papua New Guinea"><img src="https://flagcdn.com/w40/pg.png" alt="Papua New Guinea" class="country-flag"></a><a href="../../../countries/philippines/index.html" title="Philippines"><img src="https://flagcdn.com/w40/ph.png" alt="Philippines" class="country-flag"></a><a href="../../../countries/palau/index.html" title="Palau"><img src="https://flagcdn.com/w40/pw.png" alt="Palau" class="country-flag"></a><a href="../../../countries/saudi-arabia/index.html" title="Saudi Arabia"><img src="https://flagcdn.com/w40/sa.png" alt="Saudi Arabia" class="country-flag"></a><a href="../../../countries/solomon-islands/index.html" title="Solomon Islands"><img src="https://flagcdn.com/w40/sb.png" alt="Solomon Islands" class="country-flag"></a><a href="../../../countries/singapore/index.html" title="Singapore"><img src="https://flagcdn.com/w40/sg.png" alt="Singapore" class="country-flag"></a><a href="../../../countries/suriname/index.html" title="Suriname"><img src="https://flagcdn.com/w40/sr.png" alt="Suriname" class="country-flag"></a><a href="../../../countries/thailand/index.html" title="Thailand"><img src="https://flagcdn.com/w40/th.png" alt="Thailand" class="country-flag"></a><a href="../../../countries/tokelau/index.html" title="Tokelau"><img src="https://flagcdn.com/w40/tk.png" alt="Tokelau" class="country-flag"></a><a href="../../../countries/timor-leste/index.html" title="Timor-Leste"><img src="https://flagcdn.com/w40/tl.png" alt="Timor-Leste" class="country-flag"></a><a href="../../../countries/tonga/index.html" title="Tonga"><img src="https://flagcdn.com/w40/to.png" alt="Tonga" class="country-flag"></a><a href="../../../countries/tuvalu/index.html" title="Tuvalu"><img src="https://flagcdn.com/w40/tv.png" alt="Tuvalu" class="country-flag"></a><a href="../../../countries/taiwan/index.html" title="Taiwan"><img src="https://flagcdn.com/w40/tw.png" alt="Taiwan" class="country-flag"></a><a href="../../../countries/united-states/index.html" title="United States"><img src="https://flagcdn.com/w40/us.png" alt="United States" class="country-flag"></a><a href="../../../countries/vietnam/index.html" title="Vietnam"><img src="https://flagcdn.com/w40/vn.png" alt="Vietnam" class="country-flag"></a><a href="../../../countries/vanuatu/index.html" title="Vanuatu"><img src="https://flagcdn.com/w40/vu.png" alt="Vanuatu" class="country-flag"></a><a href="../../../countries/wallis-and-futuna/index.html" title="Wallis and Futuna"><img src="https://flagcdn.com/w40/wf.png" alt="Wallis and Futuna" class="country-flag"></a><a href="../../../countries/samoa/index.html" title="Samoa"><img src="https://flagcdn.com/w40/ws.png" alt="Samoa" class="country-flag"></a><a href="../../../countries/mayotte/index.html" title="Mayotte"><img src="https://flagcdn.com/w40/yt.png" alt="Mayotte" class="country-flag"></a></div>
+<h1>Malayo-Polynesian</h1>
+        
+        <div class="metadata">
+            <p><strong>Type:</strong> <span class="level-tag family">Family</span></p>
+            <p><strong>Glottolog ID:</strong> mala1545</p>
+            
+        </div>
+        
+        <section>
+            <h2>Language Family</h2>
+<div class="breadcrumb-tree">
+    <a href="../index.html">Austronesian</a> / <span class="current">Malayo-Polynesian</span>
+</div>
+        </section>
+        <section>
+<div class="locality-section">
+    <h3>Geographic Information</h3>
+    <div class="geographic-info">
+        <p><strong>Countries:</strong> American Samoa, Australia, Brunei, Cocos Islands, Cook Islands, Chile, China, Fiji, Micronesia, France, French Guiana, Guam, Indonesia, Cambodia, Kiribati, Sri Lanka, Madagascar, Marshall Islands, Myanmar, Northern Mariana Islands, Malaysia, New Caledonia, Netherlands, Nauru, Niue, New Zealand, French Polynesia, Papua New Guinea, Philippines, Palau, Saudi Arabia, Solomon Islands, Singapore, Suriname, Thailand, Tokelau, Timor-Leste, Tonga, Tuvalu, Taiwan, United States, Vietnam, Vanuatu, Wallis and Futuna, Samoa, Mayotte</p>
+    </div>
+</div>
+        </section>
+        <section>
+<div class="children-section">
+<h3>Sub-families [29]</h3>
+<ul class="children-list">
+<li><a href="aru/index.html">Aru</a></li>
+<li><a href="bali-sasak-sumbawa/index.html">Bali-Sasak-Sumbawa</a></li>
+<li><a href="basap-greater-barito/index.html">Basap-Greater Barito</a></li>
+<li><a href="batanic/index.html">Batanic</a></li>
+<li><a href="bilic/index.html">Bilic</a></li>
+<li><a href="bima-lembata/index.html">Bima-Lembata</a></li>
+<li><a href="celebic/index.html">Celebic</a></li>
+<li><a href="central-luzon/index.html">Central Luzon</a></li>
+<li><a href="central-timor/index.html">Central Timor</a></li>
+<li><a href="eastern-malayo-polynesian/index.html">Eastern Malayo-Polynesian</a></li>
+<li><a href="greater-central-philippine/index.html">Greater Central Philippine</a></li>
+<li><a href="greater-seram-laut/index.html">Greater Seram Laut</a></li>
+<li><a href="greater-south-sulawesi/index.html">Greater South Sulawesi</a></li>
+<li><a href="javanesic/index.html">Javanesic</a></li>
+<li><a href="lampungic/index.html">Lampungic</a></li>
+<li><a href="land-dayak/index.html">Land Dayak</a></li>
+<li><a href="maduresic/index.html">Maduresic</a></li>
+<li><a href="malayo-chamic/index.html">Malayo-Chamic</a></li>
+<li><a href="moken-moklen/index.html">Moken-Moklen</a></li>
+<li><a href="north-borneo-malayo-polynesian/index.html">North Borneo Malayo-Polynesian</a></li>
+<li><a href="north-mangyan/index.html">North Mangyan</a></li>
+<li><a href="northern-luzon/index.html">Northern Luzon</a></li>
+<li><a href="nunusaku/index.html">Nunusaku</a></li>
+<li><a href="sangiric-minahasan/index.html">Sangiric-Minahasan</a></li>
+<li><a href="sumatran/index.html">Sumatran</a></li>
+<li><a href="tanimbar-bomberai/index.html">Tanimbar-Bomberai</a></li>
+<li><a href="timor-babar/index.html">Timor-Babar</a></li>
+<li><a href="tolitoli/index.html">Tolitoli</a></li>
+<li><a href="west-central-maluku/index.html">West Central Maluku</a></li>
+</ul>
+<h3>Languages [5]</h3>
+<ul class="children-list">
+<li><a href="ati/index.html">Ati</a></li>
+<li><a href="chamorro/index.html">Chamorro</a></li>
+<li><a href="palauan/index.html">Palauan</a></li>
+<li><a href="rejang/index.html">Rejang</a></li>
+<li><a href="sundanese/index.html">Sundanese</a></li>
+</ul>
+</div>
+        </section>
+        <section>
+            <h2>Information</h2>
+            <p>This page is for the Malayo-Polynesian language/dialect.</p>
+            <p>Data sourced from <a href="https://glottolog.org">Glottolog</a>, a comprehensive reference information for the world's languages.</p>
+        </section>
+        
+        <section>
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="https://glottolog.org/resource/languoid/id/mala1545">View on Glottolog</a></li>
+                <li><a href="https://www.wals.info">World Atlas of Language Structures (WALS)</a></li>
+                <li><a href="https://www.ethnologue.com">Ethnologue</a></li>
+            </ul>
+        </section>
+        
+        <hr>
+        <footer>
+            <p><small>Generated from Glottolog 5.2 data. Last updated: January 12, 2026</small></p>
+        </footer>
+    </div></div>
+        
+    </div>
+</div>
+
+    <script src="../../../search-index.js"></script>
+    <script src="../../../search.js"></script>
+</body>
+</html>

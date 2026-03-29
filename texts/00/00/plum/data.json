@@ -1,0 +1,23 @@
+{
+  "id": "plum",
+  "title": "This Is Just to Say",
+  "titleTranslation": null,
+  "author": "William Carlos Williams (1883–1963)",
+  "source": "Poetry Magazine",
+  "date": "1934",
+  "language": "stan1293",
+  "pages": [
+    {
+      "id": "page-1",
+      "label": "1",
+      "works": [
+        {
+          "id": "this-is-just-to-say",
+          "elementId": "work-plums-1",
+          "title": "This Is Just to Say",
+          "content": "<poem>\nI have eaten\nthe plums\nthat were in\nthe icebox\n\nand which\nyou were probably\nsaving\nfor breakfast\n\nForgive me\nthey were delicious\nso sweet\nand so cold\n</poem>"
+        }
+      ]
+    }
+  ]
+}

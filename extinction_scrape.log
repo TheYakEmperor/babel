@@ -1,0 +1,511 @@
+Scraping Glottolog extinction status...
+CSV File: languoid.csv
+Cache File: extinction_cache.json
+Base URL: https://glottolog.org/resource/languoid/id
+
+Loaded cache with 0 existing entries
+Total unique languoid IDs: 27034
+Need to fetch: 27034
+
+Starting scrape...
+Note: This will take ~225.3 minutes with rate limiting
+
+  [100/27034] Extinct: 3, Active: 29, Unknown: 68
+  [200/27034] Extinct: 6, Active: 60, Unknown: 134
+  [300/27034] Extinct: 12, Active: 90, Unknown: 198
+  [400/27034] Extinct: 22, Active: 122, Unknown: 256
+  [500/27034] Extinct: 27, Active: 155, Unknown: 318
+  [600/27034] Extinct: 31, Active: 191, Unknown: 378
+  [700/27034] Extinct: 36, Active: 217, Unknown: 447
+  [800/27034] Extinct: 50, Active: 244, Unknown: 506
+  [900/27034] Extinct: 56, Active: 276, Unknown: 568
+  [1000/27034] Extinct: 67, Active: 295, Unknown: 638
+  [1100/27034] Extinct: 81, Active: 323, Unknown: 696
+  [1200/27034] Extinct: 82, Active: 351, Unknown: 767
+  [1300/27034] Extinct: 90, Active: 375, Unknown: 835
+  [1400/27034] Extinct: 97, Active: 414, Unknown: 889
+  [1500/27034] Extinct: 102, Active: 440, Unknown: 958
+  [1600/27034] Extinct: 108, Active: 480, Unknown: 1012
+  [1700/27034] Extinct: 111, Active: 505, Unknown: 1084
+  [1800/27034] Extinct: 111, Active: 534, Unknown: 1155
+  [1900/27034] Extinct: 113, Active: 565, Unknown: 1222
+  [2000/27034] Extinct: 118, Active: 582, Unknown: 1300
+  [2100/27034] Extinct: 125, Active: 606, Unknown: 1369
+  [2200/27034] Extinct: 129, Active: 639, Unknown: 1432
+  [2300/27034] Extinct: 131, Active: 671, Unknown: 1498
+  [2400/27034] Extinct: 136, Active: 697, Unknown: 1567
+  [2500/27034] Extinct: 138, Active: 722, Unknown: 1640
+  [2600/27034] Extinct: 143, Active: 753, Unknown: 1704
+  [2700/27034] Extinct: 152, Active: 786, Unknown: 1762
+  [2800/27034] Extinct: 152, Active: 810, Unknown: 1838
+  [2900/27034] Extinct: 153, Active: 837, Unknown: 1910
+  [3000/27034] Extinct: 157, Active: 869, Unknown: 1974
+  [3100/27034] Extinct: 159, Active: 897, Unknown: 2044
+  [3200/27034] Extinct: 164, Active: 924, Unknown: 2112
+  [3300/27034] Extinct: 167, Active: 958, Unknown: 2175
+  [3400/27034] Extinct: 171, Active: 998, Unknown: 2231
+  [3500/27034] Extinct: 175, Active: 1030, Unknown: 2295
+  [3600/27034] Extinct: 188, Active: 1059, Unknown: 2353
+  [3700/27034] Extinct: 196, Active: 1080, Unknown: 2424
+  [3800/27034] Extinct: 197, Active: 1101, Unknown: 2502
+  [3900/27034] Extinct: 198, Active: 1117, Unknown: 2585
+  [4000/27034] Extinct: 198, Active: 1120, Unknown: 2682
+  [4100/27034] Extinct: 205, Active: 1143, Unknown: 2752
+  [4200/27034] Extinct: 211, Active: 1172, Unknown: 2817
+  [4300/27034] Extinct: 219, Active: 1200, Unknown: 2881
+  [4400/27034] Extinct: 224, Active: 1229, Unknown: 2947
+  [4500/27034] Extinct: 236, Active: 1250, Unknown: 3014
+  [4600/27034] Extinct: 246, Active: 1276, Unknown: 3078
+  [4700/27034] Extinct: 265, Active: 1298, Unknown: 3137
+  [4800/27034] Extinct: 270, Active: 1331, Unknown: 3199
+  [4900/27034] Extinct: 275, Active: 1359, Unknown: 3266
+  [5000/27034] Extinct: 276, Active: 1386, Unknown: 3338
+  [5100/27034] Extinct: 278, Active: 1419, Unknown: 3403
+  [5200/27034] Extinct: 284, Active: 1452, Unknown: 3464
+  [5300/27034] Extinct: 290, Active: 1479, Unknown: 3531
+  [5400/27034] Extinct: 291, Active: 1513, Unknown: 3596
+  [5500/27034] Extinct: 296, Active: 1539, Unknown: 3665
+  [5600/27034] Extinct: 303, Active: 1575, Unknown: 3722
+  [5700/27034] Extinct: 304, Active: 1601, Unknown: 3795
+  [5800/27034] Extinct: 304, Active: 1619, Unknown: 3877
+  [5900/27034] Extinct: 306, Active: 1633, Unknown: 3961
+  [6000/27034] Extinct: 308, Active: 1636, Unknown: 4056
+  [6100/27034] Extinct: 309, Active: 1647, Unknown: 4144
+  [6200/27034] Extinct: 312, Active: 1678, Unknown: 4210
+  [6300/27034] Extinct: 316, Active: 1709, Unknown: 4275
+  [6400/27034] Extinct: 325, Active: 1738, Unknown: 4337
+  [6500/27034] Extinct: 330, Active: 1765, Unknown: 4405
+  [6600/27034] Extinct: 331, Active: 1791, Unknown: 4478
+  [6700/27034] Extinct: 333, Active: 1811, Unknown: 4556
+  [6800/27034] Extinct: 338, Active: 1846, Unknown: 4616
+  [6900/27034] Extinct: 348, Active: 1873, Unknown: 4679
+  [7000/27034] Extinct: 353, Active: 1893, Unknown: 4754
+  [7100/27034] Extinct: 357, Active: 1914, Unknown: 4829
+  [7200/27034] Extinct: 359, Active: 1944, Unknown: 4897
+  [7300/27034] Extinct: 361, Active: 1979, Unknown: 4960
+  [7400/27034] Extinct: 363, Active: 2000, Unknown: 5037
+  [7500/27034] Extinct: 373, Active: 2020, Unknown: 5107
+  [7600/27034] Extinct: 386, Active: 2051, Unknown: 5163
+  [7700/27034] Extinct: 399, Active: 2076, Unknown: 5225
+  [7800/27034] Extinct: 400, Active: 2101, Unknown: 5299
+  [7900/27034] Extinct: 404, Active: 2133, Unknown: 5363
+  [8000/27034] Extinct: 407, Active: 2158, Unknown: 5435
+  [8100/27034] Extinct: 410, Active: 2184, Unknown: 5506
+  [8200/27034] Extinct: 414, Active: 2211, Unknown: 5575
+  [8300/27034] Extinct: 421, Active: 2241, Unknown: 5638
+  [8400/27034] Extinct: 424, Active: 2273, Unknown: 5703
+  [8500/27034] Extinct: 428, Active: 2305, Unknown: 5767
+  [8600/27034] Extinct: 431, Active: 2334, Unknown: 5835
+  [8700/27034] Extinct: 435, Active: 2357, Unknown: 5908
+  [8800/27034] Extinct: 437, Active: 2383, Unknown: 5980
+  [8900/27034] Extinct: 441, Active: 2417, Unknown: 6042
+  [9000/27034] Extinct: 442, Active: 2449, Unknown: 6109
+  [9100/27034] Extinct: 448, Active: 2478, Unknown: 6174
+  [9200/27034] Extinct: 451, Active: 2502, Unknown: 6247
+  [9300/27034] Extinct: 458, Active: 2531, Unknown: 6311
+  [9400/27034] Extinct: 465, Active: 2568, Unknown: 6367
+  [9500/27034] Extinct: 466, Active: 2603, Unknown: 6431
+  [9600/27034] Extinct: 473, Active: 2636, Unknown: 6491
+  [9700/27034] Extinct: 478, Active: 2658, Unknown: 6564
+  [9800/27034] Extinct: 480, Active: 2686, Unknown: 6634
+  [9900/27034] Extinct: 488, Active: 2713, Unknown: 6699
+  [10000/27034] Extinct: 496, Active: 2748, Unknown: 6756
+  [10100/27034] Extinct: 501, Active: 2768, Unknown: 6831
+  [10200/27034] Extinct: 507, Active: 2792, Unknown: 6901
+  [10300/27034] Extinct: 509, Active: 2827, Unknown: 6964
+  [10400/27034] Extinct: 512, Active: 2853, Unknown: 7035
+  [10500/27034] Extinct: 512, Active: 2884, Unknown: 7104
+  [10600/27034] Extinct: 516, Active: 2903, Unknown: 7181
+  [10700/27034] Extinct: 520, Active: 2936, Unknown: 7244
+  [10800/27034] Extinct: 524, Active: 2963, Unknown: 7313
+  [10900/27034] Extinct: 528, Active: 2993, Unknown: 7379
+  [11000/27034] Extinct: 529, Active: 3023, Unknown: 7448
+  [11100/27034] Extinct: 530, Active: 3060, Unknown: 7510
+  [11200/27034] Extinct: 532, Active: 3090, Unknown: 7578
+  [11300/27034] Extinct: 535, Active: 3122, Unknown: 7643
+  [11400/27034] Extinct: 542, Active: 3155, Unknown: 7703
+  [11500/27034] Extinct: 547, Active: 3188, Unknown: 7765
+  [11600/27034] Extinct: 554, Active: 3221, Unknown: 7825
+  [11700/27034] Extinct: 558, Active: 3254, Unknown: 7888
+  [11800/27034] Extinct: 561, Active: 3285, Unknown: 7954
+  [11900/27034] Extinct: 562, Active: 3318, Unknown: 8020
+  [12000/27034] Extinct: 562, Active: 3352, Unknown: 8086
+  [12100/27034] Extinct: 566, Active: 3387, Unknown: 8147
+  [12200/27034] Extinct: 573, Active: 3420, Unknown: 8207
+  [12300/27034] Extinct: 575, Active: 3449, Unknown: 8276
+  [12400/27034] Extinct: 577, Active: 3482, Unknown: 8341
+  [12500/27034] Extinct: 579, Active: 3509, Unknown: 8412
+  [12600/27034] Extinct: 580, Active: 3530, Unknown: 8490
+  [12700/27034] Extinct: 589, Active: 3550, Unknown: 8561
+  [12800/27034] Extinct: 594, Active: 3567, Unknown: 8639
+  [12900/27034] Extinct: 602, Active: 3588, Unknown: 8710
+  [13000/27034] Extinct: 609, Active: 3618, Unknown: 8773
+  [13100/27034] Extinct: 615, Active: 3644, Unknown: 8841
+  [13200/27034] Extinct: 618, Active: 3678, Unknown: 8904
+  [13300/27034] Extinct: 622, Active: 3718, Unknown: 8960
+  [13400/27034] Extinct: 627, Active: 3750, Unknown: 9023
+  [13500/27034] Extinct: 635, Active: 3781, Unknown: 9084
+  [13600/27034] Extinct: 636, Active: 3810, Unknown: 9154
+  [13700/27034] Extinct: 643, Active: 3843, Unknown: 9214
+  [13800/27034] Extinct: 650, Active: 3870, Unknown: 9280
+  [13900/27034] Extinct: 655, Active: 3895, Unknown: 9350
+  [14000/27034] Extinct: 668, Active: 3924, Unknown: 9408
+  [14100/27034] Extinct: 672, Active: 3950, Unknown: 9478
+  [14200/27034] Extinct: 675, Active: 3983, Unknown: 9542
+  [14300/27034] Extinct: 679, Active: 4014, Unknown: 9607
+  [14400/27034] Extinct: 689, Active: 4036, Unknown: 9675
+  [14500/27034] Extinct: 695, Active: 4057, Unknown: 9748
+  [14600/27034] Extinct: 701, Active: 4086, Unknown: 9813
+  [14700/27034] Extinct: 707, Active: 4112, Unknown: 9881
+  [14800/27034] Extinct: 711, Active: 4145, Unknown: 9944
+  [14900/27034] Extinct: 715, Active: 4180, Unknown: 10005
+  [15000/27034] Extinct: 719, Active: 4211, Unknown: 10070
+  [15100/27034] Extinct: 722, Active: 4245, Unknown: 10133
+  [15200/27034] Extinct: 726, Active: 4271, Unknown: 10203
+  [15300/27034] Extinct: 729, Active: 4300, Unknown: 10271
+  [15400/27034] Extinct: 732, Active: 4324, Unknown: 10344
+  [15500/27034] Extinct: 736, Active: 4354, Unknown: 10410
+  [15600/27034] Extinct: 745, Active: 4394, Unknown: 10461
+  [15700/27034] Extinct: 747, Active: 4428, Unknown: 10525
+  [15800/27034] Extinct: 755, Active: 4456, Unknown: 10589
+  [15900/27034] Extinct: 766, Active: 4488, Unknown: 10646
+  [16000/27034] Extinct: 768, Active: 4516, Unknown: 10716
+  [16100/27034] Extinct: 776, Active: 4543, Unknown: 10781
+  [16200/27034] Extinct: 778, Active: 4570, Unknown: 10852
+  [16300/27034] Extinct: 782, Active: 4598, Unknown: 10920
+  [16400/27034] Extinct: 786, Active: 4616, Unknown: 10998
+  [16500/27034] Extinct: 788, Active: 4643, Unknown: 11069
+  [16600/27034] Extinct: 789, Active: 4664, Unknown: 11147
+  [16700/27034] Extinct: 796, Active: 4696, Unknown: 11208
+  [16800/27034] Extinct: 796, Active: 4697, Unknown: 11307
+  [16900/27034] Extinct: 796, Active: 4703, Unknown: 11401
+  [17000/27034] Extinct: 798, Active: 4713, Unknown: 11489
+  [17100/27034] Extinct: 800, Active: 4727, Unknown: 11573
+  [17200/27034] Extinct: 800, Active: 4736, Unknown: 11664
+  [17300/27034] Extinct: 800, Active: 4739, Unknown: 11761
+  [17400/27034] Extinct: 802, Active: 4750, Unknown: 11848
+  [17500/27034] Extinct: 803, Active: 4757, Unknown: 11940
+  [17600/27034] Extinct: 807, Active: 4776, Unknown: 12017
+  [17700/27034] Extinct: 809, Active: 4804, Unknown: 12087
+  [17800/27034] Extinct: 812, Active: 4833, Unknown: 12155
+  [17900/27034] Extinct: 816, Active: 4858, Unknown: 12226
+  [18000/27034] Extinct: 842, Active: 4871, Unknown: 12287
+  [18100/27034] Extinct: 863, Active: 4891, Unknown: 12346
+  [18200/27034] Extinct: 866, Active: 4925, Unknown: 12409
+  [18300/27034] Extinct: 873, Active: 4939, Unknown: 12488
+  [18400/27034] Extinct: 880, Active: 4967, Unknown: 12553
+  [18500/27034] Extinct: 892, Active: 4989, Unknown: 12619
+  [18600/27034] Extinct: 897, Active: 5019, Unknown: 12684
+  [18700/27034] Extinct: 902, Active: 5052, Unknown: 12746
+  [18800/27034] Extinct: 914, Active: 5080, Unknown: 12806
+  [18900/27034] Extinct: 919, Active: 5099, Unknown: 12882
+  [19000/27034] Extinct: 929, Active: 5135, Unknown: 12936
+  [19100/27034] Extinct: 942, Active: 5163, Unknown: 12995
+  [19200/27034] Extinct: 948, Active: 5190, Unknown: 13062
+  [19300/27034] Extinct: 954, Active: 5208, Unknown: 13138
+  [19400/27034] Extinct: 962, Active: 5240, Unknown: 13198
+  [19500/27034] Extinct: 966, Active: 5263, Unknown: 13271
+  [19600/27034] Extinct: 974, Active: 5286, Unknown: 13340
+  [19700/27034] Extinct: 976, Active: 5314, Unknown: 13410
+  [19800/27034] Extinct: 981, Active: 5345, Unknown: 13474
+  [19900/27034] Extinct: 983, Active: 5369, Unknown: 13548
+  [20000/27034] Extinct: 986, Active: 5400, Unknown: 13614
+  saba1265: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  saba1267: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  saba1268: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  saba1272: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  saba1276: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  saba1279: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  saba1280: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  saba1281: Timeout
+  sadr1247: HTTPSConnectionPool(host='glottolog.org', port=443): Read ti
+  sadr1248: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sadr1249: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sadr1250: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sadu1234: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  saek1240: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  saep1240: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  safa1243: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  safa1244: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  safa1245: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  safa1246: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  safa1247: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  safe1240: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  safw1238: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  saga1256: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  saga1260: Timeout
+  saga1268: Timeout
+  sagz1238: HTTPSConnectionPool(host='glottolog.org', port=443): Read ti
+  [20100/27034] Extinct: 990, Active: 5416, Unknown: 13694
+  saka1303: Timeout
+  saka1304: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sake1246: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sake1247: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sake1249: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sakh1245: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sakh1246: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sakh1247: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  saki1247: Timeout
+  sako1234: Timeout
+  sala1264: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1265: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1266: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1268: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1269: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1270: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1271: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1272: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1273: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1277: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1281: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1282: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1283: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1284: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sala1285: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  salc1238: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  salc1239: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  salc1240: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sale1243: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sale1244: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sali1253: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sali1255: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sali1295: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sali1296: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sali1297: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sali1298: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sali1302: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  sall1238: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  salm1240: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  salo1238: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  salt1242: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  salt1245: HTTPSConnectionPo
+  kodi1246: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kodi1247: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  [10800/27034] Extinct: 519, Active: 2920, Unknown: 7361
+  kodi1248: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kodi1249: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kodi1251: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kodi1252: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kodo1238: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kodr1238: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kodu1239: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koen1239: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kofa1236: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kofe1239: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koff1238: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koff1242: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kofy1242: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kofy1243: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kofy1244: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kogo1235: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kogu1234: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koha1244: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koha1245: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koha1246: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kohg1238: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kohi1247: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kohi1248: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kohi1249: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kohi1250: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kohi1251: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kohn1238: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koho1243: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koho1244: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koho1245: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kohu1243: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  kohu1244: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koia1260: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koia1261: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koia1262: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  koii1238: HTTPSConnectionPool(host='glottolog.org', port=443): Max ret
+  [10900/27034] Extinct: 522, Active: 2940, Unknown: 7438
+  [11000/27034] Extinct: 523, Active: 2970, Unknown: 7507
+  [11100/27034] Extinct: 524, Active: 3007, Unknown: 7569
+  [11200/27034] Extinct: 526, Active: 3037, Unknown: 7637
+  [11300/27034] Extinct: 529, Active: 3069, Unknown: 7702
+  [11400/27034] Extinct: 536, Active: 3102, Unknown: 7762
+  [11500/27034] Extinct: 541, Active: 3135, Unknown: 7824
+  [11600/27034] Extinct: 548, Active: 3168, Unknown: 7884
+  [11700/27034] Extinct: 552, Active: 3201, Unknown: 7947
+  [11800/27034] Extinct: 555, Active: 3232, Unknown: 8013
+  [11900/27034] Extinct: 556, Active: 3265, Unknown: 8079
+  [12000/27034] Extinct: 556, Active: 3299, Unknown: 8145
+  [12100/27034] Extinct: 560, Active: 3334, Unknown: 8206
+  [12200/27034] Extinct: 567, Active: 3367, Unknown: 8266
+  [12300/27034] Extinct: 569, Active: 3396, Unknown: 8335
+  [12400/27034] Extinct: 571, Active: 3429, Unknown: 8400
+  [12500/27034] Extinct: 573, Active: 3456, Unknown: 8471
+  [12600/27034] Extinct: 574, Active: 3477, Unknown: 8549
+  [12700/27034] Extinct: 583, Active: 3497, Unknown: 8620
+  [12800/27034] Extinct: 588, Active: 3514, Unknown: 8698
+  [12900/27034] Extinct: 596, Active: 3535, Unknown: 8769
+  [13000/27034] Extinct: 603, Active: 3565, Unknown: 8832
+  [13100/27034] Extinct: 609, Active: 3591, Unknown: 8900
+  [13200/27034] Extinct: 612, Active: 3625, Unknown: 8963
+  [13300/27034] Extinct: 616, Active: 3665, Unknown: 9019
+  [13400/27034] Extinct: 621, Active: 3697, Unknown: 9082
+  [13500/27034] Extinct: 629, Active: 3728, Unknown: 9143
+  [13600/27034] Extinct: 630, Active: 3757, Unknown: 9213
+  [13700/27034] Extinct: 637, Active: 3790, Unknown: 9273
+  [13800/27034] Extinct: 644, Active: 3817, Unknown: 9339
+  [13900/27034] Extinct: 649, Active: 3842, Unknown: 9409
+  [14000/27034] Extinct: 662, Active: 3871, Unknown: 9467
+  [14100/27034] Extinct: 666, Active: 3897, Unknown: 9537
+  [14200/27034] Extinct: 669, Active: 3930, Unknown: 9601
+  [14300/27034] Extinct: 673, Active: 3961, Unknown: 9666
+  [14400/27034] Extinct: 683, Active: 3983, Unknown: 9734
+  [14500/27034] Extinct: 689, Active: 4004, Unknown: 9807
+  [14600/27034] Extinct: 695, Active: 4033, Unknown: 9872
+  [14700/27034] Extinct: 701, Active: 4059, Unknown: 9940
+  [14800/27034] Extinct: 705, Active: 4092, Unknown: 10003
+  [14900/27034] Extinct: 709, Active: 4127, Unknown: 10064
+  [15000/27034] Extinct: 713, Active: 4158, Unknown: 10129
+  [15100/27034] Extinct: 716, Active: 4192, Unknown: 10192
+  [15200/27034] Extinct: 720, Active: 4218, Unknown: 10262
+  [15300/27034] Extinct: 723, Active: 4247, Unknown: 10330
+  [15400/27034] Extinct: 726, Active: 4271, Unknown: 10403
+  [15500/27034] Extinct: 730, Active: 4301, Unknown: 10469
+  [15600/27034] Extinct: 739, Active: 4341, Unknown: 10520
+  [15700/27034] Extinct: 741, Active: 4375, Unknown: 10584
+  [15800/27034] Extinct: 749, Active: 4403, Unknown: 10648
+  [15900/27034] Extinct: 760, Active: 4435, Unknown: 10705
+  [16000/27034] Extinct: 762, Active: 4463, Unknown: 10775
+  [16100/27034] Extinct: 770, Active: 4490, Unknown: 10840
+  [16200/27034] Extinct: 772, Active: 4517, Unknown: 10911
+  [16300/27034] Extinct: 776, Active: 4545, Unknown: 10979
+  [16400/27034] Extinct: 780, Active: 4563, Unknown: 11057
+  [16500/27034] Extinct: 782, Active: 4590, Unknown: 11128
+  [16600/27034] Extinct: 783, Active: 4611, Unknown: 11206
+  [16700/27034] Extinct: 790, Active: 4643, Unknown: 11267
+  [16800/27034] Extinct: 790, Active: 4644, Unknown: 11366
+  [16900/27034] Extinct: 790, Active: 4650, Unknown: 11460
+  [17000/27034] Extinct: 792, Active: 4660, Unknown: 11548
+  [17100/27034] Extinct: 794, Active: 4674, Unknown: 11632
+  [17200/27034] Extinct: 794, Active: 4683, Unknown: 11723
+  [17300/27034] Extinct: 794, Active: 4686, Unknown: 11820
+  [17400/27034] Extinct: 796, Active: 4697, Unknown: 11907
+  [17500/27034] Extinct: 797, Active: 4704, Unknown: 11999
+  [17600/27034] Extinct: 801, Active: 4723, Unknown: 12076
+  [17700/27034] Extinct: 803, Active: 4751, Unknown: 12146
+  [17800/27034] Extinct: 806, Active: 4780, Unknown: 12214
+  [17900/27034] Extinct: 810, Active: 4805, Unknown: 12285
+  [18000/27034] Extinct: 836, Active: 4818, Unknown: 12346
+  [18100/27034] Extinct: 857, Active: 4838, Unknown: 12405
+  [18200/27034] Extinct: 860, Active: 4872, Unknown: 12468
+  [18300/27034] Extinct: 867, Active: 4886, Unknown: 12547
+  [18400/27034] Extinct: 874, Active: 4914, Unknown: 12612
+  [18500/27034] Extinct: 886, Active: 4936, Unknown: 12678
+  [18600/27034] Extinct: 891, Active: 4966, Unknown: 12743
+  [18700/27034] Extinct: 896, Active: 4999, Unknown: 12805
+  [18800/27034] Extinct: 908, Active: 5027, Unknown: 12865
+  [18900/27034] Extinct: 913, Active: 5046, Unknown: 12941
+  [19000/27034] Extinct: 923, Active: 5082, Unknown: 12995
+  [19100/27034] Extinct: 936, Active: 5110, Unknown: 13054
+  [19200/27034] Extinct: 942, Active: 5137, Unknown: 13121
+  [19300/27034] Extinct: 948, Active: 5155, Unknown: 13197
+  [19400/27034] Extinct: 956, Active: 5187, Unknown: 13257
+  [19500/27034] Extinct: 960, Active: 5210, Unknown: 13330
+  [19600/27034] Extinct: 968, Active: 5233, Unknown: 13399
+  [19700/27034] Extinct: 970, Active: 5261, Unknown: 13469
+  [19800/27034] Extinct: 975, Active: 5292, Unknown: 13533
+  [19900/27034] Extinct: 977, Active: 5316, Unknown: 13607
+  [20000/27034] Extinct: 980, Active: 5347, Unknown: 13673
+  [20100/27034] Extinct: 985, Active: 5375, Unknown: 13740
+  [20200/27034] Extinct: 992, Active: 5403, Unknown: 13805
+  [20300/27034] Extinct: 994, Active: 5431, Unknown: 13875
+  [20400/27034] Extinct: 995, Active: 5460, Unknown: 13945
+  [20500/27034] Extinct: 1002, Active: 5486, Unknown: 14012
+  [20600/27034] Extinct: 1005, Active: 5516, Unknown: 14079
+  [20700/27034] Extinct: 1007, Active: 5549, Unknown: 14144
+  [20800/27034] Extinct: 1011, Active: 5584, Unknown: 14205
+  [20900/27034] Extinct: 1017, Active: 5610, Unknown: 14273
+  [21000/27034] Extinct: 1020, Active: 5641, Unknown: 14339
+  [21100/27034] Extinct: 1021, Active: 5662, Unknown: 14417
+  [21200/27034] Extinct: 1024, Active: 5697, Unknown: 14479
+  [21300/27034] Extinct: 1026, Active: 5725, Unknown: 14549
+  [21400/27034] Extinct: 1030, Active: 5747, Unknown: 14623
+  [21500/27034] Extinct: 1033, Active: 5776, Unknown: 14691
+  [21600/27034] Extinct: 1035, Active: 5798, Unknown: 14767
+  [21700/27034] Extinct: 1035, Active: 5825, Unknown: 14840
+  [21800/27034] Extinct: 1037, Active: 5853, Unknown: 14910
+  [21900/27034] Extinct: 1040, Active: 5883, Unknown: 14977
+  [22000/27034] Extinct: 1042, Active: 5900, Unknown: 15058
+  [22100/27034] Extinct: 1046, Active: 5907, Unknown: 15147
+  [22200/27034] Extinct: 1047, Active: 5909, Unknown: 15244
+  [22300/27034] Extinct: 1051, Active: 5933, Unknown: 15316
+  [22400/27034] Extinct: 1054, Active: 5963, Unknown: 15383
+  [22500/27034] Extinct: 1056, Active: 5991, Unknown: 15453
+  [22600/27034] Extinct: 1061, Active: 6026, Unknown: 15513
+  [22700/27034] Extinct: 1065, Active: 6060, Unknown: 15575
+  [22800/27034] Extinct: 1071, Active: 6087, Unknown: 15642
+  [22900/27034] Extinct: 1073, Active: 6113, Unknown: 15714
+  [23000/27034] Extinct: 1081, Active: 6133, Unknown: 15786
+  [23100/27034] Extinct: 1084, Active: 6171, Unknown: 15845
+  [23200/27034] Extinct: 1086, Active: 6209, Unknown: 15905
+  [23300/27034] Extinct: 1094, Active: 6245, Unknown: 15961
+  [23400/27034] Extinct: 1099, Active: 6271, Unknown: 16030
+  [23500/27034] Extinct: 1104, Active: 6301, Unknown: 16095
+  [23600/27034] Extinct: 1107, Active: 6324, Unknown: 16169
+  [23700/27034] Extinct: 1112, Active: 6359, Unknown: 16229
+  [23800/27034] Extinct: 1120, Active: 6389, Unknown: 16291
+  [23900/27034] Extinct: 1125, Active: 6417, Unknown: 16358
+  [24000/27034] Extinct: 1130, Active: 6451, Unknown: 16419
+  [24100/27034] Extinct: 1135, Active: 6477, Unknown: 16488
+  [24200/27034] Extinct: 1148, Active: 6508, Unknown: 16544
+  [24300/27034] Extinct: 1153, Active: 6538, Unknown: 16609
+  [24400/27034] Extinct: 1162, Active: 6554, Unknown: 16684
+  [24500/27034] Extinct: 1164, Active: 6561, Unknown: 16775
+  [24600/27034] Extinct: 1167, Active: 6571, Unknown: 16862
+  [24700/27034] Extinct: 1176, Active: 6599, Unknown: 16925
+  [24800/27034] Extinct: 1179, Active: 6625, Unknown: 16996
+  [24900/27034] Extinct: 1182, Active: 6648, Unknown: 17070
+  [25000/27034] Extinct: 1185, Active: 6677, Unknown: 17138
+  [25100/27034] Extinct: 1192, Active: 6707, Unknown: 17201
+  [25200/27034] Extinct: 1201, Active: 6738, Unknown: 17261
+  [25300/27034] Extinct: 1212, Active: 6769, Unknown: 17319
+  [25400/27034] Extinct: 1221, Active: 6798, Unknown: 17381
+  [25500/27034] Extinct: 1224, Active: 6823, Unknown: 17453
+  [25600/27034] Extinct: 1225, Active: 6842, Unknown: 17533
+  [25700/27034] Extinct: 1226, Active: 6864, Unknown: 17610
+  [25800/27034] Extinct: 1228, Active: 6869, Unknown: 17703
+  [25900/27034] Extinct: 1228, Active: 6869, Unknown: 17803
+  [26000/27034] Extinct: 1238, Active: 6885, Unknown: 17877
+  [26100/27034] Extinct: 1248, Active: 6909, Unknown: 17943
+  [26200/27034] Extinct: 1261, Active: 6933, Unknown: 18006
+  [26300/27034] Extinct: 1278, Active: 6955, Unknown: 18067
+  [26400/27034] Extinct: 1290, Active: 6989, Unknown: 18121
+  [26500/27034] Extinct: 1298, Active: 7021, Unknown: 18181
+  [26600/27034] Extinct: 1305, Active: 7056, Unknown: 18239
+  [26700/27034] Extinct: 1313, Active: 7085, Unknown: 18302
+  [26800/27034] Extinct: 1325, Active: 7110, Unknown: 18365
+  [26900/27034] Extinct: 1330, Active: 7136, Unknown: 18434
+  [27000/27034] Extinct: 1334, Active: 7165, Unknown: 18501
+
+Cache saved with 27034 entries
+
+Extinction Status Summary:
+----------------------------------------
+Extinct languages: 1335
+Found statuses: ['extinct', 'moribund', 'nearly extinct', 'not endangered', 'shifting', 'threatened']
+Total cached: 27034
+Still unknown: 18526
+
+Example extinct languages:
+  aasa1238
+  abip1241
+  abis1238
+  acro1239
+  adai1235
+  adha1238
+  agav1236
+  aghu1254
+  aghu1256
+  aghw1237
+ aghu1254
+  aghu1256
+  aghw1237
+dha1238
+  agav1236
+  aghu1254
+  aghu1256
+  aghw1237

@@ -1,0 +1,21 @@
+{
+  "id": "beinecke-ms-404",
+  "title": "Beinecke MS 404",
+  "sources": [
+    "yale-beinecke-library"
+  ],
+  "provenances": [
+    "Flanders",
+    "Rhineland"
+  ],
+  "collections": [
+    "beinecke-ms"
+  ],
+  "date": "1300",
+  "country": [
+    "BE",
+    "DE"
+  ],
+  "language": "lati1261",
+  "pages": []
+}

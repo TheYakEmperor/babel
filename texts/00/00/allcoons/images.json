@@ -1,0 +1,36 @@
+{
+  "images": [
+    {
+      "url": "images/1.png",
+      "label": "1"
+    },
+    {
+      "url": "images/2.png",
+      "label": "2"
+    },
+    {
+      "url": "images/3.png",
+      "label": "3"
+    },
+    {
+      "url": "images/4.png",
+      "label": "4"
+    },
+    {
+      "url": "images/5.png",
+      "label": "5"
+    },
+    {
+      "url": "images/6.png",
+      "label": "6"
+    },
+    {
+      "url": "images/7.png",
+      "label": "7"
+    },
+    {
+      "url": "images/8.png",
+      "label": "8"
+    }
+  ]
+}

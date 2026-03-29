@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Croatian Standard</title>
+    <link rel="icon" type="image/webp" href="../../../../../../../../../../../../favicon.webp">
+    <link rel="stylesheet" href="../../../../../../../../../../../../style.css">
+    <!-- Stylesheet injected by update_family_trees.py -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+function initMap(elementId, latitude, longitude) {
+    const container = document.getElementById(elementId);
+    if (!container) return;
+    const map = L.map(elementId).setView([latitude, longitude], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+        minZoom: 2
+    }).addTo(map);
+    const countryCodes = JSON.parse(container.dataset.countries || '[]');
+    
+    // Draw country boundaries if available
+    if (countryCodes && countryCodes.length > 0) {
+        fetch('https://cdn.jsdelivr.net/npm/world-geojson/countries.geojson')
+            .then(r => r.json())
+            .then(geojson => {
+                const countryFeatures = geojson.features.filter(f => {
+                    const code = f.properties.ISO_A2 || f.properties.ADMIN || '';
+                    return countryCodes.includes(code);
+                });
+                L.geoJSON({
+                    type: 'FeatureCollection',
+                    features: countryFeatures
+                }, {
+                    style: {
+                        color: '#B85A4F',
+                        weight: 1.5,
+                        opacity: 0.5,
+                        fillOpacity: 0.08
+                    }
+                }).addTo(map);
+            })
+            .catch(e => console.log(''));
+    }
+
+    // Center point marker
+    L.circleMarker([latitude, longitude], {
+        radius: 8,
+        fillColor: '#B85A4F',
+        color: '#8B4530',
+        weight: 2.5,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`${latitude.toFixed(4)}°, ${longitude.toFixed(4)}°`);
+    
+    setTimeout(() => { map.invalidateSize(); }, 150);
+}
+
+function toggleLargeList(btn) {
+    const list = btn.closest('h3').nextElementSibling;
+    if (list.style.display === 'none') {
+        list.style.display = '';
+        btn.textContent = 'Hide';
+    } else {
+        list.style.display = 'none';
+        btn.textContent = 'Show';
+    }
+}
+    </script>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../../../../../../../../../../../" class="header-logo"><img src="../../../../../../../../../../../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../../../../../../../../../../../" class="sidebar-logo">
+                <img src="../../../../../../../../../../../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../../../../../../../../../../../">Home</a></li>
+                <li><a href="../../../../../../../../../../../../texts-index.html">All Texts</a></li>
+                <li><a href="../../../../../../../../../../../../languages/">Languages</a></li>
+                <li><a href="../../../../../../../../../../../../works/">Works Index</a></li>
+                <li><a href="../../../../../../../../../../../../authors/">Authors</a></li>
+                <li><a href="../../../../../../../../../../../../sources/">Sources</a></li>
+                <li><a href="../../../../../../../../../../../../provenances/">Provenances</a></li>
+                <li><a href="../../../../../../../../../../../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-flags"><a href="../../../../../../../../../../../../countries/croatia/index.html" title="Croatia"><img src="https://flagcdn.com/w40/hr.png" alt="Croatia" class="country-flag"></a><a href="../../../../../../../../../../../../countries/austria/index.html" title="Austria"><img src="https://flagcdn.com/w40/at.png" alt="Austria" class="country-flag"></a><a href="../../../../../../../../../../../../countries/bosnia-and-herzegovina/index.html" title="Bosnia and Herzegovina"><img src="https://flagcdn.com/w40/ba.png" alt="Bosnia and Herzegovina" class="country-flag"></a><a href="../../../../../../../../../../../../countries/hungary/index.html" title="Hungary"><img src="https://flagcdn.com/w40/hu.png" alt="Hungary" class="country-flag"></a><a href="../../../../../../../../../../../../countries/italy/index.html" title="Italy"><img src="https://flagcdn.com/w40/it.png" alt="Italy" class="country-flag"></a><a href="../../../../../../../../../../../../countries/montenegro/index.html" title="Montenegro"><img src="https://flagcdn.com/w40/me.png" alt="Montenegro" class="country-flag"></a><a href="../../../../../../../../../../../../countries/serbia/index.html" title="Serbia"><img src="https://flagcdn.com/w40/rs.png" alt="Serbia" class="country-flag"></a><a href="../../../../../../../../../../../../countries/slovenia/index.html" title="Slovenia"><img src="https://flagcdn.com/w40/si.png" alt="Slovenia" class="country-flag"></a></div>
+<h1>Croatian Standard</h1>
+<p class="language-status">Shifting</p>
+<p class="alternate-names"><strong>Also known as:</strong> An Chróitis, Bahasa Croatia, Bahasa Kroasia, Basa Kroasia, Chorvatština, Chorvátčina, Chorwatska rěc, Chorwatšćina, Chòrwacczi jãzëk, Croat, Croata, Croatais, Croate, Croateg, Croatian, Croatian language, Croatie leid, Croato, Gagana Croatian, Gjuha kroate<span class="hidden-names" id="hidden-croa1245" style="display: none;">, Horvaadi keel, Horvát nyelv, Horvātu valoda, Hrvatski, Hrvatski jezik, Hrvaščina, Hurwat simi, Hırvatça, Idioma croata, Isi-Croatia, Język chorwacki, Kroaatsch, Kroata lingvo, Kroateg, Kroatek, Kroatian kieli, Kroaties, Kroatisch, Kroatische Sprache, Kroatisk, Kroatisk språk, Kroatiska, Kroatų kalba, Kroaziera, Krowodische Sproch, Kroátiagiella, Króatíska, Lengua croata, Limba croată, Lingua croata, Lingua cruata, Língua croata, Pinulongang Krowata, Serbian-Croatian, Serbo-Croat, Serbo-Croatian, Serbocroatian, Xorvat dili, Xırwatki, croate, Łéngua croata, Забони хорватӣ, Харвацкая мова, Хорват йылме, Хорват хэл, Хорват чĕлхи, Хорватаг æвзаг, Хорватский язык, Хорватська мова, Хрватски јазик, Хрватски језик, Хръва́тьскъ ѩꙁꙑ́къ, Хърватски език, Խորվաթերեն, קראאטיש, קרואטית, زبان کروواتی, كرودىيە تىلى, لغة كرواتية, क्रोएशियन भाषा, ক্রোয়েশীয় ভাষা, ภาษาโครเอเชีย, ხორვატული ენა, クロアチア語, 克罗地亚语, 크로아티아어</span> <a href="javascript:void(0)" class="names-toggle" id="toggle-croa1245" data-count="66">and 66 more...</a></p>
+<script>
+document.getElementById('toggle-croa1245').addEventListener('click', function() {
+    var hidden = document.getElementById('hidden-croa1245');
+    var count = this.getAttribute('data-count');
+    if (hidden.style.display === 'none') {
+        hidden.style.display = 'inline';
+        this.textContent = 'show less';
+    } else {
+        hidden.style.display = 'none';
+        this.textContent = 'and ' + count + ' more...';
+    }
+});
+</script>
+        
+        <div class="metadata">
+            <p><strong>Type:</strong> <span class="level-tag dialect">Dialect</span></p>
+            <p><strong>Glottolog ID:</strong> croa1245</p>
+            <p><strong>ISO 639-3 Code:</strong> hrv</p>
+        </div>
+        
+        <section>
+            <h2>Language Family</h2>
+<div class="breadcrumb-tree">
+    <a href="../../../../../../../../../../index.html">Indo-European</a> / <a href="../../../../../../../../../index.html">Classical Indo-European</a> / <a href="../../../../../../../../index.html">Balto-Slavic</a> / <a href="../../../../../../../index.html">Slavic</a> / <a href="../../../../../../index.html">South Slavic</a> / <a href="../../../../../index.html">Western South Slavic</a> / <a href="../../../../index.html">Serbian-Croatian-Bosnian</a> / <a href="../../../index.html">Shtokavski</a> / <a href="../../index.html">New Shtokavian</a> / <a href="../index.html">Eastern Herzegovinian Shtokavian</a> / <span class="current">Croatian Standard</span>
+</div>
+        </section>
+        <section>
+<div class="locality-section">
+    <h3>Geographic Location</h3>
+    <div id="map-croa1245" class="language-map" data-countries='["AT", "BA", "HR", "HU", "IT", "ME", "RS", "SI"]'></div>
+    <div class="geographic-info">
+        <p><strong>Countries:</strong> Austria, Bosnia and Herzegovina, Croatia, Hungary, Italy, Montenegro, Serbia, Slovenia</p>
+        <p><strong>Coordinates:</strong> 45.5550°, 15.9820°</p>
+    </div>
+</div>
+    <script>
+    // Initialize map for croa1245
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap('map-croa1245', 45.555, 15.982);
+        });
+    } else {
+        initMap('map-croa1245', 45.555, 15.982);
+    }
+</script>
+        </section>
+        <section>
+            <h2>Information</h2>
+            <p>This page is for the Croatian Standard language/dialect.</p>
+            <p>Data sourced from <a href="https://glottolog.org">Glottolog</a>, a comprehensive reference information for the world's languages.</p>
+        </section>
+        
+        <section>
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="https://glottolog.org/resource/languoid/id/croa1245">View on Glottolog</a></li>
+                <li><a href="https://www.wals.info">World Atlas of Language Structures (WALS)</a></li>
+                <li><a href="https://www.ethnologue.com">Ethnologue</a></li>
+            </ul>
+        </section>
+        
+        <hr>
+        <footer>
+            <p><small>Generated from Glottolog 5.2 data. Last updated: January 12, 2026</small></p>
+        </footer>
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <script src="../../../../../../../../../../../../search-index.js"></script>
+    <script src="../../../../../../../../../../../../search.js"></script>
+</body>
+</html>

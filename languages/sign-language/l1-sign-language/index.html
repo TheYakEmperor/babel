@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L1 Sign Language</title>
+    <link rel="icon" type="image/webp" href="../../../favicon.webp">
+    <link rel="stylesheet" href="../../../style.css">
+    <!-- Stylesheet injected by update_family_trees.py -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+function initMap(elementId, latitude, longitude) {
+    const container = document.getElementById(elementId);
+    if (!container) return;
+    const map = L.map(elementId).setView([latitude, longitude], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+        minZoom: 2
+    }).addTo(map);
+    const countryCodes = JSON.parse(container.dataset.countries || '[]');
+    
+    // Draw country boundaries if available
+    if (countryCodes && countryCodes.length > 0) {
+        fetch('https://cdn.jsdelivr.net/npm/world-geojson/countries.geojson')
+            .then(r => r.json())
+            .then(geojson => {
+                const countryFeatures = geojson.features.filter(f => {
+                    const code = f.properties.ISO_A2 || f.properties.ADMIN || '';
+                    return countryCodes.includes(code);
+                });
+                L.geoJSON({
+                    type: 'FeatureCollection',
+                    features: countryFeatures
+                }, {
+                    style: {
+                        color: '#B85A4F',
+                        weight: 1.5,
+                        opacity: 0.5,
+                        fillOpacity: 0.08
+                    }
+                }).addTo(map);
+            })
+            .catch(e => console.log(''));
+    }
+
+    // Center point marker
+    L.circleMarker([latitude, longitude], {
+        radius: 8,
+        fillColor: '#B85A4F',
+        color: '#8B4530',
+        weight: 2.5,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`${latitude.toFixed(4)}°, ${longitude.toFixed(4)}°`);
+    
+    setTimeout(() => { map.invalidateSize(); }, 150);
+}
+
+function toggleLargeList(btn) {
+    const list = btn.closest('h3').nextElementSibling;
+    if (list.style.display === 'none') {
+        list.style.display = '';
+        btn.textContent = 'Hide';
+    } else {
+        list.style.display = 'none';
+        btn.textContent = 'Show';
+    }
+}
+    </script>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../../" class="header-logo"><img src="../../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../../" class="sidebar-logo">
+                <img src="../../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../../">Home</a></li>
+                <li><a href="../../../texts-index.html">All Texts</a></li>
+                <li><a href="../../../languages/">Languages</a></li>
+                <li><a href="../../../works/">Works Index</a></li>
+                <li><a href="../../../authors/">Authors</a></li>
+                <li><a href="../../../sources/">Sources</a></li>
+                <li><a href="../../../provenances/">Provenances</a></li>
+                <li><a href="../../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-flags"><a href="../../../countries/afghanistan/index.html" title="Afghanistan"><img src="https://flagcdn.com/w40/af.png" alt="Afghanistan" class="country-flag"></a><a href="../../../countries/albania/index.html" title="Albania"><img src="https://flagcdn.com/w40/al.png" alt="Albania" class="country-flag"></a><a href="../../../countries/argentina/index.html" title="Argentina"><img src="https://flagcdn.com/w40/ar.png" alt="Argentina" class="country-flag"></a><a href="../../../countries/austria/index.html" title="Austria"><img src="https://flagcdn.com/w40/at.png" alt="Austria" class="country-flag"></a><a href="../../../countries/australia/index.html" title="Australia"><img src="https://flagcdn.com/w40/au.png" alt="Australia" class="country-flag"></a><a href="../../../countries/åland-islands/index.html" title="Åland Islands"><img src="https://flagcdn.com/w40/ax.png" alt="Åland Islands" class="country-flag"></a><a href="../../../countries/barbados/index.html" title="Barbados"><img src="https://flagcdn.com/w40/bb.png" alt="Barbados" class="country-flag"></a><a href="../../../countries/bangladesh/index.html" title="Bangladesh"><img src="https://flagcdn.com/w40/bd.png" alt="Bangladesh" class="country-flag"></a><a href="../../../countries/belgium/index.html" title="Belgium"><img src="https://flagcdn.com/w40/be.png" alt="Belgium" class="country-flag"></a><a href="../../../countries/burkina-faso/index.html" title="Burkina Faso"><img src="https://flagcdn.com/w40/bf.png" alt="Burkina Faso" class="country-flag"></a><a href="../../../countries/bulgaria/index.html" title="Bulgaria"><img src="https://flagcdn.com/w40/bg.png" alt="Bulgaria" class="country-flag"></a><a href="../../../countries/burundi/index.html" title="Burundi"><img src="https://flagcdn.com/w40/bi.png" alt="Burundi" class="country-flag"></a><a href="../../../countries/benin/index.html" title="Benin"><img src="https://flagcdn.com/w40/bj.png" alt="Benin" class="country-flag"></a><a href="../../../countries/bolivia/index.html" title="Bolivia"><img src="https://flagcdn.com/w40/bo.png" alt="Bolivia" class="country-flag"></a><a href="../../../countries/brazil/index.html" title="Brazil"><img src="https://flagcdn.com/w40/br.png" alt="Brazil" class="country-flag"></a><a href="../../../countries/bhutan/index.html" title="Bhutan"><img src="https://flagcdn.com/w40/bt.png" alt="Bhutan" class="country-flag"></a><a href="../../../countries/canada/index.html" title="Canada"><img src="https://flagcdn.com/w40/ca.png" alt="Canada" class="country-flag"></a><a href="../../../countries/democratic-republic-of-the-congo/index.html" title="Democratic Republic of the Congo"><img src="https://flagcdn.com/w40/cd.png" alt="Democratic Republic of the Congo" class="country-flag"></a><a href="../../../countries/central-african-republic/index.html" title="Central African Republic"><img src="https://flagcdn.com/w40/cf.png" alt="Central African Republic" class="country-flag"></a><a href="../../../countries/switzerland/index.html" title="Switzerland"><img src="https://flagcdn.com/w40/ch.png" alt="Switzerland" class="country-flag"></a><a href="../../../countries/côte-divoire/index.html" title="Côte d'Ivoire"><img src="https://flagcdn.com/w40/ci.png" alt="Côte d'Ivoire" class="country-flag"></a><a href="../../../countries/chile/index.html" title="Chile"><img src="https://flagcdn.com/w40/cl.png" alt="Chile" class="country-flag"></a><a href="../../../countries/cameroon/index.html" title="Cameroon"><img src="https://flagcdn.com/w40/cm.png" alt="Cameroon" class="country-flag"></a><a href="../../../countries/china/index.html" title="China"><img src="https://flagcdn.com/w40/cn.png" alt="China" class="country-flag"></a><a href="../../../countries/colombia/index.html" title="Colombia"><img src="https://flagcdn.com/w40/co.png" alt="Colombia" class="country-flag"></a><a href="../../../countries/costa-rica/index.html" title="Costa Rica"><img src="https://flagcdn.com/w40/cr.png" alt="Costa Rica" class="country-flag"></a><a href="../../../countries/cuba/index.html" title="Cuba"><img src="https://flagcdn.com/w40/cu.png" alt="Cuba" class="country-flag"></a><a href="../../../countries/czech-republic/index.html" title="Czech Republic"><img src="https://flagcdn.com/w40/cz.png" alt="Czech Republic" class="country-flag"></a><a href="../../../countries/germany/index.html" title="Germany"><img src="https://flagcdn.com/w40/de.png" alt="Germany" class="country-flag"></a><a href="../../../countries/denmark/index.html" title="Denmark"><img src="https://flagcdn.com/w40/dk.png" alt="Denmark" class="country-flag"></a><a href="../../../countries/dominican-republic/index.html" title="Dominican Republic"><img src="https://flagcdn.com/w40/do.png" alt="Dominican Republic" class="country-flag"></a><a href="../../../countries/algeria/index.html" title="Algeria"><img src="https://flagcdn.com/w40/dz.png" alt="Algeria" class="country-flag"></a><a href="../../../countries/ecuador/index.html" title="Ecuador"><img src="https://flagcdn.com/w40/ec.png" alt="Ecuador" class="country-flag"></a><a href="../../../countries/estonia/index.html" title="Estonia"><img src="https://flagcdn.com/w40/ee.png" alt="Estonia" class="country-flag"></a><a href="../../../countries/egypt/index.html" title="Egypt"><img src="https://flagcdn.com/w40/eg.png" alt="Egypt" class="country-flag"></a><a href="../../../countries/spain/index.html" title="Spain"><img src="https://flagcdn.com/w40/es.png" alt="Spain" class="country-flag"></a><a href="../../../countries/ethiopia/index.html" title="Ethiopia"><img src="https://flagcdn.com/w40/et.png" alt="Ethiopia" class="country-flag"></a><a href="../../../countries/finland/index.html" title="Finland"><img src="https://flagcdn.com/w40/fi.png" alt="Finland" class="country-flag"></a><a href="../../../countries/fiji/index.html" title="Fiji"><img src="https://flagcdn.com/w40/fj.png" alt="Fiji" class="country-flag"></a><a href="../../../countries/faroe-islands/index.html" title="Faroe Islands"><img src="https://flagcdn.com/w40/fo.png" alt="Faroe Islands" class="country-flag"></a><a href="../../../countries/france/index.html" title="France"><img src="https://flagcdn.com/w40/fr.png" alt="France" class="country-flag"></a><a href="../../../countries/gabon/index.html" title="Gabon"><img src="https://flagcdn.com/w40/ga.png" alt="Gabon" class="country-flag"></a><a href="../../../countries/united-kingdom/index.html" title="United Kingdom"><img src="https://flagcdn.com/w40/gb.png" alt="United Kingdom" class="country-flag"></a><a href="../../../countries/georgia/index.html" title="Georgia"><img src="https://flagcdn.com/w40/ge.png" alt="Georgia" class="country-flag"></a><a href="../../../countries/ghana/index.html" title="Ghana"><img src="https://flagcdn.com/w40/gh.png" alt="Ghana" class="country-flag"></a><a href="../../../countries/greenland/index.html" title="Greenland"><img src="https://flagcdn.com/w40/gl.png" alt="Greenland" class="country-flag"></a><a href="../../../countries/gambia/index.html" title="Gambia"><img src="https://flagcdn.com/w40/gm.png" alt="Gambia" class="country-flag"></a><a href="../../../countries/guinea/index.html" title="Guinea"><img src="https://flagcdn.com/w40/gn.png" alt="Guinea" class="country-flag"></a><a href="../../../countries/greece/index.html" title="Greece"><img src="https://flagcdn.com/w40/gr.png" alt="Greece" class="country-flag"></a><a href="../../../countries/guatemala/index.html" title="Guatemala"><img src="https://flagcdn.com/w40/gt.png" alt="Guatemala" class="country-flag"></a><a href="../../../countries/guinea-bissau/index.html" title="Guinea-Bissau"><img src="https://flagcdn.com/w40/gw.png" alt="Guinea-Bissau" class="country-flag"></a><a href="../../../countries/guyana/index.html" title="Guyana"><img src="https://flagcdn.com/w40/gy.png" alt="Guyana" class="country-flag"></a><a href="../../../countries/honduras/index.html" title="Honduras"><img src="https://flagcdn.com/w40/hn.png" alt="Honduras" class="country-flag"></a><a href="../../../countries/croatia/index.html" title="Croatia"><img src="https://flagcdn.com/w40/hr.png" alt="Croatia" class="country-flag"></a><a href="../../../countries/haiti/index.html" title="Haiti"><img src="https://flagcdn.com/w40/ht.png" alt="Haiti" class="country-flag"></a><a href="../../../countries/hungary/index.html" title="Hungary"><img src="https://flagcdn.com/w40/hu.png" alt="Hungary" class="country-flag"></a><a href="../../../countries/indonesia/index.html" title="Indonesia"><img src="https://flagcdn.com/w40/id.png" alt="Indonesia" class="country-flag"></a><a href="../../../countries/ireland/index.html" title="Ireland"><img src="https://flagcdn.com/w40/ie.png" alt="Ireland" class="country-flag"></a><a href="../../../countries/israel/index.html" title="Israel"><img src="https://flagcdn.com/w40/il.png" alt="Israel" class="country-flag"></a><a href="../../../countries/india/index.html" title="India"><img src="https://flagcdn.com/w40/in.png" alt="India" class="country-flag"></a><a href="../../../countries/iraq/index.html" title="Iraq"><img src="https://flagcdn.com/w40/iq.png" alt="Iraq" class="country-flag"></a><a href="../../../countries/iran/index.html" title="Iran"><img src="https://flagcdn.com/w40/ir.png" alt="Iran" class="country-flag"></a><a href="../../../countries/iceland/index.html" title="Iceland"><img src="https://flagcdn.com/w40/is.png" alt="Iceland" class="country-flag"></a><a href="../../../countries/italy/index.html" title="Italy"><img src="https://flagcdn.com/w40/it.png" alt="Italy" class="country-flag"></a><a href="../../../countries/jamaica/index.html" title="Jamaica"><img src="https://flagcdn.com/w40/jm.png" alt="Jamaica" class="country-flag"></a><a href="../../../countries/jordan/index.html" title="Jordan"><img src="https://flagcdn.com/w40/jo.png" alt="Jordan" class="country-flag"></a><a href="../../../countries/japan/index.html" title="Japan"><img src="https://flagcdn.com/w40/jp.png" alt="Japan" class="country-flag"></a><a href="../../../countries/kenya/index.html" title="Kenya"><img src="https://flagcdn.com/w40/ke.png" alt="Kenya" class="country-flag"></a><a href="../../../countries/cambodia/index.html" title="Cambodia"><img src="https://flagcdn.com/w40/kh.png" alt="Cambodia" class="country-flag"></a><a href="../../../countries/south-korea/index.html" title="South Korea"><img src="https://flagcdn.com/w40/kr.png" alt="South Korea" class="country-flag"></a><a href="../../../countries/kuwait/index.html" title="Kuwait"><img src="https://flagcdn.com/w40/kw.png" alt="Kuwait" class="country-flag"></a><a href="../../../countries/cayman-islands/index.html" title="Cayman Islands"><img src="https://flagcdn.com/w40/ky.png" alt="Cayman Islands" class="country-flag"></a><a href="../../../countries/liechtenstein/index.html" title="Liechtenstein"><img src="https://flagcdn.com/w40/li.png" alt="Liechtenstein" class="country-flag"></a><a href="../../../countries/sri-lanka/index.html" title="Sri Lanka"><img src="https://flagcdn.com/w40/lk.png" alt="Sri Lanka" class="country-flag"></a><a href="../../../countries/lesotho/index.html" title="Lesotho"><img src="https://flagcdn.com/w40/ls.png" alt="Lesotho" class="country-flag"></a><a href="../../../countries/lithuania/index.html" title="Lithuania"><img src="https://flagcdn.com/w40/lt.png" alt="Lithuania" class="country-flag"></a><a href="../../../countries/latvia/index.html" title="Latvia"><img src="https://flagcdn.com/w40/lv.png" alt="Latvia" class="country-flag"></a><a href="../../../countries/libya/index.html" title="Libya"><img src="https://flagcdn.com/w40/ly.png" alt="Libya" class="country-flag"></a><a href="../../../countries/morocco/index.html" title="Morocco"><img src="https://flagcdn.com/w40/ma.png" alt="Morocco" class="country-flag"></a><a href="../../../countries/moldova/index.html" title="Moldova"><img src="https://flagcdn.com/w40/md.png" alt="Moldova" class="country-flag"></a><a href="../../../countries/madagascar/index.html" title="Madagascar"><img src="https://flagcdn.com/w40/mg.png" alt="Madagascar" class="country-flag"></a><a href="../../../countries/mali/index.html" title="Mali"><img src="https://flagcdn.com/w40/ml.png" alt="Mali" class="country-flag"></a><a href="../../../countries/myanmar/index.html" title="Myanmar"><img src="https://flagcdn.com/w40/mm.png" alt="Myanmar" class="country-flag"></a><a href="../../../countries/mongolia/index.html" title="Mongolia"><img src="https://flagcdn.com/w40/mn.png" alt="Mongolia" class="country-flag"></a><a href="../../../countries/mauritania/index.html" title="Mauritania"><img src="https://flagcdn.com/w40/mr.png" alt="Mauritania" class="country-flag"></a><a href="../../../countries/malta/index.html" title="Malta"><img src="https://flagcdn.com/w40/mt.png" alt="Malta" class="country-flag"></a><a href="../../../countries/mauritius/index.html" title="Mauritius"><img src="https://flagcdn.com/w40/mu.png" alt="Mauritius" class="country-flag"></a><a href="../../../countries/malawi/index.html" title="Malawi"><img src="https://flagcdn.com/w40/mw.png" alt="Malawi" class="country-flag"></a><a href="../../../countries/mexico/index.html" title="Mexico"><img src="https://flagcdn.com/w40/mx.png" alt="Mexico" class="country-flag"></a><a href="../../../countries/malaysia/index.html" title="Malaysia"><img src="https://flagcdn.com/w40/my.png" alt="Malaysia" class="country-flag"></a><a href="../../../countries/mozambique/index.html" title="Mozambique"><img src="https://flagcdn.com/w40/mz.png" alt="Mozambique" class="country-flag"></a><a href="../../../countries/namibia/index.html" title="Namibia"><img src="https://flagcdn.com/w40/na.png" alt="Namibia" class="country-flag"></a><a href="../../../countries/nigeria/index.html" title="Nigeria"><img src="https://flagcdn.com/w40/ng.png" alt="Nigeria" class="country-flag"></a><a href="../../../countries/nicaragua/index.html" title="Nicaragua"><img src="https://flagcdn.com/w40/ni.png" alt="Nicaragua" class="country-flag"></a><a href="../../../countries/netherlands/index.html" title="Netherlands"><img src="https://flagcdn.com/w40/nl.png" alt="Netherlands" class="country-flag"></a><a href="../../../countries/norway/index.html" title="Norway"><img src="https://flagcdn.com/w40/no.png" alt="Norway" class="country-flag"></a><a href="../../../countries/nepal/index.html" title="Nepal"><img src="https://flagcdn.com/w40/np.png" alt="Nepal" class="country-flag"></a><a href="../../../countries/new-zealand/index.html" title="New Zealand"><img src="https://flagcdn.com/w40/nz.png" alt="New Zealand" class="country-flag"></a><a href="../../../countries/panama/index.html" title="Panama"><img src="https://flagcdn.com/w40/pa.png" alt="Panama" class="country-flag"></a><a href="../../../countries/peru/index.html" title="Peru"><img src="https://flagcdn.com/w40/pe.png" alt="Peru" class="country-flag"></a><a href="../../../countries/papua-new-guinea/index.html" title="Papua New Guinea"><img src="https://flagcdn.com/w40/pg.png" alt="Papua New Guinea" class="country-flag"></a><a href="../../../countries/philippines/index.html" title="Philippines"><img src="https://flagcdn.com/w40/ph.png" alt="Philippines" class="country-flag"></a><a href="../../../countries/pakistan/index.html" title="Pakistan"><img src="https://flagcdn.com/w40/pk.png" alt="Pakistan" class="country-flag"></a><a href="../../../countries/poland/index.html" title="Poland"><img src="https://flagcdn.com/w40/pl.png" alt="Poland" class="country-flag"></a><a href="../../../countries/puerto-rico/index.html" title="Puerto Rico"><img src="https://flagcdn.com/w40/pr.png" alt="Puerto Rico" class="country-flag"></a><a href="../../../countries/portugal/index.html" title="Portugal"><img src="https://flagcdn.com/w40/pt.png" alt="Portugal" class="country-flag"></a><a href="../../../countries/paraguay/index.html" title="Paraguay"><img src="https://flagcdn.com/w40/py.png" alt="Paraguay" class="country-flag"></a><a href="../../../countries/romania/index.html" title="Romania"><img src="https://flagcdn.com/w40/ro.png" alt="Romania" class="country-flag"></a><a href="../../../countries/serbia/index.html" title="Serbia"><img src="https://flagcdn.com/w40/rs.png" alt="Serbia" class="country-flag"></a><a href="../../../countries/russia/index.html" title="Russia"><img src="https://flagcdn.com/w40/ru.png" alt="Russia" class="country-flag"></a><a href="../../../countries/rwanda/index.html" title="Rwanda"><img src="https://flagcdn.com/w40/rw.png" alt="Rwanda" class="country-flag"></a><a href="../../../countries/saudi-arabia/index.html" title="Saudi Arabia"><img src="https://flagcdn.com/w40/sa.png" alt="Saudi Arabia" class="country-flag"></a><a href="../../../countries/solomon-islands/index.html" title="Solomon Islands"><img src="https://flagcdn.com/w40/sb.png" alt="Solomon Islands" class="country-flag"></a><a href="../../../countries/seychelles/index.html" title="Seychelles"><img src="https://flagcdn.com/w40/sc.png" alt="Seychelles" class="country-flag"></a><a href="../../../countries/sweden/index.html" title="Sweden"><img src="https://flagcdn.com/w40/se.png" alt="Sweden" class="country-flag"></a><a href="../../../countries/singapore/index.html" title="Singapore"><img src="https://flagcdn.com/w40/sg.png" alt="Singapore" class="country-flag"></a><a href="../../../countries/slovenia/index.html" title="Slovenia"><img src="https://flagcdn.com/w40/si.png" alt="Slovenia" class="country-flag"></a><a href="../../../countries/slovakia/index.html" title="Slovakia"><img src="https://flagcdn.com/w40/sk.png" alt="Slovakia" class="country-flag"></a><a href="../../../countries/sierra-leone/index.html" title="Sierra Leone"><img src="https://flagcdn.com/w40/sl.png" alt="Sierra Leone" class="country-flag"></a><a href="../../../countries/senegal/index.html" title="Senegal"><img src="https://flagcdn.com/w40/sn.png" alt="Senegal" class="country-flag"></a><a href="../../../countries/suriname/index.html" title="Suriname"><img src="https://flagcdn.com/w40/sr.png" alt="Suriname" class="country-flag"></a><a href="../../../countries/south-sudan/index.html" title="South Sudan"><img src="https://flagcdn.com/w40/ss.png" alt="South Sudan" class="country-flag"></a><a href="../../../countries/são-tomé-and-príncipe/index.html" title="São Tomé and Príncipe"><img src="https://flagcdn.com/w40/st.png" alt="São Tomé and Príncipe" class="country-flag"></a><a href="../../../countries/el-salvador/index.html" title="El Salvador"><img src="https://flagcdn.com/w40/sv.png" alt="El Salvador" class="country-flag"></a><a href="../../../countries/chad/index.html" title="Chad"><img src="https://flagcdn.com/w40/td.png" alt="Chad" class="country-flag"></a><a href="../../../countries/togo/index.html" title="Togo"><img src="https://flagcdn.com/w40/tg.png" alt="Togo" class="country-flag"></a><a href="../../../countries/thailand/index.html" title="Thailand"><img src="https://flagcdn.com/w40/th.png" alt="Thailand" class="country-flag"></a><a href="../../../countries/tunisia/index.html" title="Tunisia"><img src="https://flagcdn.com/w40/tn.png" alt="Tunisia" class="country-flag"></a><a href="../../../countries/turkey/index.html" title="Turkey"><img src="https://flagcdn.com/w40/tr.png" alt="Turkey" class="country-flag"></a><a href="../../../countries/trinidad-and-tobago/index.html" title="Trinidad and Tobago"><img src="https://flagcdn.com/w40/tt.png" alt="Trinidad and Tobago" class="country-flag"></a><a href="../../../countries/taiwan/index.html" title="Taiwan"><img src="https://flagcdn.com/w40/tw.png" alt="Taiwan" class="country-flag"></a><a href="../../../countries/tanzania/index.html" title="Tanzania"><img src="https://flagcdn.com/w40/tz.png" alt="Tanzania" class="country-flag"></a><a href="../../../countries/ukraine/index.html" title="Ukraine"><img src="https://flagcdn.com/w40/ua.png" alt="Ukraine" class="country-flag"></a><a href="../../../countries/uganda/index.html" title="Uganda"><img src="https://flagcdn.com/w40/ug.png" alt="Uganda" class="country-flag"></a><a href="../../../countries/united-states/index.html" title="United States"><img src="https://flagcdn.com/w40/us.png" alt="United States" class="country-flag"></a><a href="../../../countries/uruguay/index.html" title="Uruguay"><img src="https://flagcdn.com/w40/uy.png" alt="Uruguay" class="country-flag"></a><a href="../../../countries/venezuela/index.html" title="Venezuela"><img src="https://flagcdn.com/w40/ve.png" alt="Venezuela" class="country-flag"></a><a href="../../../countries/vietnam/index.html" title="Vietnam"><img src="https://flagcdn.com/w40/vn.png" alt="Vietnam" class="country-flag"></a><a href="../../../countries/vanuatu/index.html" title="Vanuatu"><img src="https://flagcdn.com/w40/vu.png" alt="Vanuatu" class="country-flag"></a><a href="../../../countries/yemen/index.html" title="Yemen"><img src="https://flagcdn.com/w40/ye.png" alt="Yemen" class="country-flag"></a><a href="../../../countries/south-africa/index.html" title="South Africa"><img src="https://flagcdn.com/w40/za.png" alt="South Africa" class="country-flag"></a><a href="../../../countries/zambia/index.html" title="Zambia"><img src="https://flagcdn.com/w40/zm.png" alt="Zambia" class="country-flag"></a><a href="../../../countries/zimbabwe/index.html" title="Zimbabwe"><img src="https://flagcdn.com/w40/zw.png" alt="Zimbabwe" class="country-flag"></a></div>
+<h1>L1 Sign Language</h1>
+<p class="alternate-names"><strong>Also known as:</strong> Deaf Sign Language</p>
+        
+        <div class="metadata">
+            <p><strong>Type:</strong> <span class="level-tag family">Family</span></p>
+            <p><strong>Glottolog ID:</strong> deaf1237</p>
+            
+        </div>
+        
+        <section>
+            <h2>Language Family</h2>
+<div class="breadcrumb-tree">
+    <a href="../index.html">Sign Language</a> / <span class="current">L1 Sign Language</span>
+</div>
+        </section>
+        <section>
+<div class="locality-section">
+    <h3>Geographic Information</h3>
+    <div class="geographic-info">
+        <p><strong>Countries:</strong> Afghanistan, Albania, Argentina, Austria, Australia, Åland Islands, Barbados, Bangladesh, Belgium, Burkina Faso, Bulgaria, Burundi, Benin, Bolivia, Brazil, Bhutan, Canada, Democratic Republic of the Congo, Central African Republic, Switzerland, Côte d'Ivoire, Chile, Cameroon, China, Colombia, Costa Rica, Cuba, Czech Republic, Germany, Denmark, Dominican Republic, Algeria, Ecuador, Estonia, Egypt, Spain, Ethiopia, Finland, Fiji, Faroe Islands, France, Gabon, United Kingdom, Georgia, Ghana, Greenland, Gambia, Guinea, Greece, Guatemala, Guinea-Bissau, Guyana, Honduras, Croatia, Haiti, Hungary, Indonesia, Ireland, Israel, India, Iraq, Iran, Iceland, Italy, Jamaica, Jordan, Japan, Kenya, Cambodia, South Korea, Kuwait, Cayman Islands, Liechtenstein, Sri Lanka, Lesotho, Lithuania, Latvia, Libya, Morocco, Moldova, Madagascar, Mali, Myanmar, Mongolia, Mauritania, Malta, Mauritius, Malawi, Mexico, Malaysia, Mozambique, Namibia, Nigeria, Nicaragua, Netherlands, Norway, Nepal, New Zealand, Panama, Peru, Papua New Guinea, Philippines, Pakistan, Poland, Puerto Rico, Portugal, Paraguay, Romania, Serbia, Russia, Rwanda, Saudi Arabia, Solomon Islands, Seychelles, Sweden, Singapore, Slovenia, Slovakia, Sierra Leone, Senegal, Suriname, South Sudan, São Tomé and Príncipe, El Salvador, Chad, Togo, Thailand, Tunisia, Turkey, Trinidad and Tobago, Taiwan, Tanzania, Ukraine, Uganda, United States, Uruguay, Venezuela, Vietnam, Vanuatu, Yemen, South Africa, Zambia, Zimbabwe</p>
+    </div>
+</div>
+        </section>
+        <section>
+<div class="children-section">
+<h3>Sub-families [17]</h3>
+<ul class="children-list">
+<li><a href="arab-sign/index.html">Arab Sign</a></li>
+<li><a href="bslic/index.html">BSLic</a></li>
+<li><a href="cslic/index.html">CSLic</a></li>
+<li><a href="dgsic/index.html">DGSic</a></li>
+<li><a href="indo-pakistani-nepalese-sign/index.html">Indo-Pakistani-Nepalese Sign</a></li>
+<li><a href="jslic/index.html">JSLic</a></li>
+<li><a href="lsfic/index.html">LSFic</a></li>
+<li><a href="meemul-tziij/index.html">Meemul-Tziij</a></li>
+<li><a href="myanmar-sign/index.html">Myanmar Sign</a></li>
+<li><a href="okslic/index.html">† OKSLic</a></li>
+<li><a href="old-chiangmai-bangkok-sign/index.html">Old Chiangmai-Bangkok Sign</a></li>
+<li><a href="providencia-cayman-sign/index.html">Providencia-Cayman Sign</a></li>
+<li><a href="rslic/index.html">RSLic</a></li>
+<li><a href="spanish-sign/index.html">Spanish Sign</a></li>
+<li><a href="swedish-sign/index.html">Swedish Sign</a></li>
+<li><a href="unclassified-l1-sign-language/index.html">Unclassified L1 Sign Language</a></li>
+<li><a href="vietnamese-sign/index.html">Vietnamese Sign</a></li>
+</ul>
+<h3>Languages [105] <button class="tree-btn" onclick="toggleLargeList(this)">Show</button></h3>
+<ul class="children-list large-list" style="display: none;">
+<li><a href="adamorobe-sign-language/index.html">Adamorobe Sign Language</a></li>
+<li><a href="afghan-sign-language/index.html">Afghan Sign Language</a></li>
+<li><a href="al-sayyid-bedouin-sign-language/index.html">Al-Sayyid Bedouin Sign Language</a></li>
+<li><a href="albanian-sign-language/index.html">Albanian Sign Language</a></li>
+<li><a href="albarradas-sign-language/index.html">Albarradas Sign Language</a></li>
+<li><a href="alipur-sign-language/index.html">Alipur Sign Language</a></li>
+<li><a href="amami-o-shima-sign-language/index.html">Amami O Shima Sign Language</a></li>
+<li><a href="angami-naga-sign-language/index.html">Angami Naga Sign Language</a></li>
+<li><a href="arab-el-naim-sign-language/index.html">Arab El-Naim Sign Language</a></li>
+<li><a href="argentine-sign-language/index.html">Argentine Sign Language</a></li>
+<li><a href="ban-khor-sign-language/index.html">Ban Khor Sign Language</a></li>
+<li><a href="bay-islands-sign-language/index.html">Bay Islands Sign Language</a></li>
+<li><a href="berbey-sign-language/index.html">Berbey Sign Language</a></li>
+<li><a href="bhutanese-sign-language/index.html">Bhutanese Sign Language</a></li>
+<li><a href="bribri-sign-language/index.html">Bribri Sign Language</a></li>
+<li><a href="brunca-sign-language/index.html">Brunca Sign Language</a></li>
+<li><a href="bura-sign-language/index.html">Bura Sign Language</a></li>
+<li><a href="cambodian-sign-language/index.html">Cambodian Sign Language</a></li>
+<li><a href="cena/index.html">Cena</a></li>
+<li><a href="central-taurus-sign-language/index.html">Central Taurus Sign Language</a></li>
+<li><a href="chilean-sign-language/index.html">Chilean Sign Language</a></li>
+<li><a href="cuba-sign-language/index.html">Cuba Sign Language</a></li>
+<li><a href="dadhkai-village-sign-language/index.html">Dadhkai Village Sign Language</a></li>
+<li><a href="douentza-sign-language/index.html">Douentza Sign Language</a></li>
+<li><a href="douz-sign-language/index.html">Douz Sign Language</a></li>
+<li><a href="ein-mahal-sign-language/index.html">Ein Mahal Sign Language</a></li>
+<li><a href="enga-sign-language/index.html">Enga Sign Language</a></li>
+<li><a href="extreme-north-cameroon-sign-language/index.html">Extreme North Cameroon Sign Language</a></li>
+<li><a href="far-north-queensland-indigenous-sign-language/index.html">Far North Queensland Indigenous Sign Language</a></li>
+<li><a href="ghandruk-sign-language/index.html">Ghandruk Sign Language</a></li>
+<li><a href="ghardaia-sign-language/index.html">Ghardaia Sign Language</a></li>
+<li><a href="guatemalan-sign-language/index.html">Guatemalan Sign Language</a></li>
+<li><a href="guinea-bissau-sign-language/index.html">Guinea-Bissau Sign Language</a></li>
+<li><a href="hausa-sign-language/index.html">Hausa Sign Language</a></li>
+<li><a href="hawaii-sign-language/index.html">Hawai'i Sign Language</a></li>
+<li><a href="ibokun-sign-language/index.html">Ibokun Sign Language</a></li>
+<li><a href="inuit-sign-language/index.html">Inuit Sign Language</a></li>
+<li><a href="isyarat-lama-asli-bali/index.html">Isyarat Lama Asli Bali</a></li>
+<li><a href="isyarat-lama-cicendo/index.html">Isyarat Lama Cicendo</a></li>
+<li><a href="jamaican-country-sign-language/index.html">Jamaican Country Sign Language</a></li>
+<li><a href="jhyankot-sign-language/index.html">Jhyankot Sign Language</a></li>
+<li><a href="jumla-sign-language/index.html">Jumla Sign Language</a></li>
+<li><a href="kafr-qasem-sign-language/index.html">Kafr Qasem Sign Language</a></li>
+<li><a href="kailge-sign-language/index.html">Kailge Sign Language</a></li>
+<li><a href="kajana-sign-language/index.html">Kajana Sign Language</a></li>
+<li><a href="kata-kolok/index.html">Kata Kolok</a></li>
+<li><a href="kenya-somali-sign-language/index.html">Kenya-Somali Sign Language</a></li>
+<li><a href="keresan-pueblo-indian-sign-language/index.html">Keresan Pueblo Indian Sign Language</a></li>
+<li><a href="langue-de-signes-malienne/index.html">Langue de Signes Malienne</a></li>
+<li><a href="langue-des-signes-zairoise/index.html">Langue des Signes Zairoise</a></li>
+<li><a href="langue-des-signes-de-bouakako/index.html">Langue des Signes de Bouakako</a></li>
+<li><a href="latvian-sign-language/index.html">Latvian Sign Language</a></li>
+<li><a href="língua-de-sinais-fortalezinha/index.html">Língua de sinais Fortalezinha</a></li>
+<li><a href="língua-de-sinais-de-caiçara/index.html">Língua de sinais de Caiçara</a></li>
+<li><a href="língua-de-sinais-do-uiramutã/index.html">Língua de sinais do Uiramutã</a></li>
+<li><a href="macushi-sign-language/index.html">Macushi Sign Language</a></li>
+<li><a href="magajingari-sign-language/index.html">Magajingari Sign Language</a></li>
+<li><a href="malawian-sign-language/index.html">Malawian Sign Language</a></li>
+<li><a href="maltese-sign-language/index.html">Maltese Sign Language</a></li>
+<li><a href="marajo-sign-language/index.html">Marajo Sign Language</a></li>
+<li><a href="mardin-sign-language/index.html">Mardin Sign Language</a></li>
+<li><a href="maunabudhuk-and-bodhe-local-sign/index.html">Maunabudhuk and Bodhe Local Sign</a></li>
+<li><a href="mauritian-sign-language/index.html">Mauritian Sign Language</a></li>
+<li><a href="mavea-sign-language/index.html">Mavea Sign Language</a></li>
+<li><a href="maxakali-sign-language/index.html">Maxakali Sign Language</a></li>
+<li><a href="mbour-sign-language/index.html">Mbour Sign Language</a></li>
+<li><a href="mehek-sign-language/index.html">Mehek Sign Language</a></li>
+<li><a href="miriwoong-sign-language/index.html">Miriwoong Sign Language</a></li>
+<li><a href="miyakubo-sign-language/index.html">Miyakubo Sign Language</a></li>
+<li><a href="mofu-gudur-sign-language/index.html">Mofu-Gudur Sign Language</a></li>
+<li><a href="mount-avejaha-sign-language/index.html">Mount Avejaha Sign Language</a></li>
+<li><a href="mozambican-sign-language/index.html">Mozambican Sign Language</a></li>
+<li><a href="nanabin-sign-language/index.html">Nanabin Sign Language</a></li>
+<li><a href="nebaj-shared-homesign-systems/index.html">Nebaj Shared Homesign Systems</a></li>
+<li><a href="nicaraguan-sign-language/index.html">Nicaraguan Sign Language</a></li>
+<li><a href="nueva-vida-maijuna-sign-language/index.html">Nueva Vida Maijuna Sign Language</a></li>
+<li><a href="original-costa-rican-sign-language/index.html">Original Costa Rican Sign Language</a></li>
+<li><a href="papiu-yanomama-sign-language/index.html">Papiu Yanomama Sign Language</a></li>
+<li><a href="paraguayan-sign-language/index.html">Paraguayan Sign Language</a></li>
+<li><a href="penang-sign-language/index.html">Penang Sign Language</a></li>
+<li><a href="portuguese-sign-language/index.html">Portuguese Sign Language</a></li>
+<li><a href="qahvehkhaneh-sign-language/index.html">Qahvehkhaneh Sign Language</a></li>
+<li><a href="salvadoran-sign-language/index.html">Salvadoran Sign Language</a></li>
+<li><a href="san-juan-quiahije-chatino-sign-language/index.html">San Juan Quiahije Chatino Sign Language</a></li>
+<li><a href="sao-tome-and-principe-sign-language/index.html">Sao Tome and Principe Sign Language</a></li>
+<li><a href="seychelles-sign-language/index.html">Seychelles Sign Language</a></li>
+<li><a href="sinasina-sign-language/index.html">Sinasina Sign Language</a></li>
+<li><a href="sivia-sign-language/index.html">Sivia Sign Language</a></li>
+<li><a href="south-rupununi-sign/index.html">South Rupununi Sign</a></li>
+<li><a href="south-sudanese-sign-language/index.html">South Sudanese Sign Language</a></li>
+<li><a href="tanzanian-sign-language/index.html">Tanzanian Sign Language</a></li>
+<li><a href="tebul-sign-language/index.html">Tebul Sign Language</a></li>
+<li><a href="terena-sign-language/index.html">Terena Sign Language</a></li>
+<li><a href="tibetan-sign-language/index.html">Tibetan Sign Language</a></li>
+<li><a href="turkish-sign-language/index.html">Turkish Sign Language</a></li>
+<li><a href="urubú-kaapor-sign-language/index.html">Urubú-Kaapor Sign Language</a></li>
+<li><a href="uruguayan-sign-language/index.html">Uruguayan Sign Language</a></li>
+<li><a href="wanib-sign-language/index.html">Wanib Sign Language</a></li>
+<li><a href="wimbum-sign-language/index.html">Wimbum Sign Language</a></li>
+<li><a href="yolngu-sign-language/index.html">Yolngu Sign Language</a></li>
+<li><a href="yoruba-sign-language/index.html">Yoruba Sign Language</a></li>
+<li><a href="zaban-eshareh-irani/index.html">Zaban Eshareh Irani</a></li>
+<li><a href="zambian-sign-language/index.html">Zambian Sign Language</a></li>
+<li><a href="zimbabwe-sign-language/index.html">Zimbabwe Sign Language</a></li>
+<li><a href="zinacantec-family-homesign/index.html">Zinacantec family homesign</a></li>
+</ul>
+</div>
+        </section>
+        <section>
+            <h2>Information</h2>
+            <p>This page is for the L1 Sign Language language/dialect.</p>
+            <p>Data sourced from <a href="https://glottolog.org">Glottolog</a>, a comprehensive reference information for the world's languages.</p>
+        </section>
+        
+        <section>
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="https://glottolog.org/resource/languoid/id/deaf1237">View on Glottolog</a></li>
+                <li><a href="https://www.wals.info">World Atlas of Language Structures (WALS)</a></li>
+                <li><a href="https://www.ethnologue.com">Ethnologue</a></li>
+            </ul>
+        </section>
+        
+        <hr>
+        <footer>
+            <p><small>Generated from Glottolog 5.2 data. Last updated: January 12, 2026</small></p>
+        </footer>
+    </div></div>
+        
+    </div>
+</div>
+
+    <script src="../../../search-index.js"></script>
+    <script src="../../../search.js"></script>
+</body>
+</html>

@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Languages of Nepal — Babel</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search languages, families, texts..." id="search-input">
+        <div class="search-results" id="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+                <h3>Navigate</h3>
+                <ul>
+                    <li><a href="../../">Home</a></li>
+                    <li><a href="../../texts-index.html">All Texts</a></li>
+                    <li><a href="../../languages/">Languages</a></li>
+                    <li><a href="../../works/">Works Index</a></li>
+                    <li><a href="../../authors/">Authors</a></li>
+                    <li><a href="../../sources/">Sources</a></li>
+                    <li><a href="../../provenances/">Provenances</a></li>
+                    <li><a href="../../collections/">Collections</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-header">
+            <img src="https://flagcdn.com/w160/np.png" 
+                 alt="Nepal flag" 
+                 class="country-flag-large">
+            <h1>Languages of Nepal</h1>
+        </div>
+        
+        <div class="metadata">
+            <p><strong>Languages:</strong> 137</p>
+            <p><strong>Language Families:</strong> 7</p>
+        </div>
+
+        <div class="locality-section">
+            <h3>Location</h3>
+            <div id="country-map-np" class="country-map"></div>
+        </div>
+        <script>
+            (function() {
+                var map = L.map('country-map-np').setView([28.394857, 84.124008], 4);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap',
+                    maxZoom: 19,
+                    minZoom: 2
+                }).addTo(map);
+                L.circleMarker([28.394857, 84.124008], {
+                    radius: 8,
+                    fillColor: '#B85A4F',
+                    color: '#8B4530',
+                    weight: 2.5,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(map).bindPopup('<b>Nepal</b>');
+                setTimeout(function() { map.invalidateSize(); }, 150);
+            })();
+        </script>
+        <div class="tree-controls">
+            <h2>Languages by Family</h2>
+            <div class="tree-buttons">
+                <button onclick="expandAll()" class="tree-btn">Expand All</button>
+                <button onclick="collapseAll()" class="tree-btn">Collapse All</button>
+            </div>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/austroasiatic/index.html">Austroasiatic</a></h3>
+                <span class="family-count">(3 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/austroasiatic/index.html">Austroasiatic</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/austroasiatic/mundaic/index.html">Mundaic</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/austroasiatic/mundaic/kharia/index.html">Kharia</a>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/austroasiatic/mundaic/north-munda/index.html">North Munda</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austroasiatic/mundaic/north-munda/kherwarian/index.html">Kherwarian</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austroasiatic/mundaic/north-munda/kherwarian/mundaric/index.html">Mundaric</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austroasiatic/mundaic/north-munda/kherwarian/mundaric/ho-mundari/index.html">Ho-Mundari</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austroasiatic/mundaic/north-munda/kherwarian/mundaric/ho-mundari/mundari/index.html">Mundari</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austroasiatic/mundaic/north-munda/kherwarian/santalic/index.html">Santalic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austroasiatic/mundaic/north-munda/kherwarian/santalic/santali/index.html">Santali</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/bookkeeping/index.html">Bookkeeping</a></h3>
+                <span class="family-count">(10 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/bookkeeping/index.html">Bookkeeping</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/kayort/index.html">Kayort</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/lambichhong/index.html">Lambichhong</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/lumba-yakkha/index.html">Lumba-Yakkha</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/northwestern-tamang/index.html">Northwestern Tamang</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/palpa/index.html">† Palpa</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/phangduwali/index.html">Phangduwali</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/pongyong/index.html">Pongyong</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/southwestern-tamang/index.html">Southwestern Tamang</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/thudam/index.html">Thudam</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/yamphe/index.html">Yamphe</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/dravidian/index.html">Dravidian</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/dravidian/index.html">Dravidian</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/dravidian/north-dravidian/index.html">North Dravidian</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/dravidian/north-dravidian/kurux-malto/index.html">Kurux-Malto</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/dravidian/north-dravidian/kurux-malto/kurukh/index.html">Kurukh</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-dialect target-language ">
+                                                    <a href="../../languages/dravidian/north-dravidian/kurux-malto/kurukh/nepali-kurux/index.html">Nepali Kurux</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/indo-european/index.html">Indo-European</a></h3>
+                <span class="family-count">(27 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/indo-european/index.html">Indo-European</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/indo-european/classical-indo-european/index.html">Classical Indo-European</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/index.html">Indo-Iranian</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/index.html">Indo-Aryan</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/index.html">Middle-Modern Indo-Aryan</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/index.html">Continental Indo-Aryan</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/indo-aryan-eastern-zone/index.html">Indo-Aryan Eastern zone</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/indo-aryan-eastern-zone/oriya-gauda-kamrupa/index.html">Oriya-Gauda-Kamrupa</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/indo-aryan-eastern-zone/oriya-gauda-kamrupa/gauda-kamrupa/index.html">Gauda-Kamrupa</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/indo-aryan-eastern-zone/oriya-gauda-kamrupa/gauda-kamrupa/gauda-banga/index.html">Gauda-Banga</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/indo-aryan-eastern-zone/oriya-gauda-kamrupa/gauda-kamrupa/gauda-banga/bengali/index.html">Bengali</a>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/indo-aryan-eastern-zone/oriya-gauda-kamrupa/gauda-kamrupa/gauda-banga/unclassified-gauda-banga/index.html">Unclassified Gauda-Banga</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/indo-aryan-eastern-zone/oriya-gauda-kamrupa/gauda-kamrupa/gauda-banga/unclassified-gauda-banga/kurmukar/index.html">Kurmukar</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/indo-aryan-eastern-zone/oriya-gauda-kamrupa/gauda-kamrupa/kamrupa/index.html">Kamrupa</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/indo-aryan-eastern-zone/oriya-gauda-kamrupa/gauda-kamrupa/kamrupa/kamta/index.html">Kamta</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/indo-aryan-eastern-zone/oriya-gauda-kamrupa/gauda-kamrupa/kamrupa/kamta/western-kamta/index.html">Western Kamta</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/indo-aryan-eastern-zone/oriya-gauda-kamrupa/gauda-kamrupa/kamrupa/kamta/western-kamta/rajbanshi/index.html">Rajbanshi</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/index.html">Midlands Indo-Aryan</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/apabhramsic/index.html">Apabhramsic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/apabhramsic/gujarati-rajasthani/index.html">Gujarati-Rajasthani</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/apabhramsic/gujarati-rajasthani/rajasthani/index.html">Rajasthani</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/apabhramsic/gujarati-rajasthani/rajasthani/mewati-gojri/index.html">Mewati-Gojri</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/apabhramsic/gujarati-rajasthani/rajasthani/mewati-gojri/marwari-india/index.html">Marwari (India)</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/indo-aryan-northern-zone/index.html">Indo-Aryan Northern zone</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/indo-aryan-northern-zone/central-pahari/index.html">Central Pahari</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/indo-aryan-northern-zone/central-pahari/kumaoni/index.html">Kumaoni</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/indo-aryan-northern-zone/eastern-pahari/index.html">Eastern Pahari</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/indo-aryan-northern-zone/eastern-pahari/dotyali/index.html">Dotyali</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/indo-aryan-northern-zone/eastern-pahari/jumli/index.html">Jumli</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/indo-aryan-northern-zone/eastern-pahari/nepali/index.html">Nepali</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/index.html">Shaurasenic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/index.html">Bihari</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/magadhan/index.html">Magadhan</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/magadhan/angika/index.html">Angika</a>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/magadhan/bhojpuric/index.html">Bhojpuric</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/magadhan/bhojpuric/bhojpuri/index.html">Bhojpuri</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/magadhan/maithili/index.html">Maithili</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/tharuic/index.html">Tharuic</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/tharuic/eastern-tharu/index.html">Eastern Tharu</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/tharuic/eastern-tharu/chitwania-tharu/index.html">Chitwania Tharu</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/tharuic/eastern-tharu/dangaura-khuna-sonaha/index.html">Dangaura-Khuna-Sonaha</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/tharuic/eastern-tharu/dangaura-khuna-sonaha/dangaura-tharu/index.html">Dangaura Tharu</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/tharuic/eastern-tharu/dangaura-khuna-sonaha/sonha/index.html">Sonha</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/tharuic/eastern-tharu/kathoriya-tharu/index.html">Kathoriya Tharu</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/tharuic/eastern-tharu/kochila-tharu/index.html">Kochila Tharu</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/tharuic/rana-tharu/index.html">Rana Tharu</a>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/tharuic/unclassified-tharu/index.html">Unclassified Tharu</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/tharuic/unclassified-tharu/majhi/index.html">Majhi</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/tharuic/unclassified-tharu/musasa/index.html">Musasa</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/unclassified-bihari/index.html">Unclassified Bihari</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/unclassified-bihari/kumhali/index.html">Kumhali</a>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/unclassified-bihari/kuswaric/index.html">Kuswaric</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/unclassified-bihari/kuswaric/bote/index.html">Bote</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/unclassified-bihari/kuswaric/darai/index.html">Darai</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/unclassified-bihari/kuswaric/dewas-done-danuwar/index.html">Dewas-Done Danuwar</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/bihari/unclassified-bihari/kuswaric/kochariya-east-danuwar/index.html">Kochariya-East Danuwar</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/eastern-hindi/index.html">Eastern Hindi</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/eastern-hindi/awadhic/index.html">Awadhic</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/eastern-hindi/awadhic/awadhi/index.html">Awadhi</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/eastern-hindi/awadhic/bagheli/index.html">Bagheli</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/index.html">Indo-Aryan Central zone</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/western-hindi/index.html">Western Hindi</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/western-hindi/hindustani/index.html">Hindustani</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/western-hindi/hindustani/hindi/index.html">Hindi</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/kusunda/index.html">Kusunda</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/kusunda/index.html">Kusunda</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/sign-language/index.html">Sign Language</a></h3>
+                <span class="family-count">(5 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/sign-language/index.html">Sign Language</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sign-language/l1-sign-language/index.html">L1 Sign Language</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sign-language/l1-sign-language/ghandruk-sign-language/index.html">Ghandruk Sign Language</a>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sign-language/l1-sign-language/indo-pakistani-nepalese-sign/index.html">Indo-Pakistani-Nepalese Sign</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/sign-language/l1-sign-language/indo-pakistani-nepalese-sign/nepalese-sign-language/index.html">Nepalese Sign Language</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sign-language/l1-sign-language/jhyankot-sign-language/index.html">Jhyankot Sign Language</a>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sign-language/l1-sign-language/jumla-sign-language/index.html">Jumla Sign Language</a>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sign-language/l1-sign-language/maunabudhuk-and-bodhe-local-sign/index.html">Maunabudhuk and Bodhe Local Sign</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/sino-tibetan/index.html">Sino-Tibetan</a></h3>
+                <span class="family-count">(90 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/sino-tibetan/index.html">Sino-Tibetan</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sino-tibetan/bodic/index.html">Bodic</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sino-tibetan/bodic/bodish/index.html">Bodish</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/index.html">Early Old Tibetan</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/index.html">Middle Old Tibetan</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/index.html">Late Old Tibetan</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/index.html">Central Tibetan</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/index.html">South-Western Tibetic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/dolpo-tichurong/index.html">Dolpo-Tichurong</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/dolpo-tichurong/dolpo/index.html">Dolpo</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/dolpo-tichurong/tichurong/index.html">Tichurong</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/humla/index.html">Humla</a>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/kyirong-kagate/index.html">Kyirong-Kagate</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/kyirong-kagate/gyalsumdo-nubri-kyirong/index.html">Gyalsumdo-Nubri-Kyirong</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/kyirong-kagate/gyalsumdo-nubri-kyirong/gyalsumdo-nubri/index.html">Gyalsumdo-Nubri</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-dialect target-language ">
+                                                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/kyirong-kagate/gyalsumdo-nubri-kyirong/gyalsumdo-nubri/gyalsumdo/index.html">Gyalsumdo</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/kyirong-kagate/gyalsumdo-nubri-kyirong/kyerung/index.html">Kyerung</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/kyirong-kagate/tsum/index.html">Tsum</a>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/kyirong-kagate/yolmo-kagate/index.html">Yolmo-Kagate</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/kyirong-kagate/yolmo-kagate/kagate/index.html">Kagate</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/kyirong-kagate/yolmo-kagate/lamjung-melamchi-yolmo/index.html">Lamjung-Melamchi Yolmo</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/lhomi/index.html">Lhomi</a>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/mustangic/index.html">Mustangic</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/mustangic/lowa/index.html">Lowa</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/mustangic/mugom/index.html">Mugom</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/sherpa-jirel/index.html">Sherpa-Jirel</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/sherpa-jirel/jirel/index.html">Jirel</a>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/sherpa-jirel/sherpaic/index.html">Sherpaic</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/sherpa-jirel/sherpaic/naaba/index.html">Naaba</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/sherpa-jirel/sherpaic/solu-khumbu-sherpa/index.html">Solu-Khumbu Sherpa</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/south-western-tibetic/walungge/index.html">Walungge</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/central-tibetan/tibetan/index.html">Tibetan</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/southern-tibetic/index.html">Southern Tibetic</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/southern-tibetic/dzongkhic/index.html">Dzongkhic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/southern-tibetic/dzongkhic/nuclear-dzongkhic/index.html">Nuclear Dzongkhic</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/sino-tibetan/bodic/bodish/early-old-tibetan/middle-old-tibetan/late-old-tibetan/southern-tibetic/dzongkhic/nuclear-dzongkhic/dzongkha/index.html">Dzongkha</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/index.html">Kaike-Ghale-Tamangic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/index.html">Ghale-Tamangic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/ghale/index.html">Ghale</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/ghale/kutang-ghale/index.html">Kutang Ghale</a>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/ghale/nuclear-ghale/index.html">Nuclear Ghale</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/ghale/nuclear-ghale/northern-ghale/index.html">Northern Ghale</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/ghale/nuclear-ghale/southern-ghale/index.html">Southern Ghale</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/index.html">Tamangic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/eastern-gorkha-tamang/index.html">Eastern Gorkha Tamang</a>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/gurungic/index.html">Gurungic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/gurungic/gurung/index.html">Gurung</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-dialect target-language ">
+                                                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/gurungic/gurung/eastern-gurung/index.html">Eastern Gurung</a>
+                                                                        </li>
+                                                                        <li class="level-dialect target-language ">
+                                                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/gurungic/gurung/western-gurung/index.html">Western Gurung</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/gurungic/manangba-nar-phu/index.html">Manangba-Nar-Phu</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/gurungic/manangba-nar-phu/manange/index.html">Manange</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/gurungic/manangba-nar-phu/nar-phu/index.html">Nar Phu</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/gurungic/thakali-chantyal/index.html">Thakali-Chantyal</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/gurungic/thakali-chantyal/chantyal/index.html">Chantyal</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/gurungic/thakali-chantyal/thakali/index.html">Thakali</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/nuclear-tamang/index.html">Nuclear Tamang</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/nuclear-tamang/eastern-tamang/index.html">Eastern Tamang</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/nuclear-tamang/western-tamang/index.html">Western Tamang</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/ghale-tamangic/tamangic/seke-nepal/index.html">Seke (Nepal)</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/sino-tibetan/bodic/kaike-ghale-tamangic/kaike/index.html">Kaike</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sino-tibetan/bodic/west-himalayish/index.html">West Himalayish</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sino-tibetan/bodic/west-himalayish/eastern-west-himalayish/index.html">Eastern West Himalayish</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/bodic/west-himalayish/eastern-west-himalayish/pithauragarh/index.html">Pithauragarh</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sino-tibetan/bodic/west-himalayish/eastern-west-himalayish/pithauragarh/darma-byangsi-chaudangsi/index.html">Darma-Byangsi-Chaudangsi</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/bodic/west-himalayish/eastern-west-himalayish/pithauragarh/darma-byangsi-chaudangsi/chaudangsi/index.html">Chaudangsi</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/bodic/west-himalayish/eastern-west-himalayish/pithauragarh/darma-byangsi-chaudangsi/darma-byangsi/index.html">Darma-Byangsi</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/bodic/west-himalayish/eastern-west-himalayish/pithauragarh/darma-byangsi-chaudangsi/darma-byangsi/byangsi/index.html">Byangsi</a>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/sino-tibetan/bodic/west-himalayish/eastern-west-himalayish/pithauragarh/darma-byangsi-chaudangsi/darma-byangsi/zhangzhungic/index.html">Zhangzhungic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/sino-tibetan/bodic/west-himalayish/eastern-west-himalayish/pithauragarh/darma-byangsi-chaudangsi/darma-byangsi/zhangzhungic/darma/index.html">Darma</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sino-tibetan/brahmaputran/index.html">Brahmaputran</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sino-tibetan/brahmaputran/bodo-garo/index.html">Bodo-Garo</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sino-tibetan/brahmaputran/bodo-garo/boroic/index.html">Boroic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/brahmaputran/bodo-garo/boroic/tiwa-boro/index.html">Tiwa-Boro</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sino-tibetan/brahmaputran/bodo-garo/boroic/tiwa-boro/bodo-mech-kachari/index.html">Bodo-Mech-Kachari</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/brahmaputran/bodo-garo/boroic/tiwa-boro/bodo-mech-kachari/bodo-mech/index.html">Bodo-Mech</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sino-tibetan/dhimal-lhokpu-toto/index.html">Dhimal-Lhokpu-Toto</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sino-tibetan/dhimal-lhokpu-toto/dhimal/index.html">Dhimal</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sino-tibetan/himalayish/index.html">Himalayish</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sino-tibetan/himalayish/lepcha/index.html">Lepcha</a>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/index.html">Mahakiranti</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/index.html">Kham-Magar-Chepang</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/chepangic/index.html">Chepangic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/chepangic/bujhyal/index.html">Bujhyal</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/chepangic/chepang/index.html">Chepang</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/dura/index.html">† Dura</a>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/kham/index.html">Kham</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/kham/gamale-parbate/index.html">Gamale-Parbate</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/kham/gamale-parbate/gamale-kham/index.html">Gamale Kham</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/kham/gamale-parbate/parbate-kham/index.html">Parbate Kham</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/kham/gamale-parbate/parbate-kham/eastern-parbate-kham/index.html">Eastern Parbate Kham</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/kham/gamale-parbate/parbate-kham/western-parbate-kham/index.html">Western Parbate Kham</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/kham/sheshi-kham/index.html">Sheshi Kham</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/magar/index.html">Magar</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/magar/eastern-magar/index.html">Eastern Magar</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kham-magar-chepang/magar/western-magar/index.html">Western Magar</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/index.html">Kiranti</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/chaurasiya/index.html">Chaurasiya</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/chaurasiya/jerung/index.html">Jerung</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/chaurasiya/wambule/index.html">Wambule</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/index.html">Eastern Kiranti</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/khambu/index.html">Khambu</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/khambu/kulungic/index.html">Kulungic</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/khambu/kulungic/kulung-nepal/index.html">Kulung (Nepal)</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-dialect target-language ">
+                                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/khambu/kulungic/kulung-nepal/chukwa/index.html">Chukwa</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/khambu/kulungic/nachering/index.html">Nachering</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/khambu/sampang/index.html">Sampang</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/southern-kiranti/index.html">Southern Kiranti</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/southern-kiranti/bantawic/index.html">Bantawic</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/southern-kiranti/bantawic/bantawa/index.html">Bantawa</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/southern-kiranti/bantawic/waling/index.html">† Waling</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/southern-kiranti/camling/index.html">Camling</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/southern-kiranti/dungmali/index.html">Dungmali</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/southern-kiranti/puma/index.html">Puma</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/tamar/index.html">Tamar</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/tamar/chhulung/index.html">Chhulung</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/tamar/chintang/index.html">Chintang</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/tamar/limbu/index.html">Limbu</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/tamar/yakkha-athpariyic/index.html">Yakkha-Athpariyic</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/tamar/yakkha-athpariyic/athpariyic/index.html">Athpariyic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/tamar/yakkha-athpariyic/athpariyic/athpariya/index.html">Athpariya</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/tamar/yakkha-athpariyic/athpariyic/belhariya/index.html">Belhariya</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/tamar/yakkha-athpariyic/yakkha/index.html">Yakkha</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/upper-arun/index.html">Upper Arun</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/upper-arun/lohorung-yamphu/index.html">Lohorung-Yamphu</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/upper-arun/lohorung-yamphu/lohorung/index.html">Lohorung</a>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/upper-arun/lohorung-yamphu/yamphuic/index.html">Yamphuic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/upper-arun/lohorung-yamphu/yamphuic/southern-yamphu/index.html">Southern Yamphu</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/upper-arun/lohorung-yamphu/yamphuic/yamphu/index.html">Yamphu</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/upper-arun/mewahang/index.html">Mewahang</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/upper-arun/mewahang/eastern-mewahang/index.html">Eastern Mewahang</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/upper-arun/mewahang/western-mewahang/index.html">Western Mewahang</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-dialect target-language ">
+                                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/upper-arun/mewahang/western-mewahang/lingkhim/index.html">Lingkhim</a>
+                                                                                </li>
+                                                                                <li class="level-dialect target-language ">
+                                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/upper-arun/mewahang/western-mewahang/saam/index.html">Saam</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/northwestern-kiranti/index.html">Northwestern Kiranti</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/northwestern-kiranti/bahing-sunwar/index.html">Bahing-Sunwar</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/northwestern-kiranti/bahing-sunwar/bahing/index.html">Bahing</a>
+                                                                </li>
+                                                                <li class="level-language target-language has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/northwestern-kiranti/bahing-sunwar/sunwar/index.html">Sunwar</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-dialect target-language ">
+                                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/northwestern-kiranti/bahing-sunwar/sunwar/surel/index.html">Surel</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/northwestern-kiranti/wayu/index.html">Wayu</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/thulung-tilung-koyi/index.html">Thulung-Tilung-Koyi</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/thulung-tilung-koyi/koi/index.html">Koi</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/thulung-tilung-koyi/thulung/index.html">Thulung</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/thulung-tilung-koyi/tilung/index.html">Tilung</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/upper-dudhkosi/index.html">Upper Dudhkosi</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/upper-dudhkosi/dumi/index.html">Dumi</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/kiranti/upper-dudhkosi/khaling/index.html">Khaling</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/newaric/index.html">Newaric</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/newaric/newar/index.html">Newar</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/newaric/newar/eastern-newari/index.html">Eastern Newari</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/newaric/newar/kathmandu-valley-newari/index.html">Kathmandu Valley Newari</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/newaric/newar/pahari-newari/index.html">Pahari Newari</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/himalayish/mahakiranti/newaric/thangmi-baram/index.html">Thangmi-Baram</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/newaric/thangmi-baram/baraamu/index.html">Baraamu</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/himalayish/mahakiranti/newaric/thangmi-baram/thangmi/index.html">Thangmi</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sino-tibetan/kuki-chin-naga/index.html">Kuki-Chin-Naga</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sino-tibetan/kuki-chin-naga/kuki-chin/index.html">Kuki-Chin</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sino-tibetan/kuki-chin-naga/kuki-chin/northwestern-kuki-chin/index.html">Northwestern Kuki-Chin</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sino-tibetan/kuki-chin-naga/kuki-chin/northwestern-kuki-chin/central-old-kuki/index.html">Central Old Kuki</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sino-tibetan/kuki-chin-naga/kuki-chin/northwestern-kuki-chin/central-old-kuki/aimol/index.html">Aimol</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sino-tibetan/raji-raute/index.html">Raji-Raute</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sino-tibetan/raji-raute/raji/index.html">Raji</a>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sino-tibetan/raji-raute/raute-rawat/index.html">Raute-Rawat</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/sino-tibetan/raji-raute/raute-rawat/raute/index.html">Raute</a>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/sino-tibetan/raji-raute/raute-rawat/rawat/index.html">Rawat</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <!-- Tree toggle functionality -->
+    <script>
+        function toggleTree(toggle) {
+            const li = toggle.parentElement;
+            const subtree = li.querySelector('.language-subtree');
+            if (subtree) {
+                if (toggle.classList.contains('expanded')) {
+                    toggle.classList.remove('expanded');
+                    toggle.classList.add('collapsed');
+                    toggle.textContent = '▶';
+                    subtree.style.display = 'none';
+                } else {
+                    toggle.classList.remove('collapsed');
+                    toggle.classList.add('expanded');
+                    toggle.textContent = '▼';
+                    subtree.style.display = 'block';
+                }
+            }
+        }
+        
+        function expandAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('collapsed');
+                toggle.classList.add('expanded');
+                toggle.textContent = '▼';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'block';
+            });
+        }
+        
+        function collapseAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('expanded');
+                toggle.classList.add('collapsed');
+                toggle.textContent = '▶';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'none';
+            });
+        }
+    </script>
+    
+    <!-- Search functionality -->
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+</body>
+</html>

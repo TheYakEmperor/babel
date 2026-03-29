@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romance</title>
+    <link rel="icon" type="image/webp" href="../../../../../../../../favicon.webp">
+    <link rel="stylesheet" href="../../../../../../../../style.css">
+    <!-- Stylesheet injected by update_family_trees.py -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+function initMap(elementId, latitude, longitude) {
+    const container = document.getElementById(elementId);
+    if (!container) return;
+    const map = L.map(elementId).setView([latitude, longitude], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+        minZoom: 2
+    }).addTo(map);
+    const countryCodes = JSON.parse(container.dataset.countries || '[]');
+    
+    // Draw country boundaries if available
+    if (countryCodes && countryCodes.length > 0) {
+        fetch('https://cdn.jsdelivr.net/npm/world-geojson/countries.geojson')
+            .then(r => r.json())
+            .then(geojson => {
+                const countryFeatures = geojson.features.filter(f => {
+                    const code = f.properties.ISO_A2 || f.properties.ADMIN || '';
+                    return countryCodes.includes(code);
+                });
+                L.geoJSON({
+                    type: 'FeatureCollection',
+                    features: countryFeatures
+                }, {
+                    style: {
+                        color: '#B85A4F',
+                        weight: 1.5,
+                        opacity: 0.5,
+                        fillOpacity: 0.08
+                    }
+                }).addTo(map);
+            })
+            .catch(e => console.log(''));
+    }
+
+    // Center point marker
+    L.circleMarker([latitude, longitude], {
+        radius: 8,
+        fillColor: '#B85A4F',
+        color: '#8B4530',
+        weight: 2.5,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`${latitude.toFixed(4)}°, ${longitude.toFixed(4)}°`);
+    
+    setTimeout(() => { map.invalidateSize(); }, 150);
+}
+
+function toggleLargeList(btn) {
+    const list = btn.closest('h3').nextElementSibling;
+    if (list.style.display === 'none') {
+        list.style.display = '';
+        btn.textContent = 'Hide';
+    } else {
+        list.style.display = 'none';
+        btn.textContent = 'Show';
+    }
+}
+    </script>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../../../../../../../" class="header-logo"><img src="../../../../../../../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../../../../../../../" class="sidebar-logo">
+                <img src="../../../../../../../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../../../../../../../">Home</a></li>
+                <li><a href="../../../../../../../../texts-index.html">All Texts</a></li>
+                <li><a href="../../../../../../../../languages/">Languages</a></li>
+                <li><a href="../../../../../../../../works/">Works Index</a></li>
+                <li><a href="../../../../../../../../authors/">Authors</a></li>
+                <li><a href="../../../../../../../../sources/">Sources</a></li>
+                <li><a href="../../../../../../../../provenances/">Provenances</a></li>
+                <li><a href="../../../../../../../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-flags"><a href="../../../../../../../../countries/andorra/index.html" title="Andorra"><img src="https://flagcdn.com/w40/ad.png" alt="Andorra" class="country-flag"></a><a href="../../../../../../../../countries/albania/index.html" title="Albania"><img src="https://flagcdn.com/w40/al.png" alt="Albania" class="country-flag"></a><a href="../../../../../../../../countries/argentina/index.html" title="Argentina"><img src="https://flagcdn.com/w40/ar.png" alt="Argentina" class="country-flag"></a><a href="../../../../../../../../countries/austria/index.html" title="Austria"><img src="https://flagcdn.com/w40/at.png" alt="Austria" class="country-flag"></a><a href="../../../../../../../../countries/australia/index.html" title="Australia"><img src="https://flagcdn.com/w40/au.png" alt="Australia" class="country-flag"></a><a href="../../../../../../../../countries/aruba/index.html" title="Aruba"><img src="https://flagcdn.com/w40/aw.png" alt="Aruba" class="country-flag"></a><a href="../../../../../../../../countries/bosnia-and-herzegovina/index.html" title="Bosnia and Herzegovina"><img src="https://flagcdn.com/w40/ba.png" alt="Bosnia and Herzegovina" class="country-flag"></a><a href="../../../../../../../../countries/belgium/index.html" title="Belgium"><img src="https://flagcdn.com/w40/be.png" alt="Belgium" class="country-flag"></a><a href="../../../../../../../../countries/bulgaria/index.html" title="Bulgaria"><img src="https://flagcdn.com/w40/bg.png" alt="Bulgaria" class="country-flag"></a><a href="../../../../../../../../countries/saint-barthélemy/index.html" title="Saint Barthélemy"><img src="https://flagcdn.com/w40/bl.png" alt="Saint Barthélemy" class="country-flag"></a><a href="../../../../../../../../countries/bolivia/index.html" title="Bolivia"><img src="https://flagcdn.com/w40/bo.png" alt="Bolivia" class="country-flag"></a><a href="../../../../../../../../countries/caribbean-netherlands/index.html" title="Caribbean Netherlands"><img src="https://flagcdn.com/w40/bq.png" alt="Caribbean Netherlands" class="country-flag"></a><a href="../../../../../../../../countries/brazil/index.html" title="Brazil"><img src="https://flagcdn.com/w40/br.png" alt="Brazil" class="country-flag"></a><a href="../../../../../../../../countries/belize/index.html" title="Belize"><img src="https://flagcdn.com/w40/bz.png" alt="Belize" class="country-flag"></a><a href="../../../../../../../../countries/canada/index.html" title="Canada"><img src="https://flagcdn.com/w40/ca.png" alt="Canada" class="country-flag"></a><a href="../../../../../../../../countries/switzerland/index.html" title="Switzerland"><img src="https://flagcdn.com/w40/ch.png" alt="Switzerland" class="country-flag"></a><a href="../../../../../../../../countries/côte-divoire/index.html" title="Côte d'Ivoire"><img src="https://flagcdn.com/w40/ci.png" alt="Côte d'Ivoire" class="country-flag"></a><a href="../../../../../../../../countries/chile/index.html" title="Chile"><img src="https://flagcdn.com/w40/cl.png" alt="Chile" class="country-flag"></a><a href="../../../../../../../../countries/china/index.html" title="China"><img src="https://flagcdn.com/w40/cn.png" alt="China" class="country-flag"></a><a href="../../../../../../../../countries/colombia/index.html" title="Colombia"><img src="https://flagcdn.com/w40/co.png" alt="Colombia" class="country-flag"></a><a href="../../../../../../../../countries/costa-rica/index.html" title="Costa Rica"><img src="https://flagcdn.com/w40/cr.png" alt="Costa Rica" class="country-flag"></a><a href="../../../../../../../../countries/cuba/index.html" title="Cuba"><img src="https://flagcdn.com/w40/cu.png" alt="Cuba" class="country-flag"></a><a href="../../../../../../../../countries/cape-verde/index.html" title="Cape Verde"><img src="https://flagcdn.com/w40/cv.png" alt="Cape Verde" class="country-flag"></a><a href="../../../../../../../../countries/curaçao/index.html" title="Curaçao"><img src="https://flagcdn.com/w40/cw.png" alt="Curaçao" class="country-flag"></a><a href="../../../../../../../../countries/dominican-republic/index.html" title="Dominican Republic"><img src="https://flagcdn.com/w40/do.png" alt="Dominican Republic" class="country-flag"></a><a href="../../../../../../../../countries/algeria/index.html" title="Algeria"><img src="https://flagcdn.com/w40/dz.png" alt="Algeria" class="country-flag"></a><a href="../../../../../../../../countries/ecuador/index.html" title="Ecuador"><img src="https://flagcdn.com/w40/ec.png" alt="Ecuador" class="country-flag"></a><a href="../../../../../../../../countries/spain/index.html" title="Spain"><img src="https://flagcdn.com/w40/es.png" alt="Spain" class="country-flag"></a><a href="../../../../../../../../countries/france/index.html" title="France"><img src="https://flagcdn.com/w40/fr.png" alt="France" class="country-flag"></a><a href="../../../../../../../../countries/united-kingdom/index.html" title="United Kingdom"><img src="https://flagcdn.com/w40/gb.png" alt="United Kingdom" class="country-flag"></a><a href="../../../../../../../../countries/french-guiana/index.html" title="French Guiana"><img src="https://flagcdn.com/w40/gf.png" alt="French Guiana" class="country-flag"></a><a href="../../../../../../../../countries/guernsey/index.html" title="Guernsey"><img src="https://flagcdn.com/w40/gg.png" alt="Guernsey" class="country-flag"></a><a href="../../../../../../../../countries/gibraltar/index.html" title="Gibraltar"><img src="https://flagcdn.com/w40/gi.png" alt="Gibraltar" class="country-flag"></a><a href="../../../../../../../../countries/gambia/index.html" title="Gambia"><img src="https://flagcdn.com/w40/gm.png" alt="Gambia" class="country-flag"></a><a href="../../../../../../../../countries/guadeloupe/index.html" title="Guadeloupe"><img src="https://flagcdn.com/w40/gp.png" alt="Guadeloupe" class="country-flag"></a><a href="../../../../../../../../countries/equatorial-guinea/index.html" title="Equatorial Guinea"><img src="https://flagcdn.com/w40/gq.png" alt="Equatorial Guinea" class="country-flag"></a><a href="../../../../../../../../countries/greece/index.html" title="Greece"><img src="https://flagcdn.com/w40/gr.png" alt="Greece" class="country-flag"></a><a href="../../../../../../../../countries/guatemala/index.html" title="Guatemala"><img src="https://flagcdn.com/w40/gt.png" alt="Guatemala" class="country-flag"></a><a href="../../../../../../../../countries/guinea-bissau/index.html" title="Guinea-Bissau"><img src="https://flagcdn.com/w40/gw.png" alt="Guinea-Bissau" class="country-flag"></a><a href="../../../../../../../../countries/guyana/index.html" title="Guyana"><img src="https://flagcdn.com/w40/gy.png" alt="Guyana" class="country-flag"></a><a href="../../../../../../../../countries/honduras/index.html" title="Honduras"><img src="https://flagcdn.com/w40/hn.png" alt="Honduras" class="country-flag"></a><a href="../../../../../../../../countries/croatia/index.html" title="Croatia"><img src="https://flagcdn.com/w40/hr.png" alt="Croatia" class="country-flag"></a><a href="../../../../../../../../countries/haiti/index.html" title="Haiti"><img src="https://flagcdn.com/w40/ht.png" alt="Haiti" class="country-flag"></a><a href="../../../../../../../../countries/hungary/index.html" title="Hungary"><img src="https://flagcdn.com/w40/hu.png" alt="Hungary" class="country-flag"></a><a href="../../../../../../../../countries/indonesia/index.html" title="Indonesia"><img src="https://flagcdn.com/w40/id.png" alt="Indonesia" class="country-flag"></a><a href="../../../../../../../../countries/israel/index.html" title="Israel"><img src="https://flagcdn.com/w40/il.png" alt="Israel" class="country-flag"></a><a href="../../../../../../../../countries/india/index.html" title="India"><img src="https://flagcdn.com/w40/in.png" alt="India" class="country-flag"></a><a href="../../../../../../../../countries/italy/index.html" title="Italy"><img src="https://flagcdn.com/w40/it.png" alt="Italy" class="country-flag"></a><a href="../../../../../../../../countries/jersey/index.html" title="Jersey"><img src="https://flagcdn.com/w40/je.png" alt="Jersey" class="country-flag"></a><a href="../../../../../../../../countries/saint-lucia/index.html" title="Saint Lucia"><img src="https://flagcdn.com/w40/lc.png" alt="Saint Lucia" class="country-flag"></a><a href="../../../../../../../../countries/sri-lanka/index.html" title="Sri Lanka"><img src="https://flagcdn.com/w40/lk.png" alt="Sri Lanka" class="country-flag"></a><a href="../../../../../../../../countries/luxembourg/index.html" title="Luxembourg"><img src="https://flagcdn.com/w40/lu.png" alt="Luxembourg" class="country-flag"></a><a href="../../../../../../../../countries/morocco/index.html" title="Morocco"><img src="https://flagcdn.com/w40/ma.png" alt="Morocco" class="country-flag"></a><a href="../../../../../../../../countries/monaco/index.html" title="Monaco"><img src="https://flagcdn.com/w40/mc.png" alt="Monaco" class="country-flag"></a><a href="../../../../../../../../countries/moldova/index.html" title="Moldova"><img src="https://flagcdn.com/w40/md.png" alt="Moldova" class="country-flag"></a><a href="../../../../../../../../countries/north-macedonia/index.html" title="North Macedonia"><img src="https://flagcdn.com/w40/mk.png" alt="North Macedonia" class="country-flag"></a><a href="../../../../../../../../countries/martinique/index.html" title="Martinique"><img src="https://flagcdn.com/w40/mq.png" alt="Martinique" class="country-flag"></a><a href="../../../../../../../../countries/mauritius/index.html" title="Mauritius"><img src="https://flagcdn.com/w40/mu.png" alt="Mauritius" class="country-flag"></a><a href="../../../../../../../../countries/mexico/index.html" title="Mexico"><img src="https://flagcdn.com/w40/mx.png" alt="Mexico" class="country-flag"></a><a href="../../../../../../../../countries/malaysia/index.html" title="Malaysia"><img src="https://flagcdn.com/w40/my.png" alt="Malaysia" class="country-flag"></a><a href="../../../../../../../../countries/new-caledonia/index.html" title="New Caledonia"><img src="https://flagcdn.com/w40/nc.png" alt="New Caledonia" class="country-flag"></a><a href="../../../../../../../../countries/nicaragua/index.html" title="Nicaragua"><img src="https://flagcdn.com/w40/ni.png" alt="Nicaragua" class="country-flag"></a><a href="../../../../../../../../countries/netherlands/index.html" title="Netherlands"><img src="https://flagcdn.com/w40/nl.png" alt="Netherlands" class="country-flag"></a><a href="../../../../../../../../countries/panama/index.html" title="Panama"><img src="https://flagcdn.com/w40/pa.png" alt="Panama" class="country-flag"></a><a href="../../../../../../../../countries/peru/index.html" title="Peru"><img src="https://flagcdn.com/w40/pe.png" alt="Peru" class="country-flag"></a><a href="../../../../../../../../countries/philippines/index.html" title="Philippines"><img src="https://flagcdn.com/w40/ph.png" alt="Philippines" class="country-flag"></a><a href="../../../../../../../../countries/saint-pierre-and-miquelon/index.html" title="Saint Pierre and Miquelon"><img src="https://flagcdn.com/w40/pm.png" alt="Saint Pierre and Miquelon" class="country-flag"></a><a href="../../../../../../../../countries/puerto-rico/index.html" title="Puerto Rico"><img src="https://flagcdn.com/w40/pr.png" alt="Puerto Rico" class="country-flag"></a><a href="../../../../../../../../countries/portugal/index.html" title="Portugal"><img src="https://flagcdn.com/w40/pt.png" alt="Portugal" class="country-flag"></a><a href="../../../../../../../../countries/paraguay/index.html" title="Paraguay"><img src="https://flagcdn.com/w40/py.png" alt="Paraguay" class="country-flag"></a><a href="../../../../../../../../countries/réunion/index.html" title="Réunion"><img src="https://flagcdn.com/w40/re.png" alt="Réunion" class="country-flag"></a><a href="../../../../../../../../countries/romania/index.html" title="Romania"><img src="https://flagcdn.com/w40/ro.png" alt="Romania" class="country-flag"></a><a href="../../../../../../../../countries/serbia/index.html" title="Serbia"><img src="https://flagcdn.com/w40/rs.png" alt="Serbia" class="country-flag"></a><a href="../../../../../../../../countries/seychelles/index.html" title="Seychelles"><img src="https://flagcdn.com/w40/sc.png" alt="Seychelles" class="country-flag"></a><a href="../../../../../../../../countries/slovenia/index.html" title="Slovenia"><img src="https://flagcdn.com/w40/si.png" alt="Slovenia" class="country-flag"></a><a href="../../../../../../../../countries/san-marino/index.html" title="San Marino"><img src="https://flagcdn.com/w40/sm.png" alt="San Marino" class="country-flag"></a><a href="../../../../../../../../countries/senegal/index.html" title="Senegal"><img src="https://flagcdn.com/w40/sn.png" alt="Senegal" class="country-flag"></a><a href="../../../../../../../../countries/suriname/index.html" title="Suriname"><img src="https://flagcdn.com/w40/sr.png" alt="Suriname" class="country-flag"></a><a href="../../../../../../../../countries/são-tomé-and-príncipe/index.html" title="São Tomé and Príncipe"><img src="https://flagcdn.com/w40/st.png" alt="São Tomé and Príncipe" class="country-flag"></a><a href="../../../../../../../../countries/el-salvador/index.html" title="El Salvador"><img src="https://flagcdn.com/w40/sv.png" alt="El Salvador" class="country-flag"></a><a href="../../../../../../../../countries/french-southern-territories/index.html" title="French Southern Territories"><img src="https://flagcdn.com/w40/tf.png" alt="French Southern Territories" class="country-flag"></a><a href="../../../../../../../../countries/timor-leste/index.html" title="Timor-Leste"><img src="https://flagcdn.com/w40/tl.png" alt="Timor-Leste" class="country-flag"></a><a href="../../../../../../../../countries/turkey/index.html" title="Turkey"><img src="https://flagcdn.com/w40/tr.png" alt="Turkey" class="country-flag"></a><a href="../../../../../../../../countries/ukraine/index.html" title="Ukraine"><img src="https://flagcdn.com/w40/ua.png" alt="Ukraine" class="country-flag"></a><a href="../../../../../../../../countries/united-states/index.html" title="United States"><img src="https://flagcdn.com/w40/us.png" alt="United States" class="country-flag"></a><a href="../../../../../../../../countries/uruguay/index.html" title="Uruguay"><img src="https://flagcdn.com/w40/uy.png" alt="Uruguay" class="country-flag"></a><a href="../../../../../../../../countries/vatican-city/index.html" title="Vatican City"><img src="https://flagcdn.com/w40/va.png" alt="Vatican City" class="country-flag"></a><a href="../../../../../../../../countries/venezuela/index.html" title="Venezuela"><img src="https://flagcdn.com/w40/ve.png" alt="Venezuela" class="country-flag"></a></div>
+<h1>Romance</h1>
+        
+        <div class="metadata">
+            <p><strong>Type:</strong> <span class="level-tag family">Family</span></p>
+            <p><strong>Glottolog ID:</strong> roma1334</p>
+            
+        </div>
+        
+        <section>
+            <h2>Language Family</h2>
+<div class="breadcrumb-tree">
+    <a href="../../../../../../index.html">Indo-European</a> / <a href="../../../../../index.html">Classical Indo-European</a> / <a href="../../../../index.html">Italic</a> / <a href="../../../index.html">Latino-Faliscan</a> / <a href="../../index.html">Latinic</a> / <a href="../index.html">Imperial Latin</a> / <span class="current">Romance</span>
+</div>
+        </section>
+        <section>
+<div class="locality-section">
+    <h3>Geographic Information</h3>
+    <div class="geographic-info">
+        <p><strong>Countries:</strong> Andorra, Albania, Argentina, Austria, Australia, Aruba, Bosnia and Herzegovina, Belgium, Bulgaria, Saint Barthélemy, Bolivia, Caribbean Netherlands, Brazil, Belize, Canada, Switzerland, Côte d'Ivoire, Chile, China, Colombia, Costa Rica, Cuba, Cape Verde, Curaçao, Dominican Republic, Algeria, Ecuador, Spain, France, United Kingdom, French Guiana, Guernsey, Gibraltar, Gambia, Guadeloupe, Equatorial Guinea, Greece, Guatemala, Guinea-Bissau, Guyana, Honduras, Croatia, Haiti, Hungary, Indonesia, Israel, India, Italy, Jersey, Saint Lucia, Sri Lanka, Luxembourg, Morocco, Monaco, Moldova, North Macedonia, Martinique, Mauritius, Mexico, Malaysia, New Caledonia, Nicaragua, Netherlands, Panama, Peru, Philippines, Saint Pierre and Miquelon, Puerto Rico, Portugal, Paraguay, Réunion, Romania, Serbia, Seychelles, Slovenia, San Marino, Senegal, Suriname, São Tomé and Príncipe, El Salvador, French Southern Territories, Timor-Leste, Turkey, Ukraine, United States, Uruguay, Vatican City, Venezuela</p>
+    </div>
+</div>
+        </section>
+        <section>
+<div class="children-section">
+<h3>Sub-families [3]</h3>
+<ul class="children-list">
+<li><a href="eastern-romance/index.html">Eastern Romance</a></li>
+<li><a href="italo-western-romance/index.html">Italo-Western Romance</a></li>
+<li><a href="southern-romance/index.html">Southern Romance</a></li>
+</ul>
+</div>
+        </section>
+        <section>
+            <h2>Information</h2>
+            <p>This page is for the Romance language/dialect.</p>
+            <p>Data sourced from <a href="https://glottolog.org">Glottolog</a>, a comprehensive reference information for the world's languages.</p>
+        </section>
+        
+        <section>
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="https://glottolog.org/resource/languoid/id/roma1334">View on Glottolog</a></li>
+                <li><a href="https://www.wals.info">World Atlas of Language Structures (WALS)</a></li>
+                <li><a href="https://www.ethnologue.com">Ethnologue</a></li>
+            </ul>
+        </section>
+        
+        <hr>
+        <footer>
+            <p><small>Generated from Glottolog 5.2 data. Last updated: January 12, 2026</small></p>
+        </footer>
+    </div></div>
+        
+    </div>
+</div>
+
+    <script src="../../../../../../../../search-index.js"></script>
+    <script src="../../../../../../../../search.js"></script>
+</body>
+</html>

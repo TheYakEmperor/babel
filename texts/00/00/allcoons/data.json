@@ -1,0 +1,24 @@
+{
+  "id": "MUM00682",
+  "title": "Sheldon Harris Collection MUM00682",
+  "titleTranslation": "",
+  "author": "m-witmark-sons",
+  "source": "University of Mississippi Library",
+  "date": "1896",
+  "country": ["US"],  
+  "language": ["stan1293","earl1247"],
+  "pages": [
+    {
+      "id": "page-1",
+      "label": "1",
+      "works": [
+        {
+          "id": "all-coons-look-alike-to-me",
+          "elementId": "all-coons-look-alike-to-me-1",
+          "title": "All Coons Look Alike to Me",
+          "content": ""
+        }
+      ]
+    }
+  ]
+}

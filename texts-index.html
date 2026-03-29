@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Archive — Babel Archive</title>
+    <link rel="icon" type="image/webp" href="favicon.webp">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .archive-intro {
+            background: linear-gradient(135deg, #f8f9fa, #eff6ff);
+            border-radius: 0;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .archive-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            border-radius: 0;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .recent-texts {
+            margin-top: 2rem;
+        }
+        .text-list {
+            list-style: none;
+            padding: 0;
+        }
+        .text-list li {
+            background: #f8f9fa;
+            margin-bottom: 0.75rem;
+            padding: 1rem 1.5rem;
+            border-radius: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e5e7eb;
+        }
+        .text-list a {
+            font-weight: 500;
+        }
+        .text-lang {
+            background: #3b82f6;
+            color: white;
+            padding: 0.25rem 0.6rem;
+            border-radius: 0;
+            font-size: 0.8rem;
+        }
+        .text-id-small {
+            font-family: monospace;
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+        .id-explainer {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 0;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-family: monospace;
+        }
+        .id-explainer code {
+            color: #22d3ee;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+    
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="./" class="header-logo"><img src="Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="./" class="sidebar-logo">
+                <img src="background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+                <h3>Navigate</h3>
+                <ul>
+                    <li><a href="./">Home</a></li>
+                    <li><a href="texts-index.html">All Texts</a></li>
+                    <li><a href="languages/">Languages</a></li>
+                    <li><a href="works/">Works Index</a></li>
+                    <li><a href="authors/">Authors</a></li>
+                    <li><a href="sources/">Sources</a></li>
+                    <li><a href="provenances/">Provenances</a></li>
+                    <li><a href="collections/">Collections</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="main-content">
+        <h1>Text Archive</h1>
+        
+        <div class="archive-intro">
+            <p>A universal repository of texts in every language — from ancient manuscripts to modern documents, from major world languages to endangered and extinct tongues.</p>
+            <p>Each text is transcribed, catalogued, and linked to its language in the Babel Archive.</p>
+        </div>
+        
+        <div class="archive-stats">
+            <div class="stat-card">
+                <div class="stat-number">22</div>
+                <div class="stat-label">Total Texts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">10+</div>
+                <div class="stat-label">Languages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">18.4 Q</div>
+                <div class="stat-label">Max Capacity</div>
+            </div>
+        </div>
+        
+        <div class="id-explainer">
+            <strong>URL Structure:</strong><br><br>
+            <code>texts/XX/XX/XXXXXXXXXXXXXXXX/index.html</code><br><br>
+            Each text has a unique 16-character hexadecimal ID (64-bit), supporting up to <strong>18,446,744,073,709,551,616</strong> texts.<br>
+            The first 4 hex digits are used as directory prefixes for filesystem efficiency (256 × 256 = 65,536 subdirectories).
+        </div>
+        
+        <section class="recent-texts">
+            <h2>Recent Texts</h2>
+            <ul class="text-list">
+                <li>
+                    <div>
+                        <a href="texts/00/00/0000000000000001/index.html">Yr Arglwydd Iesu a Lefarodd</a>
+                        <span class="text-id-small">0000000000000001</span>
+                    </div>
+                    <span class="text-lang">Welsh</span>
+                </li>
+            </ul>
+        </section>
+        
+        <section>
+            <h2>Browse by Language</h2>
+            <p>Select a language from the <a href="languages/">language catalogue</a> to see all texts in that language.</p>
+        </section>
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+</div>
+
+    <script src="search-index.js"></script>
+    <script src="search.js"></script>
+</body>
+</html>

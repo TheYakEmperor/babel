@@ -1,0 +1,77 @@
+{
+  "id": "exeter-book",
+  "title": "Exeter Book",
+  "titleTranslation": null,
+  "author": "Unknown",
+  "source": null,
+  "date": "c. 970–990 CE",
+  "language": "olde1238",
+  "pages": [
+    {
+      "id": "105r",
+      "label": "105r",
+      "regions": [
+        {
+          "x": 0.05,
+          "y": 0.05,
+          "width": 0.9,
+          "height": 0.18,
+          "title": "Riddle 16 (end)",
+          "text": "ƿinnes gif ic stille ƿeorþe gif me þæs tosæleð hi beoð sƿiþran\nþōn ic ⁊mec slitende sona flymað ƿillað oþfergan þæt\nic friþian sceal ic him ꝥ forstonde gif min steort þolað\n⁊mec stiþne ƿiþ stanas moton fæste gehabban frige\n                                                               hƿæt ic hatte :⁊"
+        },
+        {
+          "x": 0.05,
+          "y": 0.23,
+          "width": 0.9,
+          "height": 0.25,
+          "title": "Riddle 17",
+          "text": "Ic eom mund bora minre heorde eodor ƿirum fæst in\nnan gefylled dryht gestreona dæg tidum oft spæte\nspere brogan sped biþ þy mare fylle minre freo þæt bi\nhealdeð hu me of hrife fleogað hylde pilas hƿilum ic\nsƿeartum sƿelgan onginne brunum beado ƿæpnum bi\ntrum ordum eglum attor sperum is min innað til\nƿomb hord ƿlitig ƿloncū deore men gemunan þæt me\nþurh muþ fareð :- :⁊"
+        }
+      ],
+      "works": [
+        {
+          "id": "eb-riddle-16",
+          "elementId": "work-eb-riddle-16-2",
+          "title": "Riddle 16",
+          "content": "<poem>ƿinnes gif ic stille ƿeorþe gif me þæs tosæleð hi beoð sƿiþran\nþōn ic ⁊mec slitende sona flymað ƿillað oþfergan þæt\nic friþian sceal ic him ꝥ forstonde gif min steort þolað\n⁊mec stiþne ƿiþ stanas moton fæste gehabban frige\n                                                               hƿæt ic hatte :⁊</poem>"
+        },
+        {
+          "id": "eb-riddle-17",
+          "elementId": "work-eb-riddle-17",
+          "title": "Riddle 17",
+          "content": "<poem>Ic eom mund bora minre heorde eodor ƿirum fæst in\nnan gefylled dryht gestreona dæg tidum oft spæte\nspere brogan sped biþ þy mare fylle minre freo þæt bi\nhealdeð hu me of hrife fleogað hylde pilas hƿilum ic\nsƿeartum sƿelgan onginne brunum beado ƿæpnum bi\ntrum ordum eglum attor sperum is min innað til\nƿomb hord ƿlitig ƿloncū deore men gemunan þæt me\nþurh muþ fareð :- :⁊</poem>"
+        },
+        {
+          "id": "eb-riddle-18",
+          "elementId": "work-eb-riddle-18",
+          "title": "Riddle 18",
+          "content": "<poem>Ic eom ƿunderlicu ƿiht ne mæg ƿord sprecan mældan\nfor monnum þeah ic muþ hæbbe ƿide ƿombe ic ƿæs\non ceole ⁊mines cnosles ma :- :⁊</poem>"
+        },
+        {
+          "id": "eb-riddle-19",
+          "elementId": "work-eb-riddle-19",
+          "title": "Riddle 19",
+          "content": "<poem>Ic seah ·ᛋ ᚱ ᚩ ᚻ· hyge ƿloncne heafod beorhtne sƿift\nne ofer sælƿong sƿiþe þrægan hæfde him on hrycge\nhilde þryþe ·ᚾ ᚩ ᛗ· nægledne rad ·ᚪ ᚷ ᛖ ᚹ· ƿidlast fe\nrede ryne strong on rade rofne ·ᚳ ᚩ ᛇ ᚩ ᚪ ᚻ· for ƿæs\nþy beorhtre sƿylcra siþfæt saga hƿæt ic hatte :⁊</poem>"
+        },
+        {
+          "id": "eb-riddle-20",
+          "elementId": "work-eb-riddle-20-1",
+          "title": "Riddle 20",
+          "content": "<poem>Ic eom ƿunderlicu ƿiht on geƿin sceapen frean minū</poem>"
+        }
+      ]
+    },
+    {
+      "id": "105v",
+      "label": "105v",
+      "works": [
+        {
+          "id": "eb-riddle-20",
+          "elementId": "work-eb-riddle-20-2",
+          "title": "Riddle 20",
+          "content": "<poem>leof fægre gegyrƿed byrne is min bleofag sƿylce beorht seo\nmað ƿir ymb þone ƿæl gim þe me ƿaldend geaf se me ƿid\ngalum ƿisað hƿilum sylfum to sace þōn ic sinc ƿege þurh\nhlutterne dæg hond ƿeorc smiþa gold ofer geardas oft\nic gæst berend cƿelle comp ƿæpnū cyning mec gyrƿeð\nsince ⁊seolfre ⁊mec onsele ƿeorþað ne ƿyrneð ƿord lofes\nƿisan mæneð mine for mengo þær hy meodu drincað heal\ndeð mec on hea þore hƿilum læteð eft rad ƿerigne on\ngerum sceacan orleg fromne oft ic oþrum scod frecne\næt his freonde fah eom ic ƿide ƿæpnum aƿyrged Ic me\nƿenan ne þearf þæt me bearn ƿræce on bonan feore gif\nme gromra hƿylc guþe genægeð ne ƿeorþeð sio mæg burg\ngemicledu eaforan minum þe ic æfter ƿoc nymþe ic\nhlaford leas hƿeorfan mote from þā healdende þe me\nhringas geaf me bið forð ƿitod gif ic frean hyre guþe\nfremme sƿa ic gien dyde minū þeodne on þonc þæt ic þo\nlian sceal bearn gestreona ic ƿiþ bryde ne mot hæmed\nhabban ac me þæs hyht plegan geno ƿyrneð se mec geara\non bende legde forþon ic brucan sceal on hago stealde\nhæleþa gestreona oft ic ƿirum dol ƿife abelge ƿonie\nhyre ƿillan heo me ƿom spreceð floceð hyre folmum\nfirenaþ mec ƿordum ungod gæleð ic ne gyme þæs compes</poem>"
+        }
+      ]
+    }
+  ]
+}

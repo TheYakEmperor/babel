@@ -1,0 +1,74 @@
+{
+  "id": "university-of-toronto-library-3-1761-01643081-1",
+  "title": "University of Toronto Library 3 1761 01643081 1",
+  "author": "william-clowes-and-sons",
+  "sources": [
+    "University of Toronto Library"
+  ],
+  "provenances": [
+    "London"
+  ],
+  "date": "1870",
+  "country": "GB",
+  "language": "stan1293",
+  "pages": [
+    {
+      "works": [
+        {
+          "id": "punch-and-judy-cruikshank",
+          "title": "PUNCH AND JUDY, / WITH TWENTY-FOUR ILLUSTRATIONS. // (FIFTH EDITION.)",
+          "viewerPage": "9",
+          "children": [
+            {
+              "isChapter": true,
+              "title": "Introduction",
+              "viewerPage": "15"
+            },
+            {
+              "isChapter": true,
+              "title": "Chapter I.—Origins of Punch in Italy",
+              "viewerPage": "21"
+            },
+            {
+              "isChapter": true,
+              "title": ",, II.—Origin and Progress of Puppet-Plays in / England",
+              "viewerPage": "29"
+            },
+            {
+              "isChapter": true,
+              "title": ",, III.—Arrival of Punch in England",
+              "viewerPage": "36"
+            },
+            {
+              "isChapter": true,
+              "title": ",, IV.—Nature of Punch's Performance",
+              "viewerPage": "46",
+              "children": [
+                {
+                  "isChapter": true,
+                  "title": "Punch's Pranks",
+                  "viewerPage": "50"
+                }
+              ]
+            },
+            {
+              "isChapter": true,
+              "title": "Chapter V.—Moral of Punch's Performances",
+              "viewerPage": "56"
+            },
+            {
+              "isChapter": true,
+              "title": ",, VI.—On the Character of Punch",
+              "viewerPage": "63"
+            },
+            {
+              "id": "tragical-comedy-of-punch-and-judy",
+              "title": "The Tragical Comedy of Punch and Judy",
+              "viewerPage": "71"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

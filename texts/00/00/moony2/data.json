@@ -1,0 +1,23 @@
+{
+  "id": "2-SIZE M1978.A5 C574x",
+  "title": "2-SIZE M1978.A5 C574x",
+  "titleTranslation": "",
+  "author": "white-smith-music-pub-co",
+  "source": "John Hay Library: Sheet Music Collection",
+  "date": "1897",
+  "language": ["stan1293","earl1247"],
+  "pages": [
+    {
+      "id": "page-1",
+      "label": "1",
+      "works": [
+        {
+          "id": "coon-from-the-moon",
+          "elementId": "coon-from-the-moon-1",
+          "title": "The coon from the moon: a jolly Negro song",
+          "content": ""
+        }
+      ]
+    }
+  ]
+}

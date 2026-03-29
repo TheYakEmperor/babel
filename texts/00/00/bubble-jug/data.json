@@ -1,0 +1,69 @@
+{
+  "id": "bubble-jug",
+  "title": "Bubble Jug",
+  "date": "2026",
+  "country": "US",
+  "language": "stan1293",
+  "pages": [
+    {
+      "id": "bubblejug1",
+      "label": "bubblejug1",
+      "regions": [
+        {
+          "x": 0.3237100737100737,
+          "y": 0.5025721744471745,
+          "width": 0.3538083538083538,
+          "height": 0.1941031941031941,
+          "title": "",
+          "text": "<div style=\"text-align: center;\"><span style=\"font-size: 32px;\">BUBBLE</span></div><div style=\"text-align: center;\"><span style=\"font-size: 32px;\">JUG</span></div>"
+        },
+        {
+          "x": 0.38267813267813267,
+          "y": 0.6893043611793612,
+          "width": 0.23095823095823095,
+          "height": 0.07371007371007371,
+          "title": "",
+          "text": "<div style=\"text-align: center;\"><span style=\"font-size: 18px;\"><span style=\"font-size: 20px;\">TROPICAL FRUIT</span></span><br><span style=\"font-size: 14px;\">BUBBLE GUM</span></div>"
+        },
+        {
+          "x": 0.2966830466830467,
+          "y": 0.7875844594594594,
+          "width": 0.15233415233415235,
+          "height": 0.056511056511056514,
+          "title": "",
+          "text": "Net Wt. 1.94oz (55g)"
+        },
+        {
+          "x": 0.562039312039312,
+          "y": 0.7875844594594594,
+          "width": 0.13267813267813267,
+          "height": 0.05896805896805897,
+          "title": "",
+          "text": "ARTIFICIAL FLAVOR"
+        }
+      ]
+    },
+    {
+      "id": "bubblejug2",
+      "label": "bubblejug2",
+      "regions": [
+        {
+          "x": 0.2893120393120393,
+          "y": 0.3797220515970516,
+          "width": 0.1769041769041769,
+          "height": 0.2800982800982801,
+          "title": "",
+          "text": "<b><span style=\"font-size: 20px;\">Nutrition Facts</span></b><div><span style=\"font-size: 20px;\">Servings: 2</span></div><div><b><span style=\"font-size: 20px;\">Serv. size: 27.5g</span></b></div><div><b><span style=\"font-size: 16px;\"><br></span></b></div><div><span style=\"font-size: 11px;\"><span style=\"font-size: 14px;\">Amount per serving:</span></span></div><div><span style=\"font-size: 11px;\"><b><span style=\"font-size: 16px;\"><span style=\"font-size: 20px;\">Calories 100</span></span></b></span></div><div><span style=\"font-size: 14px;\"><b style=\"\">Total Fat </b>0g (0% DV), Sat.</span></div><div><span style=\"font-size: 14px;\">Fat 0g (0% DV), <i>Trans</i>&nbsp;Fat 0g,</span></div><div><span style=\"font-size: 14px;\"><b>Cholest.</b>&nbsp;0mg (0% DV),</span></div><div><span style=\"font-size: 14px;\"><b>Sodium</b>&nbsp;0mg (0% DV),</span></div><div><span style=\"font-size: 14px;\"><b>Total Carb. </b>25g (8% DV),</span></div><div><span style=\"font-size: 14px;\">Fiber 0g (0% DV), Total</span></div><div><span style=\"font-size: 14px;\">Sugars 21g (Incl. 21g Added</span></div><div><span style=\"font-size: 14px;\">Sugars, 42% DV), <b>Protein</b></span></div><div><span style=\"font-size: 14px;\">0g, Vit. D (0% DV), Calcium</span></div><div><span style=\"font-size: 14px;\">(0% DV), Iron (0% DV),</span></div><div><span style=\"font-size: 14px;\">Potas. (0% DV).</span></div>"
+        },
+        {
+          "x": 0.2942260442260442,
+          "y": 0.6671913390663391,
+          "width": 0.16461916461916462,
+          "height": 0.16707616707616707,
+          "title": "",
+          "text": "<b><span style=\"font-size: 16px;\">INGREDIENTS:</span></b><div><span style=\"font-size: 16px;\">SUGAR, DEXTROSE,</span></div><div><span style=\"font-size: 16px;\">GUM BASE, GLUCOSE</span></div><div><span style=\"font-size: 16px;\">SYRUP, MALTODEXTRIN,</span></div><div><span style=\"font-size: 16px;\">ARTIFICIAL FLAVOR,</span></div><div><span style=\"font-size: 16px;\">CITRIC ACID, MAGNESIUM</span></div><div><span style=\"font-size: 16px;\">STEARATE, LECITHIN,</span></div><div><span style=\"font-size: 16px;\">GUM ARABIC, CARNAUBA</span></div><div><span style=\"font-size: 16px;\">WAX, RED 40</span></div>"
+        }
+      ]
+    }
+  ]
+}

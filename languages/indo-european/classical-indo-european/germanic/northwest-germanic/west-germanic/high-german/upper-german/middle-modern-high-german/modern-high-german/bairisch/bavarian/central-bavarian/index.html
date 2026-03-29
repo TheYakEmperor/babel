@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Bavarian</title>
+    <link rel="icon" type="image/webp" href="../../../../../../../../../../../../../favicon.webp">
+    <link rel="stylesheet" href="../../../../../../../../../../../../../style.css">
+    <!-- Stylesheet injected by update_family_trees.py -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+function initMap(elementId, latitude, longitude) {
+    const container = document.getElementById(elementId);
+    if (!container) return;
+    const map = L.map(elementId).setView([latitude, longitude], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+        minZoom: 2
+    }).addTo(map);
+    const countryCodes = JSON.parse(container.dataset.countries || '[]');
+    
+    // Draw country boundaries if available
+    if (countryCodes && countryCodes.length > 0) {
+        fetch('https://cdn.jsdelivr.net/npm/world-geojson/countries.geojson')
+            .then(r => r.json())
+            .then(geojson => {
+                const countryFeatures = geojson.features.filter(f => {
+                    const code = f.properties.ISO_A2 || f.properties.ADMIN || '';
+                    return countryCodes.includes(code);
+                });
+                L.geoJSON({
+                    type: 'FeatureCollection',
+                    features: countryFeatures
+                }, {
+                    style: {
+                        color: '#B85A4F',
+                        weight: 1.5,
+                        opacity: 0.5,
+                        fillOpacity: 0.08
+                    }
+                }).addTo(map);
+            })
+            .catch(e => console.log(''));
+    }
+
+    // Center point marker
+    L.circleMarker([latitude, longitude], {
+        radius: 8,
+        fillColor: '#B85A4F',
+        color: '#8B4530',
+        weight: 2.5,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`${latitude.toFixed(4)}°, ${longitude.toFixed(4)}°`);
+    
+    setTimeout(() => { map.invalidateSize(); }, 150);
+}
+
+function toggleLargeList(btn) {
+    const list = btn.closest('h3').nextElementSibling;
+    if (list.style.display === 'none') {
+        list.style.display = '';
+        btn.textContent = 'Hide';
+    } else {
+        list.style.display = 'none';
+        btn.textContent = 'Show';
+    }
+}
+    </script>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../../../../../../../../../../../../" class="header-logo"><img src="../../../../../../../../../../../../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../../../../../../../../../../../../" class="sidebar-logo">
+                <img src="../../../../../../../../../../../../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../../../../../../../../../../../../">Home</a></li>
+                <li><a href="../../../../../../../../../../../../../texts-index.html">All Texts</a></li>
+                <li><a href="../../../../../../../../../../../../../languages/">Languages</a></li>
+                <li><a href="../../../../../../../../../../../../../works/">Works Index</a></li>
+                <li><a href="../../../../../../../../../../../../../authors/">Authors</a></li>
+                <li><a href="../../../../../../../../../../../../../sources/">Sources</a></li>
+                <li><a href="../../../../../../../../../../../../../provenances/">Provenances</a></li>
+                <li><a href="../../../../../../../../../../../../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-flags"><a href="../../../../../../../../../../../../../countries/austria/index.html" title="Austria"><img src="https://flagcdn.com/w40/at.png" alt="Austria" class="country-flag"></a><a href="../../../../../../../../../../../../../countries/czech-republic/index.html" title="Czech Republic"><img src="https://flagcdn.com/w40/cz.png" alt="Czech Republic" class="country-flag"></a><a href="../../../../../../../../../../../../../countries/germany/index.html" title="Germany"><img src="https://flagcdn.com/w40/de.png" alt="Germany" class="country-flag"></a></div>
+<h1>Central Bavarian</h1>
+        
+        <div class="metadata">
+            <p><strong>Type:</strong> <span class="level-tag dialect">Dialect</span></p>
+            <p><strong>Glottolog ID:</strong> cent1967</p>
+            
+        </div>
+        
+        <section>
+            <h2>Language Family</h2>
+<div class="breadcrumb-tree">
+    <a href="../../../../../../../../../../../index.html">Indo-European</a> / <a href="../../../../../../../../../../index.html">Classical Indo-European</a> / <a href="../../../../../../../../../index.html">Germanic</a> / <a href="../../../../../../../../index.html">Northwest Germanic</a> / <a href="../../../../../../../index.html">West Germanic</a> / <a href="../../../../../../index.html">High German</a> / <a href="../../../../../index.html">Upper German</a> / <a href="../../../../index.html">Middle-Modern High German</a> / <a href="../../../index.html">Modern High German</a> / <a href="../../index.html">Bairisch</a> / <a href="../index.html">Bavarian</a> / <span class="current">Central Bavarian</span>
+</div>
+        </section>
+        <section>
+<div class="locality-section">
+    <h3>Geographic Location</h3>
+    <div id="map-cent1967" class="language-map" data-countries='["AT", "CZ", "DE"]'></div>
+    <div class="geographic-info">
+        <p><strong>Countries:</strong> Austria, Czech Republic, Germany</p>
+        <p><strong>Coordinates:</strong> 48.3400°, 13.3500°</p>
+    </div>
+</div>
+    <script>
+    // Initialize map for cent1967
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap('map-cent1967', 48.34, 13.35);
+        });
+    } else {
+        initMap('map-cent1967', 48.34, 13.35);
+    }
+</script>
+        </section>
+        <section>
+<div class="dialects-section">
+<h3>Dialects [2]</h3>
+<ul class="dialects-list">
+<li><a href="east-central-bavarian/index.html">East Central Bavarian</a></li>
+<li><a href="west-central-bavarian/index.html">West Central Bavarian</a></li>
+</ul>
+</div>
+        </section>
+        <section>
+            <h2>Information</h2>
+            <p>This page is for the Central Bavarian language/dialect.</p>
+            <p>Data sourced from <a href="https://glottolog.org">Glottolog</a>, a comprehensive reference information for the world's languages.</p>
+        </section>
+        
+        <section>
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="https://glottolog.org/resource/languoid/id/cent1967">View on Glottolog</a></li>
+                <li><a href="https://www.wals.info">World Atlas of Language Structures (WALS)</a></li>
+                <li><a href="https://www.ethnologue.com">Ethnologue</a></li>
+            </ul>
+        </section>
+        
+        <hr>
+        <footer>
+            <p><small>Generated from Glottolog 5.2 data. Last updated: January 12, 2026</small></p>
+        </footer>
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <script src="../../../../../../../../../../../../../search-index.js"></script>
+    <script src="../../../../../../../../../../../../../search.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "id": "116",
+  "title": "Catecismo mexicano",
+  "titleTranslation": "Mexican Catechism",
+  "author": "Geronimo bloke",
+  "source": "...",
+  "date": "1758",
+  "language": ["stan1288", "lati1261", "clas1250"],
+  "pages": [
+    {
+      "id": "page-1",
+      "label": "1",
+      "works": [
+        {
+          "id": "catecismo-mexicano",
+          "title": "Catecismo mexicano",
+          "subworks": [
+            {
+              "id": "firstthings",
+              "elementId": "firstyhings",
+              "title": "Pizza Time Pizza Time Pizza Time Pizza Time Pizza Time Pizza Time Pizza Time Pizza Time ",
+              "language": "stan1288",
+              "content": "<poem style=\"text-align:center\"><em>APROBACION</em></poem><poem style=\"text-align:center\" class=\"justify-lines\"><em>DEL Dr. D. IGNACIO JOACHIN\nRoldan Lopez Lazcano, Colegial, que fue en\nel Real, y mas Antiguo Colegio de San Ilde-\nfonſo, Door en Sagrada Theologia por la\nReal, y Pontificia Univerſidad de eſta Cor-\nte, Prebendado en la Inſigne, y Real Cole-</em></poem><poem style=\"text-align:center\"><em>giata de Nrá Srá Santa MARIA\nVirgen de Guadalupe.</em></poem>"
+            },
+            {
+              "id": "slob",
+              "elementId": "slob-2",
+              "title": "Slob",
+              "language": "stan1288",
+              "content": "<poem style=\"text-align:center;font-size:20px\">Excmô Señor,\n\n</poem><poem class=\"justify-lines\">LUego que recibi el ſuperior decreto de\nV. Exciá, para que diera mi parecer ſo-\nbre la impreſſion del Cateciſmo en el\nIdioma Mexicano, compueſto por el R. P.\nIgnacio de Paredes, Religioſo Profeſſo de\nQuarto Voto de la Sagrada Compañia de JE-\nsus, ſe me llenò de eſpecial jubilo el corazon;\npues muchos dias hà, deſeaba con anſia, el\nque ſaliera â luz obra tan util, ê importan-\nte, aſſi à los miſerables Indios, como à los\nMiniſtros Evangelicos: á eſtos, porque vivi-\nràn con el ſeguro, de que lograràn ſu tra-\nbajo, en repartirles â ſus Ovejas el paſto de</poem>"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

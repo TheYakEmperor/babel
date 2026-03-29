@@ -1,0 +1,23 @@
+{
+  "id": "0000000000000003",
+  "title": "Hymn to Inanna",
+  "titleTranslation": null,
+  "author": "Enheduanna (c. 2285–2250 BCE)",
+  "source": null,
+  "date": "c. 2300 BCE",
+  "language": "sume1241",
+  "pages": [
+    {
+      "id": "page-1",
+      "label": "1",
+      "works": [
+        {
+          "id": "hymn-to-inanna",
+          "elementId": "work-hymn-to-inanna-1",
+          "title": "Hymn to Inanna",
+          "content": "<poem>\n𒀭𒈹 𒌷𒀭𒈹𒆠\n𒂗𒃶𒁺𒀭𒈾\n\nnin me šar₂-ra\nu₆ di-di\n\nMy lady of all the divine powers,\nresplendent light...\n</poem>"
+        }
+      ]
+    }
+  ]
+}

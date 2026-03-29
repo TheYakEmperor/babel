@@ -1,0 +1,12 @@
+{
+  "images": [
+    {
+      "url": "images/munk1.webp",
+      "label": "munk1"
+    },
+    {
+      "url": "images/munk2.webp",
+      "label": "munk2"
+    }
+  ]
+}

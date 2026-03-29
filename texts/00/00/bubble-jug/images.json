@@ -1,0 +1,12 @@
+{
+  "images": [
+    {
+      "url": "images/bubblejug1.webp",
+      "label": "bubblejug1"
+    },
+    {
+      "url": "images/bubblejug2.webp",
+      "label": "bubblejug2"
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puerto Rican Spanish</title>
+    <link rel="icon" type="image/webp" href="../../../../../../../../../../../../../../../../../../favicon.webp">
+    <link rel="stylesheet" href="../../../../../../../../../../../../../../../../../../style.css">
+    <!-- Stylesheet injected by update_family_trees.py -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+function initMap(elementId, latitude, longitude) {
+    const container = document.getElementById(elementId);
+    if (!container) return;
+    const map = L.map(elementId).setView([latitude, longitude], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+        minZoom: 2
+    }).addTo(map);
+    const countryCodes = JSON.parse(container.dataset.countries || '[]');
+    
+    // Draw country boundaries if available
+    if (countryCodes && countryCodes.length > 0) {
+        fetch('https://cdn.jsdelivr.net/npm/world-geojson/countries.geojson')
+            .then(r => r.json())
+            .then(geojson => {
+                const countryFeatures = geojson.features.filter(f => {
+                    const code = f.properties.ISO_A2 || f.properties.ADMIN || '';
+                    return countryCodes.includes(code);
+                });
+                L.geoJSON({
+                    type: 'FeatureCollection',
+                    features: countryFeatures
+                }, {
+                    style: {
+                        color: '#B85A4F',
+                        weight: 1.5,
+                        opacity: 0.5,
+                        fillOpacity: 0.08
+                    }
+                }).addTo(map);
+            })
+            .catch(e => console.log(''));
+    }
+
+    // Center point marker
+    L.circleMarker([latitude, longitude], {
+        radius: 8,
+        fillColor: '#B85A4F',
+        color: '#8B4530',
+        weight: 2.5,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`${latitude.toFixed(4)}°, ${longitude.toFixed(4)}°`);
+    
+    setTimeout(() => { map.invalidateSize(); }, 150);
+}
+
+function toggleLargeList(btn) {
+    const list = btn.closest('h3').nextElementSibling;
+    if (list.style.display === 'none') {
+        list.style.display = '';
+        btn.textContent = 'Hide';
+    } else {
+        list.style.display = 'none';
+        btn.textContent = 'Show';
+    }
+}
+    </script>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../../../../../../../../../../../../../../../../../" class="header-logo"><img src="../../../../../../../../../../../../../../../../../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../../../../../../../../../../../../../../../../../" class="sidebar-logo">
+                <img src="../../../../../../../../../../../../../../../../../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../../../../../../../../../../../../../../../../../">Home</a></li>
+                <li><a href="../../../../../../../../../../../../../../../../../../texts-index.html">All Texts</a></li>
+                <li><a href="../../../../../../../../../../../../../../../../../../languages/">Languages</a></li>
+                <li><a href="../../../../../../../../../../../../../../../../../../works/">Works Index</a></li>
+                <li><a href="../../../../../../../../../../../../../../../../../../authors/">Authors</a></li>
+                <li><a href="../../../../../../../../../../../../../../../../../../sources/">Sources</a></li>
+                <li><a href="../../../../../../../../../../../../../../../../../../provenances/">Provenances</a></li>
+                <li><a href="../../../../../../../../../../../../../../../../../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-flags"><a href="../../../../../../../../../../../../../../../../../../countries/andorra/index.html" title="Andorra"><img src="https://flagcdn.com/w40/ad.png" alt="Andorra" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/argentina/index.html" title="Argentina"><img src="https://flagcdn.com/w40/ar.png" alt="Argentina" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/bolivia/index.html" title="Bolivia"><img src="https://flagcdn.com/w40/bo.png" alt="Bolivia" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/brazil/index.html" title="Brazil"><img src="https://flagcdn.com/w40/br.png" alt="Brazil" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/belize/index.html" title="Belize"><img src="https://flagcdn.com/w40/bz.png" alt="Belize" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/chile/index.html" title="Chile"><img src="https://flagcdn.com/w40/cl.png" alt="Chile" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/colombia/index.html" title="Colombia"><img src="https://flagcdn.com/w40/co.png" alt="Colombia" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/costa-rica/index.html" title="Costa Rica"><img src="https://flagcdn.com/w40/cr.png" alt="Costa Rica" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/cuba/index.html" title="Cuba"><img src="https://flagcdn.com/w40/cu.png" alt="Cuba" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/dominican-republic/index.html" title="Dominican Republic"><img src="https://flagcdn.com/w40/do.png" alt="Dominican Republic" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/ecuador/index.html" title="Ecuador"><img src="https://flagcdn.com/w40/ec.png" alt="Ecuador" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/spain/index.html" title="Spain"><img src="https://flagcdn.com/w40/es.png" alt="Spain" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/france/index.html" title="France"><img src="https://flagcdn.com/w40/fr.png" alt="France" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/gibraltar/index.html" title="Gibraltar"><img src="https://flagcdn.com/w40/gi.png" alt="Gibraltar" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/guatemala/index.html" title="Guatemala"><img src="https://flagcdn.com/w40/gt.png" alt="Guatemala" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/guyana/index.html" title="Guyana"><img src="https://flagcdn.com/w40/gy.png" alt="Guyana" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/honduras/index.html" title="Honduras"><img src="https://flagcdn.com/w40/hn.png" alt="Honduras" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/haiti/index.html" title="Haiti"><img src="https://flagcdn.com/w40/ht.png" alt="Haiti" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/morocco/index.html" title="Morocco"><img src="https://flagcdn.com/w40/ma.png" alt="Morocco" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/mexico/index.html" title="Mexico"><img src="https://flagcdn.com/w40/mx.png" alt="Mexico" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/nicaragua/index.html" title="Nicaragua"><img src="https://flagcdn.com/w40/ni.png" alt="Nicaragua" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/panama/index.html" title="Panama"><img src="https://flagcdn.com/w40/pa.png" alt="Panama" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/peru/index.html" title="Peru"><img src="https://flagcdn.com/w40/pe.png" alt="Peru" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/puerto-rico/index.html" title="Puerto Rico"><img src="https://flagcdn.com/w40/pr.png" alt="Puerto Rico" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/portugal/index.html" title="Portugal"><img src="https://flagcdn.com/w40/pt.png" alt="Portugal" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/paraguay/index.html" title="Paraguay"><img src="https://flagcdn.com/w40/py.png" alt="Paraguay" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/el-salvador/index.html" title="El Salvador"><img src="https://flagcdn.com/w40/sv.png" alt="El Salvador" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/united-states/index.html" title="United States"><img src="https://flagcdn.com/w40/us.png" alt="United States" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/uruguay/index.html" title="Uruguay"><img src="https://flagcdn.com/w40/uy.png" alt="Uruguay" class="country-flag"></a><a href="../../../../../../../../../../../../../../../../../../countries/venezuela/index.html" title="Venezuela"><img src="https://flagcdn.com/w40/ve.png" alt="Venezuela" class="country-flag"></a></div>
+<h1>Puerto Rican Spanish</h1>
+        
+        <div class="metadata">
+            <p><strong>Type:</strong> <span class="level-tag dialect">Dialect</span></p>
+            <p><strong>Glottolog ID:</strong> puer1238</p>
+            
+        </div>
+        
+        <section>
+            <h2>Language Family</h2>
+<div class="breadcrumb-tree">
+    <a href="../../../../../../../../../../../../../../../../index.html">Indo-European</a> / <a href="../../../../../../../../../../../../../../../index.html">Classical Indo-European</a> / <a href="../../../../../../../../../../../../../../index.html">Italic</a> / <a href="../../../../../../../../../../../../../index.html">Latino-Faliscan</a> / <a href="../../../../../../../../../../../../index.html">Latinic</a> / <a href="../../../../../../../../../../../index.html">Imperial Latin</a> / <a href="../../../../../../../../../../index.html">Romance</a> / <a href="../../../../../../../../../index.html">Italo-Western Romance</a> / <a href="../../../../../../../../index.html">Western Romance</a> / <a href="../../../../../../../index.html">Shifted Western Romance</a> / <a href="../../../../../../index.html">Southwestern Shifted Romance</a> / <a href="../../../../../index.html">West Ibero-Romance</a> / <a href="../../../../index.html">Castilic</a> / <a href="../../../index.html">Spanish</a> / <a href="../../index.html">Latin American Spanish</a> / <a href="../index.html">Caribbean Spanish</a> / <span class="current">Puerto Rican Spanish</span>
+</div>
+        </section>
+        <section>
+<div class="locality-section">
+    <h3>Geographic Location</h3>
+    <div id="map-puer1238" class="language-map" data-countries='["AD", "AR", "BO", "BR", "BZ", "CL", "CO", "CR", "CU", "DO", "EC", "ES", "FR", "GI", "GT", "GY", "HN", "HT", "MA", "MX", "NI", "PA", "PE", "PR", "PT", "PY", "SV", "US", "UY", "VE"]'></div>
+    <div class="geographic-info">
+        <p><strong>Countries:</strong> Andorra, Argentina, Bolivia, Brazil, Belize, Chile, Colombia, Costa Rica, Cuba, Dominican Republic, Ecuador, Spain, France, Gibraltar, Guatemala, Guyana, Honduras, Haiti, Morocco, Mexico, Nicaragua, Panama, Peru, Puerto Rico, Portugal, Paraguay, El Salvador, United States, Uruguay, Venezuela</p>
+        <p><strong>Coordinates:</strong> 40.4414°, -1.1179°</p>
+    </div>
+</div>
+    <script>
+    // Initialize map for puer1238
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap('map-puer1238', 40.4414, -1.11788);
+        });
+    } else {
+        initMap('map-puer1238', 40.4414, -1.11788);
+    }
+</script>
+        </section>
+        <section>
+            <h2>Information</h2>
+            <p>This page is for the Puerto Rican Spanish language/dialect.</p>
+            <p>Data sourced from <a href="https://glottolog.org">Glottolog</a>, a comprehensive reference information for the world's languages.</p>
+        </section>
+        
+        <section>
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="https://glottolog.org/resource/languoid/id/puer1238">View on Glottolog</a></li>
+                <li><a href="https://www.wals.info">World Atlas of Language Structures (WALS)</a></li>
+                <li><a href="https://www.ethnologue.com">Ethnologue</a></li>
+            </ul>
+        </section>
+        
+        <hr>
+        <footer>
+            <p><small>Generated from Glottolog 5.2 data. Last updated: January 12, 2026</small></p>
+        </footer>
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <script src="../../../../../../../../../../../../../../../../../../search-index.js"></script>
+    <script src="../../../../../../../../../../../../../../../../../../search.js"></script>
+</body>
+</html>

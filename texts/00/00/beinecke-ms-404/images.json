@@ -1,0 +1,1652 @@
+{
+  "images": [
+    {
+      "url": "images/001_Front_cover_vol_1.jpg",
+      "label": "001 Front cover vol 1"
+    },
+    {
+      "url": "images/002_Inside_front_cover_vol_1.jpg",
+      "label": "002 Inside front cover vol 1"
+    },
+    {
+      "url": "images/003_Flyleaf_r.jpg",
+      "label": "003 Flyleaf r"
+    },
+    {
+      "url": "images/004_Flyleaf_v.jpg",
+      "label": "004 Flyleaf v"
+    },
+    {
+      "url": "images/005_ir.jpg",
+      "label": "005 ir"
+    },
+    {
+      "url": "images/006_iv.jpg",
+      "label": "006 iv"
+    },
+    {
+      "url": "images/007_iir.jpg",
+      "label": "007 iir"
+    },
+    {
+      "url": "images/008_iiv.jpg",
+      "label": "008 iiv"
+    },
+    {
+      "url": "images/009_1r.jpg",
+      "label": "009 1r"
+    },
+    {
+      "url": "images/010_1v.jpg",
+      "label": "010 1v"
+    },
+    {
+      "url": "images/011_2r.jpg",
+      "label": "011 2r"
+    },
+    {
+      "url": "images/012_2v.jpg",
+      "label": "012 2v"
+    },
+    {
+      "url": "images/013_3r.jpg",
+      "label": "013 3r"
+    },
+    {
+      "url": "images/014_3v.jpg",
+      "label": "014 3v"
+    },
+    {
+      "url": "images/015_4r.jpg",
+      "label": "015 4r"
+    },
+    {
+      "url": "images/016_4v.jpg",
+      "label": "016 4v"
+    },
+    {
+      "url": "images/017_5r.jpg",
+      "label": "017 5r"
+    },
+    {
+      "url": "images/018_5v.jpg",
+      "label": "018 5v"
+    },
+    {
+      "url": "images/019_6r.jpg",
+      "label": "019 6r"
+    },
+    {
+      "url": "images/020_6v.jpg",
+      "label": "020 6v"
+    },
+    {
+      "url": "images/021_7r.jpg",
+      "label": "021 7r"
+    },
+    {
+      "url": "images/022_7v.jpg",
+      "label": "022 7v"
+    },
+    {
+      "url": "images/023_8r.jpg",
+      "label": "023 8r"
+    },
+    {
+      "url": "images/024_8v.jpg",
+      "label": "024 8v"
+    },
+    {
+      "url": "images/025_9r.jpg",
+      "label": "025 9r"
+    },
+    {
+      "url": "images/026_9v.jpg",
+      "label": "026 9v"
+    },
+    {
+      "url": "images/027_10r.jpg",
+      "label": "027 10r"
+    },
+    {
+      "url": "images/028_10v.jpg",
+      "label": "028 10v"
+    },
+    {
+      "url": "images/029_11r.jpg",
+      "label": "029 11r"
+    },
+    {
+      "url": "images/030_11v.jpg",
+      "label": "030 11v"
+    },
+    {
+      "url": "images/031_12r.jpg",
+      "label": "031 12r"
+    },
+    {
+      "url": "images/032_12v.jpg",
+      "label": "032 12v"
+    },
+    {
+      "url": "images/033_13r.jpg",
+      "label": "033 13r"
+    },
+    {
+      "url": "images/034_13v.jpg",
+      "label": "034 13v"
+    },
+    {
+      "url": "images/035_14r.jpg",
+      "label": "035 14r"
+    },
+    {
+      "url": "images/036_14v.jpg",
+      "label": "036 14v"
+    },
+    {
+      "url": "images/037_15r.jpg",
+      "label": "037 15r"
+    },
+    {
+      "url": "images/038_15v.jpg",
+      "label": "038 15v"
+    },
+    {
+      "url": "images/039_16r.jpg",
+      "label": "039 16r"
+    },
+    {
+      "url": "images/040_16v.jpg",
+      "label": "040 16v"
+    },
+    {
+      "url": "images/041_17r.jpg",
+      "label": "041 17r"
+    },
+    {
+      "url": "images/042_17v.jpg",
+      "label": "042 17v"
+    },
+    {
+      "url": "images/043_18r.jpg",
+      "label": "043 18r"
+    },
+    {
+      "url": "images/044_18v.jpg",
+      "label": "044 18v"
+    },
+    {
+      "url": "images/045_19r.jpg",
+      "label": "045 19r"
+    },
+    {
+      "url": "images/046_19v.jpg",
+      "label": "046 19v"
+    },
+    {
+      "url": "images/047_20r.jpg",
+      "label": "047 20r"
+    },
+    {
+      "url": "images/048_20v.jpg",
+      "label": "048 20v"
+    },
+    {
+      "url": "images/049_21r.jpg",
+      "label": "049 21r"
+    },
+    {
+      "url": "images/050_21v.jpg",
+      "label": "050 21v"
+    },
+    {
+      "url": "images/051_22r.jpg",
+      "label": "051 22r"
+    },
+    {
+      "url": "images/052_22v.jpg",
+      "label": "052 22v"
+    },
+    {
+      "url": "images/053_23r.jpg",
+      "label": "053 23r"
+    },
+    {
+      "url": "images/054_23v.jpg",
+      "label": "054 23v"
+    },
+    {
+      "url": "images/055_24r.jpg",
+      "label": "055 24r"
+    },
+    {
+      "url": "images/056_24v.jpg",
+      "label": "056 24v"
+    },
+    {
+      "url": "images/057_25r.jpg",
+      "label": "057 25r"
+    },
+    {
+      "url": "images/058_25v.jpg",
+      "label": "058 25v"
+    },
+    {
+      "url": "images/059_26r.jpg",
+      "label": "059 26r"
+    },
+    {
+      "url": "images/060_26v.jpg",
+      "label": "060 26v"
+    },
+    {
+      "url": "images/061_27r.jpg",
+      "label": "061 27r"
+    },
+    {
+      "url": "images/062_27v.jpg",
+      "label": "062 27v"
+    },
+    {
+      "url": "images/063_28r.jpg",
+      "label": "063 28r"
+    },
+    {
+      "url": "images/064_28v.jpg",
+      "label": "064 28v"
+    },
+    {
+      "url": "images/065_29r.jpg",
+      "label": "065 29r"
+    },
+    {
+      "url": "images/066_29v.jpg",
+      "label": "066 29v"
+    },
+    {
+      "url": "images/067_30r.jpg",
+      "label": "067 30r"
+    },
+    {
+      "url": "images/068_30v.jpg",
+      "label": "068 30v"
+    },
+    {
+      "url": "images/069_31r.jpg",
+      "label": "069 31r"
+    },
+    {
+      "url": "images/070_31v.jpg",
+      "label": "070 31v"
+    },
+    {
+      "url": "images/071_32r.jpg",
+      "label": "071 32r"
+    },
+    {
+      "url": "images/072_32v.jpg",
+      "label": "072 32v"
+    },
+    {
+      "url": "images/073_33r.jpg",
+      "label": "073 33r"
+    },
+    {
+      "url": "images/074_33v.jpg",
+      "label": "074 33v"
+    },
+    {
+      "url": "images/075_34r.jpg",
+      "label": "075 34r"
+    },
+    {
+      "url": "images/076_34v.jpg",
+      "label": "076 34v"
+    },
+    {
+      "url": "images/077_35r.jpg",
+      "label": "077 35r"
+    },
+    {
+      "url": "images/078_35v.jpg",
+      "label": "078 35v"
+    },
+    {
+      "url": "images/079_36r.jpg",
+      "label": "079 36r"
+    },
+    {
+      "url": "images/080_36v.jpg",
+      "label": "080 36v"
+    },
+    {
+      "url": "images/081_37r.jpg",
+      "label": "081 37r"
+    },
+    {
+      "url": "images/082_37v.jpg",
+      "label": "082 37v"
+    },
+    {
+      "url": "images/083_38r.jpg",
+      "label": "083 38r"
+    },
+    {
+      "url": "images/084_38v.jpg",
+      "label": "084 38v"
+    },
+    {
+      "url": "images/085_39r.jpg",
+      "label": "085 39r"
+    },
+    {
+      "url": "images/086_39v.jpg",
+      "label": "086 39v"
+    },
+    {
+      "url": "images/087_40r.jpg",
+      "label": "087 40r"
+    },
+    {
+      "url": "images/088_40v.jpg",
+      "label": "088 40v"
+    },
+    {
+      "url": "images/089_41r.jpg",
+      "label": "089 41r"
+    },
+    {
+      "url": "images/090_41v.jpg",
+      "label": "090 41v"
+    },
+    {
+      "url": "images/091_42r.jpg",
+      "label": "091 42r"
+    },
+    {
+      "url": "images/092_42v.jpg",
+      "label": "092 42v"
+    },
+    {
+      "url": "images/093_43r.jpg",
+      "label": "093 43r"
+    },
+    {
+      "url": "images/094_43v.jpg",
+      "label": "094 43v"
+    },
+    {
+      "url": "images/095_44r.jpg",
+      "label": "095 44r"
+    },
+    {
+      "url": "images/096_44v.jpg",
+      "label": "096 44v"
+    },
+    {
+      "url": "images/097_45r.jpg",
+      "label": "097 45r"
+    },
+    {
+      "url": "images/098_45v.jpg",
+      "label": "098 45v"
+    },
+    {
+      "url": "images/099_46r.jpg",
+      "label": "099 46r"
+    },
+    {
+      "url": "images/100_46v.jpg",
+      "label": "100 46v"
+    },
+    {
+      "url": "images/101_47r.jpg",
+      "label": "101 47r"
+    },
+    {
+      "url": "images/102_47v.jpg",
+      "label": "102 47v"
+    },
+    {
+      "url": "images/103_48r.jpg",
+      "label": "103 48r"
+    },
+    {
+      "url": "images/104_48v.jpg",
+      "label": "104 48v"
+    },
+    {
+      "url": "images/105_49r.jpg",
+      "label": "105 49r"
+    },
+    {
+      "url": "images/106_49v.jpg",
+      "label": "106 49v"
+    },
+    {
+      "url": "images/107_50r.jpg",
+      "label": "107 50r"
+    },
+    {
+      "url": "images/108_50v.jpg",
+      "label": "108 50v"
+    },
+    {
+      "url": "images/109_51r.jpg",
+      "label": "109 51r"
+    },
+    {
+      "url": "images/110_51v.jpg",
+      "label": "110 51v"
+    },
+    {
+      "url": "images/111_52r.jpg",
+      "label": "111 52r"
+    },
+    {
+      "url": "images/112_52v.jpg",
+      "label": "112 52v"
+    },
+    {
+      "url": "images/113_53r.jpg",
+      "label": "113 53r"
+    },
+    {
+      "url": "images/114_53v.jpg",
+      "label": "114 53v"
+    },
+    {
+      "url": "images/115_54r.jpg",
+      "label": "115 54r"
+    },
+    {
+      "url": "images/116_54v.jpg",
+      "label": "116 54v"
+    },
+    {
+      "url": "images/117_55r.jpg",
+      "label": "117 55r"
+    },
+    {
+      "url": "images/118_55v.jpg",
+      "label": "118 55v"
+    },
+    {
+      "url": "images/119_56r.jpg",
+      "label": "119 56r"
+    },
+    {
+      "url": "images/120_56v.jpg",
+      "label": "120 56v"
+    },
+    {
+      "url": "images/121_57r.jpg",
+      "label": "121 57r"
+    },
+    {
+      "url": "images/122_57v.jpg",
+      "label": "122 57v"
+    },
+    {
+      "url": "images/123_58r.jpg",
+      "label": "123 58r"
+    },
+    {
+      "url": "images/124_58v.jpg",
+      "label": "124 58v"
+    },
+    {
+      "url": "images/125_59r.jpg",
+      "label": "125 59r"
+    },
+    {
+      "url": "images/126_59v.jpg",
+      "label": "126 59v"
+    },
+    {
+      "url": "images/127_60r.jpg",
+      "label": "127 60r"
+    },
+    {
+      "url": "images/128_60v.jpg",
+      "label": "128 60v"
+    },
+    {
+      "url": "images/129_61r.jpg",
+      "label": "129 61r"
+    },
+    {
+      "url": "images/130_61v.jpg",
+      "label": "130 61v"
+    },
+    {
+      "url": "images/131_62r.jpg",
+      "label": "131 62r"
+    },
+    {
+      "url": "images/132_62v.jpg",
+      "label": "132 62v"
+    },
+    {
+      "url": "images/133_63r.jpg",
+      "label": "133 63r"
+    },
+    {
+      "url": "images/134_63v.jpg",
+      "label": "134 63v"
+    },
+    {
+      "url": "images/135_64r.jpg",
+      "label": "135 64r"
+    },
+    {
+      "url": "images/136_64v.jpg",
+      "label": "136 64v"
+    },
+    {
+      "url": "images/137_65r.jpg",
+      "label": "137 65r"
+    },
+    {
+      "url": "images/138_65v.jpg",
+      "label": "138 65v"
+    },
+    {
+      "url": "images/139_66r.jpg",
+      "label": "139 66r"
+    },
+    {
+      "url": "images/140_66v.jpg",
+      "label": "140 66v"
+    },
+    {
+      "url": "images/141_67r.jpg",
+      "label": "141 67r"
+    },
+    {
+      "url": "images/142_67v.jpg",
+      "label": "142 67v"
+    },
+    {
+      "url": "images/143_68r.jpg",
+      "label": "143 68r"
+    },
+    {
+      "url": "images/144_68v.jpg",
+      "label": "144 68v"
+    },
+    {
+      "url": "images/145_69r.jpg",
+      "label": "145 69r"
+    },
+    {
+      "url": "images/146_69v.jpg",
+      "label": "146 69v"
+    },
+    {
+      "url": "images/147_70r.jpg",
+      "label": "147 70r"
+    },
+    {
+      "url": "images/148_70v.jpg",
+      "label": "148 70v"
+    },
+    {
+      "url": "images/149_71r.jpg",
+      "label": "149 71r"
+    },
+    {
+      "url": "images/150_71v.jpg",
+      "label": "150 71v"
+    },
+    {
+      "url": "images/151_72r.jpg",
+      "label": "151 72r"
+    },
+    {
+      "url": "images/152_72v.jpg",
+      "label": "152 72v"
+    },
+    {
+      "url": "images/153_73r.jpg",
+      "label": "153 73r"
+    },
+    {
+      "url": "images/154_73v.jpg",
+      "label": "154 73v"
+    },
+    {
+      "url": "images/155_74r.jpg",
+      "label": "155 74r"
+    },
+    {
+      "url": "images/156_74v.jpg",
+      "label": "156 74v"
+    },
+    {
+      "url": "images/157_75r.jpg",
+      "label": "157 75r"
+    },
+    {
+      "url": "images/158_75v.jpg",
+      "label": "158 75v"
+    },
+    {
+      "url": "images/159_76r.jpg",
+      "label": "159 76r"
+    },
+    {
+      "url": "images/160_76v.jpg",
+      "label": "160 76v"
+    },
+    {
+      "url": "images/161_77r.jpg",
+      "label": "161 77r"
+    },
+    {
+      "url": "images/162_77v.jpg",
+      "label": "162 77v"
+    },
+    {
+      "url": "images/163_78r.jpg",
+      "label": "163 78r"
+    },
+    {
+      "url": "images/164_78v.jpg",
+      "label": "164 78v"
+    },
+    {
+      "url": "images/165_79r.jpg",
+      "label": "165 79r"
+    },
+    {
+      "url": "images/166_79v.jpg",
+      "label": "166 79v"
+    },
+    {
+      "url": "images/167_80r.jpg",
+      "label": "167 80r"
+    },
+    {
+      "url": "images/168_80v.jpg",
+      "label": "168 80v"
+    },
+    {
+      "url": "images/169_81r.jpg",
+      "label": "169 81r"
+    },
+    {
+      "url": "images/170_81v.jpg",
+      "label": "170 81v"
+    },
+    {
+      "url": "images/171_82r.jpg",
+      "label": "171 82r"
+    },
+    {
+      "url": "images/172_82v.jpg",
+      "label": "172 82v"
+    },
+    {
+      "url": "images/173_83r.jpg",
+      "label": "173 83r"
+    },
+    {
+      "url": "images/174_83v.jpg",
+      "label": "174 83v"
+    },
+    {
+      "url": "images/175_84r.jpg",
+      "label": "175 84r"
+    },
+    {
+      "url": "images/176_84v.jpg",
+      "label": "176 84v"
+    },
+    {
+      "url": "images/177_85r.jpg",
+      "label": "177 85r"
+    },
+    {
+      "url": "images/178_85v.jpg",
+      "label": "178 85v"
+    },
+    {
+      "url": "images/179_86r.jpg",
+      "label": "179 86r"
+    },
+    {
+      "url": "images/180_86v.jpg",
+      "label": "180 86v"
+    },
+    {
+      "url": "images/181_87r.jpg",
+      "label": "181 87r"
+    },
+    {
+      "url": "images/182_87v.jpg",
+      "label": "182 87v"
+    },
+    {
+      "url": "images/183_88r.jpg",
+      "label": "183 88r"
+    },
+    {
+      "url": "images/184_88v.jpg",
+      "label": "184 88v"
+    },
+    {
+      "url": "images/185_89r.jpg",
+      "label": "185 89r"
+    },
+    {
+      "url": "images/186_89v.jpg",
+      "label": "186 89v"
+    },
+    {
+      "url": "images/187_90r.jpg",
+      "label": "187 90r"
+    },
+    {
+      "url": "images/188_90v.jpg",
+      "label": "188 90v"
+    },
+    {
+      "url": "images/189_91r.jpg",
+      "label": "189 91r"
+    },
+    {
+      "url": "images/190_91v.jpg",
+      "label": "190 91v"
+    },
+    {
+      "url": "images/191_92r.jpg",
+      "label": "191 92r"
+    },
+    {
+      "url": "images/192_92v.jpg",
+      "label": "192 92v"
+    },
+    {
+      "url": "images/193_93r.jpg",
+      "label": "193 93r"
+    },
+    {
+      "url": "images/194_93v.jpg",
+      "label": "194 93v"
+    },
+    {
+      "url": "images/195_94r.jpg",
+      "label": "195 94r"
+    },
+    {
+      "url": "images/196_94v.jpg",
+      "label": "196 94v"
+    },
+    {
+      "url": "images/197_95r.jpg",
+      "label": "197 95r"
+    },
+    {
+      "url": "images/198_95v.jpg",
+      "label": "198 95v"
+    },
+    {
+      "url": "images/199_96r.jpg",
+      "label": "199 96r"
+    },
+    {
+      "url": "images/200_96v.jpg",
+      "label": "200 96v"
+    },
+    {
+      "url": "images/201_ir.jpg",
+      "label": "201 ir"
+    },
+    {
+      "url": "images/202_iv.jpg",
+      "label": "202 iv"
+    },
+    {
+      "url": "images/203_iir.jpg",
+      "label": "203 iir"
+    },
+    {
+      "url": "images/204_iiv.jpg",
+      "label": "204 iiv"
+    },
+    {
+      "url": "images/205_iiir.jpg",
+      "label": "205 iiir"
+    },
+    {
+      "url": "images/206_iiiv.jpg",
+      "label": "206 iiiv"
+    },
+    {
+      "url": "images/207_Back_cover_vol_1.jpg",
+      "label": "207 Back cover vol 1"
+    },
+    {
+      "url": "images/208_Inside_back_cover_vol_1.jpg",
+      "label": "208 Inside back cover vol 1"
+    },
+    {
+      "url": "images/209_Front_cover_vol_2.jpg",
+      "label": "209 Front cover vol 2"
+    },
+    {
+      "url": "images/210_Inside_front_cover_vol_2.jpg",
+      "label": "210 Inside front cover vol 2"
+    },
+    {
+      "url": "images/211_Flyleaf_r.jpg",
+      "label": "211 Flyleaf r"
+    },
+    {
+      "url": "images/212_Flyleaf_v.jpg",
+      "label": "212 Flyleaf v"
+    },
+    {
+      "url": "images/213_ir.jpg",
+      "label": "213 ir"
+    },
+    {
+      "url": "images/214_iv.jpg",
+      "label": "214 iv"
+    },
+    {
+      "url": "images/215_iir.jpg",
+      "label": "215 iir"
+    },
+    {
+      "url": "images/216_iiv.jpg",
+      "label": "216 iiv"
+    },
+    {
+      "url": "images/217_97r.jpg",
+      "label": "217 97r"
+    },
+    {
+      "url": "images/218_97v.jpg",
+      "label": "218 97v"
+    },
+    {
+      "url": "images/219_98r.jpg",
+      "label": "219 98r"
+    },
+    {
+      "url": "images/220_98v.jpg",
+      "label": "220 98v"
+    },
+    {
+      "url": "images/221_99r.jpg",
+      "label": "221 99r"
+    },
+    {
+      "url": "images/222_99v.jpg",
+      "label": "222 99v"
+    },
+    {
+      "url": "images/223_100r.jpg",
+      "label": "223 100r"
+    },
+    {
+      "url": "images/224_100v.jpg",
+      "label": "224 100v"
+    },
+    {
+      "url": "images/225_101r.jpg",
+      "label": "225 101r"
+    },
+    {
+      "url": "images/226_101v.jpg",
+      "label": "226 101v"
+    },
+    {
+      "url": "images/227_102r.jpg",
+      "label": "227 102r"
+    },
+    {
+      "url": "images/228_102v.jpg",
+      "label": "228 102v"
+    },
+    {
+      "url": "images/229_103r.jpg",
+      "label": "229 103r"
+    },
+    {
+      "url": "images/230_103v.jpg",
+      "label": "230 103v"
+    },
+    {
+      "url": "images/231_104r.jpg",
+      "label": "231 104r"
+    },
+    {
+      "url": "images/232_104v.jpg",
+      "label": "232 104v"
+    },
+    {
+      "url": "images/233_105r.jpg",
+      "label": "233 105r"
+    },
+    {
+      "url": "images/234_105v.jpg",
+      "label": "234 105v"
+    },
+    {
+      "url": "images/235_106r.jpg",
+      "label": "235 106r"
+    },
+    {
+      "url": "images/236_106v.jpg",
+      "label": "236 106v"
+    },
+    {
+      "url": "images/237_107r.jpg",
+      "label": "237 107r"
+    },
+    {
+      "url": "images/238_107v.jpg",
+      "label": "238 107v"
+    },
+    {
+      "url": "images/239_108r.jpg",
+      "label": "239 108r"
+    },
+    {
+      "url": "images/240_108v.jpg",
+      "label": "240 108v"
+    },
+    {
+      "url": "images/241_109r.jpg",
+      "label": "241 109r"
+    },
+    {
+      "url": "images/242_109v.jpg",
+      "label": "242 109v"
+    },
+    {
+      "url": "images/243_110r.jpg",
+      "label": "243 110r"
+    },
+    {
+      "url": "images/244_110v.jpg",
+      "label": "244 110v"
+    },
+    {
+      "url": "images/245_111r.jpg",
+      "label": "245 111r"
+    },
+    {
+      "url": "images/246_111v.jpg",
+      "label": "246 111v"
+    },
+    {
+      "url": "images/247_112r.jpg",
+      "label": "247 112r"
+    },
+    {
+      "url": "images/248_112v.jpg",
+      "label": "248 112v"
+    },
+    {
+      "url": "images/249_113r.jpg",
+      "label": "249 113r"
+    },
+    {
+      "url": "images/250_113v.jpg",
+      "label": "250 113v"
+    },
+    {
+      "url": "images/251_114r.jpg",
+      "label": "251 114r"
+    },
+    {
+      "url": "images/252_114v.jpg",
+      "label": "252 114v"
+    },
+    {
+      "url": "images/253_115r.jpg",
+      "label": "253 115r"
+    },
+    {
+      "url": "images/254_115v.jpg",
+      "label": "254 115v"
+    },
+    {
+      "url": "images/255_116r.jpg",
+      "label": "255 116r"
+    },
+    {
+      "url": "images/256_116v.jpg",
+      "label": "256 116v"
+    },
+    {
+      "url": "images/257_117r.jpg",
+      "label": "257 117r"
+    },
+    {
+      "url": "images/258_117v.jpg",
+      "label": "258 117v"
+    },
+    {
+      "url": "images/259_118r.jpg",
+      "label": "259 118r"
+    },
+    {
+      "url": "images/260_118v.jpg",
+      "label": "260 118v"
+    },
+    {
+      "url": "images/261_119r.jpg",
+      "label": "261 119r"
+    },
+    {
+      "url": "images/262_119v.jpg",
+      "label": "262 119v"
+    },
+    {
+      "url": "images/263_120r.jpg",
+      "label": "263 120r"
+    },
+    {
+      "url": "images/264_120v.jpg",
+      "label": "264 120v"
+    },
+    {
+      "url": "images/265_121r.jpg",
+      "label": "265 121r"
+    },
+    {
+      "url": "images/266_121v.jpg",
+      "label": "266 121v"
+    },
+    {
+      "url": "images/267_122r.jpg",
+      "label": "267 122r"
+    },
+    {
+      "url": "images/268_122v.jpg",
+      "label": "268 122v"
+    },
+    {
+      "url": "images/269_123r.jpg",
+      "label": "269 123r"
+    },
+    {
+      "url": "images/270_123v.jpg",
+      "label": "270 123v"
+    },
+    {
+      "url": "images/271_124r.jpg",
+      "label": "271 124r"
+    },
+    {
+      "url": "images/272_124v.jpg",
+      "label": "272 124v"
+    },
+    {
+      "url": "images/273_125r.jpg",
+      "label": "273 125r"
+    },
+    {
+      "url": "images/274_125v.jpg",
+      "label": "274 125v"
+    },
+    {
+      "url": "images/275_126r.jpg",
+      "label": "275 126r"
+    },
+    {
+      "url": "images/276_126v.jpg",
+      "label": "276 126v"
+    },
+    {
+      "url": "images/277_127r.jpg",
+      "label": "277 127r"
+    },
+    {
+      "url": "images/278_127v.jpg",
+      "label": "278 127v"
+    },
+    {
+      "url": "images/279_128r.jpg",
+      "label": "279 128r"
+    },
+    {
+      "url": "images/280_128v.jpg",
+      "label": "280 128v"
+    },
+    {
+      "url": "images/281_129r.jpg",
+      "label": "281 129r"
+    },
+    {
+      "url": "images/282_129v.jpg",
+      "label": "282 129v"
+    },
+    {
+      "url": "images/283_130r.jpg",
+      "label": "283 130r"
+    },
+    {
+      "url": "images/284_130v.jpg",
+      "label": "284 130v"
+    },
+    {
+      "url": "images/285_131r.jpg",
+      "label": "285 131r"
+    },
+    {
+      "url": "images/286_131v.jpg",
+      "label": "286 131v"
+    },
+    {
+      "url": "images/287_132r.jpg",
+      "label": "287 132r"
+    },
+    {
+      "url": "images/288_132v.jpg",
+      "label": "288 132v"
+    },
+    {
+      "url": "images/289_133r.jpg",
+      "label": "289 133r"
+    },
+    {
+      "url": "images/290_133v.jpg",
+      "label": "290 133v"
+    },
+    {
+      "url": "images/291_134r.jpg",
+      "label": "291 134r"
+    },
+    {
+      "url": "images/292_134v.jpg",
+      "label": "292 134v"
+    },
+    {
+      "url": "images/293_135r.jpg",
+      "label": "293 135r"
+    },
+    {
+      "url": "images/294_135v.jpg",
+      "label": "294 135v"
+    },
+    {
+      "url": "images/295_136r.jpg",
+      "label": "295 136r"
+    },
+    {
+      "url": "images/296_136v.jpg",
+      "label": "296 136v"
+    },
+    {
+      "url": "images/297_137r.jpg",
+      "label": "297 137r"
+    },
+    {
+      "url": "images/298_137v.jpg",
+      "label": "298 137v"
+    },
+    {
+      "url": "images/299_138r.jpg",
+      "label": "299 138r"
+    },
+    {
+      "url": "images/300_138v.jpg",
+      "label": "300 138v"
+    },
+    {
+      "url": "images/301_139r.jpg",
+      "label": "301 139r"
+    },
+    {
+      "url": "images/302_139v.jpg",
+      "label": "302 139v"
+    },
+    {
+      "url": "images/303_140r.jpg",
+      "label": "303 140r"
+    },
+    {
+      "url": "images/304_140v.jpg",
+      "label": "304 140v"
+    },
+    {
+      "url": "images/305_141r.jpg",
+      "label": "305 141r"
+    },
+    {
+      "url": "images/306_141v.jpg",
+      "label": "306 141v"
+    },
+    {
+      "url": "images/307_142r.jpg",
+      "label": "307 142r"
+    },
+    {
+      "url": "images/308_142v.jpg",
+      "label": "308 142v"
+    },
+    {
+      "url": "images/309_143r.jpg",
+      "label": "309 143r"
+    },
+    {
+      "url": "images/310_143v.jpg",
+      "label": "310 143v"
+    },
+    {
+      "url": "images/311_144r.jpg",
+      "label": "311 144r"
+    },
+    {
+      "url": "images/312_144v.jpg",
+      "label": "312 144v"
+    },
+    {
+      "url": "images/313_145r.jpg",
+      "label": "313 145r"
+    },
+    {
+      "url": "images/314_145v.jpg",
+      "label": "314 145v"
+    },
+    {
+      "url": "images/315_146r.jpg",
+      "label": "315 146r"
+    },
+    {
+      "url": "images/316_146v.jpg",
+      "label": "316 146v"
+    },
+    {
+      "url": "images/317_147r.jpg",
+      "label": "317 147r"
+    },
+    {
+      "url": "images/318_147v.jpg",
+      "label": "318 147v"
+    },
+    {
+      "url": "images/319_148r.jpg",
+      "label": "319 148r"
+    },
+    {
+      "url": "images/320_148v.jpg",
+      "label": "320 148v"
+    },
+    {
+      "url": "images/321_149r.jpg",
+      "label": "321 149r"
+    },
+    {
+      "url": "images/322_149v.jpg",
+      "label": "322 149v"
+    },
+    {
+      "url": "images/323_150r.jpg",
+      "label": "323 150r"
+    },
+    {
+      "url": "images/324_150v.jpg",
+      "label": "324 150v"
+    },
+    {
+      "url": "images/325_151r.jpg",
+      "label": "325 151r"
+    },
+    {
+      "url": "images/326_151v.jpg",
+      "label": "326 151v"
+    },
+    {
+      "url": "images/327_152r.jpg",
+      "label": "327 152r"
+    },
+    {
+      "url": "images/328_152v.jpg",
+      "label": "328 152v"
+    },
+    {
+      "url": "images/329_153r.jpg",
+      "label": "329 153r"
+    },
+    {
+      "url": "images/330_153v.jpg",
+      "label": "330 153v"
+    },
+    {
+      "url": "images/331_154r.jpg",
+      "label": "331 154r"
+    },
+    {
+      "url": "images/332_154v.jpg",
+      "label": "332 154v"
+    },
+    {
+      "url": "images/333_155r.jpg",
+      "label": "333 155r"
+    },
+    {
+      "url": "images/334_155v.jpg",
+      "label": "334 155v"
+    },
+    {
+      "url": "images/335_156r.jpg",
+      "label": "335 156r"
+    },
+    {
+      "url": "images/336_156v.jpg",
+      "label": "336 156v"
+    },
+    {
+      "url": "images/337_157r.jpg",
+      "label": "337 157r"
+    },
+    {
+      "url": "images/338_157v.jpg",
+      "label": "338 157v"
+    },
+    {
+      "url": "images/339_158r.jpg",
+      "label": "339 158r"
+    },
+    {
+      "url": "images/340_158v.jpg",
+      "label": "340 158v"
+    },
+    {
+      "url": "images/341_159r.jpg",
+      "label": "341 159r"
+    },
+    {
+      "url": "images/342_159v.jpg",
+      "label": "342 159v"
+    },
+    {
+      "url": "images/343_160r.jpg",
+      "label": "343 160r"
+    },
+    {
+      "url": "images/344_160v.jpg",
+      "label": "344 160v"
+    },
+    {
+      "url": "images/345_161r.jpg",
+      "label": "345 161r"
+    },
+    {
+      "url": "images/346_161v.jpg",
+      "label": "346 161v"
+    },
+    {
+      "url": "images/347_162r.jpg",
+      "label": "347 162r"
+    },
+    {
+      "url": "images/348_162v.jpg",
+      "label": "348 162v"
+    },
+    {
+      "url": "images/349_163r.jpg",
+      "label": "349 163r"
+    },
+    {
+      "url": "images/350_163v.jpg",
+      "label": "350 163v"
+    },
+    {
+      "url": "images/351_164r.jpg",
+      "label": "351 164r"
+    },
+    {
+      "url": "images/352_164v.jpg",
+      "label": "352 164v"
+    },
+    {
+      "url": "images/353_165r.jpg",
+      "label": "353 165r"
+    },
+    {
+      "url": "images/354_165v.jpg",
+      "label": "354 165v"
+    },
+    {
+      "url": "images/355_166r.jpg",
+      "label": "355 166r"
+    },
+    {
+      "url": "images/356_166v.jpg",
+      "label": "356 166v"
+    },
+    {
+      "url": "images/357_167r.jpg",
+      "label": "357 167r"
+    },
+    {
+      "url": "images/358_167v.jpg",
+      "label": "358 167v"
+    },
+    {
+      "url": "images/359_168r.jpg",
+      "label": "359 168r"
+    },
+    {
+      "url": "images/360_168v.jpg",
+      "label": "360 168v"
+    },
+    {
+      "url": "images/361_169r.jpg",
+      "label": "361 169r"
+    },
+    {
+      "url": "images/362_169v.jpg",
+      "label": "362 169v"
+    },
+    {
+      "url": "images/363_170r.jpg",
+      "label": "363 170r"
+    },
+    {
+      "url": "images/364_170v.jpg",
+      "label": "364 170v"
+    },
+    {
+      "url": "images/365_171r.jpg",
+      "label": "365 171r"
+    },
+    {
+      "url": "images/366_171v.jpg",
+      "label": "366 171v"
+    },
+    {
+      "url": "images/367_172r.jpg",
+      "label": "367 172r"
+    },
+    {
+      "url": "images/368_172v.jpg",
+      "label": "368 172v"
+    },
+    {
+      "url": "images/369_173r.jpg",
+      "label": "369 173r"
+    },
+    {
+      "url": "images/370_173v.jpg",
+      "label": "370 173v"
+    },
+    {
+      "url": "images/371_174r.jpg",
+      "label": "371 174r"
+    },
+    {
+      "url": "images/372_174v.jpg",
+      "label": "372 174v"
+    },
+    {
+      "url": "images/373_175r.jpg",
+      "label": "373 175r"
+    },
+    {
+      "url": "images/374_175v.jpg",
+      "label": "374 175v"
+    },
+    {
+      "url": "images/375_176r.jpg",
+      "label": "375 176r"
+    },
+    {
+      "url": "images/376_176v.jpg",
+      "label": "376 176v"
+    },
+    {
+      "url": "images/377_177r.jpg",
+      "label": "377 177r"
+    },
+    {
+      "url": "images/378_177v.jpg",
+      "label": "378 177v"
+    },
+    {
+      "url": "images/379_178r.jpg",
+      "label": "379 178r"
+    },
+    {
+      "url": "images/380_178v.jpg",
+      "label": "380 178v"
+    },
+    {
+      "url": "images/381_179r.jpg",
+      "label": "381 179r"
+    },
+    {
+      "url": "images/382_179v.jpg",
+      "label": "382 179v"
+    },
+    {
+      "url": "images/383_180r.jpg",
+      "label": "383 180r"
+    },
+    {
+      "url": "images/384_180v.jpg",
+      "label": "384 180v"
+    },
+    {
+      "url": "images/385_181r.jpg",
+      "label": "385 181r"
+    },
+    {
+      "url": "images/386_181v.jpg",
+      "label": "386 181v"
+    },
+    {
+      "url": "images/387_182r.jpg",
+      "label": "387 182r"
+    },
+    {
+      "url": "images/388_182v.jpg",
+      "label": "388 182v"
+    },
+    {
+      "url": "images/389_183r.jpg",
+      "label": "389 183r"
+    },
+    {
+      "url": "images/390_183v.jpg",
+      "label": "390 183v"
+    },
+    {
+      "url": "images/391_184r.jpg",
+      "label": "391 184r"
+    },
+    {
+      "url": "images/392_184v.jpg",
+      "label": "392 184v"
+    },
+    {
+      "url": "images/393_185r.jpg",
+      "label": "393 185r"
+    },
+    {
+      "url": "images/394_185v.jpg",
+      "label": "394 185v"
+    },
+    {
+      "url": "images/395_186r.jpg",
+      "label": "395 186r"
+    },
+    {
+      "url": "images/396_186v.jpg",
+      "label": "396 186v"
+    },
+    {
+      "url": "images/397_187r.jpg",
+      "label": "397 187r"
+    },
+    {
+      "url": "images/398_187v.jpg",
+      "label": "398 187v"
+    },
+    {
+      "url": "images/399_188r.jpg",
+      "label": "399 188r"
+    },
+    {
+      "url": "images/400_188v.jpg",
+      "label": "400 188v"
+    },
+    {
+      "url": "images/401_189r.jpg",
+      "label": "401 189r"
+    },
+    {
+      "url": "images/402_189v.jpg",
+      "label": "402 189v"
+    },
+    {
+      "url": "images/403_190r.jpg",
+      "label": "403 190r"
+    },
+    {
+      "url": "images/404_190v.jpg",
+      "label": "404 190v"
+    },
+    {
+      "url": "images/405_191r.jpg",
+      "label": "405 191r"
+    },
+    {
+      "url": "images/406_191v.jpg",
+      "label": "406 191v"
+    },
+    {
+      "url": "images/407_192r.jpg",
+      "label": "407 192r"
+    },
+    {
+      "url": "images/408_192v.jpg",
+      "label": "408 192v"
+    },
+    {
+      "url": "images/409_Back_flyleaf_r.jpg",
+      "label": "409 Back flyleaf r"
+    },
+    {
+      "url": "images/410_Back_flyleaf_v.jpg",
+      "label": "410 Back flyleaf v"
+    },
+    {
+      "url": "images/411_Inside_back_cover.jpg",
+      "label": "411 Inside back cover"
+    },
+    {
+      "url": "images/412_Back_cover.jpg",
+      "label": "412 Back cover"
+    }
+  ]
+}

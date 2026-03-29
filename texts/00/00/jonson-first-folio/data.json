@@ -1,0 +1,30 @@
+{
+  "id": "jonson-first-folio",
+  "title": "The workes of Ben Jonson (1st folio)",
+  "author": [
+    "william-stansby",
+    "matthew-lownes",
+    "john-smethwicke",
+    "william-hole"
+  ],
+  "provenances": [
+    "london"
+  ],
+  "date": "1616",
+  "country": "GB",
+  "language": [
+    "stan1293",
+    "lati1261"
+  ],
+  "pages": [
+    {
+      "works": [
+        {
+          "id": "jonson-first-folio",
+          "title": "The Workes of Beniamin Jonson.",
+          "viewerPage": "8"
+        }
+      ]
+    }
+  ]
+}

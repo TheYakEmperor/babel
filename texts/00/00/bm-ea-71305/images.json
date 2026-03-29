@@ -1,0 +1,12 @@
+{
+  "images": [
+    {
+      "url": "images/001_1.webp",
+      "label": "001 1"
+    },
+    {
+      "url": "images/002_2.webp",
+      "label": "002 2"
+    }
+  ]
+}

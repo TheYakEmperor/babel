@@ -1,0 +1,3519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Encyclopaedia Glossologica</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/webp" href="favicon.webp">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 80px auto 40px;
+            padding: 0 20px;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .admin-header h1 {
+            margin: 0;
+            font-family: 'EB Garamond', Georgia, serif;
+        }
+        
+        .admin-nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .admin-nav button {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.2s;
+        }
+        
+        .admin-nav button:hover { background: #f5f5f5; }
+        .admin-nav button.active { background: #3b82f6; color: white; border-color: #3b82f6; }
+        
+        .admin-section { display: none; }
+        .admin-section.active { display: block; }
+        
+        .item-list { display: grid; gap: 15px; margin-bottom: 30px; }
+        
+        .item-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0;
+            transition: box-shadow 0.2s;
+        }
+        
+        .item-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .item-card-info h3 { margin: 0 0 5px 0; font-size: 1.1em; }
+        .item-card-info .meta { font-size: 0.85em; color: #6b7280; }
+        .item-card-actions { display: flex; gap: 8px; }
+        
+        .btn { padding: 8px 16px; border: none; border-radius: 0; cursor: pointer; font-size: 0.9em; transition: all 0.2s; }
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-primary:hover { background: #2563eb; }
+        .btn-secondary { background: #f3f4f6; color: #374151; }
+        .btn-secondary:hover { background: #e5e7eb; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-success { background: #22c55e; color: white; }
+        .btn-success:hover { background: #16a34a; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .form-section { background: white; border: 1px solid #e5e7eb; border-radius: 0; padding: 25px; margin-bottom: 20px; }
+        .form-section h3 { margin: 0 0 20px 0; padding-bottom: 10px; border-bottom: 1px solid #e5e7eb; font-family: 'EB Garamond', Georgia, serif; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 500; color: #374151; }
+        .form-group label .hint { font-weight: normal; color: #9ca3af; font-size: 0.85em; }
+        
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 0;
+            font-size: 0.95em;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+        
+        .tag-input-container {
+            display: flex; flex-wrap: wrap; gap: 8px; padding: 8px;
+            border: 1px solid #d1d5db; border-radius: 0; min-height: 44px; align-items: center;
+        }
+        .tag-input-container:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .tag { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; background: #e5e7eb; border-radius: 0; font-size: 0.85em; }
+        .tag .remove-tag { cursor: pointer; font-weight: bold; color: #6b7280; }
+        .tag .remove-tag:hover { color: #ef4444; }
+        .tag-input { flex: 1; min-width: 150px; border: none !important; padding: 5px !important; box-shadow: none !important; }
+        .tag-input:focus { outline: none; }
+        
+        .nested-list { border: 1px solid #e5e7eb; border-radius: 0; padding: 15px; margin-top: 10px; background: #fafafa; }
+        .nested-item { background: white; border: 1px solid #e5e7eb; border-radius: 0; padding: 15px; margin-bottom: 15px; }
+        .nested-item:last-child { margin-bottom: 0; }
+        .nested-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #e5e7eb; }
+        .nested-item-header h4 { margin: 0; font-size: 1em; }
+        
+        .add-nested-btn {
+            display: flex; align-items: center; gap: 5px; padding: 10px 15px;
+            background: #f3f4f6; border: 2px dashed #d1d5db; border-radius: 0;
+            color: #6b7280; cursor: pointer; width: 100%; justify-content: center; transition: all 0.2s;
+        }
+        .add-nested-btn:hover { background: #e5e7eb; border-color: #9ca3af; color: #374151; }
+        
+        .image-upload-zone {
+            border: 2px dashed #d1d5db; border-radius: 0; padding: 30px;
+            text-align: center; background: #fafafa; cursor: pointer; transition: all 0.2s;
+        }
+        .image-upload-zone:hover { border-color: #3b82f6; background: #eff6ff; }
+        .image-upload-zone.drag-over { border-color: #3b82f6; background: #dbeafe; }
+        
+        .image-preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-top: 15px; }
+        .image-preview { position: relative; aspect-ratio: 1; border-radius: 0; overflow: hidden; border: 1px solid #e5e7eb; cursor: pointer; transition: all 0.2s; }
+        .image-preview:hover { transform: scale(1.02); }
+        .image-preview.selected { border: 3px solid #ef4444; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3); }
+        .image-preview img { width: 100%; height: 100%; object-fit: cover; }
+        .image-preview .remove-image { position: absolute; top: 5px; right: 5px; width: 24px; height: 24px; background: rgba(239, 68, 68, 0.9); color: white; border: none; border-radius: 0; cursor: pointer; font-size: 14px; line-height: 1; }
+        .image-preview .image-number { position: absolute; bottom: 5px; left: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 8px; border-radius: 0; font-size: 0.75em; }
+        .image-preview .select-checkbox { position: absolute; top: 5px; left: 5px; width: 22px; height: 22px; background: white; border: 2px solid #d1d5db; border-radius: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #ef4444; }
+        .image-preview.selected .select-checkbox { background: #ef4444; border-color: #ef4444; color: white; }
+        
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: white; border-radius: 0; max-width: 900px; width: 90%; max-height: 90vh; overflow-y: auto; padding: 30px; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #e5e7eb; }
+        .modal-header h2 { margin: 0; font-family: 'EB Garamond', Georgia, serif; }
+        .modal-close { background: none; border: none; font-size: 1.5em; cursor: pointer; color: #6b7280; }
+        .modal-close:hover { color: #374151; }
+        .modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 25px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+        
+        .loading { text-align: center; padding: 40px; color: #6b7280; }
+        .loading::after { content: ''; display: inline-block; width: 20px; height: 20px; border: 2px solid #e5e7eb; border-top-color: #3b82f6; border-radius: 0; animation: spin 1s linear infinite; margin-left: 10px; vertical-align: middle; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .status-message { padding: 15px 20px; border-radius: 0; margin-bottom: 20px; display: none; }
+        .status-message.success { display: block; background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+        .status-message.error { display: block; background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; }
+        
+        .empty-state { text-align: center; padding: 60px 20px; color: #6b7280; }
+        .empty-state p { margin-bottom: 20px; }
+        
+        .collapsible-content { display: none; }
+        .collapsible-content.expanded { display: block; }
+        .content-editor { font-family: 'Courier New', monospace; font-size: 0.9em; line-height: 1.5; }
+        .view-link { color: #3b82f6; text-decoration: none; font-size: 0.85em; margin-left: 10px; }
+        .view-link:hover { text-decoration: underline; }
+        
+        /* Autocomplete dropdown styles */
+        .autocomplete-wrapper { position: relative; flex: 1; min-width: 150px; }
+        .autocomplete-dropdown {
+            position: absolute; top: 100%; left: 0; right: 0; max-height: 250px; overflow-y: auto;
+            background: white; border: 1px solid #d1d5db; border-radius: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000; display: none;
+        }
+        .autocomplete-dropdown.active { display: block; }
+        .autocomplete-item {
+            padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #f3f4f6;
+            display: flex; flex-direction: column; gap: 2px;
+        }
+        .autocomplete-item:last-child { border-bottom: none; }
+        .autocomplete-item:hover, .autocomplete-item.selected { background: #eff6ff; }
+        .autocomplete-item .ac-name { font-weight: 500; color: #1f2937; }
+        .autocomplete-item .ac-meta { font-size: 0.8em; color: #6b7280; }
+        .autocomplete-item .ac-id { font-family: monospace; font-size: 0.75em; color: #9ca3af; }
+        .autocomplete-item.extinct .ac-name::before { content: ' '; color: #dc2626; }
+        
+        /* Region Annotator Styles */
+        .annotator-container {
+            display: grid;
+            grid-template-columns: 150px 1fr 300px;
+            gap: 15px;
+            height: calc(80vh - 150px);
+            min-height: 500px;
+        }
+        
+        .annotator-sidebar {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        
+        .annotator-sidebar h4 {
+            margin: 0 0 10px 0;
+            font-size: 0.9em;
+            color: #6b7280;
+        }
+        
+        .annotator-page-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .annotator-page-thumb {
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 0;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        
+        .annotator-page-thumb:hover {
+            border-color: #3b82f6;
+        }
+        
+        .annotator-page-thumb.active {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+        }
+        
+        .annotator-page-thumb img {
+            width: 100%;
+            display: block;
+        }
+        
+        .annotator-page-thumb .thumb-label {
+            font-size: 0.75em;
+            text-align: center;
+            padding: 4px;
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .annotator-page-thumb.has-regions .thumb-label {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .annotator-main {
+            display: flex;
+            flex-direction: column;
+            background: #1a1a1a;
+            border-radius: 0;
+            overflow: hidden;
+        }
+        
+        .annotator-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: #2a2a2a;
+            color: white;
+        }
+        
+        .annotator-tools {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .annotator-canvas-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .annotator-canvas-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+        
+        #annotator-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        #annotator-canvas.drawing {
+            pointer-events: auto;
+            cursor: crosshair;
+        }
+        
+        .annotator-regions-panel {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .annotator-regions-panel h4 {
+            margin: 0 0 10px 0;
+            font-size: 0.9em;
+            color: #6b7280;
+        }
+        
+        .annotator-regions-list {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        
+        .annotator-region-item {
+            padding: 10px;
+            padding-left: 30px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .annotator-region-item:hover {
+            border-color: #3b82f6;
+        }
+        
+        .annotator-region-item.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        
+        .annotator-region-item.drag-over {
+            border-color: #10b981;
+            border-style: dashed;
+            background: #ecfdf5;
+        }
+        
+        .annotator-region-item.dragging {
+            opacity: 0.5;
+        }
+        
+        .annotator-region-item .region-drag-handle {
+            position: absolute;
+            left: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: grab;
+            color: #9ca3af;
+            font-size: 14px;
+            padding: 4px;
+            user-select: none;
+        }
+        
+        .annotator-region-item .region-drag-handle:hover {
+            color: #6b7280;
+        }
+        
+        .annotator-region-item .region-drag-handle:active {
+            cursor: grabbing;
+        }
+        
+        .annotator-region-item .region-title {
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+        
+        .annotator-region-item .region-preview {
+            font-size: 0.85em;
+            color: #6b7280;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .annotator-region-editor {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 15px;
+        }
+        
+        .annotator-region-editor h5 {
+            margin: 0 0 10px 0;
+            font-size: 0.9em;
+            color: #374151;
+        }
+        
+        #annotator-draw-btn.active {
+            background: #ef4444;
+        }
+        
+        /* Rich Text Editor */
+        .rich-text-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            padding: 8px;
+            background: #f8f9fa;
+            border: 1px solid #d1d5db;
+            border-bottom: none;
+            border-radius: 0;
+        }
+        
+        .rich-text-toolbar button {
+            padding: 6px 10px;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 14px;
+            min-width: 32px;
+            transition: all 0.15s;
+        }
+        
+        .rich-text-toolbar button:hover {
+            background: #e5e7eb;
+        }
+        
+        .rich-text-toolbar button.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .rich-text-toolbar select {
+            padding: 6px 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 0;
+            background: white;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        
+        .rich-text-toolbar .separator {
+            width: 1px;
+            background: #d1d5db;
+            margin: 0 6px;
+        }
+        
+        .rich-text-editor {
+            min-height: 150px;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 0;
+            background: white;
+            font-family: 'Junicode', 'EB Garamond', Georgia, serif;
+            font-size: 15px;
+            line-height: 1.1;
+            overflow-y: auto;
+            max-height: 300px;
+            text-align: left;
+        }
+        
+        .rich-text-editor div,
+        .rich-text-editor p {
+            margin: 0;
+        }
+        
+        /* Support for justify alignment - all lines meet longest */
+        .rich-text-editor [style*="text-align: justify"],
+        .rich-text-editor [align="justify"] {
+            text-align: justify;
+            text-align-last: justify;
+            text-justify: inter-word;
+        }
+        
+        .rich-text-editor:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+        
+        .rich-text-editor:empty:before {
+            content: attr(data-placeholder);
+            color: #9ca3af;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" class="search-bar" id="searchInput" placeholder="Search languages..." autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+    </div>
+    
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Content Manager</h1>
+            <div class="admin-nav">
+                <button class="active" data-section="texts">Texts</button>
+                <button data-section="works">Works</button>
+                <button data-section="authors">Authors</button>
+                <button data-section="collections">Collections</button>
+                <button data-section="sources">Sources</button>
+                <button data-section="provenances">Provenances</button>
+                <button data-section="tools">Tools</button>
+            </div>
+        </div>
+        
+        <div id="status-message" class="status-message"></div>
+        
+        <!-- Texts Section -->
+        <div class="admin-section active" id="section-texts">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Texts</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-secondary" onclick="loadTexts()">Refresh</button>
+                    <button class="btn btn-primary" onclick="openTextEditor()">+ New Text</button>
+                </div>
+            </div>
+            <div class="item-list" id="texts-list"><div class="loading">Loading texts...</div></div>
+        </div>
+        
+        <!-- Works Section -->
+        <div class="admin-section" id="section-works">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Works</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-secondary" onclick="loadWorks()">Refresh</button>
+                    <button class="btn btn-primary" onclick="openWorkEditor()">+ New Work</button>
+                </div>
+            </div>
+            <div class="item-list" id="works-list"><div class="loading">Loading works...</div></div>
+        </div>
+        
+        <!-- Authors Section -->
+        <div class="admin-section" id="section-authors">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Authors</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-secondary" onclick="loadAuthors()">Refresh</button>
+                    <button class="btn btn-primary" onclick="openAuthorEditor()">+ New Author</button>
+                </div>
+            </div>
+            <div class="item-list" id="authors-list"><div class="loading">Loading authors...</div></div>
+        </div>
+        
+        <!-- Collections Section -->
+        <div class="admin-section" id="section-collections">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Collections</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-secondary" onclick="loadCollections()">Refresh</button>
+                    <button class="btn btn-primary" onclick="openCollectionEditor()">+ New Collection</button>
+                </div>
+            </div>
+            <div class="item-list" id="collections-list"><div class="loading">Loading collections...</div></div>
+        </div>
+        
+        <!-- Sources Section -->
+        <div class="admin-section" id="section-sources">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Sources (Institutions)</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-secondary" onclick="loadSources()">Refresh</button>
+                    <button class="btn btn-primary" onclick="openSourceEditor()">+ New Source</button>
+                </div>
+            </div>
+            <div class="item-list" id="sources-list"><div class="loading">Loading sources...</div></div>
+        </div>
+        
+        <!-- Provenances Section -->
+        <div class="admin-section" id="section-provenances">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Provenances (Origin Locations)</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-secondary" onclick="loadProvenances()">Refresh</button>
+                    <button class="btn btn-primary" onclick="openProvenanceEditor()">+ New Provenance</button>
+                </div>
+            </div>
+            <div class="item-list" id="provenances-list"><div class="loading">Loading provenances...</div></div>
+        </div>
+        
+        <!-- Tools Section -->
+        <div class="admin-section" id="section-tools">
+            <h2>Tools</h2>
+            <div class="form-section">
+                <h3>Rebuild Indexes</h3>
+                <p style="color: #6b7280; margin-bottom: 20px;">After adding or modifying content, rebuild the search indexes.</p>
+                <button class="btn btn-success" onclick="rebuildIndexes()" id="rebuild-btn">Rebuild All Indexes</button>
+                <div id="rebuild-output" style="margin-top: 15px; font-family: monospace; font-size: 0.85em; white-space: pre-wrap;"></div>
+            </div>
+            <div class="form-section">
+                <h3>Server Status</h3>
+                <p style="color: #6b7280; margin-bottom: 10px;">Run this server instead of http.server:</p>
+                <code style="display: block; background: #1e293b; color: #e2e8f0; padding: 15px; border-radius: 0;">python3 admin_server.py</code>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Text Editor Modal -->
+    <div class="modal-overlay" id="text-editor-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="text-editor-title">New Text</h2>
+                <button class="modal-close" onclick="closeTextEditor()">&times;</button>
+            </div>
+            
+            <div class="form-section">
+                <h3>Basic Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>ID <span class="hint">(e.g., "british-museum-ea-12345")</span></label>
+                        <input type="text" id="text-id" placeholder="my-text-id">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="text" id="text-date" placeholder="1623">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="text-title" placeholder="Full title of the text">
+                </div>
+                <div class="form-group">
+                    <label>Title Translation <span class="hint">(optional)</span></label>
+                    <input type="text" id="text-title-translation" placeholder="English translation">
+                </div>
+                <div class="form-group">
+                    <label>Source(s) <span class="hint">(holding institutions, press Enter to add)</span></label>
+                    <div class="tag-input-container" id="text-sources-container">
+                        <input type="text" class="tag-input" id="text-sources-input" placeholder="british-museum">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Provenance(s) <span class="hint">(origin locations, press Enter to add)</span></label>
+                    <div class="tag-input-container" id="text-provenances-container">
+                        <input type="text" class="tag-input" id="text-provenances-input" placeholder="qasr-ibrim">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Collection(s) <span class="hint">(collection codes, press Enter to add)</span></label>
+                    <div class="tag-input-container" id="text-collections-container">
+                        <input type="text" class="tag-input" id="text-collections-input" placeholder="cotton-library">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Authors</h3>
+                <div class="form-group">
+                    <label>Author(s) <span class="hint">(press Enter to add)</span></label>
+                    <div class="tag-input-container" id="text-authors-container">
+                        <input type="text" class="tag-input" id="text-authors-input" placeholder="author-id">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Languages</h3>
+                <div class="form-group">
+                    <label>Language(s) <span class="hint">(Glottolog codes)</span></label>
+                    <div class="tag-input-container" id="text-languages-container">
+                        <input type="text" class="tag-input" id="text-languages-input" placeholder="stan1293">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Countries</h3>
+                <div class="form-group">
+                    <label>Country Codes <span class="hint">(ISO 2-letter)</span></label>
+                    <div class="tag-input-container" id="text-countries-container">
+                        <input type="text" class="tag-input" id="text-countries-input" placeholder="GB">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Page Images</h3>
+                <div class="form-group">
+                    <div class="image-upload-zone" id="text-images-zone">
+                        <p>Drag & drop images or click to select</p>
+                        <input type="file" id="text-images-input" multiple accept="image/*" style="display: none;">
+                    </div>
+                    <div id="image-delete-controls" style="display:none; margin-top:15px; padding:10px; background:#fef2f2; border-radius:0; border:1px solid #fecaca;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="color:#dc2626;"><strong id="selected-count">0</strong> page(s) selected</span>
+                            <div style="display:flex; gap:8px;">
+                                <button class="btn btn-secondary" onclick="deselectAllPages()">Deselect All</button>
+                                <button class="btn btn-danger" onclick="deleteSelectedPages()">Delete Selected</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image-preview-grid" id="text-images-preview"></div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Works in this Text</h3>
+                <p style="color:#6b7280;font-size:0.85em;margin-bottom:15px;">Link works to specific image pages in the viewer</p>
+                <div class="nested-list" id="text-works-list"></div>
+                <button class="add-nested-btn" onclick="addTextWork()">+ Add Work</button>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeTextEditor()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveText()" id="save-text-btn">Save Text</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Work Editor Modal -->
+    <div class="modal-overlay" id="work-editor-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="work-editor-title">New Work</h2>
+                <button class="modal-close" onclick="closeWorkEditor()">&times;</button>
+            </div>
+            
+            <div class="form-section">
+                <h3>Basic Information</h3>
+                <div class="form-group">
+                    <label>ID <span class="hint">(e.g., "first-folio")</span></label>
+                    <input type="text" id="work-id" placeholder="work-id">
+                </div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="work-title" placeholder="Short title">
+                </div>
+                <div class="form-group">
+                    <label>Full Title</label>
+                    <input type="text" id="work-full-title" placeholder="Complete formal title">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="text" id="work-date" placeholder="1623">
+                    </div>
+                    <div class="form-group">
+                        <label>Genre</label>
+                        <input type="text" id="work-genre" placeholder="Drama, Poetry...">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Authors</h3>
+                <div class="form-group">
+                    <div class="tag-input-container" id="work-authors-container">
+                        <input type="text" class="tag-input" id="work-authors-input" placeholder="author-id">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Languages</h3>
+                <div class="form-group">
+                    <div class="tag-input-container" id="work-languages-container">
+                        <input type="text" class="tag-input" id="work-languages-input" placeholder="stan1293">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Aliases</h3>
+                <div class="form-group">
+                    <div class="tag-input-container" id="work-aliases-container">
+                        <input type="text" class="tag-input" id="work-aliases-input" placeholder="Alternative name">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Relationships</h3>
+                <div class="form-group">
+                    <label>Belongs to <span class="hint">(parent work, e.g., a poetry collection)</span></label>
+                    <div class="tag-input-container" id="work-belongsto-container">
+                        <div class="autocomplete-wrapper">
+                            <input type="text" class="tag-input" id="work-belongsto-input" placeholder="Type to search works..." autocomplete="off">
+                            <div class="autocomplete-dropdown" id="work-belongsto-dropdown"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeWorkEditor()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveWork()" id="save-work-btn">Save Work</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Author Editor Modal -->
+    <div class="modal-overlay" id="author-editor-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="author-editor-title">New Author</h2>
+                <button class="modal-close" onclick="closeAuthorEditor()">&times;</button>
+            </div>
+            
+            <div class="form-section">
+                <h3>Basic Information</h3>
+                <div class="form-group">
+                    <label>ID</label>
+                    <input type="text" id="author-id" placeholder="author-id">
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="author-name" placeholder="Full Name">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Birth Year</label>
+                        <input type="text" id="author-birth" placeholder="1564">
+                    </div>
+                    <div class="form-group">
+                        <label>Death Year</label>
+                        <input type="text" id="author-death" placeholder="1616">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Nationality</label>
+                    <input type="text" id="author-nationality" placeholder="English">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="author-description" placeholder="Brief biography..."></textarea>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Aliases</h3>
+                <div class="form-group">
+                    <div class="tag-input-container" id="author-aliases-container">
+                        <input type="text" class="tag-input" id="author-aliases-input" placeholder="Alternative name">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeAuthorEditor()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveAuthor()" id="save-author-btn">Save Author</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Collection Editor Modal -->
+    <div class="modal-overlay" id="collection-editor-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="collection-editor-title">New Collection</h2>
+                <button class="modal-close" onclick="closeCollectionEditor()">&times;</button>
+            </div>
+            
+            <div class="form-section">
+                <h3>Collection Information</h3>
+                <div class="form-group">
+                    <label>ID <span class="hint">(e.g., "cotton-library")</span></label>
+                    <input type="text" id="collection-id" placeholder="collection-id">
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="collection-name" placeholder="Cotton Library">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="collection-description" placeholder="Description of the collection..."></textarea>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeCollectionEditor()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveCollection()" id="save-collection-btn">Save Collection</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Source Editor Modal -->
+    <div class="modal-overlay" id="source-editor-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="source-editor-title">New Source</h2>
+                <button class="modal-close" onclick="closeSourceEditor()">&times;</button>
+            </div>
+            
+            <div class="form-section">
+                <h3>Source Information</h3>
+                <div class="form-group">
+                    <label>ID <span class="hint">(e.g., "british-museum")</span></label>
+                    <input type="text" id="source-id" placeholder="source-id">
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="source-name" placeholder="British Museum">
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="source-location" placeholder="London, UK">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="source-description" placeholder="Description of the institution..."></textarea>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeSourceEditor()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSource()" id="save-source-btn">Save Source</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Provenance Editor Modal -->
+    <div class="modal-overlay" id="provenance-editor-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="provenance-editor-title">New Provenance</h2>
+                <button class="modal-close" onclick="closeProvenanceEditor()">&times;</button>
+            </div>
+            
+            <div class="form-section">
+                <h3>Provenance Information</h3>
+                <div class="form-group">
+                    <label>ID <span class="hint">(e.g., "qasr-ibrim")</span></label>
+                    <input type="text" id="provenance-id" placeholder="provenance-id">
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="provenance-name" placeholder="Qasr Ibrim">
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="provenance-location" placeholder="Egypt">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="provenance-description" placeholder="Description of the origin location..."></textarea>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeProvenanceEditor()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveProvenance()" id="save-provenance-btn">Save Provenance</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Region Annotator Modal -->
+    <div class="modal-overlay" id="annotator-modal">
+        <div class="modal" style="max-width: 95vw; width: 1400px; max-height: 95vh;">
+            <div class="modal-header">
+                <h2 id="annotator-title">Region Annotator</h2>
+                <button class="modal-close" onclick="closeAnnotator()">&times;</button>
+            </div>
+            
+            <div class="annotator-container">
+                <div class="annotator-sidebar">
+                    <h4>Pages</h4>
+                    <div class="annotator-page-list" id="annotator-pages"></div>
+                </div>
+                
+                <div class="annotator-main">
+                    <div class="annotator-toolbar">
+                        <span id="annotator-page-label">Select a page</span>
+                        <div class="annotator-tools">
+                            <button class="btn btn-primary" id="annotator-draw-btn" onclick="toggleDrawMode()">Draw Region</button>
+                            <button class="btn btn-secondary" onclick="deleteSelectedRegion()">Delete Selected</button>
+                        </div>
+                    </div>
+                    <div class="annotator-canvas-wrapper" id="annotator-canvas-wrapper">
+                        <img id="annotator-image" src="" alt="Page image">
+                        <canvas id="annotator-canvas"></canvas>
+                    </div>
+                </div>
+                
+                <div class="annotator-regions-panel">
+                    <h4>Regions on this Page</h4>
+                    <div class="annotator-regions-list" id="annotator-regions"></div>
+                    
+                    <div class="annotator-region-editor" id="annotator-region-editor" style="display: none;">
+                        <h5>Edit Region</h5>
+                        <div class="form-group">
+                            <label>Title (optional)</label>
+                            <input type="text" id="region-title" placeholder="e.g., Verse 1">
+                        </div>
+                        <div class="form-group" id="region-work-group" style="display: none;">
+                            <label>Associated Work</label>
+                            <select id="region-work">
+                                <option value="">(None)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Transcription Text</label>
+                            <div class="rich-text-toolbar">
+                                <button type="button" onclick="execRichCmd('bold')" title="Bold"><b>B</b></button>
+                                <button type="button" onclick="execRichCmd('italic')" title="Italic"><i>I</i></button>
+                                <button type="button" onclick="execRichCmd('underline')" title="Underline"><u>U</u></button>
+                                <button type="button" onclick="execRichCmd('strikeThrough')" title="Strikethrough"><s>S</s></button>
+                                <div class="separator"></div>
+                                <button type="button" onclick="execRichCmd('superscript')" title="Superscript">x<sup>2</sup></button>
+                                <button type="button" onclick="execRichCmd('subscript')" title="Subscript">x<sub>2</sub></button>
+                                <div class="separator"></div>
+                                <select onchange="setFontSizePx(this.value); this.selectedIndex=0;" title="Font Size">
+                                    <option value="">Size</option>
+                                    <option value="10">10px</option>
+                                    <option value="11">11px</option>
+                                    <option value="12">12px</option>
+                                    <option value="14">14px</option>
+                                    <option value="16">16px</option>
+                                    <option value="18">18px</option>
+                                    <option value="20">20px</option>
+                                    <option value="24">24px</option>
+                                    <option value="28">28px</option>
+                                    <option value="32">32px</option>
+                                    <option value="36">36px</option>
+                                    <option value="40">40px</option>
+                                    <option value="48">48px</option>
+                                    <option value="56">56px</option>
+                                    <option value="64">64px</option>
+                                    <option value="72">72px</option>
+                                </select>
+                                <div class="separator"></div>
+                                <button type="button" onclick="execRichCmd('justifyLeft')" title="Align Left">⫷</button>
+                                <button type="button" onclick="execRichCmd('justifyCenter')" title="Align Center"></button>
+                                <button type="button" onclick="execRichCmd('justifyRight')" title="Align Right">⫸</button>
+                                <button type="button" onclick="execRichCmd('justifyFull')" title="Justify">≡</button>
+                                <div class="separator"></div>
+                                <button type="button" onclick="execRichCmd('insertUnorderedList')" title="Bullet List">•</button>
+                                <button type="button" onclick="execRichCmd('insertOrderedList')" title="Numbered List">1.</button>
+                                <div class="separator"></div>
+                                <button type="button" onclick="execRichCmd('removeFormat')" title="Clear Formatting"></button>
+                            </div>
+                            <div class="rich-text-editor" id="region-text" contenteditable="true" data-placeholder="Enter the transcribed text..."></div>
+                        </div>
+                        <button class="btn btn-primary" onclick="saveRegionText()">Update Region</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeAnnotator()">Cancel</button>
+                <button class="btn btn-success" onclick="saveAllRegions()">Save All Regions</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="search-index.js"></script>
+    <script src="search.js"></script>
+    <script>
+        async function api(endpoint, data = {}) {
+            const response = await fetch('/api/' + endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            // Check if response is ok
+            if (!response.ok) {
+                const text = await response.text();
+                try {
+                    const err = JSON.parse(text);
+                    throw new Error(err.error || `Server error: ${response.status}`);
+                } catch (e) {
+                    throw new Error(`Server error ${response.status}: ${text.substring(0, 100)}`);
+                }
+            }
+            
+            const result = await response.json();
+            if (result.error) throw new Error(result.error);
+            return result;
+        }
+        
+        function showStatus(message, isError = false) {
+            const el = document.getElementById('status-message');
+            el.textContent = message;
+            el.className = 'status-message ' + (isError ? 'error' : 'success');
+            setTimeout(() => el.className = 'status-message', 5000);
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+        
+        // Navigation
+        document.querySelectorAll('.admin-nav button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.admin-nav button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+                document.getElementById('section-' + btn.dataset.section).classList.add('active');
+                
+                // Load content when switching to a section
+                const section = btn.dataset.section;
+                if (section === 'texts') loadTexts();
+                else if (section === 'works') loadWorks();
+                else if (section === 'authors') loadAuthors();
+                else if (section === 'collections') loadCollections();
+                else if (section === 'sources') loadSources();
+                else if (section === 'provenances') loadProvenances();
+            });
+        });
+        
+        // Load Lists
+        async function loadTexts() {
+            const list = document.getElementById('texts-list');
+            list.innerHTML = '<div class="loading">Loading...</div>';
+            try {
+                const result = await api('list-texts');
+                if (result.texts.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><p>No texts yet.</p></div>';
+                    return;
+                }
+                list.innerHTML = result.texts.map(t => `
+                    <div class="item-card">
+                        <div class="item-card-info">
+                            <h3>${escapeHtml(t.title)}</h3>
+                            <div class="meta">ID: ${t.id} • ${t.date || 'No date'} • ${t.pages} pages
+                            <a href="texts/00/00/${t.id}/" class="view-link" target="_blank">View →</a></div>
+                        </div>
+                        <div class="item-card-actions">
+                            <button class="btn btn-success" onclick="openAnnotator('${t.id}')" title="Add text regions">Annotate</button>
+                            <button class="btn btn-secondary" onclick="editText('${t.id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteText('${t.id}')">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><p>Error: ${escapeHtml(e.message)}</p><p>Make sure admin_server.py is running.</p></div>`;
+            }
+        }
+        
+        async function loadWorks() {
+            const list = document.getElementById('works-list');
+            list.innerHTML = '<div class="loading">Loading...</div>';
+            try {
+                const result = await api('list-works');
+                if (result.works.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><p>No works yet.</p></div>';
+                    return;
+                }
+                list.innerHTML = result.works.map(w => `
+                    <div class="item-card">
+                        <div class="item-card-info">
+                            <h3>${escapeHtml(w.title)}</h3>
+                            <div class="meta">ID: ${w.id} • ${w.date || ''} ${w.aliases?.length ? '• Also: ' + w.aliases.join(', ') : ''}
+                            <a href="works/${w.id}/" class="view-link" target="_blank">View →</a></div>
+                        </div>
+                        <div class="item-card-actions">
+                            <button class="btn btn-secondary" onclick="editWork('${w.id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteWork('${w.id}')">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><p>Error: ${escapeHtml(e.message)}</p></div>`;
+            }
+        }
+        
+        async function loadAuthors() {
+            const list = document.getElementById('authors-list');
+            list.innerHTML = '<div class="loading">Loading...</div>';
+            try {
+                const result = await api('list-authors');
+                if (result.authors.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><p>No authors yet.</p></div>';
+                    return;
+                }
+                list.innerHTML = result.authors.map(a => `
+                    <div class="item-card">
+                        <div class="item-card-info">
+                            <h3>${escapeHtml(a.name)}</h3>
+                            <div class="meta">ID: ${a.id} ${a.birth || a.death ? '• ' + (a.birth||'?') + '–' + (a.death||'') : ''}
+                            <a href="authors/${a.id}/" class="view-link" target="_blank">View →</a></div>
+                        </div>
+                        <div class="item-card-actions">
+                            <button class="btn btn-secondary" onclick="editAuthor('${a.id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteAuthor('${a.id}')">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><p>Error: ${escapeHtml(e.message)}</p></div>`;
+            }
+        }
+        
+        async function loadCollections() {
+            const list = document.getElementById('collections-list');
+            list.innerHTML = '<div class="loading">Loading...</div>';
+            try {
+                const result = await api('list-collections');
+                if (result.collections.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><p>No collections yet.</p></div>';
+                    return;
+                }
+                list.innerHTML = result.collections.map(c => `
+                    <div class="item-card">
+                        <div class="item-card-info">
+                            <h3>${escapeHtml(c.name)}</h3>
+                            <div class="meta">ID: ${c.id}
+                            <a href="collections/${c.id}/" class="view-link" target="_blank">View →</a></div>
+                        </div>
+                        <div class="item-card-actions">
+                            <button class="btn btn-secondary" onclick="editCollection('${c.id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteCollection('${c.id}')">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><p>Error: ${escapeHtml(e.message)}</p></div>`;
+            }
+        }
+        
+        async function loadSources() {
+            const list = document.getElementById('sources-list');
+            list.innerHTML = '<div class="loading">Loading...</div>';
+            try {
+                const result = await api('list-sources');
+                if (result.sources.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><p>No sources yet.</p></div>';
+                    return;
+                }
+                list.innerHTML = result.sources.map(s => `
+                    <div class="item-card">
+                        <div class="item-card-info">
+                            <h3>${escapeHtml(s.name)}</h3>
+                            <div class="meta">ID: ${s.id}${s.location ? ' • ' + escapeHtml(s.location) : ''}
+                            <a href="sources/${s.id}/" class="view-link" target="_blank">View →</a></div>
+                        </div>
+                        <div class="item-card-actions">
+                            <button class="btn btn-secondary" onclick="editSource('${s.id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteSource('${s.id}')">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><p>Error: ${escapeHtml(e.message)}</p></div>`;
+            }
+        }
+        
+        async function loadProvenances() {
+            const list = document.getElementById('provenances-list');
+            list.innerHTML = '<div class="loading">Loading...</div>';
+            try {
+                const result = await api('list-provenances');
+                if (result.provenances.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><p>No provenances yet.</p></div>';
+                    return;
+                }
+                list.innerHTML = result.provenances.map(p => `
+                    <div class="item-card">
+                        <div class="item-card-info">
+                            <h3>${escapeHtml(p.name)}</h3>
+                            <div class="meta">ID: ${p.id}${p.location ? ' • ' + escapeHtml(p.location) : ''}
+                            <a href="provenances/${p.id}/" class="view-link" target="_blank">View →</a></div>
+                        </div>
+                        <div class="item-card-actions">
+                            <button class="btn btn-secondary" onclick="editProvenance('${p.id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteProvenance('${p.id}')">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><p>Error: ${escapeHtml(e.message)}</p></div>`;
+            }
+        }
+        
+        // Text Editor
+        let textEditorData = { authors: [], languages: [], countries: [], collections: [], sources: [], provenances: [], images: [], existingImages: [], works: [] };
+        let currentEditId = null;
+        let cachedProvenances = [];
+        
+        async function openTextEditor(id = null) {
+            currentEditId = id;
+            textEditorData = { authors: [], languages: [], countries: [], collections: [], sources: [], provenances: [], images: [], existingImages: [], works: [] };
+            selectedPages.clear(); // Clear page selection when opening editor
+            
+            if (id) {
+                try {
+                    const text = await api('get-text', { id });
+                    document.getElementById('text-id').value = text.id || id;
+                    document.getElementById('text-title').value = text.title || '';
+                    document.getElementById('text-title-translation').value = text.titleTranslation || '';
+                    document.getElementById('text-date').value = text.date || '';
+                    textEditorData.sources = [].concat(text.sources || (text.source ? [text.source] : []));
+                    textEditorData.provenances = [].concat(text.provenances || (text.provenance ? [text.provenance] : []));
+                    textEditorData.collections = [].concat(text.collections || []);
+                    textEditorData.authors = [].concat(text.author || []);
+                    textEditorData.languages = [].concat(text.language || []);
+                    textEditorData.countries = [].concat(text.country || []);
+                    // Load works from pages structure (flatten for simpler editing)
+                    textEditorData.works = extractWorksFromPages(text.pages || []);
+                    // Load existing images from server
+                    if (text._imageFiles && text._imageFiles.length > 0) {
+                        textEditorData.existingImages = text._imageFiles.map(f => ({
+                            name: f,
+                            url: `texts/00/00/${id}/images/${f}`
+                        }));
+                    }
+                    document.getElementById('text-editor-title').textContent = 'Edit Text';
+                    document.getElementById('text-id').disabled = true;
+                } catch (e) {
+                    showStatus('Error loading text: ' + e.message, true);
+                    return;
+                }
+            } else {
+                document.getElementById('text-id').value = '';
+                document.getElementById('text-title').value = '';
+                document.getElementById('text-title-translation').value = '';
+                document.getElementById('text-date').value = '';
+                document.getElementById('text-editor-title').textContent = 'New Text';
+                document.getElementById('text-id').disabled = false;
+            }
+            
+            renderTagInputs('text');
+            renderTextWorks();
+            renderTextImages();
+            document.getElementById('text-editor-modal').classList.add('active');
+            setTimeout(setupWorkAutocomplete, 100);
+        }
+        
+        function closeTextEditor() {
+            document.getElementById('text-editor-modal').classList.remove('active');
+        }
+        
+        async function saveText() {
+            const id = document.getElementById('text-id').value.trim();
+            if (!id) { alert('Please enter a text ID'); return; }
+            
+            const btn = document.getElementById('save-text-btn');
+            btn.disabled = true; btn.textContent = 'Saving...';
+            
+            // Convert flat works list back to pages structure for data.json
+            const pages = buildPagesFromWorks(textEditorData.works);
+            
+            const textData = {
+                id,
+                title: document.getElementById('text-title').value.trim(),
+                titleTranslation: document.getElementById('text-title-translation').value.trim() || undefined,
+                author: textEditorData.authors.length === 1 ? textEditorData.authors[0] : (textEditorData.authors.length ? textEditorData.authors : undefined),
+                sources: textEditorData.sources.length ? textEditorData.sources : undefined,
+                provenances: textEditorData.provenances.length ? textEditorData.provenances : undefined,
+                collections: textEditorData.collections.length ? textEditorData.collections : undefined,
+                date: document.getElementById('text-date').value.trim() || undefined,
+                country: textEditorData.countries.length === 1 ? textEditorData.countries[0] : (textEditorData.countries.length ? textEditorData.countries : undefined),
+                language: textEditorData.languages.length === 1 ? textEditorData.languages[0] : (textEditorData.languages.length ? textEditorData.languages : undefined),
+                pages: pages.length ? pages : []
+            };
+            
+            try {
+                // First save text metadata without images
+                btn.textContent = 'Saving metadata...';
+                const result = await api('text', textData);
+                
+                // Then upload images in batches if we have any
+                const imagesToUpload = textEditorData.images.filter(img => img.file);
+                if (imagesToUpload.length > 0) {
+                    const BATCH_SIZE = 10; // Upload 10 images at a time
+                    const totalBatches = Math.ceil(imagesToUpload.length / BATCH_SIZE);
+                    
+                    for (let batch = 0; batch < totalBatches; batch++) {
+                        const start = batch * BATCH_SIZE;
+                        const end = Math.min(start + BATCH_SIZE, imagesToUpload.length);
+                        const batchImages = imagesToUpload.slice(start, end);
+                        
+                        btn.textContent = `Uploading images ${start + 1}-${end} of ${imagesToUpload.length}...`;
+                        
+                        // Convert this batch to base64
+                        const imageData = [];
+                        for (const img of batchImages) {
+                            const base64 = await fileToBase64(img.file);
+                            imageData.push({ name: img.name, data: base64 });
+                        }
+                        
+                        // Upload this batch
+                        await api('upload-images', { id, images: imageData });
+                    }
+                }
+                
+                // Clean up object URLs after successful save
+                textEditorData.images.forEach(img => {
+                    if (img.previewUrl) URL.revokeObjectURL(img.previewUrl);
+                });
+                showStatus(result.message + (imagesToUpload.length ? ` (${imagesToUpload.length} images uploaded)` : ''));
+                closeTextEditor();
+                loadTexts();
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            } finally {
+                btn.disabled = false; btn.textContent = 'Save Text';
+            }
+        }
+        
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        async function editText(id) { await openTextEditor(id); }
+        
+        async function deleteText(id) {
+            if (!confirm(`Delete "${id}"? This cannot be undone.`)) return;
+            try {
+                const result = await api('delete-text', { id });
+                showStatus(result.message);
+                loadTexts();
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            }
+        }
+        
+        // Work Editor
+        let workEditorData = { authors: [], languages: [], aliases: [], belongsTo: '' };
+        let cachedWorksList = [];
+        
+        // Author Editor
+        let authorEditorData = { aliases: [] };
+        
+        async function getWorksList() {
+            if (cachedWorksList.length === 0) {
+                try {
+                    const result = await api('list-works');
+                    cachedWorksList = result.works || [];
+                } catch (e) {
+                    cachedWorksList = [];
+                }
+            }
+            return cachedWorksList;
+        }
+        
+        async function openWorkEditor(id = null) {
+            currentEditId = id;
+            workEditorData = { authors: [], languages: [], aliases: [], belongsTo: '' };
+            
+            // Pre-load works list for belongsTo autocomplete
+            await getWorksList();
+            
+            if (id) {
+                try {
+                    const work = await api('get-work', { id });
+                    document.getElementById('work-id').value = work.id || id;
+                    document.getElementById('work-title').value = work.title || '';
+                    document.getElementById('work-full-title').value = work.fullTitle || '';
+                    document.getElementById('work-date').value = work.date || '';
+                    document.getElementById('work-genre').value = work.genre || '';
+                    workEditorData.belongsTo = work.belongsTo || '';
+                    workEditorData.authors = [].concat(work.author || []);
+                    workEditorData.languages = [].concat(work.original_language || []);
+                    workEditorData.aliases = [].concat(work.alias || []);
+                    document.getElementById('work-editor-title').textContent = 'Edit Work';
+                    document.getElementById('work-id').disabled = true;
+                } catch (e) {
+                    showStatus('Error: ' + e.message, true);
+                    return;
+                }
+            } else {
+                document.getElementById('work-id').value = '';
+                document.getElementById('work-title').value = '';
+                document.getElementById('work-full-title').value = '';
+                document.getElementById('work-date').value = '';
+                document.getElementById('work-genre').value = '';
+                workEditorData.belongsTo = '';
+                document.getElementById('work-editor-title').textContent = 'New Work';
+                document.getElementById('work-id').disabled = false;
+            }
+            
+            renderWorkTagInputs();
+            document.getElementById('work-editor-modal').classList.add('active');
+        }
+        
+        function closeWorkEditor() {
+            document.getElementById('work-editor-modal').classList.remove('active');
+        }
+        
+        async function saveWork() {
+            const id = document.getElementById('work-id').value.trim();
+            if (!id) { alert('Please enter a work ID'); return; }
+            
+            const btn = document.getElementById('save-work-btn');
+            btn.disabled = true; btn.textContent = 'Saving...';
+            
+            const workData = {
+                id,
+                title: document.getElementById('work-title').value.trim() || undefined,
+                fullTitle: document.getElementById('work-full-title').value.trim() || undefined,
+                author: workEditorData.authors.length === 1 ? workEditorData.authors[0] : (workEditorData.authors.length ? workEditorData.authors : undefined),
+                date: document.getElementById('work-date').value.trim() || undefined,
+                original_language: workEditorData.languages.length === 1 ? workEditorData.languages[0] : (workEditorData.languages.length ? workEditorData.languages : undefined),
+                alias: workEditorData.aliases.length ? workEditorData.aliases : undefined,
+                genre: document.getElementById('work-genre').value.trim() || undefined,
+                belongsTo: workEditorData.belongsTo || undefined
+            };
+            
+            try {
+                const result = await api('work', workData);
+                showStatus(result.message);
+                closeWorkEditor();
+                loadWorks();
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            } finally {
+                btn.disabled = false; btn.textContent = 'Save Work';
+            }
+        }
+        
+        async function editWork(id) { await openWorkEditor(id); }
+        
+        async function deleteWork(id) {
+            if (!confirm(`Delete "${id}"?`)) return;
+            try {
+                const result = await api('delete-work', { id });
+                showStatus(result.message);
+                loadWorks();
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            }
+        }
+        
+        // Author Editor
+        async function openAuthorEditor(id = null) {
+            currentEditId = id;
+            
+            // Clear author aliases
+            authorEditorData.aliases = [];
+            renderAuthorTagInputs();
+            
+            if (id) {
+                try {
+                    const author = await api('get-author', { id });
+                    document.getElementById('author-id').value = author.id || id;
+                    document.getElementById('author-name').value = author.name || '';
+                    document.getElementById('author-birth').value = author.birth || '';
+                    document.getElementById('author-death').value = author.death || '';
+                    document.getElementById('author-nationality').value = author.nationality || '';
+                    document.getElementById('author-description').value = author.description || '';
+                    document.getElementById('author-editor-title').textContent = 'Edit Author';
+                    document.getElementById('author-id').disabled = true;
+                    
+                    // Load aliases
+                    const aliases = author.alias || [];
+                    authorEditorData.aliases = Array.isArray(aliases) ? [...aliases] : [aliases];
+                    renderAuthorTagInputs();
+                } catch (e) {
+                    showStatus('Error: ' + e.message, true);
+                    return;
+                }
+            } else {
+                document.getElementById('author-id').value = '';
+                document.getElementById('author-name').value = '';
+                document.getElementById('author-birth').value = '';
+                document.getElementById('author-death').value = '';
+                document.getElementById('author-nationality').value = '';
+                document.getElementById('author-description').value = '';
+                document.getElementById('author-editor-title').textContent = 'New Author';
+                document.getElementById('author-id').disabled = false;
+            }
+            
+            document.getElementById('author-editor-modal').classList.add('active');
+        }
+        
+        function closeAuthorEditor() {
+            document.getElementById('author-editor-modal').classList.remove('active');
+        }
+        
+        async function saveAuthor() {
+            const id = document.getElementById('author-id').value.trim();
+            if (!id) { alert('Please enter an author ID'); return; }
+            
+            const btn = document.getElementById('save-author-btn');
+            btn.disabled = true; btn.textContent = 'Saving...';
+            
+            const authorData = {
+                id,
+                name: document.getElementById('author-name').value.trim(),
+                birth: document.getElementById('author-birth').value.trim() || undefined,
+                death: document.getElementById('author-death').value.trim() || undefined,
+                nationality: document.getElementById('author-nationality').value.trim() || undefined,
+                description: document.getElementById('author-description').value.trim() || undefined,
+                alias: authorEditorData.aliases.length > 0 ? authorEditorData.aliases : undefined
+            };
+            
+            try {
+                const result = await api('author', authorData);
+                showStatus(result.message);
+                closeAuthorEditor();
+                loadAuthors();
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            } finally {
+                btn.disabled = false; btn.textContent = 'Save Author';
+            }
+        }
+        
+        async function editAuthor(id) { await openAuthorEditor(id); }
+        
+        async function deleteAuthor(id) {
+            if (!confirm(`Delete "${id}"?`)) return;
+            try {
+                const result = await api('delete-author', { id });
+                showStatus(result.message);
+                loadAuthors();
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            }
+        }
+        
+        // Collection Editor
+        let currentCollectionId = null;
+        
+        async function openCollectionEditor(id = null) {
+            currentCollectionId = id;
+            
+            if (id) {
+                try {
+                    const coll = await api('get-collection', { id });
+                    document.getElementById('collection-id').value = coll.id || id;
+                    document.getElementById('collection-name').value = coll.name || '';
+                    document.getElementById('collection-description').value = coll.description || '';
+                    document.getElementById('collection-editor-title').textContent = 'Edit Collection';
+                    document.getElementById('collection-id').disabled = true;
+                } catch (e) {
+                    showStatus('Error: ' + e.message, true);
+                    return;
+                }
+            } else {
+                document.getElementById('collection-id').value = '';
+                document.getElementById('collection-name').value = '';
+                document.getElementById('collection-description').value = '';
+                document.getElementById('collection-editor-title').textContent = 'New Collection';
+                document.getElementById('collection-id').disabled = false;
+            }
+            
+            document.getElementById('collection-editor-modal').classList.add('active');
+        }
+        
+        function closeCollectionEditor() {
+            document.getElementById('collection-editor-modal').classList.remove('active');
+        }
+        
+        async function saveCollection() {
+            const id = document.getElementById('collection-id').value.trim();
+            if (!id) { alert('Please enter a collection ID'); return; }
+            
+            const btn = document.getElementById('save-collection-btn');
+            btn.disabled = true; btn.textContent = 'Saving...';
+            
+            const data = {
+                id,
+                name: document.getElementById('collection-name').value.trim(),
+                description: document.getElementById('collection-description').value.trim() || undefined
+            };
+            
+            try {
+                const result = await api('collection', data);
+                showStatus(result.message);
+                closeCollectionEditor();
+                loadCollections();
+                cachedCollections = []; // Clear cache to reload
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            } finally {
+                btn.disabled = false; btn.textContent = 'Save Collection';
+            }
+        }
+        
+        async function editCollection(id) { await openCollectionEditor(id); }
+        
+        async function deleteCollection(id) {
+            if (!confirm(`Delete collection "${id}"?`)) return;
+            try {
+                const result = await api('delete-collection', { id });
+                showStatus(result.message);
+                loadCollections();
+                cachedCollections = [];
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            }
+        }
+        
+        // Source Editor
+        let currentSourceId = null;
+        
+        async function openSourceEditor(id = null) {
+            currentSourceId = id;
+            
+            if (id) {
+                try {
+                    const src = await api('get-source', { id });
+                    document.getElementById('source-id').value = src.id || id;
+                    document.getElementById('source-name').value = src.name || '';
+                    document.getElementById('source-location').value = src.location || '';
+                    document.getElementById('source-description').value = src.description || '';
+                    document.getElementById('source-editor-title').textContent = 'Edit Source';
+                    document.getElementById('source-id').disabled = true;
+                } catch (e) {
+                    showStatus('Error: ' + e.message, true);
+                    return;
+                }
+            } else {
+                document.getElementById('source-id').value = '';
+                document.getElementById('source-name').value = '';
+                document.getElementById('source-location').value = '';
+                document.getElementById('source-description').value = '';
+                document.getElementById('source-editor-title').textContent = 'New Source';
+                document.getElementById('source-id').disabled = false;
+            }
+            
+            document.getElementById('source-editor-modal').classList.add('active');
+        }
+        
+        function closeSourceEditor() {
+            document.getElementById('source-editor-modal').classList.remove('active');
+        }
+        
+        async function saveSource() {
+            const id = document.getElementById('source-id').value.trim();
+            if (!id) { alert('Please enter a source ID'); return; }
+            
+            const btn = document.getElementById('save-source-btn');
+            btn.disabled = true; btn.textContent = 'Saving...';
+            
+            const data = {
+                id,
+                name: document.getElementById('source-name').value.trim(),
+                location: document.getElementById('source-location').value.trim() || undefined,
+                description: document.getElementById('source-description').value.trim() || undefined
+            };
+            
+            try {
+                const result = await api('source', data);
+                showStatus(result.message);
+                closeSourceEditor();
+                loadSources();
+                cachedSources = [];
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            } finally {
+                btn.disabled = false; btn.textContent = 'Save Source';
+            }
+        }
+        
+        async function editSource(id) { await openSourceEditor(id); }
+        
+        async function deleteSource(id) {
+            if (!confirm(`Delete source "${id}"?`)) return;
+            try {
+                const result = await api('delete-source', { id });
+                showStatus(result.message);
+                loadSources();
+                cachedSources = [];
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            }
+        }
+        
+        // Provenance Editor
+        let currentProvenanceId = null;
+        
+        async function openProvenanceEditor(id = null) {
+            currentProvenanceId = id;
+            
+            if (id) {
+                try {
+                    const prov = await api('get-provenance', { id });
+                    document.getElementById('provenance-id').value = prov.id || id;
+                    document.getElementById('provenance-name').value = prov.name || '';
+                    document.getElementById('provenance-location').value = prov.location || '';
+                    document.getElementById('provenance-description').value = prov.description || '';
+                    document.getElementById('provenance-editor-title').textContent = 'Edit Provenance';
+                    document.getElementById('provenance-id').disabled = true;
+                } catch (e) {
+                    showStatus('Error: ' + e.message, true);
+                    return;
+                }
+            } else {
+                document.getElementById('provenance-id').value = '';
+                document.getElementById('provenance-name').value = '';
+                document.getElementById('provenance-location').value = '';
+                document.getElementById('provenance-description').value = '';
+                document.getElementById('provenance-editor-title').textContent = 'New Provenance';
+                document.getElementById('provenance-id').disabled = false;
+            }
+            
+            document.getElementById('provenance-editor-modal').classList.add('active');
+        }
+        
+        function closeProvenanceEditor() {
+            document.getElementById('provenance-editor-modal').classList.remove('active');
+        }
+        
+        async function saveProvenance() {
+            const id = document.getElementById('provenance-id').value.trim();
+            if (!id) { alert('Please enter a provenance ID'); return; }
+            
+            const btn = document.getElementById('save-provenance-btn');
+            btn.disabled = true; btn.textContent = 'Saving...';
+            
+            const data = {
+                id,
+                name: document.getElementById('provenance-name').value.trim(),
+                location: document.getElementById('provenance-location').value.trim() || undefined,
+                description: document.getElementById('provenance-description').value.trim() || undefined
+            };
+            
+            try {
+                const result = await api('provenance', data);
+                showStatus(result.message);
+                closeProvenanceEditor();
+                loadProvenances();
+                cachedProvenancesList = [];
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            } finally {
+                btn.disabled = false; btn.textContent = 'Save Provenance';
+            }
+        }
+        
+        async function editProvenance(id) { await openProvenanceEditor(id); }
+        
+        async function deleteProvenance(id) {
+            if (!confirm(`Delete provenance "${id}"?`)) return;
+            try {
+                const result = await api('delete-provenance', { id });
+                showStatus(result.message);
+                loadProvenances();
+                cachedProvenancesList = [];
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            }
+        }
+        
+        // Rebuild Indexes
+        async function rebuildIndexes() {
+            const btn = document.getElementById('rebuild-btn');
+            const output = document.getElementById('rebuild-output');
+            btn.disabled = true; btn.textContent = 'Rebuilding...';
+            output.textContent = 'Running...\n';
+            
+            try {
+                const result = await api('rebuild-indexes');
+                output.textContent = result.results.map(r => 
+                    `${r.script}: ${r.success ? 'OK' : 'FAIL'}\n${r.output || ''}${r.error ? 'Error: ' + r.error : ''}`
+                ).join('\n');
+                showStatus(result.message, !result.success);
+            } catch (e) {
+                output.textContent = 'Error: ' + e.message;
+                showStatus('Error: ' + e.message, true);
+            } finally {
+                btn.disabled = false; btn.textContent = 'Rebuild All Indexes';
+            }
+        }
+        
+        // Tag Inputs with Autocomplete
+        let cachedAuthors = [];
+        let cachedLanguages = [];
+        let cachedWorks = [];
+        let cachedCollections = [];
+        let cachedSources = [];
+        let cachedProvenancesList = [];
+        const cachedCountries = [
+            {code: 'AF', name: 'Afghanistan'}, {code: 'AL', name: 'Albania'}, {code: 'DZ', name: 'Algeria'},
+            {code: 'AD', name: 'Andorra'}, {code: 'AO', name: 'Angola'}, {code: 'AG', name: 'Antigua and Barbuda'},
+            {code: 'AR', name: 'Argentina'}, {code: 'AM', name: 'Armenia'}, {code: 'AU', name: 'Australia'},
+            {code: 'AT', name: 'Austria'}, {code: 'AZ', name: 'Azerbaijan'}, {code: 'BS', name: 'Bahamas'},
+            {code: 'BH', name: 'Bahrain'}, {code: 'BD', name: 'Bangladesh'}, {code: 'BB', name: 'Barbados'},
+            {code: 'BY', name: 'Belarus'}, {code: 'BE', name: 'Belgium'}, {code: 'BZ', name: 'Belize'},
+            {code: 'BJ', name: 'Benin'}, {code: 'BT', name: 'Bhutan'}, {code: 'BO', name: 'Bolivia'},
+            {code: 'BA', name: 'Bosnia and Herzegovina'}, {code: 'BW', name: 'Botswana'}, {code: 'BR', name: 'Brazil'},
+            {code: 'BN', name: 'Brunei'}, {code: 'BG', name: 'Bulgaria'}, {code: 'BF', name: 'Burkina Faso'},
+            {code: 'BI', name: 'Burundi'}, {code: 'CV', name: 'Cabo Verde'}, {code: 'KH', name: 'Cambodia'},
+            {code: 'CM', name: 'Cameroon'}, {code: 'CA', name: 'Canada'}, {code: 'CF', name: 'Central African Republic'},
+            {code: 'TD', name: 'Chad'}, {code: 'CL', name: 'Chile'}, {code: 'CN', name: 'China'},
+            {code: 'CO', name: 'Colombia'}, {code: 'KM', name: 'Comoros'}, {code: 'CG', name: 'Congo'},
+            {code: 'CD', name: 'Congo (DRC)'}, {code: 'CR', name: 'Costa Rica'}, {code: 'CI', name: "Côte d'Ivoire"},
+            {code: 'HR', name: 'Croatia'}, {code: 'CU', name: 'Cuba'}, {code: 'CY', name: 'Cyprus'},
+            {code: 'CZ', name: 'Czechia'}, {code: 'DK', name: 'Denmark'}, {code: 'DJ', name: 'Djibouti'},
+            {code: 'DM', name: 'Dominica'}, {code: 'DO', name: 'Dominican Republic'}, {code: 'EC', name: 'Ecuador'},
+            {code: 'EG', name: 'Egypt'}, {code: 'SV', name: 'El Salvador'}, {code: 'GQ', name: 'Equatorial Guinea'},
+            {code: 'ER', name: 'Eritrea'}, {code: 'EE', name: 'Estonia'}, {code: 'SZ', name: 'Eswatini'},
+            {code: 'ET', name: 'Ethiopia'}, {code: 'FJ', name: 'Fiji'}, {code: 'FI', name: 'Finland'},
+            {code: 'FR', name: 'France'}, {code: 'GA', name: 'Gabon'}, {code: 'GM', name: 'Gambia'},
+            {code: 'GE', name: 'Georgia'}, {code: 'DE', name: 'Germany'}, {code: 'GH', name: 'Ghana'},
+            {code: 'GR', name: 'Greece'}, {code: 'GD', name: 'Grenada'}, {code: 'GT', name: 'Guatemala'},
+            {code: 'GN', name: 'Guinea'}, {code: 'GW', name: 'Guinea-Bissau'}, {code: 'GY', name: 'Guyana'},
+            {code: 'HT', name: 'Haiti'}, {code: 'HN', name: 'Honduras'}, {code: 'HU', name: 'Hungary'},
+            {code: 'IS', name: 'Iceland'}, {code: 'IN', name: 'India'}, {code: 'ID', name: 'Indonesia'},
+            {code: 'IR', name: 'Iran'}, {code: 'IQ', name: 'Iraq'}, {code: 'IE', name: 'Ireland'},
+            {code: 'IL', name: 'Israel'}, {code: 'IT', name: 'Italy'}, {code: 'JM', name: 'Jamaica'},
+            {code: 'JP', name: 'Japan'}, {code: 'JO', name: 'Jordan'}, {code: 'KZ', name: 'Kazakhstan'},
+            {code: 'KE', name: 'Kenya'}, {code: 'KI', name: 'Kiribati'}, {code: 'KP', name: 'North Korea'},
+            {code: 'KR', name: 'South Korea'}, {code: 'KW', name: 'Kuwait'}, {code: 'KG', name: 'Kyrgyzstan'},
+            {code: 'LA', name: 'Laos'}, {code: 'LV', name: 'Latvia'}, {code: 'LB', name: 'Lebanon'},
+            {code: 'LS', name: 'Lesotho'}, {code: 'LR', name: 'Liberia'}, {code: 'LY', name: 'Libya'},
+            {code: 'LI', name: 'Liechtenstein'}, {code: 'LT', name: 'Lithuania'}, {code: 'LU', name: 'Luxembourg'},
+            {code: 'MG', name: 'Madagascar'}, {code: 'MW', name: 'Malawi'}, {code: 'MY', name: 'Malaysia'},
+            {code: 'MV', name: 'Maldives'}, {code: 'ML', name: 'Mali'}, {code: 'MT', name: 'Malta'},
+            {code: 'MH', name: 'Marshall Islands'}, {code: 'MR', name: 'Mauritania'}, {code: 'MU', name: 'Mauritius'},
+            {code: 'MX', name: 'Mexico'}, {code: 'FM', name: 'Micronesia'}, {code: 'MD', name: 'Moldova'},
+            {code: 'MC', name: 'Monaco'}, {code: 'MN', name: 'Mongolia'}, {code: 'ME', name: 'Montenegro'},
+            {code: 'MA', name: 'Morocco'}, {code: 'MZ', name: 'Mozambique'}, {code: 'MM', name: 'Myanmar'},
+            {code: 'NA', name: 'Namibia'}, {code: 'NR', name: 'Nauru'}, {code: 'NP', name: 'Nepal'},
+            {code: 'NL', name: 'Netherlands'}, {code: 'NZ', name: 'New Zealand'}, {code: 'NI', name: 'Nicaragua'},
+            {code: 'NE', name: 'Niger'}, {code: 'NG', name: 'Nigeria'}, {code: 'MK', name: 'North Macedonia'},
+            {code: 'NO', name: 'Norway'}, {code: 'OM', name: 'Oman'}, {code: 'PK', name: 'Pakistan'},
+            {code: 'PW', name: 'Palau'}, {code: 'PS', name: 'Palestine'}, {code: 'PA', name: 'Panama'},
+            {code: 'PG', name: 'Papua New Guinea'}, {code: 'PY', name: 'Paraguay'}, {code: 'PE', name: 'Peru'},
+            {code: 'PH', name: 'Philippines'}, {code: 'PL', name: 'Poland'}, {code: 'PT', name: 'Portugal'},
+            {code: 'QA', name: 'Qatar'}, {code: 'RO', name: 'Romania'}, {code: 'RU', name: 'Russia'},
+            {code: 'RW', name: 'Rwanda'}, {code: 'KN', name: 'Saint Kitts and Nevis'}, {code: 'LC', name: 'Saint Lucia'},
+            {code: 'VC', name: 'Saint Vincent and the Grenadines'}, {code: 'WS', name: 'Samoa'}, {code: 'SM', name: 'San Marino'},
+            {code: 'ST', name: 'São Tomé and Príncipe'}, {code: 'SA', name: 'Saudi Arabia'}, {code: 'SN', name: 'Senegal'},
+            {code: 'RS', name: 'Serbia'}, {code: 'SC', name: 'Seychelles'}, {code: 'SL', name: 'Sierra Leone'},
+            {code: 'SG', name: 'Singapore'}, {code: 'SK', name: 'Slovakia'}, {code: 'SI', name: 'Slovenia'},
+            {code: 'SB', name: 'Solomon Islands'}, {code: 'SO', name: 'Somalia'}, {code: 'ZA', name: 'South Africa'},
+            {code: 'SS', name: 'South Sudan'}, {code: 'ES', name: 'Spain'}, {code: 'LK', name: 'Sri Lanka'},
+            {code: 'SD', name: 'Sudan'}, {code: 'SR', name: 'Suriname'}, {code: 'SE', name: 'Sweden'},
+            {code: 'CH', name: 'Switzerland'}, {code: 'SY', name: 'Syria'}, {code: 'TW', name: 'Taiwan'},
+            {code: 'TJ', name: 'Tajikistan'}, {code: 'TZ', name: 'Tanzania'}, {code: 'TH', name: 'Thailand'},
+            {code: 'TL', name: 'Timor-Leste'}, {code: 'TG', name: 'Togo'}, {code: 'TO', name: 'Tonga'},
+            {code: 'TT', name: 'Trinidad and Tobago'}, {code: 'TN', name: 'Tunisia'}, {code: 'TR', name: 'Turkey'},
+            {code: 'TM', name: 'Turkmenistan'}, {code: 'TV', name: 'Tuvalu'}, {code: 'UG', name: 'Uganda'},
+            {code: 'UA', name: 'Ukraine'}, {code: 'AE', name: 'United Arab Emirates'}, {code: 'GB', name: 'United Kingdom'},
+            {code: 'US', name: 'United States'}, {code: 'UY', name: 'Uruguay'}, {code: 'UZ', name: 'Uzbekistan'},
+            {code: 'VU', name: 'Vanuatu'}, {code: 'VA', name: 'Vatican City'}, {code: 'VE', name: 'Venezuela'},
+            {code: 'VN', name: 'Vietnam'}, {code: 'YE', name: 'Yemen'}, {code: 'ZM', name: 'Zambia'}, {code: 'ZW', name: 'Zimbabwe'}
+        ];
+        
+        // Load authors list for autocomplete
+        async function loadAuthorsList() {
+            try {
+                const result = await api('list-authors');
+                cachedAuthors = result.authors || [];
+            } catch (e) { cachedAuthors = []; }
+        }
+        
+        // Load works list for autocomplete
+        async function loadWorksList() {
+            try {
+                const result = await api('list-works');
+                cachedWorks = result.works || [];
+            } catch (e) { cachedWorks = []; }
+        }
+        
+        // Get languages from LANGUAGE_INDEX (loaded via search-index.js)
+        function getLanguagesList() {
+            if (typeof LANGUAGE_INDEX !== 'undefined') {
+                cachedLanguages = LANGUAGE_INDEX.filter(e => 
+                    e.level !== 'text' && e.level !== 'work' && e.level !== 'author'
+                ).map(e => ({
+                    id: e.id,
+                    name: e.name.replace(/^ /, ''),
+                    extinct: e.name.startsWith(''),
+                    family: e.family || ''
+                }));
+            }
+            return cachedLanguages;
+        }
+        
+        // Get collections from API
+        async function getCollectionsList() {
+            if (cachedCollections.length === 0) {
+                try {
+                    const result = await api('list-collections');
+                    cachedCollections = result.collections || [];
+                } catch (e) {
+                    cachedCollections = [];
+                }
+            }
+            return cachedCollections;
+        }
+        getCollectionsList(); // Pre-fetch on page load
+        
+        // Get sources from API
+        async function getSourcesList() {
+            if (cachedSources.length === 0) {
+                try {
+                    const result = await api('list-sources');
+                    cachedSources = result.sources || [];
+                } catch (e) {
+                    cachedSources = [];
+                }
+            }
+            return cachedSources;
+        }
+        getSourcesList(); // Pre-fetch on page load
+        
+        // Get provenances from API
+        async function getProvenancesList() {
+            if (cachedProvenancesList.length === 0) {
+                try {
+                    const result = await api('list-provenances');
+                    cachedProvenancesList = result.provenances || [];
+                } catch (e) {
+                    cachedProvenancesList = [];
+                }
+            }
+            return cachedProvenancesList;
+        }
+        getProvenancesList(); // Pre-fetch on page load
+        
+        function renderTagInputs(prefix) {
+            ['authors', 'languages', 'countries', 'collections', 'sources', 'provenances'].forEach(field => {
+                const container = document.getElementById(`${prefix}-${field}-container`);
+                if (!container) return;
+                const data = prefix === 'text' ? textEditorData : workEditorData;
+                if (!data[field]) return;
+                
+                const needsAutocomplete = ['authors', 'languages', 'countries', 'collections', 'sources', 'provenances'].includes(field);
+                const placeholders = { collections: 'collection-id', sources: 'source-id', provenances: 'provenance-id' };
+                const placeholder = placeholders[field] || 'Type to search...';
+                const inputHtml = needsAutocomplete
+                    ? `<div class="autocomplete-wrapper"><input type="text" class="tag-input" id="${prefix}-${field}-input" placeholder="${placeholder}" autocomplete="off"><div class="autocomplete-dropdown" id="${prefix}-${field}-dropdown"></div></div>`
+                    : `<input type="text" class="tag-input" id="${prefix}-${field}-input" placeholder="...">`;
+                
+                container.innerHTML = data[field].map((v, i) => {
+                    let displayName = v;
+                    if (field === 'languages') {
+                        const lang = cachedLanguages.find(l => l.id === v);
+                        if (lang) displayName = `${lang.name} (${v})`;
+                    } else if (field === 'authors') {
+                        const author = cachedAuthors.find(a => a.id === v);
+                        if (author) displayName = `${author.name} (${v})`;
+                    } else if (field === 'countries') {
+                        const country = cachedCountries.find(c => c.code === v);
+                        if (country) displayName = `${country.name} (${v})`;
+                    } else if (field === 'collections') {
+                        const coll = cachedCollections.find(c => c.id === v);
+                        if (coll) displayName = `${coll.name} (${v})`;
+                    } else if (field === 'sources') {
+                        const src = cachedSources.find(s => s.id === v);
+                        if (src) displayName = `${src.name} (${v})`;
+                    } else if (field === 'provenances') {
+                        const prov = cachedProvenancesList.find(p => p.id === v);
+                        if (prov) displayName = `${prov.name} (${v})`;
+                    }
+                    return `<span class="tag">${escapeHtml(displayName)} <span class="remove-tag" data-p="${prefix}" data-f="${field}" data-i="${i}">&times;</span></span>`;
+                }).join('') + inputHtml;
+                
+                setupTagInput(prefix, field);
+            });
+        }
+        
+        function renderWorkTagInputs() {
+            ['authors', 'languages', 'aliases'].forEach(field => {
+                const container = document.getElementById(`work-${field}-container`);
+                if (!container) return;
+                
+                const needsAutocomplete = field === 'authors' || field === 'languages';
+                const inputHtml = needsAutocomplete
+                    ? `<div class="autocomplete-wrapper"><input type="text" class="tag-input" id="work-${field}-input" placeholder="Type to search..." autocomplete="off"><div class="autocomplete-dropdown" id="work-${field}-dropdown"></div></div>`
+                    : `<input type="text" class="tag-input" id="work-${field}-input" placeholder="...">`;
+                
+                container.innerHTML = workEditorData[field].map((v, i) => {
+                    let displayName = v;
+                    if (field === 'languages') {
+                        const lang = cachedLanguages.find(l => l.id === v);
+                        if (lang) displayName = `${lang.name} (${v})`;
+                    } else if (field === 'authors') {
+                        const author = cachedAuthors.find(a => a.id === v);
+                        if (author) displayName = `${author.name} (${v})`;
+                    }
+                    return `<span class="tag">${escapeHtml(displayName)} <span class="remove-tag" data-p="work" data-f="${field}" data-i="${i}">&times;</span></span>`;
+                }).join('') + inputHtml;
+                
+                setupTagInput('work', field);
+            });
+            
+            // Handle belongsTo separately (single value, not array)
+            const belongsToContainer = document.getElementById('work-belongsto-container');
+            if (belongsToContainer) {
+                const inputHtml = `<div class="autocomplete-wrapper"><input type="text" class="tag-input" id="work-belongsto-input" placeholder="Type to search works..." autocomplete="off"><div class="autocomplete-dropdown" id="work-belongsto-dropdown"></div></div>`;
+                
+                let tagHtml = '';
+                if (workEditorData.belongsTo) {
+                    const work = cachedWorksList.find(w => w.id === workEditorData.belongsTo);
+                    const displayName = work ? `${work.title} (${workEditorData.belongsTo})` : workEditorData.belongsTo;
+                    tagHtml = `<span class="tag">${escapeHtml(displayName)} <span class="remove-tag" data-p="work" data-f="belongsTo" data-i="0">&times;</span></span>`;
+                }
+                
+                belongsToContainer.innerHTML = tagHtml + inputHtml;
+                setupBelongsToInput();
+            }
+        }
+        
+        function setupBelongsToInput() {
+            const input = document.getElementById('work-belongsto-input');
+            const dropdown = document.getElementById('work-belongsto-dropdown');
+            if (!input) return;
+            
+            let selectedIndex = -1;
+            const currentWorkId = document.getElementById('work-id').value;
+            
+            function setValue(v) {
+                workEditorData.belongsTo = v;
+                renderWorkTagInputs();
+            }
+            
+            function showDropdown(items) {
+                if (!dropdown) return;
+                if (items.length === 0) {
+                    dropdown.classList.remove('active');
+                    return;
+                }
+                selectedIndex = -1;
+                dropdown.innerHTML = items.slice(0, 50).map((item, i) => {
+                    return `<div class="autocomplete-item" data-value="${item.id}" data-index="${i}">
+                        <span class="ac-name">${escapeHtml(item.title || item.id)}</span>
+                        <span class="ac-meta">${item.date || ''}</span>
+                        <span class="ac-id">${item.id}</span>
+                    </div>`;
+                }).join('');
+                dropdown.classList.add('active');
+            }
+            
+            function hideDropdown() {
+                if (dropdown) dropdown.classList.remove('active');
+            }
+            
+            function selectItem(index) {
+                const items = dropdown.querySelectorAll('.autocomplete-item');
+                items.forEach((el, i) => el.classList.toggle('selected', i === index));
+                if (items[index]) items[index].scrollIntoView({ block: 'nearest' });
+            }
+            
+            input.oninput = () => {
+                const query = input.value.toLowerCase().trim();
+                if (!query || query.length < 1) { hideDropdown(); return; }
+                
+                const matches = cachedWorksList
+                    .filter(w => w.id !== currentWorkId) // Can't belong to itself
+                    .filter(w => 
+                        (w.title || '').toLowerCase().includes(query) || w.id.toLowerCase().includes(query)
+                    )
+                    .sort((a, b) => {
+                        const aStart = (a.title || '').toLowerCase().startsWith(query) || a.id.startsWith(query) ? 0 : 1;
+                        const bStart = (b.title || '').toLowerCase().startsWith(query) || b.id.startsWith(query) ? 0 : 1;
+                        return aStart - bStart || (a.title || a.id).localeCompare(b.title || b.id);
+                    });
+                showDropdown(matches);
+            };
+            
+            input.onkeydown = (e) => {
+                const items = dropdown ? dropdown.querySelectorAll('.autocomplete-item') : [];
+                
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (items.length > 0) {
+                        selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+                        selectItem(selectedIndex);
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (items.length > 0) {
+                        selectedIndex = Math.max(selectedIndex - 1, 0);
+                        selectItem(selectedIndex);
+                    }
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (selectedIndex >= 0 && items[selectedIndex]) {
+                        setValue(items[selectedIndex].dataset.value);
+                    }
+                    hideDropdown();
+                } else if (e.key === 'Escape') {
+                    hideDropdown();
+                }
+            };
+            
+            input.onblur = () => setTimeout(hideDropdown, 200);
+            
+            if (dropdown) {
+                dropdown.onclick = (e) => {
+                    const item = e.target.closest('.autocomplete-item');
+                    if (item) {
+                        setValue(item.dataset.value);
+                        hideDropdown();
+                    }
+                };
+            }
+        }
+        
+        function renderAuthorTagInputs() {
+            const container = document.getElementById('author-aliases-container');
+            if (!container) return;
+            
+            const inputHtml = `<input type="text" class="tag-input" id="author-aliases-input" placeholder="Alternative name">`;
+            
+            container.innerHTML = authorEditorData.aliases.map((v, i) => {
+                return `<span class="tag">${escapeHtml(v)} <span class="remove-tag" data-p="author" data-f="aliases" data-i="${i}">&times;</span></span>`;
+            }).join('') + inputHtml;
+            
+            setupTagInput('author', 'aliases');
+        }
+        
+        function setupTagInput(prefix, field) {
+            const input = document.getElementById(`${prefix}-${field}-input`);
+            if (!input) return;
+            
+            const dropdown = document.getElementById(`${prefix}-${field}-dropdown`);
+            let selectedIndex = -1;
+            
+            function addValue(v) {
+                const data = prefix === 'text' ? textEditorData : (prefix === 'author' ? authorEditorData : workEditorData);
+                if (v && !data[field].includes(v)) {
+                    data[field].push(v);
+                    if (prefix === 'text') renderTagInputs('text');
+                    else if (prefix === 'author') renderAuthorTagInputs();
+                    else renderWorkTagInputs();
+                }
+            }
+            
+            function showDropdown(items) {
+                if (!dropdown) return;
+                if (items.length === 0) {
+                    dropdown.classList.remove('active');
+                    return;
+                }
+                selectedIndex = -1;
+                dropdown.innerHTML = items.slice(0, 50).map((item, i) => {
+                    if (field === 'languages') {
+                        return `<div class="autocomplete-item ${item.extinct ? 'extinct' : ''}" data-value="${item.id}" data-index="${i}">
+                            <span class="ac-name">${escapeHtml(item.name)}</span>
+                            <span class="ac-meta">${escapeHtml(item.family || '')}</span>
+                            <span class="ac-id">${item.id}</span>
+                        </div>`;
+                    } else if (field === 'authors') {
+                        const lifespan = item.birth || item.death ? `${item.birth || '?'}–${item.death || ''}` : '';
+                        return `<div class="autocomplete-item" data-value="${item.id}" data-index="${i}">
+                            <span class="ac-name">${escapeHtml(item.name)}</span>
+                            <span class="ac-meta">${lifespan}</span>
+                            <span class="ac-id">${item.id}</span>
+                        </div>`;
+                    } else if (field === 'countries') {
+                        return `<div class="autocomplete-item" data-value="${item.code}" data-index="${i}">
+                            <span class="ac-name">${escapeHtml(item.name)}</span>
+                            <span class="ac-id">${item.code}</span>
+                        </div>`;
+                    } else if (field === 'collections') {
+                        return `<div class="autocomplete-item" data-value="${item.id}" data-index="${i}">
+                            <span class="ac-name">${escapeHtml(item.name)}</span>
+                            <span class="ac-id">${item.id}</span>
+                        </div>`;
+                    } else if (field === 'sources') {
+                        return `<div class="autocomplete-item" data-value="${item.id}" data-index="${i}">
+                            <span class="ac-name">${escapeHtml(item.name)}</span>
+                            <span class="ac-meta">${escapeHtml(item.location || '')}</span>
+                            <span class="ac-id">${item.id}</span>
+                        </div>`;
+                    } else if (field === 'provenances') {
+                        return `<div class="autocomplete-item" data-value="${item.id}" data-index="${i}">
+                            <span class="ac-name">${escapeHtml(item.name)}</span>
+                            <span class="ac-meta">${escapeHtml(item.location || '')}</span>
+                            <span class="ac-id">${item.id}</span>
+                        </div>`;
+                    }
+                    return '';
+                }).join('');
+                dropdown.classList.add('active');
+            }
+            
+            function hideDropdown() {
+                if (dropdown) dropdown.classList.remove('active');
+            }
+            
+            function selectItem(index) {
+                const items = dropdown.querySelectorAll('.autocomplete-item');
+                items.forEach((el, i) => el.classList.toggle('selected', i === index));
+                if (items[index]) items[index].scrollIntoView({ block: 'nearest' });
+            }
+            
+            input.oninput = () => {
+                const query = input.value.toLowerCase().trim();
+                if (!query || query.length < 1) { hideDropdown(); return; }
+                
+                let matches = [];
+                if (field === 'languages') {
+                    getLanguagesList();
+                    matches = cachedLanguages.filter(l => 
+                        l.name.toLowerCase().includes(query) || l.id.toLowerCase().includes(query)
+                    ).sort((a, b) => {
+                        const aStart = a.name.toLowerCase().startsWith(query) ? 0 : 1;
+                        const bStart = b.name.toLowerCase().startsWith(query) ? 0 : 1;
+                        return aStart - bStart || a.name.localeCompare(b.name);
+                    });
+                } else if (field === 'authors') {
+                    matches = cachedAuthors.filter(a => 
+                        a.name.toLowerCase().includes(query) || a.id.toLowerCase().includes(query)
+                    ).sort((a, b) => {
+                        const aStart = a.name.toLowerCase().startsWith(query) ? 0 : 1;
+                        const bStart = b.name.toLowerCase().startsWith(query) ? 0 : 1;
+                        return aStart - bStart || a.name.localeCompare(b.name);
+                    });
+                } else if (field === 'countries') {
+                    matches = cachedCountries.filter(c => 
+                        c.name.toLowerCase().includes(query) || c.code.toLowerCase().includes(query)
+                    ).sort((a, b) => {
+                        const aStart = a.name.toLowerCase().startsWith(query) ? 0 : 1;
+                        const bStart = b.name.toLowerCase().startsWith(query) ? 0 : 1;
+                        return aStart - bStart || a.name.localeCompare(b.name);
+                    });
+                } else if (field === 'collections') {
+                    getCollectionsList();
+                    matches = cachedCollections.filter(c => 
+                        c.name.toLowerCase().includes(query) || c.id.toLowerCase().includes(query)
+                    ).sort((a, b) => {
+                        const aStart = a.name.toLowerCase().startsWith(query) || a.id.startsWith(query) ? 0 : 1;
+                        const bStart = b.name.toLowerCase().startsWith(query) || b.id.startsWith(query) ? 0 : 1;
+                        return aStart - bStart || a.name.localeCompare(b.name);
+                    });
+                } else if (field === 'sources') {
+                    getSourcesList();
+                    matches = cachedSources.filter(s => 
+                        s.name.toLowerCase().includes(query) || s.id.toLowerCase().includes(query)
+                    ).sort((a, b) => {
+                        const aStart = a.name.toLowerCase().startsWith(query) || a.id.startsWith(query) ? 0 : 1;
+                        const bStart = b.name.toLowerCase().startsWith(query) || b.id.startsWith(query) ? 0 : 1;
+                        return aStart - bStart || a.name.localeCompare(b.name);
+                    });
+                } else if (field === 'provenances') {
+                    getProvenancesList();
+                    matches = cachedProvenancesList.filter(p => 
+                        p.name.toLowerCase().includes(query) || p.id.toLowerCase().includes(query)
+                    ).sort((a, b) => {
+                        const aStart = a.name.toLowerCase().startsWith(query) || a.id.startsWith(query) ? 0 : 1;
+                        const bStart = b.name.toLowerCase().startsWith(query) || b.id.startsWith(query) ? 0 : 1;
+                        return aStart - bStart || a.name.localeCompare(b.name);
+                    });
+                }
+                showDropdown(matches);
+            };
+            
+            input.onkeydown = (e) => {
+                const items = dropdown ? dropdown.querySelectorAll('.autocomplete-item') : [];
+                
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (items.length > 0) {
+                        selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+                        selectItem(selectedIndex);
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (items.length > 0) {
+                        selectedIndex = Math.max(selectedIndex - 1, 0);
+                        selectItem(selectedIndex);
+                    }
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (selectedIndex >= 0 && items[selectedIndex]) {
+                        addValue(items[selectedIndex].dataset.value);
+                    } else if (input.value.trim()) {
+                        addValue(input.value.trim());
+                    }
+                    hideDropdown();
+                } else if (e.key === 'Escape') {
+                    hideDropdown();
+                }
+            };
+            
+            input.onblur = () => setTimeout(hideDropdown, 200);
+            
+            if (dropdown) {
+                dropdown.onclick = (e) => {
+                    const item = e.target.closest('.autocomplete-item');
+                    if (item) {
+                        addValue(item.dataset.value);
+                        hideDropdown();
+                    }
+                };
+            }
+        }
+        
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-tag')) {
+                const { p, f, i } = e.target.dataset;
+                const data = p === 'text' ? textEditorData : (p === 'author' ? authorEditorData : workEditorData);
+                // Handle belongsTo as a string, not array
+                if (f === 'belongsTo') {
+                    data[f] = '';
+                } else {
+                    data[f].splice(parseInt(i), 1);
+                }
+                if (p === 'text') renderTagInputs('text');
+                else if (p === 'author') renderAuthorTagInputs();
+                else renderWorkTagInputs();
+            }
+        });
+        
+        // Extract works from pages structure (flatten for editing)
+        function extractWorksFromPages(pages) {
+            const works = [];
+            if (!pages) return works;
+            
+            // Recursive function to extract children - handles both new unified format and old separate format
+            function extractChildren(item) {
+                const children = [];
+                
+                // New unified format: children array with isChapter flag
+                if (item.children && Array.isArray(item.children)) {
+                    item.children.forEach(child => {
+                        if (child.isChapter) {
+                            children.push({
+                                type: 'chapter',
+                                title: child.title || '',
+                                viewerPage: child.viewerPage,
+                                children: extractChildren(child)
+                            });
+                        } else {
+                            children.push({
+                                type: 'subwork',
+                                id: child.id,
+                                title: child.title || '',
+                                viewerPage: child.viewerPage,
+                                children: extractChildren(child)
+                            });
+                        }
+                    });
+                }
+                
+                // Old format: separate subworks and chapters arrays (append to children)
+                if (item.subworks) {
+                    item.subworks.forEach(sw => {
+                        children.push({
+                            type: 'subwork',
+                            id: sw.id,
+                            title: sw.title || '',
+                            viewerPage: sw.viewerPage,
+                            children: extractChildren(sw)
+                        });
+                    });
+                }
+                if (item.chapters) {
+                    item.chapters.forEach(ch => {
+                        children.push({
+                            type: 'chapter',
+                            title: ch.title || '',
+                            viewerPage: ch.viewerPage,
+                            children: extractChildren(ch)
+                        });
+                    });
+                }
+                
+                return children;
+            }
+            
+            pages.forEach(page => {
+                if (page.works) {
+                    page.works.forEach(w => {
+                        works.push({
+                            id: w.id,
+                            title: w.title || '',
+                            viewerPage: w.viewerPage,
+                            children: extractChildren(w)
+                        });
+                    });
+                }
+            });
+            return works;
+        }
+        
+        // Convert flat works list back to pages structure for saving
+        function buildPagesFromWorks(works) {
+            if (!works || works.length === 0) return [];
+            
+            // Recursive function to build children array (preserves order of subworks/chapters)
+            function buildChildrenArray(children) {
+                if (!children || children.length === 0) return undefined;
+                return children.map(child => {
+                    const item = {};
+                    if (child.type === 'subwork') {
+                        item.id = child.id;
+                        if (child.title) item.title = child.title;
+                    } else {
+                        item.isChapter = true;
+                        if (child.title) item.title = child.title;
+                    }
+                    if (child.viewerPage) item.viewerPage = child.viewerPage;
+                    const nested = buildChildrenArray(child.children);
+                    if (nested) item.children = nested;
+                    return item;
+                });
+            }
+            
+            // Put all works in a single page entry
+            return [{
+                works: works.map(w => {
+                    const work = { id: w.id };
+                    if (w.title) work.title = w.title;
+                    if (w.viewerPage) work.viewerPage = w.viewerPage;
+                    const children = buildChildrenArray(w.children);
+                    if (children) work.children = children;
+                    return work;
+                })
+            }];
+        }
+        
+        // Works in Text
+        function getPageOptions(selectedValue) {
+            // Generate <option> elements for page dropdown from existing images
+            const pages = textEditorData.existingImages || [];
+            // Sort naturally (2 before 10)
+            const sorted = [...pages].sort((a, b) => 
+                a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' })
+            );
+            let options = '<option value="">(none)</option>';
+            sorted.forEach(img => {
+                // Extract label from filename (remove extension, replace _ with space to match page-viewer)
+                const label = img.name.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
+                const selected = selectedValue === label ? ' selected' : '';
+                options += `<option value="${escapeHtml(label)}"${selected}>${escapeHtml(label)}</option>`;
+            });
+            return options;
+        }
+        
+        function renderTextWorks() {
+            const container = document.getElementById('text-works-list');
+            if (!textEditorData.works.length) {
+                container.innerHTML = '<p style="color:#6b7280;text-align:center;padding:20px">No works linked yet.</p>';
+                return;
+            }
+            container.innerHTML = textEditorData.works.map((w, wi) => {
+                const workInfo = cachedWorks.find(cw => cw.id === w.id);
+                const displayTitle = w.title || (workInfo ? workInfo.title : '') || w.id || 'Work';
+                return `
+                <div class="nested-item">
+                    <div class="nested-item-header">
+                        <h4>${escapeHtml(displayTitle)}${w.viewerPage ? ` <span style="color:#6b7280;font-weight:normal;">(page ${w.viewerPage})</span>` : ''}</h4>
+                        <button class="btn btn-danger" onclick="removeTextWork(${wi})">Remove</button>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Work ID <span class="hint">(type to search)</span></label>
+                            <div class="autocomplete-wrapper">
+                                <input type="text" id="textwork-input-${wi}" value="${escapeHtml(w.id||'')}" autocomplete="off" onchange="textEditorData.works[${wi}].id=this.value;renderTextWorks()">
+                                <div class="autocomplete-dropdown" id="textwork-dropdown-${wi}"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Viewer Page <span class="hint">(page label)</span></label>
+                            <select onchange="textEditorData.works[${wi}].viewerPage=this.value||undefined">${getPageOptions(w.viewerPage)}</select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Title Override <span class="hint">(optional)</span></label>
+                        <input type="text" value="${escapeHtml(w.title||'')}" onchange="textEditorData.works[${wi}].title=this.value">
+                    </div>
+                    <h5 style="margin-top:15px;">Contents <span class="hint" style="font-weight:normal;font-size:0.85em;">(subworks & chapters)</span></h5>
+                    <div class="nested-list">${renderTextChildren(wi, w.children||[])}</div>
+                    <div style="display:flex;gap:8px;margin-top:8px;">
+                        <button class="add-nested-btn" onclick="addTextChild(${wi},'subwork')">+ Add Subwork</button>
+                        <button class="add-nested-btn" style="background:#fef3c7;border-color:#f59e0b;" onclick="addTextChild(${wi},'chapter')">+ Add Chapter</button>
+                    </div>
+                </div>
+            `}).join('');
+            setTimeout(setupWorkAutocomplete, 50);
+        }
+        
+        // Unified render for children (subworks and chapters interleaved)
+        function renderTextChildren(wi, children, path = '') {
+            if (!children.length) return '<p style="color:#6b7280;text-align:center;font-size:0.9em;">No contents.</p>';
+            return children.map((child, ci) => {
+                const currentPath = path ? `${path}-${ci}` : `${ci}`;
+                const depth = currentPath.split('-').length;
+                const marginLeft = Math.min(depth * 8, 24);
+                const isChapter = child.type === 'chapter';
+                const bgColor = isChapter 
+                    ? (depth % 2 === 1 ? '#fef3c7' : '#fde68a')  // Yellow for chapters
+                    : (depth % 2 === 1 ? '#f9fafb' : '#f3f4f6'); // Gray for subworks
+                
+                const displayTitle = isChapter 
+                    ? (child.title || 'Chapter')
+                    : (child.title || (cachedWorks.find(w => w.id === child.id)?.title) || child.id || 'Subwork');
+                
+                const typeLabel = isChapter ? 'Ch' : 'Wk';
+                
+                return `
+                <div class="nested-item" style="background:${bgColor};margin-left:${marginLeft}px;">
+                    <div class="nested-item-header">
+                        <h4>${typeLabel} ${escapeHtml(displayTitle)}${child.viewerPage ? ` <span style="color:#6b7280;font-weight:normal;">(page ${child.viewerPage})</span>` : ''}</h4>
+                        <div style="display:flex;gap:4px;align-items:center;">
+                            ${ci > 0 ? `<button class="btn" style="padding:2px 6px;" onclick="moveChild(${wi},'${currentPath}',-1)">↑</button>` : ''}
+                            ${ci < children.length - 1 ? `<button class="btn" style="padding:2px 6px;" onclick="moveChild(${wi},'${currentPath}',1)">↓</button>` : ''}
+                            <button class="btn btn-danger" onclick="removeTextChild(${wi},'${currentPath}')">Remove</button>
+                        </div>
+                    </div>
+                    ${isChapter ? `
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Chapter Title</label>
+                            <input type="text" value="${escapeHtml(child.title||'')}" onchange="updateChildField(${wi},'${currentPath}','title',this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>Viewer Page</label>
+                            <select onchange="updateChildField(${wi},'${currentPath}','viewerPage',this.value||undefined)">${getPageOptions(child.viewerPage)}</select>
+                        </div>
+                    </div>
+                    ` : `
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Subwork ID</label>
+                            <div class="autocomplete-wrapper">
+                                <input type="text" id="textsub-input-${wi}-${currentPath.replace(/-/g,'_')}" value="${escapeHtml(child.id||'')}" autocomplete="off" onchange="updateChildField(${wi},'${currentPath}','id',this.value)">
+                                <div class="autocomplete-dropdown" id="textsub-dropdown-${wi}-${currentPath.replace(/-/g,'_')}"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Viewer Page</label>
+                            <select onchange="updateChildField(${wi},'${currentPath}','viewerPage',this.value||undefined)">${getPageOptions(child.viewerPage)}</select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Title Override</label>
+                        <input type="text" value="${escapeHtml(child.title||'')}" onchange="updateChildField(${wi},'${currentPath}','title',this.value)">
+                    </div>
+                    `}
+                    <div class="nested-list" style="margin-top:10px;">${renderTextChildren(wi, child.children||[], currentPath)}</div>
+                    <div style="display:flex;gap:8px;margin-top:8px;">
+                        <button class="add-nested-btn" style="font-size:0.85em;" onclick="addNestedChild(${wi},'${currentPath}','subwork')">+ Subwork</button>
+                        <button class="add-nested-btn" style="font-size:0.85em;background:#fef3c7;border-color:#f59e0b;" onclick="addNestedChild(${wi},'${currentPath}','chapter')">+ Chapter</button>
+                    </div>
+                </div>
+            `}).join('');
+        }
+        
+        // Helper to navigate to a child by path
+        function getChildByPath(wi, path) {
+            const indices = path.split('-').map(Number);
+            let current = textEditorData.works[wi];
+            for (let i = 0; i < indices.length; i++) {
+                if (!current.children) current.children = [];
+                current = current.children[indices[i]];
+            }
+            return current;
+        }
+        
+        // Get parent's children array by path
+        function getParentChildren(wi, path) {
+            const indices = path.split('-').map(Number);
+            if (indices.length === 1) {
+                if (!textEditorData.works[wi].children) textEditorData.works[wi].children = [];
+                return textEditorData.works[wi].children;
+            }
+            const parentPath = indices.slice(0, -1);
+            let current = textEditorData.works[wi];
+            for (const idx of parentPath) {
+                if (!current.children) current.children = [];
+                current = current.children[idx];
+            }
+            if (!current.children) current.children = [];
+            return current.children;
+        }
+        
+        function updateChildField(wi, path, field, value) {
+            const child = getChildByPath(wi, path);
+            if (child) {
+                child[field] = value;
+                if (field === 'id') renderTextWorks();
+            }
+        }
+        
+        function addTextWork() {
+            textEditorData.works.push({ id: '', title: '', viewerPage: null, children: [] });
+            renderTextWorks();
+        }
+        
+        function removeTextWork(wi) {
+            textEditorData.works.splice(wi, 1);
+            renderTextWorks();
+        }
+        
+        function addTextChild(wi, type) {
+            if (!textEditorData.works[wi].children) textEditorData.works[wi].children = [];
+            if (type === 'chapter') {
+                textEditorData.works[wi].children.push({ type: 'chapter', title: '', viewerPage: null, children: [] });
+            } else {
+                textEditorData.works[wi].children.push({ type: 'subwork', id: '', title: '', viewerPage: null, children: [] });
+            }
+            renderTextWorks();
+        }
+        
+        function removeTextChild(wi, path) {
+            const indices = path.split('-').map(Number);
+            const parentChildren = getParentChildren(wi, path);
+            parentChildren.splice(indices[indices.length - 1], 1);
+            renderTextWorks();
+        }
+        
+        function addNestedChild(wi, path, type) {
+            const parent = getChildByPath(wi, path);
+            if (!parent.children) parent.children = [];
+            if (type === 'chapter') {
+                parent.children.push({ type: 'chapter', title: '', viewerPage: null, children: [] });
+            } else {
+                parent.children.push({ type: 'subwork', id: '', title: '', viewerPage: null, children: [] });
+            }
+            renderTextWorks();
+        }
+        
+        function moveChild(wi, path, direction) {
+            const indices = path.split('-').map(Number);
+            const parentChildren = getParentChildren(wi, path);
+            const idx = indices[indices.length - 1];
+            const newIdx = idx + direction;
+            if (newIdx < 0 || newIdx >= parentChildren.length) return;
+            // Swap
+            [parentChildren[idx], parentChildren[newIdx]] = [parentChildren[newIdx], parentChildren[idx]];
+            renderTextWorks();
+        }
+        
+        // Setup work ID autocomplete for all work/subwork inputs
+        function setupWorkAutocomplete() {
+            // Setup for textwork inputs
+            document.querySelectorAll('[id^="textwork-input-"]').forEach(input => {
+                const dropdown = document.getElementById(input.id.replace('input', 'dropdown'));
+                if (!dropdown) return;
+                setupWorkDropdown(input, dropdown);
+            });
+            // Setup for textsub inputs
+            document.querySelectorAll('[id^="textsub-input-"]').forEach(input => {
+                const dropdown = document.getElementById(input.id.replace('input', 'dropdown'));
+                if (!dropdown) return;
+                setupWorkDropdown(input, dropdown);
+            });
+        }
+        
+        function setupWorkDropdown(input, dropdown) {
+            let selectedIndex = -1;
+            
+            function showDropdown(items) {
+                if (items.length === 0) {
+                    dropdown.classList.remove('active');
+                    return;
+                }
+                selectedIndex = -1;
+                dropdown.innerHTML = items.slice(0, 30).map((w, i) => `
+                    <div class="autocomplete-item" data-value="${w.id}" data-index="${i}">
+                        <span class="ac-name">${escapeHtml(w.title || w.id)}</span>
+                        <span class="ac-meta">${w.date || ''} ${w.author || ''}</span>
+                        <span class="ac-id">${w.id}</span>
+                    </div>
+                `).join('');
+                dropdown.classList.add('active');
+            }
+            
+            function hideDropdown() { dropdown.classList.remove('active'); }
+            
+            function selectItem(index) {
+                const items = dropdown.querySelectorAll('.autocomplete-item');
+                items.forEach((el, i) => el.classList.toggle('selected', i === index));
+                if (items[index]) items[index].scrollIntoView({ block: 'nearest' });
+            }
+            
+            input.addEventListener('input', () => {
+                const query = input.value.toLowerCase().trim();
+                if (!query || query.length < 1) { hideDropdown(); return; }
+                
+                const matches = cachedWorks.filter(w => 
+                    (w.title && w.title.toLowerCase().includes(query)) || 
+                    w.id.toLowerCase().includes(query) ||
+                    (w.aliases && w.aliases.some(a => a.toLowerCase().includes(query)))
+                ).sort((a, b) => {
+                    const aStart = (a.title || a.id).toLowerCase().startsWith(query) ? 0 : 1;
+                    const bStart = (b.title || b.id).toLowerCase().startsWith(query) ? 0 : 1;
+                    return aStart - bStart || (a.title || a.id).localeCompare(b.title || b.id);
+                });
+                showDropdown(matches);
+            });
+            
+            input.addEventListener('keydown', (e) => {
+                const items = dropdown.querySelectorAll('.autocomplete-item');
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (items.length > 0) { selectedIndex = Math.min(selectedIndex + 1, items.length - 1); selectItem(selectedIndex); }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (items.length > 0) { selectedIndex = Math.max(selectedIndex - 1, 0); selectItem(selectedIndex); }
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (selectedIndex >= 0 && items[selectedIndex]) {
+                        input.value = items[selectedIndex].dataset.value;
+                        input.dispatchEvent(new Event('change'));
+                    }
+                    hideDropdown();
+                } else if (e.key === 'Escape') {
+                    hideDropdown();
+                }
+            });
+            
+            input.addEventListener('blur', () => setTimeout(hideDropdown, 300));
+            
+            dropdown.addEventListener('mousedown', (e) => {
+                e.preventDefault(); // Prevent blur from firing before click
+                const item = e.target.closest('.autocomplete-item');
+                if (item) {
+                    input.value = item.dataset.value;
+                    input.dispatchEvent(new Event('change'));
+                    hideDropdown();
+                }
+            });
+        }
+        
+        // Source Autocomplete (holding institutions)
+        // Generate slug/code from a name
+        function generateSlug(name) {
+            return name.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '')
+                .substring(0, 50);
+        }
+        
+        // Images - track selected pages for deletion
+        let selectedPages = new Set();
+        
+        function renderTextImages() {
+            const preview = document.getElementById('text-images-preview');
+            const deleteControls = document.getElementById('image-delete-controls');
+            const hasExisting = textEditorData.existingImages && textEditorData.existingImages.length > 0;
+            const hasNew = textEditorData.images && textEditorData.images.length > 0;
+            
+            // Update delete controls visibility
+            if (deleteControls) {
+                deleteControls.style.display = selectedPages.size > 0 ? 'block' : 'none';
+                document.getElementById('selected-count').textContent = selectedPages.size;
+            }
+            
+            if (!hasExisting && !hasNew) { 
+                preview.innerHTML = ''; 
+                return; 
+            }
+            
+            let html = '';
+            
+            // Show existing images first (clickable for selection)
+            if (hasExisting) {
+                html += `<div style="width:100%;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
+                    <strong style="color:#6b7280;font-size:0.85em;">Existing Images (${textEditorData.existingImages.length}):</strong>
+                    <button class="btn btn-secondary" style="padding:4px 10px;font-size:0.8em;" onclick="selectAllPages()">Select All</button>
+                </div>`;
+                html += textEditorData.existingImages.map((img, i) => {
+                    const isSelected = selectedPages.has(img.name);
+                    return `
+                    <div class="image-preview ${isSelected ? 'selected' : ''}" style="border-color:#22c55e;" onclick="togglePageSelection('${escapeHtml(img.name)}')" data-filename="${escapeHtml(img.name)}">
+                        <img src="${img.url}" alt="${escapeHtml(img.name)}">
+                        <div class="select-checkbox">${isSelected ? '' : ''}</div>
+                        <span class="image-number" style="background:#22c55e;">${i+1}</span>
+                    </div>
+                `}).join('');
+            }
+            
+            // Show newly uploaded images
+            if (hasNew) {
+                if (hasExisting) {
+                    html += `<div style="width:100%;margin:15px 0 10px;"><strong style="color:#3b82f6;font-size:0.85em;">New Uploads (${textEditorData.images.length}):</strong></div>`;
+                }
+                html += textEditorData.images.map((img, i) => `
+                    <div class="image-preview" style="border-color:#3b82f6;">
+                        <img src="${img.previewUrl}" alt="New ${i+1}">
+                        <button class="remove-image" onclick="event.stopPropagation();removeNewImage(${i})">&times;</button>
+                        <span class="image-number" style="background:#3b82f6;">${hasExisting ? textEditorData.existingImages.length + i + 1 : i + 1}</span>
+                    </div>
+                `).join('');
+            }
+            
+            preview.innerHTML = html;
+        }
+        
+        function removeNewImage(index) {
+            // Revoke the object URL to free memory
+            if (textEditorData.images[index] && textEditorData.images[index].previewUrl) {
+                URL.revokeObjectURL(textEditorData.images[index].previewUrl);
+            }
+            textEditorData.images.splice(index, 1);
+            renderTextImages();
+        }
+        
+        function togglePageSelection(filename) {
+            if (selectedPages.has(filename)) {
+                selectedPages.delete(filename);
+            } else {
+                selectedPages.add(filename);
+            }
+            renderTextImages();
+        }
+        
+        function selectAllPages() {
+            if (textEditorData.existingImages) {
+                textEditorData.existingImages.forEach(img => selectedPages.add(img.name));
+            }
+            renderTextImages();
+        }
+        
+        function deselectAllPages() {
+            selectedPages.clear();
+            renderTextImages();
+        }
+        
+        async function deleteSelectedPages() {
+            if (selectedPages.size === 0) return;
+            
+            const count = selectedPages.size;
+            if (!confirm(`Delete ${count} selected page(s)? This cannot be undone.`)) return;
+            
+            const textId = document.getElementById('text-id').value.trim();
+            if (!textId) {
+                alert('Text ID not found');
+                return;
+            }
+            
+            try {
+                const result = await api('delete-pages', {
+                    id: textId,
+                    pages: Array.from(selectedPages)
+                });
+                
+                showStatus(result.message);
+                
+                // Update existing images list with remaining files
+                if (result.remaining) {
+                    textEditorData.existingImages = result.remaining.map(f => ({
+                        name: f,
+                        url: `texts/00/00/${textId}/images/${f}`
+                    }));
+                } else {
+                    // Remove deleted ones from existing list
+                    textEditorData.existingImages = textEditorData.existingImages.filter(
+                        img => !selectedPages.has(img.name)
+                    );
+                }
+                
+                selectedPages.clear();
+                renderTextImages();
+            } catch (e) {
+                showStatus('Error deleting pages: ' + e.message, true);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const zone = document.getElementById('text-images-zone');
+            const input = document.getElementById('text-images-input');
+            zone.onclick = () => input.click();
+            zone.ondragover = (e) => { e.preventDefault(); zone.classList.add('drag-over'); };
+            zone.ondragleave = () => zone.classList.remove('drag-over');
+            zone.ondrop = (e) => { e.preventDefault(); zone.classList.remove('drag-over'); handleImages(e.dataTransfer.files); };
+            input.onchange = (e) => handleImages(e.target.files);
+            
+            // Load data for autocomplete
+            loadAuthorsList();
+            loadWorksList();
+            getLanguagesList();
+            
+            loadTexts(); loadWorks(); loadAuthors();
+        });
+        
+        function handleImages(files) {
+            // Sort files alphabetically by name before processing
+            const sortedFiles = Array.from(files)
+                .filter(f => f.type.startsWith('image/'))
+                .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+            
+            // Use object URLs for preview (much more memory efficient than base64)
+            sortedFiles.forEach((f) => {
+                textEditorData.images.push({
+                    name: f.name,
+                    file: f,  // Store the actual File object for upload
+                    previewUrl: URL.createObjectURL(f)  // Efficient preview URL
+                });
+            });
+            renderTextImages();
+        }
+        
+        // =============================================
+        // REGION ANNOTATOR
+        // =============================================
+        
+        let annotatorData = {
+            textId: null,
+            pages: [],          // Array of { label, imageUrl }
+            regions: {},        // { pageLabel: [{ x, y, width, height, title, text, workId }] }
+            works: [],          // Array of { id, title } flattened from text's works/subworks
+            currentPage: null,
+            selectedRegion: null,
+            isDrawing: false
+        };
+        
+        async function openAnnotator(textId) {
+            annotatorData.textId = textId;
+            annotatorData.pages = [];
+            annotatorData.regions = {};
+            annotatorData.works = [];
+            annotatorData.currentPage = null;
+            annotatorData.selectedRegion = null;
+            annotatorData.isDrawing = false;
+            
+            document.getElementById('annotator-title').textContent = `Region Annotator: ${textId}`;
+            document.getElementById('annotator-modal').classList.add('active');
+            
+            // Load text data
+            try {
+                const textData = await api('get-text', { id: textId });
+                
+                // Use folder name for URLs (may differ from data.json id)
+                const folderName = textData._folderName || textId;
+                annotatorData.folderName = folderName;
+                
+                // Build page list from images
+                if (textData._imageFiles && textData._imageFiles.length > 0) {
+                    annotatorData.pages = textData._imageFiles.map(filename => {
+                        const label = filename.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
+                        return {
+                            label: label,
+                            filename: filename,
+                            imageUrl: `texts/00/00/${folderName}/images/${encodeURIComponent(filename)}`
+                        };
+                    });
+                }
+                
+                // Extract works (flatten works and subworks)
+                annotatorData.works = [];
+                if (textData.pages) {
+                    textData.pages.forEach(page => {
+                        if (page.works) {
+                            page.works.forEach(work => {
+                                annotatorData.works.push({ id: work.id, title: work.title });
+                                if (work.subworks) {
+                                    work.subworks.forEach(subwork => {
+                                        annotatorData.works.push({ id: subwork.id, title: `  └ ${subwork.title}` });
+                                    });
+                                }
+                            });
+                        }
+                        // Also load existing regions
+                        const label = page.label || page.id;
+                        if (page.regions && page.regions.length > 0) {
+                            annotatorData.regions[label] = page.regions;
+                        }
+                    });
+                }
+                
+                renderAnnotatorPages();
+                
+                // Select first page
+                if (annotatorData.pages.length > 0) {
+                    selectAnnotatorPage(annotatorData.pages[0].label);
+                }
+            } catch (e) {
+                showStatus('Error loading text: ' + e.message, true);
+            }
+        }
+        
+        function closeAnnotator() {
+            document.getElementById('annotator-modal').classList.remove('active');
+            annotatorData = {
+                textId: null,
+                pages: [],
+                regions: {},
+                works: [],
+                currentPage: null,
+                selectedRegion: null,
+                isDrawing: false
+            };
+        }
+        
+        function renderAnnotatorPages() {
+            const container = document.getElementById('annotator-pages');
+            container.innerHTML = annotatorData.pages.map(page => {
+                const hasRegions = annotatorData.regions[page.label]?.length > 0;
+                const isActive = page.label === annotatorData.currentPage;
+                return `
+                    <div class="annotator-page-thumb ${isActive ? 'active' : ''} ${hasRegions ? 'has-regions' : ''}" 
+                         onclick="selectAnnotatorPage('${escapeHtml(page.label)}')">
+                        <img src="${page.imageUrl}" alt="${escapeHtml(page.label)}">
+                        <div class="thumb-label">${escapeHtml(page.label)}${hasRegions ? '' : ''}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function selectAnnotatorPage(pageLabel) {
+            annotatorData.currentPage = pageLabel;
+            annotatorData.selectedRegion = null;
+            
+            const page = annotatorData.pages.find(p => p.label === pageLabel);
+            if (!page) return;
+            
+            document.getElementById('annotator-page-label').textContent = `Page: ${pageLabel}`;
+            
+            const img = document.getElementById('annotator-image');
+            img.src = page.imageUrl;
+            img.onload = () => {
+                setupAnnotatorCanvas();
+                drawAnnotatorRegions();
+            };
+            
+            renderAnnotatorPages();
+            renderAnnotatorRegions();
+        }
+        
+        function setupAnnotatorCanvas() {
+            const wrapper = document.getElementById('annotator-canvas-wrapper');
+            const img = document.getElementById('annotator-image');
+            const canvas = document.getElementById('annotator-canvas');
+            
+            // Position canvas over image (accounting for object-fit: contain if present)
+            const naturalWidth = img.naturalWidth;
+            const naturalHeight = img.naturalHeight;
+            const elementWidth = img.offsetWidth;
+            const elementHeight = img.offsetHeight;
+            
+            const computedStyle = window.getComputedStyle(img);
+            const objectFit = computedStyle.objectFit;
+            
+            let imgWidth, imgHeight, offsetX = 0, offsetY = 0;
+            
+            if (objectFit === 'contain') {
+                const naturalRatio = naturalWidth / naturalHeight;
+                const elementRatio = elementWidth / elementHeight;
+                
+                if (naturalRatio > elementRatio) {
+                    imgWidth = elementWidth;
+                    imgHeight = elementWidth / naturalRatio;
+                    offsetY = (elementHeight - imgHeight) / 2;
+                } else {
+                    imgHeight = elementHeight;
+                    imgWidth = elementHeight * naturalRatio;
+                    offsetX = (elementWidth - imgWidth) / 2;
+                }
+            } else {
+                imgWidth = elementWidth;
+                imgHeight = elementHeight;
+            }
+            
+            // Use displayed dimensions for canvas (consistent with page-viewer)
+            canvas.width = imgWidth;
+            canvas.height = imgHeight;
+            canvas.style.width = imgWidth + 'px';
+            canvas.style.height = imgHeight + 'px';
+            
+            const imgRect = img.getBoundingClientRect();
+            const wrapperRect = wrapper.getBoundingClientRect();
+            canvas.style.left = (imgRect.left - wrapperRect.left + wrapper.scrollLeft + offsetX) + 'px';
+            canvas.style.top = (imgRect.top - wrapperRect.top + wrapper.scrollTop + offsetY) + 'px';
+        }
+        
+        function drawAnnotatorRegions() {
+            const canvas = document.getElementById('annotator-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const regions = annotatorData.regions[annotatorData.currentPage] || [];
+            regions.forEach((region, i) => {
+                const x = region.x * canvas.width;
+                const y = region.y * canvas.height;
+                const w = region.width * canvas.width;
+                const h = region.height * canvas.height;
+                
+                const isSelected = annotatorData.selectedRegion === i;
+                
+                ctx.strokeStyle = isSelected ? 'rgba(239, 68, 68, 0.9)' : 'rgba(59, 130, 246, 0.8)';
+                ctx.lineWidth = isSelected ? 3 : 2;
+                ctx.strokeRect(x, y, w, h);
+                
+                ctx.fillStyle = isSelected ? 'rgba(239, 68, 68, 0.2)' : 'rgba(59, 130, 246, 0.15)';
+                ctx.fillRect(x, y, w, h);
+                
+                // Draw region number
+                ctx.fillStyle = isSelected ? '#ef4444' : '#3b82f6';
+                ctx.font = 'bold 14px sans-serif';
+                ctx.fillText(`${i + 1}`, x + 5, y + 18);
+            });
+        }
+        
+        function renderAnnotatorRegions() {
+            const container = document.getElementById('annotator-regions');
+            const regions = annotatorData.regions[annotatorData.currentPage] || [];
+            
+            if (regions.length === 0) {
+                container.innerHTML = '<p style="color:#6b7280;text-align:center;font-size:0.9em;">No regions yet. Draw a region on the image.</p>';
+                document.getElementById('annotator-region-editor').style.display = 'none';
+                return;
+            }
+            
+            container.innerHTML = regions.map((region, i) => {
+                // Strip HTML for preview
+                const plainText = (region.text || '').replace(/<[^>]*>/g, '').trim() || '(no text)';
+                const workName = region.workId ? (annotatorData.works.find(w => w.id === region.workId)?.title || '').replace(/^\s*└\s*/, '') : '';
+                return `
+                <div class="annotator-region-item ${annotatorData.selectedRegion === i ? 'selected' : ''}" 
+                     draggable="true"
+                     data-region-index="${i}"
+                     onclick="selectRegion(${i})"
+                     ondragstart="handleRegionDragStart(event, ${i})"
+                     ondragend="handleRegionDragEnd(event)"
+                     ondragover="handleRegionDragOver(event)"
+                     ondragleave="handleRegionDragLeave(event)"
+                     ondrop="handleRegionDrop(event, ${i})">
+                    <span class="region-drag-handle" title="Drag to reorder">⋮⋮</span>
+                    <div class="region-title">${region.title || `Region ${i + 1}`}${workName ? ` <span style="color:#6b7280;font-size:0.85em;">[${workName.substring(0, 20)}${workName.length > 20 ? '...' : ''}]</span>` : ''}</div>
+                    <div class="region-preview">${plainText.substring(0, 50)}${plainText.length > 50 ? '...' : ''}</div>
+                </div>
+            `}).join('');
+            
+            // Show editor if region selected
+            if (annotatorData.selectedRegion !== null) {
+                const region = regions[annotatorData.selectedRegion];
+                document.getElementById('region-title').value = region.title || '';
+                document.getElementById('region-text').innerHTML = region.text || '';
+                
+                // Populate works dropdown
+                const workSelect = document.getElementById('region-work');
+                const workGroup = document.getElementById('region-work-group');
+                if (annotatorData.works.length > 0) {
+                    workSelect.innerHTML = '<option value="">(None)</option>' + 
+                        annotatorData.works.map(w => 
+                            `<option value="${escapeHtml(w.id)}" ${region.workId === w.id ? 'selected' : ''}>${escapeHtml(w.title)}</option>`
+                        ).join('');
+                    workGroup.style.display = 'block';
+                } else {
+                    workGroup.style.display = 'none';
+                }
+                
+                document.getElementById('annotator-region-editor').style.display = 'block';
+            } else {
+                document.getElementById('annotator-region-editor').style.display = 'none';
+            }
+        }
+        
+        function selectRegion(index) {
+            annotatorData.selectedRegion = index;
+            renderAnnotatorRegions();
+            drawAnnotatorRegions();
+        }
+        
+        // Region drag-and-drop reordering
+        let draggedRegionIndex = null;
+        
+        function handleRegionDragStart(e, index) {
+            draggedRegionIndex = index;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', index);
+        }
+        
+        function handleRegionDragEnd(e) {
+            e.target.classList.remove('dragging');
+            document.querySelectorAll('.annotator-region-item').forEach(el => {
+                el.classList.remove('drag-over');
+            });
+            draggedRegionIndex = null;
+        }
+        
+        function handleRegionDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            const item = e.target.closest('.annotator-region-item');
+            if (item && parseInt(item.dataset.regionIndex) !== draggedRegionIndex) {
+                item.classList.add('drag-over');
+            }
+        }
+        
+        function handleRegionDragLeave(e) {
+            const item = e.target.closest('.annotator-region-item');
+            if (item) {
+                item.classList.remove('drag-over');
+            }
+        }
+        
+        function handleRegionDrop(e, targetIndex) {
+            e.preventDefault();
+            const item = e.target.closest('.annotator-region-item');
+            if (item) {
+                item.classList.remove('drag-over');
+            }
+            
+            if (draggedRegionIndex === null || draggedRegionIndex === targetIndex) return;
+            
+            const regions = annotatorData.regions[annotatorData.currentPage];
+            if (!regions) return;
+            
+            // Remove the dragged region and insert at new position
+            const [movedRegion] = regions.splice(draggedRegionIndex, 1);
+            regions.splice(targetIndex, 0, movedRegion);
+            
+            // Update selected region if needed
+            if (annotatorData.selectedRegion === draggedRegionIndex) {
+                annotatorData.selectedRegion = targetIndex;
+            } else if (draggedRegionIndex < annotatorData.selectedRegion && targetIndex >= annotatorData.selectedRegion) {
+                annotatorData.selectedRegion--;
+            } else if (draggedRegionIndex > annotatorData.selectedRegion && targetIndex <= annotatorData.selectedRegion) {
+                annotatorData.selectedRegion++;
+            }
+            
+            draggedRegionIndex = null;
+            renderAnnotatorRegions();
+            drawAnnotatorRegions();
+        }
+        
+        function toggleDrawMode() {
+            annotatorData.isDrawing = !annotatorData.isDrawing;
+            const btn = document.getElementById('annotator-draw-btn');
+            const canvas = document.getElementById('annotator-canvas');
+            
+            btn.classList.toggle('active', annotatorData.isDrawing);
+            btn.textContent = annotatorData.isDrawing ? 'Cancel' : 'Draw Region';
+            canvas.classList.toggle('drawing', annotatorData.isDrawing);
+            
+            if (annotatorData.isDrawing) {
+                setupDrawHandlers();
+            }
+        }
+        
+        let drawStart = null;
+        let currentRect = null;
+        
+        function setupDrawHandlers() {
+            const canvas = document.getElementById('annotator-canvas');
+            
+            const onMouseDown = (e) => {
+                if (!annotatorData.isDrawing) return;
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                drawStart = {
+                    x: (e.clientX - rect.left) * scaleX,
+                    y: (e.clientY - rect.top) * scaleY
+                };
+                currentRect = null;
+            };
+            
+            const onMouseMove = (e) => {
+                if (!annotatorData.isDrawing || !drawStart) return;
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const currentX = (e.clientX - rect.left) * scaleX;
+                const currentY = (e.clientY - rect.top) * scaleY;
+                
+                currentRect = {
+                    x: Math.min(drawStart.x, currentX),
+                    y: Math.min(drawStart.y, currentY),
+                    width: Math.abs(currentX - drawStart.x),
+                    height: Math.abs(currentY - drawStart.y)
+                };
+                
+                // Redraw with current selection
+                drawAnnotatorRegions();
+                const ctx = canvas.getContext('2d');
+                ctx.strokeStyle = 'rgba(239, 68, 68, 0.9)';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 3]);
+                ctx.strokeRect(currentRect.x, currentRect.y, currentRect.width, currentRect.height);
+                ctx.setLineDash([]);
+            };
+            
+            const onMouseUp = (e) => {
+                if (!annotatorData.isDrawing || !drawStart || !currentRect) {
+                    drawStart = null;
+                    return;
+                }
+                
+                // Only add if region is large enough
+                if (currentRect.width > 20 && currentRect.height > 20) {
+                    // Normalize to 0-1 range
+                    const normalizedRegion = {
+                        x: currentRect.x / canvas.width,
+                        y: currentRect.y / canvas.height,
+                        width: currentRect.width / canvas.width,
+                        height: currentRect.height / canvas.height,
+                        title: '',
+                        text: ''
+                    };
+                    
+                    if (!annotatorData.regions[annotatorData.currentPage]) {
+                        annotatorData.regions[annotatorData.currentPage] = [];
+                    }
+                    annotatorData.regions[annotatorData.currentPage].push(normalizedRegion);
+                    
+                    // Select the new region
+                    annotatorData.selectedRegion = annotatorData.regions[annotatorData.currentPage].length - 1;
+                    
+                    // Exit draw mode
+                    toggleDrawMode();
+                    
+                    renderAnnotatorRegions();
+                    renderAnnotatorPages();
+                }
+                
+                drawStart = null;
+                currentRect = null;
+                drawAnnotatorRegions();
+            };
+            
+            // Remove old handlers and add new ones
+            canvas.onmousedown = onMouseDown;
+            canvas.onmousemove = onMouseMove;
+            canvas.onmouseup = onMouseUp;
+            canvas.onmouseleave = () => {
+                if (drawStart) {
+                    drawStart = null;
+                    currentRect = null;
+                    drawAnnotatorRegions();
+                }
+            };
+        }
+        
+        function saveRegionText() {
+            if (annotatorData.selectedRegion === null) return;
+            
+            const regions = annotatorData.regions[annotatorData.currentPage];
+            if (!regions || !regions[annotatorData.selectedRegion]) return;
+            
+            regions[annotatorData.selectedRegion].title = document.getElementById('region-title').value;
+            regions[annotatorData.selectedRegion].text = document.getElementById('region-text').innerHTML;
+            
+            // Save work association
+            const workId = document.getElementById('region-work').value;
+            if (workId) {
+                regions[annotatorData.selectedRegion].workId = workId;
+            } else {
+                delete regions[annotatorData.selectedRegion].workId;
+            }
+            
+            // Deselect after saving
+            annotatorData.selectedRegion = null;
+            
+            renderAnnotatorRegions();
+            renderAnnotatorPages();
+            drawAnnotatorRegions();
+            showStatus('Region text updated');
+        }
+        
+        // Rich text editor command
+        function execRichCmd(command, value = null) {
+            document.getElementById('region-text').focus();
+            document.execCommand(command, false, value);
+        }
+        
+        // Set font size in pixels using span wrapper
+        function setFontSizePx(size) {
+            if (!size) return;
+            const editor = document.getElementById('region-text');
+            editor.focus();
+            
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            
+            const range = selection.getRangeAt(0);
+            if (range.collapsed) return; // No text selected
+            
+            const span = document.createElement('span');
+            span.style.fontSize = size + 'px';
+            
+            try {
+                range.surroundContents(span);
+                selection.removeAllRanges();
+                const newRange = document.createRange();
+                newRange.selectNodeContents(span);
+                selection.addRange(newRange);
+            } catch (e) {
+                // If selection spans multiple elements, use execCommand as fallback
+                document.execCommand('fontSize', false, '7');
+                // Then find and update the font elements
+                const fonts = editor.querySelectorAll('font[size="7"]');
+                fonts.forEach(font => {
+                    const span = document.createElement('span');
+                    span.style.fontSize = size + 'px';
+                    span.innerHTML = font.innerHTML;
+                    font.replaceWith(span);
+                });
+            }
+        }
+        
+        function deleteSelectedRegion() {
+            if (annotatorData.selectedRegion === null) return;
+            
+            const regions = annotatorData.regions[annotatorData.currentPage];
+            if (!regions) return;
+            
+            regions.splice(annotatorData.selectedRegion, 1);
+            annotatorData.selectedRegion = null;
+            
+            if (regions.length === 0) {
+                delete annotatorData.regions[annotatorData.currentPage];
+            }
+            
+            renderAnnotatorRegions();
+            renderAnnotatorPages();
+            drawAnnotatorRegions();
+            showStatus('Region deleted');
+        }
+        
+        async function saveAllRegions() {
+            try {
+                await api('save-regions', {
+                    textId: annotatorData.textId,
+                    regions: annotatorData.regions
+                });
+                showStatus('All regions saved successfully!');
+                closeAnnotator();
+            } catch (e) {
+                showStatus('Error saving regions: ' + e.message, true);
+            }
+        }
+    </script>
+</body>
+</html>

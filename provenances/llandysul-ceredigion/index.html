@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llandysul, Ceredigion</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+    
+    <div class="page-wrapper">
+    <div class="container">
+        <h1>Llandysul, Ceredigion</h1>
+
+        <div class="metadata">
+            <p><strong>Provenance ID:</strong> <code>llandysul-ceredigion</code></p>
+            <p><strong>Texts:</strong> 1</p>
+        </div>
+
+        <section class="children-section">
+            <h2>Texts from this Location</h2>
+            <div class="sort-controls" id="texts-sort-controls">
+                <span>Sort by:</span>
+                <button class="sort-btn active" data-sort="alpha" data-target="texts-list">A-Z</button>
+                <button class="sort-btn" data-sort="date" data-target="texts-list">Date</button>
+                <button class="sort-btn" data-sort="lang" data-target="texts-list">Language</button>
+            </div>
+            <ul class="children-list sortable-list" id="texts-list">
+                <li class="child-language" data-title="ISBN 1 85902 817 9" data-date="1999" data-langs="Welsh" data-lang-paths="{&quot;Welsh&quot;: &quot;languages/indo-european/classical-indo-european/celtic/nuclear-celtic/core-celtic/insular-celtic/brythonic/old-modern-welsh/welsh/index.html&quot;}">
+                    <a href="../../texts/00/00/0000000000000001/index.html">ISBN 1 85902 817 9</a> (1999)
+                </li>
+            </ul>
+        </section>
+
+    <aside class="right-sidebar">
+        <a href="../../" class="sidebar-logo">
+            <img src="../../Wikilogo.webp" alt="Babel Archive">
+        </a>
+        <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../">Home</a></li>
+                <li><a href="../../texts-index.html">All Texts</a></li>
+                <li><a href="../../languages/">Languages</a></li>
+                <li><a href="../../works/">Works Index</a></li>
+                <li><a href="../../authors/">Authors</a></li>
+                <li><a href="../../sources/">Sources</a></li>
+                <li><a href="../../provenances/">Provenances</a></li>
+                <li><a href="../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+    </aside>
+</div>
+
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+    <script>
+    // Sort functionality
+    var originalItems = null;
+    var langPaths = {};
+    
+    document.querySelectorAll('.sort-controls').forEach(function(controls) {
+        var targetId = controls.querySelector('.sort-btn').dataset.target;
+        var list = document.getElementById(targetId);
+        if (!list) return;
+        
+        controls.querySelectorAll('.sort-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                controls.querySelectorAll('.sort-btn').forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                
+                var sortBy = btn.dataset.sort;
+                
+                if (!originalItems) {
+                    originalItems = Array.from(list.querySelectorAll('li.child-language')).map(function(li) {
+                        // Collect all language paths
+                        try {
+                            var paths = JSON.parse(li.dataset.langPaths || '{}');
+                            Object.keys(paths).forEach(function(lang) {
+                                if (paths[lang]) langPaths[lang] = paths[lang];
+                            });
+                        } catch(e) {}
+                        return li.cloneNode(true);
+                    });
+                }
+                
+                list.innerHTML = '';
+                
+                if (sortBy === 'lang') {
+                    var groups = {};
+                    originalItems.forEach(function(item) {
+                        var langsStr = item.dataset.langs || 'Unknown';
+                        var langs = langsStr.split('|');
+                        langs.forEach(function(lang) {
+                            lang = lang.trim();
+                            if (!groups[lang]) groups[lang] = [];
+                            groups[lang].push(item.cloneNode(true));
+                        });
+                    });
+                    
+                    Object.keys(groups).sort().forEach(function(lang) {
+                        var header = document.createElement('li');
+                        header.className = 'lang-group-header';
+                        if (langPaths[lang]) {
+                            header.innerHTML = '<strong><a href="../../' + langPaths[lang] + '" class="lang-group-link">' + lang + '</a></strong>';
+                        } else {
+                            header.innerHTML = '<strong>' + lang + '</strong>';
+                        }
+                        list.appendChild(header);
+                        groups[lang].forEach(function(item) { list.appendChild(item); });
+                    });
+                } else {
+                    var sorted = originalItems.slice().sort(function(a, b) {
+                        if (sortBy === 'date') {
+                            var dateA = parseInt(a.dataset.date) || 9999;
+                            var dateB = parseInt(b.dataset.date) || 9999;
+                            return dateA - dateB;
+                        }
+                        return (a.dataset.title || '').localeCompare(b.dataset.title || '');
+                    });
+                    sorted.forEach(function(item) { list.appendChild(item.cloneNode(true)); });
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>

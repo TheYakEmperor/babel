@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Languages of Angola — Babel</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search languages, families, texts..." id="search-input">
+        <div class="search-results" id="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+                <h3>Navigate</h3>
+                <ul>
+                    <li><a href="../../">Home</a></li>
+                    <li><a href="../../texts-index.html">All Texts</a></li>
+                    <li><a href="../../languages/">Languages</a></li>
+                    <li><a href="../../works/">Works Index</a></li>
+                    <li><a href="../../authors/">Authors</a></li>
+                    <li><a href="../../sources/">Sources</a></li>
+                    <li><a href="../../provenances/">Provenances</a></li>
+                    <li><a href="../../collections/">Collections</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-header">
+            <img src="https://flagcdn.com/w160/ao.png" 
+                 alt="Angola flag" 
+                 class="country-flag-large">
+            <h1>Languages of Angola</h1>
+        </div>
+        
+        <div class="metadata">
+            <p><strong>Languages:</strong> 55</p>
+            <p><strong>Language Families:</strong> 5</p>
+        </div>
+
+        <div class="locality-section">
+            <h3>Location</h3>
+            <div id="country-map-ao" class="country-map"></div>
+        </div>
+        <script>
+            (function() {
+                var map = L.map('country-map-ao').setView([-11.202692, 17.873887], 4);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap',
+                    maxZoom: 19,
+                    minZoom: 2
+                }).addTo(map);
+                L.circleMarker([-11.202692, 17.873887], {
+                    radius: 8,
+                    fillColor: '#B85A4F',
+                    color: '#8B4530',
+                    weight: 2.5,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(map).bindPopup('<b>Angola</b>');
+                setTimeout(function() { map.invalidateSize(); }, 150);
+            })();
+        </script>
+        <div class="tree-controls">
+            <h2>Languages by Family</h2>
+            <div class="tree-buttons">
+                <button onclick="expandAll()" class="tree-btn">Expand All</button>
+                <button onclick="collapseAll()" class="tree-btn">Collapse All</button>
+            </div>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/atlantic-congo/index.html">Atlantic-Congo</a></h3>
+                <span class="family-count">(47 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/atlantic-congo/index.html">Atlantic-Congo</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/atlantic-congo/volta-congo/index.html">Volta-Congo</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/index.html">Benue-Congo</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/index.html">Bantoid</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/index.html">Southern Bantoid</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/index.html">Narrow Bantu</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/index.html">Central-Western Bantu</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/greater-luyana/index.html">Greater Luyana</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/greater-luyana/eastern-greater-luyana/index.html">Eastern Greater Luyana</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/greater-luyana/eastern-greater-luyana/luyi/index.html">Luyi</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/greater-luyana/western-greater-luyana/index.html">Western Greater Luyana</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/greater-luyana/western-greater-luyana/mashi-mbukushi/index.html">Mashi-Mbukushi</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/greater-luyana/western-greater-luyana/mashi-mbukushi/mashi-zambia/index.html">Mashi (Zambia)</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/greater-luyana/western-greater-luyana/mashi-mbukushi/mbukushu/index.html">Mbukushu</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/greater-luyana/western-greater-luyana/simaaic/index.html">Simaaic</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/greater-luyana/western-greater-luyana/simaaic/nyengo/index.html">Nyengo</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/luban/index.html">Luban</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/luban/luba-kaonde/index.html">Luba-Kaonde</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/luban/luba-kaonde/lubaic/index.html">Lubaic</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/luban/luba-kaonde/lubaic/bangubangu-kasai/index.html">Bangubangu-Kasai</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/luban/luba-kaonde/lubaic/bangubangu-kasai/luba-lulua/index.html">Luba-Lulua</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/luban/mbagani-lwalwa/index.html">Mbagani-Lwalwa</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/luban/mbagani-lwalwa/lwalu/index.html">Lwalu</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/index.html">Njila</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/northern-njila/index.html">Northern Njila</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/northern-njila/mbala-holu-sondi-k10/index.html">Mbala-Holu-Sondi (K.10)</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/northern-njila/mbala-holu-sondi-k10/holu-k10/index.html">Holu (K.10)</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/northern-njila/mbala-holu-sondi-k10/holu-k10/holu/index.html">Holu</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/northern-njila/mbala-holu-sondi-k10/holu-k10/pheende-kwezo/index.html">Pheende-Kwezo</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/northern-njila/mbala-holu-sondi-k10/holu-k10/pheende-kwezo/mbangala/index.html">Mbangala</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/northern-njila/mbundu-h20/index.html">Mbundu (H.20)</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/northern-njila/mbundu-h20/kibala/index.html">Kibala</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/northern-njila/mbundu-h20/kimbundu/index.html">Kimbundu</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-dialect target-language ">
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/northern-njila/mbundu-h20/kimbundu/sama/index.html">Sama</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/northern-njila/mbundu-h20/mpinda/index.html">Mpinda</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/northern-njila/mbundu-h20/nsongo/index.html">Nsongo</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/index.html">Southern Njila</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/index.html">Chokwe-Lunda</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/chokwe-ngangela-nyemba-k20/index.html">Chokwe-Ngangela-Nyemba (K.20)</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/chokwe-ngangela-nyemba-k20/chokwe-lwena/index.html">Chokwe-Lwena</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/chokwe-ngangela-nyemba-k20/chokwe-lwena/chokwe/index.html">Chokwe</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/chokwe-ngangela-nyemba-k20/chokwe-lwena/luvale/index.html">Luvale</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/chokwe-ngangela-nyemba-k20/ngangela-nyemba/index.html">Ngangela-Nyemba</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/chokwe-ngangela-nyemba-k20/ngangela-nyemba/luchazi/index.html">Luchazi</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/chokwe-ngangela-nyemba-k20/ngangela-nyemba/mbwela-mbunda/index.html">Mbwela-Mbunda</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/chokwe-ngangela-nyemba-k20/ngangela-nyemba/mbwela-mbunda/luimbi/index.html">Luimbi</a>
+                                                                                                                        </li>
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/chokwe-ngangela-nyemba-k20/ngangela-nyemba/mbwela-mbunda/mbunda/index.html">Mbunda</a>
+                                                                                                                        </li>
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/chokwe-ngangela-nyemba-k20/ngangela-nyemba/mbwela-mbunda/mbwela/index.html">Mbwela</a>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/chokwe-ngangela-nyemba-k20/ngangela-nyemba/nkangala/index.html">Nkangala</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/chokwe-ngangela-nyemba-k20/ngangela-nyemba/nyemba/index.html">Nyemba</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/ruund-salampasu/index.html">Ruund-Salampasu</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/ruund-salampasu/lunda-ruund-kete/index.html">Lunda-Ruund-Kete</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/ruund-salampasu/lunda-ruund-kete/lunda/index.html">Lunda</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/ruund-salampasu/lunda-ruund-kete/ruund-kete/index.html">Ruund-Kete</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/ruund-salampasu/lunda-ruund-kete/ruund-kete/ruund/index.html">Ruund</a>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/chokwe-lunda/ruund-salampasu/salampasu/index.html">Salampasu</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/index.html">Kunene</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/index.html">Cimbebasia</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/herero-r30/index.html">Herero (R.30)</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/herero-r30/herero/index.html">Herero</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/herero-r30/zemba/index.html">Zemba</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/kuvale/index.html">Kuvale</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/kwandu/index.html">Kwandu</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/ndonga-r20/index.html">Ndonga (R.20)</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/ndonga-r20/kuanyama/index.html">Kuanyama</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/ndonga-r20/kwambi-ndonga/index.html">Kwambi-Ndonga</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/ndonga-r20/kwambi-ndonga/ndonga/index.html">Ndonga</a>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/ndonga-r20/unclassified-ndonga-r20/index.html">Unclassified Ndonga (R.20)</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-language target-language ">
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/ndonga-r20/unclassified-ndonga-r20/ngandyera/index.html">Ngandyera</a>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/ngendelengo/index.html">Ngendelengo</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/nyaneka-nkhumbi/index.html">Nyaneka-Nkhumbi</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/nyaneka-nkhumbi/nkhumbi/index.html">Nkhumbi</a>
+                                                                                                                </li>
+                                                                                                                <li class="level-language target-language ">
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/cimbebasia/nyaneka-nkhumbi/nyaneka/index.html">Nyaneka</a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/kwangali-diriku/index.html">Kwangali-Diriku</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/kwangali-diriku/diriku-shambyu/index.html">Diriku-Shambyu</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/kwangali-diriku/kwangali/index.html">Kwangali</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/umbundu/index.html">Umbundu</a>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/unclassified-kunene/index.html">Unclassified Kunene</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/njila/southern-njila/kunene/unclassified-kunene/ndombe/index.html">Ndombe</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/index.html">West-Coastal Bantu</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/index.html">Nzadic</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/index.html">Lweric</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/index.html">Dingic</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/index.html">Loange-Atlantic</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/index.html">KLC Extended</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/index.html">Kikongo Language Cluster</a>
+                                                                                                                            <ul class="language-subtree">
+                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/index.html">Nuclear KLC</a>
+                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/index.html">Kikongoic</a>
+                                                                                                                                            <ul class="language-subtree">
+                                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/index.html">Kambakunyic Kikongo</a>
+                                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kamba-kunyi/index.html">Kamba-Kunyi</a>
+                                                                                                                                                            <ul class="language-subtree">
+                                                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kamba-kunyi/kunyi/index.html">Kunyi</a>
+                                                                                                                                                                </li>
+                                                                                                                                                            </ul>
+                                                                                                                                                        </li>
+                                                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/index.html">Kilaadic Kikongo</a>
+                                                                                                                                                            <ul class="language-subtree">
+                                                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/central-southern-kikongo/index.html">Central-Southern Kikongo</a>
+                                                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/central-southern-kikongo/southeastern-kikongo/index.html">Southeastern Kikongo</a>
+                                                                                                                                                                            <ul class="language-subtree">
+                                                                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/central-southern-kikongo/southeastern-kikongo/southern-kikongo/index.html">Southern Kikongo</a>
+                                                                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                                                                        <li class="level-language target-language ">
+                                                                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/central-southern-kikongo/southeastern-kikongo/southern-kikongo/hungu-pombo/index.html">Hungu-Pombo</a>
+                                                                                                                                                                                        </li>
+                                                                                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/central-southern-kikongo/southeastern-kikongo/southern-kikongo/koongo-kituba/index.html">Koongo-Kituba</a>
+                                                                                                                                                                                            <ul class="language-subtree">
+                                                                                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/central-southern-kikongo/southeastern-kikongo/southern-kikongo/koongo-kituba/south-central-koongo/index.html">South-Central Koongo</a>
+                                                                                                                                                                                                </li>
+                                                                                                                                                                                            </ul>
+                                                                                                                                                                                        </li>
+                                                                                                                                                                                    </ul>
+                                                                                                                                                                                </li>
+                                                                                                                                                                            </ul>
+                                                                                                                                                                        </li>
+                                                                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/central-southern-kikongo/west-kikongo/index.html">West Kikongo</a>
+                                                                                                                                                                            <ul class="language-subtree">
+                                                                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/central-southern-kikongo/west-kikongo/san-salvador-kongo/index.html">San Salvador Kongo</a>
+                                                                                                                                                                                </li>
+                                                                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/central-southern-kikongo/west-kikongo/vilic/index.html">Vilic</a>
+                                                                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                                                                        <li class="level-language target-language ">
+                                                                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/central-southern-kikongo/west-kikongo/vilic/vili/index.html">Vili</a>
+                                                                                                                                                                                        </li>
+                                                                                                                                                                                    </ul>
+                                                                                                                                                                                </li>
+                                                                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/central-southern-kikongo/west-kikongo/yombe/index.html">Yombe</a>
+                                                                                                                                                                                </li>
+                                                                                                                                                                            </ul>
+                                                                                                                                                                        </li>
+                                                                                                                                                                    </ul>
+                                                                                                                                                                </li>
+                                                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/nuclear-northern-kikongo/index.html">Nuclear Northern Kikongo</a>
+                                                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                                                        <li class="level-language target-language ">
+                                                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/nuclear-northern-kikongo/laari/index.html">Laari</a>
+                                                                                                                                                                        </li>
+                                                                                                                                                                        <li class="level-language target-language ">
+                                                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/kikongoic/kambakunyic-kikongo/kilaadic-kikongo/nuclear-northern-kikongo/suundi/index.html">Suundi</a>
+                                                                                                                                                                        </li>
+                                                                                                                                                                    </ul>
+                                                                                                                                                                </li>
+                                                                                                                                                            </ul>
+                                                                                                                                                        </li>
+                                                                                                                                                    </ul>
+                                                                                                                                                </li>
+                                                                                                                                            </ul>
+                                                                                                                                        </li>
+                                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/yaka-suku/index.html">Yaka-Suku</a>
+                                                                                                                                            <ul class="language-subtree">
+                                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/klc-extended/kikongo-language-cluster/nuclear-klc/yaka-suku/yaka-pelende-lonzo/index.html">Yaka-Pelende-Lonzo</a>
+                                                                                                                                                </li>
+                                                                                                                                            </ul>
+                                                                                                                                        </li>
+                                                                                                                                    </ul>
+                                                                                                                                </li>
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/bookkeeping/index.html">Bookkeeping</a></h3>
+                <span class="family-count">(3 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/bookkeeping/index.html">Bookkeeping</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/oung/index.html">!O!ung</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/maligo/index.html">Maligo</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/yauma/index.html">Yauma</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/khoe-kwadi/index.html">Khoe-Kwadi</a></h3>
+                <span class="family-count">(2 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/khoe-kwadi/index.html">Khoe-Kwadi</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/khoe-kwadi/khoe/index.html">Khoe</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/khoe-kwadi/khoe/non-khoekhoe/index.html">Non-Khoekhoe</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/khoe-kwadi/khoe/non-khoekhoe/west-kxoe/index.html">West-Kxoe</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/khoe-kwadi/khoe/non-khoekhoe/west-kxoe/kxoe-ani/index.html">Kxoe-Ani</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/khoe-kwadi/khoe/non-khoekhoe/west-kxoe/kxoe-ani/kxoe/index.html">Kxoe</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/khoe-kwadi/kwadi/index.html">† Kwadi</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/kxa/index.html">Kxa</a></h3>
+                <span class="family-count">(2 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/kxa/index.html">Kxa</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/kxa/ju-kung/index.html">Ju-Kung</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/kxa/ju-kung/north-central-ju/index.html">North-Central Ju</a>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/kxa/ju-kung/northern-ju/index.html">Northern Ju</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/unattested/index.html">Unattested</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/unattested/index.html">Unattested</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unattested/kwisi/index.html">† Kwisi</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <!-- Tree toggle functionality -->
+    <script>
+        function toggleTree(toggle) {
+            const li = toggle.parentElement;
+            const subtree = li.querySelector('.language-subtree');
+            if (subtree) {
+                if (toggle.classList.contains('expanded')) {
+                    toggle.classList.remove('expanded');
+                    toggle.classList.add('collapsed');
+                    toggle.textContent = '▶';
+                    subtree.style.display = 'none';
+                } else {
+                    toggle.classList.remove('collapsed');
+                    toggle.classList.add('expanded');
+                    toggle.textContent = '▼';
+                    subtree.style.display = 'block';
+                }
+            }
+        }
+        
+        function expandAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('collapsed');
+                toggle.classList.add('expanded');
+                toggle.textContent = '▼';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'block';
+            });
+        }
+        
+        function collapseAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('expanded');
+                toggle.classList.add('collapsed');
+                toggle.textContent = '▶';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'none';
+            });
+        }
+    </script>
+    
+    <!-- Search functionality -->
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+</body>
+</html>

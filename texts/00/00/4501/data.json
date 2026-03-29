@@ -1,0 +1,23 @@
+{
+  "id": "4501",
+  "title": "Spainpoos",
+  "titleTranslation": "Schlimm",
+  "author": "John Coonnig",
+  "source": "A glass bottle",
+  "date": "7666 BC",
+  "language": "stan1288",
+  "pages": [
+    {
+      "id": "page-1",
+      "label": "1",
+      "works": [
+        {
+          "id": "work",
+          "elementId": "work-1",
+          "title": "Work Title",
+          "content": "<poem>\nYOUR TEXT HERE\n\nLine by line\nAs needed\n</poem>"
+        }
+      ]
+    }
+  ]
+}

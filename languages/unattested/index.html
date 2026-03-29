@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unattested</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Stylesheet injected by update_family_trees.py -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+function initMap(elementId, latitude, longitude) {
+    const container = document.getElementById(elementId);
+    if (!container) return;
+    const map = L.map(elementId).setView([latitude, longitude], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19,
+        minZoom: 2
+    }).addTo(map);
+    const countryCodes = JSON.parse(container.dataset.countries || '[]');
+    
+    // Draw country boundaries if available
+    if (countryCodes && countryCodes.length > 0) {
+        fetch('https://cdn.jsdelivr.net/npm/world-geojson/countries.geojson')
+            .then(r => r.json())
+            .then(geojson => {
+                const countryFeatures = geojson.features.filter(f => {
+                    const code = f.properties.ISO_A2 || f.properties.ADMIN || '';
+                    return countryCodes.includes(code);
+                });
+                L.geoJSON({
+                    type: 'FeatureCollection',
+                    features: countryFeatures
+                }, {
+                    style: {
+                        color: '#B85A4F',
+                        weight: 1.5,
+                        opacity: 0.5,
+                        fillOpacity: 0.08
+                    }
+                }).addTo(map);
+            })
+            .catch(e => console.log(''));
+    }
+
+    // Center point marker
+    L.circleMarker([latitude, longitude], {
+        radius: 8,
+        fillColor: '#B85A4F',
+        color: '#8B4530',
+        weight: 2.5,
+        opacity: 1,
+        fillOpacity: 0.9
+    }).addTo(map).bindPopup(`${latitude.toFixed(4)}°, ${longitude.toFixed(4)}°`);
+    
+    setTimeout(() => { map.invalidateSize(); }, 150);
+}
+
+function toggleLargeList(btn) {
+    const list = btn.closest('h3').nextElementSibling;
+    if (list.style.display === 'none') {
+        list.style.display = '';
+        btn.textContent = 'Hide';
+    } else {
+        list.style.display = 'none';
+        btn.textContent = 'Show';
+    }
+}
+    </script>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../">Home</a></li>
+                <li><a href="../../texts-index.html">All Texts</a></li>
+                <li><a href="../../languages/">Languages</a></li>
+                <li><a href="../../works/">Works Index</a></li>
+                <li><a href="../../authors/">Authors</a></li>
+                <li><a href="../../sources/">Sources</a></li>
+                <li><a href="../../provenances/">Provenances</a></li>
+                <li><a href="../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-flags"><a href="../../countries/angola/index.html" title="Angola"><img src="https://flagcdn.com/w40/ao.png" alt="Angola" class="country-flag"></a><a href="../../countries/australia/index.html" title="Australia"><img src="https://flagcdn.com/w40/au.png" alt="Australia" class="country-flag"></a><a href="../../countries/bolivia/index.html" title="Bolivia"><img src="https://flagcdn.com/w40/bo.png" alt="Bolivia" class="country-flag"></a><a href="../../countries/brazil/index.html" title="Brazil"><img src="https://flagcdn.com/w40/br.png" alt="Brazil" class="country-flag"></a><a href="../../countries/côte-divoire/index.html" title="Côte d'Ivoire"><img src="https://flagcdn.com/w40/ci.png" alt="Côte d'Ivoire" class="country-flag"></a><a href="../../countries/cameroon/index.html" title="Cameroon"><img src="https://flagcdn.com/w40/cm.png" alt="Cameroon" class="country-flag"></a><a href="../../countries/colombia/index.html" title="Colombia"><img src="https://flagcdn.com/w40/co.png" alt="Colombia" class="country-flag"></a><a href="../../countries/ethiopia/index.html" title="Ethiopia"><img src="https://flagcdn.com/w40/et.png" alt="Ethiopia" class="country-flag"></a><a href="../../countries/indonesia/index.html" title="Indonesia"><img src="https://flagcdn.com/w40/id.png" alt="Indonesia" class="country-flag"></a><a href="../../countries/india/index.html" title="India"><img src="https://flagcdn.com/w40/in.png" alt="India" class="country-flag"></a><a href="../../countries/mexico/index.html" title="Mexico"><img src="https://flagcdn.com/w40/mx.png" alt="Mexico" class="country-flag"></a><a href="../../countries/nigeria/index.html" title="Nigeria"><img src="https://flagcdn.com/w40/ng.png" alt="Nigeria" class="country-flag"></a><a href="../../countries/peru/index.html" title="Peru"><img src="https://flagcdn.com/w40/pe.png" alt="Peru" class="country-flag"></a><a href="../../countries/philippines/index.html" title="Philippines"><img src="https://flagcdn.com/w40/ph.png" alt="Philippines" class="country-flag"></a><a href="../../countries/pakistan/index.html" title="Pakistan"><img src="https://flagcdn.com/w40/pk.png" alt="Pakistan" class="country-flag"></a><a href="../../countries/tanzania/index.html" title="Tanzania"><img src="https://flagcdn.com/w40/tz.png" alt="Tanzania" class="country-flag"></a><a href="../../countries/united-states/index.html" title="United States"><img src="https://flagcdn.com/w40/us.png" alt="United States" class="country-flag"></a><a href="../../countries/vanuatu/index.html" title="Vanuatu"><img src="https://flagcdn.com/w40/vu.png" alt="Vanuatu" class="country-flag"></a></div>
+<h1>Unattested</h1>
+        
+        <div class="metadata">
+            <p><strong>Type:</strong> <span class="level-tag family">Family</span></p>
+            <p><strong>Glottolog ID:</strong> unat1236</p>
+            
+        </div>
+        
+        <section>
+            <h2>Language Family</h2>
+<div class="breadcrumb-tree">
+    <span class="current">Unattested</span>
+</div>
+        </section>
+        <section>
+<div class="locality-section">
+    <h3>Geographic Information</h3>
+    <div class="geographic-info">
+        <p><strong>Countries:</strong> Angola, Australia, Bolivia, Brazil, Côte d'Ivoire, Cameroon, Colombia, Ethiopia, Indonesia, India, Mexico, Nigeria, Peru, Philippines, Pakistan, Tanzania, United States, Vanuatu</p>
+    </div>
+</div>
+        </section>
+        <section>
+<div class="children-section">
+<h3>Sub-families [18]</h3>
+<ul class="children-list">
+<li><a href="arawakan-unattested/index.html">† Arawakan (Unattested)</a></li>
+<li><a href="arawan-unattested/index.html">Arawan (Unattested)</a></li>
+<li><a href="atlantic-congo-unattested/index.html">Atlantic-Congo (Unattested)</a></li>
+<li><a href="austronesian-unattested/index.html">Austronesian (Unattested)</a></li>
+<li><a href="barbacoan-unattested/index.html">† Barbacoan (Unattested)</a></li>
+<li><a href="cariban-unattested/index.html">Cariban (Unattested)</a></li>
+<li><a href="chocoan-unattested/index.html">† Chocoan (Unattested)</a></li>
+<li><a href="dravidian-unattested/index.html">Dravidian (Unattested)</a></li>
+<li><a href="indo-european-unattested/index.html">† Indo-European (Unattested)</a></li>
+<li><a href="iwaidjan-proper-unattested/index.html">† Iwaidjan Proper (Unattested)</a></li>
+<li><a href="mangarrayi-maran-unattested/index.html">† Mangarrayi-Maran (Unattested)</a></li>
+<li><a href="nambiquaran-unattested/index.html">Nambiquaran (Unattested)</a></li>
+<li><a href="pama-nyungan-unattested/index.html">† Pama-Nyungan (Unattested)</a></li>
+<li><a href="pano-tacanan-unattested/index.html">Pano-Tacanan (Unattested)</a></li>
+<li><a href="tor-orya-unattested/index.html">Tor-Orya (Unattested)</a></li>
+<li><a href="tupian-unattested/index.html">Tupian (Unattested)</a></li>
+<li><a href="umbugarla-unattested/index.html">† Umbugarla (Unattested)</a></li>
+<li><a href="worrorran-unattested/index.html">† Worrorran (Unattested)</a></li>
+</ul>
+<h3>Languages [24]</h3>
+<ul class="children-list">
+<li><a href="apoto/index.html">† Apoto</a></li>
+<li><a href="arusha/index.html">† Arusha</a></li>
+<li><a href="flecheiros/index.html">Flecheiros</a></li>
+<li><a href="giyug/index.html">† Giyug</a></li>
+<li><a href="guale/index.html">† Guale</a></li>
+<li><a href="harappan/index.html">† Harappan</a></li>
+<li><a href="isolado-do-tanaru/index.html">† Isolado do Tanaru</a></li>
+<li><a href="jumano/index.html">† Jumano</a></li>
+<li><a href="kwisi/index.html">† Kwisi</a></li>
+<li><a href="lumbee/index.html">† Lumbee</a></li>
+<li><a href="mawa-nigeria/index.html">† Mawa (Nigeria)</a></li>
+<li><a href="miarrã/index.html">Miarrã</a></li>
+<li><a href="moksela/index.html">† Moksela</a></li>
+<li><a href="palumata/index.html">† Palumata</a></li>
+<li><a href="pankararé/index.html">† Pankararé</a></li>
+<li><a href="rer-bare/index.html">† Rer Bare</a></li>
+<li><a href="sentinel/index.html">Sentinel</a></li>
+<li><a href="sorsorian/index.html">Sorsorian</a></li>
+<li><a href="tremembé/index.html">† Tremembé</a></li>
+<li><a href="truká/index.html">† Truká</a></li>
+<li><a href="wakoná/index.html">† Wakoná</a></li>
+<li><a href="wasu/index.html">† Wasu</a></li>
+<li><a href="weyto/index.html">† Weyto</a></li>
+<li><a href="yamasee/index.html">† Yamasee</a></li>
+</ul>
+</div>
+        </section>
+        <section>
+            <h2>Information</h2>
+            <p>This page is for the Unattested language/dialect.</p>
+            <p>Data sourced from <a href="https://glottolog.org">Glottolog</a>, a comprehensive reference information for the world's languages.</p>
+        </section>
+        
+        <section>
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="https://glottolog.org/resource/languoid/id/unat1236">View on Glottolog</a></li>
+                <li><a href="https://www.wals.info">World Atlas of Language Structures (WALS)</a></li>
+                <li><a href="https://www.ethnologue.com">Ethnologue</a></li>
+            </ul>
+        </section>
+        
+        <hr>
+        <footer>
+            <p><small>Generated from Glottolog 5.2 data. Last updated: January 12, 2026</small></p>
+        </footer>
+    </div></div>
+        
+    </div>
+</div>
+
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+</body>
+</html>

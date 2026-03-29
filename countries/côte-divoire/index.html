@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Languages of Côte d'Ivoire — Babel</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search languages, families, texts..." id="search-input">
+        <div class="search-results" id="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+                <h3>Navigate</h3>
+                <ul>
+                    <li><a href="../../">Home</a></li>
+                    <li><a href="../../texts-index.html">All Texts</a></li>
+                    <li><a href="../../languages/">Languages</a></li>
+                    <li><a href="../../works/">Works Index</a></li>
+                    <li><a href="../../authors/">Authors</a></li>
+                    <li><a href="../../sources/">Sources</a></li>
+                    <li><a href="../../provenances/">Provenances</a></li>
+                    <li><a href="../../collections/">Collections</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-header">
+            <img src="https://flagcdn.com/w160/ci.png" 
+                 alt="Côte d'Ivoire flag" 
+                 class="country-flag-large">
+            <h1>Languages of Côte d'Ivoire</h1>
+        </div>
+        
+        <div class="metadata">
+            <p><strong>Languages:</strong> 116</p>
+            <p><strong>Language Families:</strong> 10</p>
+        </div>
+
+        <div class="locality-section">
+            <h3>Location</h3>
+            <div id="country-map-ci" class="country-map"></div>
+        </div>
+        <script>
+            (function() {
+                var map = L.map('country-map-ci').setView([7.539989, -5.54708], 4);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap',
+                    maxZoom: 19,
+                    minZoom: 2
+                }).addTo(map);
+                L.circleMarker([7.539989, -5.54708], {
+                    radius: 8,
+                    fillColor: '#B85A4F',
+                    color: '#8B4530',
+                    weight: 2.5,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(map).bindPopup('<b>Côte d'Ivoire</b>');
+                setTimeout(function() { map.invalidateSize(); }, 150);
+            })();
+        </script>
+        <div class="tree-controls">
+            <h2>Languages by Family</h2>
+            <div class="tree-buttons">
+                <button onclick="expandAll()" class="tree-btn">Expand All</button>
+                <button onclick="collapseAll()" class="tree-btn">Collapse All</button>
+            </div>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/artificial-language/index.html">Artificial Language</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/artificial-language/index.html">Artificial Language</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/artificial-language/nko/index.html">† N'Ko</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/atlantic-congo/index.html">Atlantic-Congo</a></h3>
+                <span class="family-count">(51 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/atlantic-congo/index.html">Atlantic-Congo</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/atlantic-congo/north-central-atlantic/index.html">North-Central Atlantic</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/atlantic-congo/north-central-atlantic/fula-sereer/index.html">Fula-Sereer</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/atlantic-congo/north-central-atlantic/fula-sereer/fula/index.html">Fula</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/atlantic-congo/north-central-atlantic/fula-sereer/fula/maasina-fulfulde/index.html">Maasina Fulfulde</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/atlantic-congo/volta-congo/index.html">Volta-Congo</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/atlantic-congo/volta-congo/ega/index.html">Ega</a>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/index.html">Kwa Volta-Congo</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/index.html">Nyo</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/agneby/index.html">Agneby</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/agneby/abidji/index.html">Abidji</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/agneby/abé/index.html">Abé</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/agneby/adioukrou/index.html">Adioukrou</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/attié/index.html">Attié</a>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/avikam-alladian/index.html">Avikam-Alladian</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/avikam-alladian/alladian/index.html">Alladian</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/avikam-alladian/avikam/index.html">Avikam</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/index.html">Potou-Tano</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/potou/index.html">Potou</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/potou/ebrié/index.html">Ebrié</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/potou/mbato/index.html">Mbato</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/index.html">Tano</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/index.html">Central Tano</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/akanic/index.html">Akanic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/akanic/abron/index.html">Abron</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/bia/index.html">Bia</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/bia/northern-bia/index.html">Northern Bia</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/bia/northern-bia/anyinic/index.html">Anyinic</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/bia/northern-bia/anyinic/anyin/index.html">Anyin</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/bia/northern-bia/anyinic/anyin-morofo/index.html">Anyin Morofo</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/bia/northern-bia/baoulé/index.html">Baoulé</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/bia/northern-bia/sehwi/index.html">Sehwi</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/bia/southern-bia/index.html">Southern Bia</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/bia/southern-bia/jwira-nzima/index.html">Jwira-Nzima</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/central-tano/bia/southern-bia/jwira-nzima/nzima/index.html">Nzima</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/krobu/index.html">Krobu</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/western-tano/index.html">Western Tano</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/western-tano/abure/index.html">Abure</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/kwa-volta-congo/nyo/potou-tano/tano/western-tano/beti-côte-divoire/index.html">Beti (Côte d'Ivoire)</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/index.html">North Volta-Congo</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/index.html">Gur</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/index.html">Central Gur</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/index.html">Northern Central Gur</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/index.html">Bwamu-Oti-Volta</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/index.html">Oti-Volta</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/index.html">Nuclear Oti-Volta</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/index.html">Gurma-Yom-Oti-Volta Occidental</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/index.html">Oti-Volta Occidental</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/nuclear-oti-volta-occidental/index.html">Nuclear Oti-Volta Occidental</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/nuclear-oti-volta-occidental/northwest-oti-volta/index.html">Northwest Oti-Volta</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/nuclear-oti-volta-occidental/northwest-oti-volta/mossi-farefare/index.html">Mossi-Farefare</a>
+                                                                                                                            <ul class="language-subtree">
+                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/nuclear-oti-volta-occidental/northwest-oti-volta/mossi-farefare/mossic/index.html">Mossic</a>
+                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                        <li class="level-language target-language ">
+                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/nuclear-oti-volta-occidental/northwest-oti-volta/mossi-farefare/mossic/mossi/index.html">Mossi</a>
+                                                                                                                                        </li>
+                                                                                                                                    </ul>
+                                                                                                                                </li>
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/nuclear-oti-volta-occidental/northwest-oti-volta/safaliba-dagaare/index.html">Safaliba-Dagaare</a>
+                                                                                                                            <ul class="language-subtree">
+                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/nuclear-oti-volta-occidental/northwest-oti-volta/safaliba-dagaare/dagaaric/index.html">Dagaaric</a>
+                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/nuclear-oti-volta-occidental/northwest-oti-volta/safaliba-dagaare/dagaaric/north-west-dagaric/index.html">North-West Dagaric</a>
+                                                                                                                                            <ul class="language-subtree">
+                                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/nuclear-oti-volta-occidental/northwest-oti-volta/safaliba-dagaare/dagaaric/north-west-dagaric/birifor/index.html">Birifor</a>
+                                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                                        <li class="level-language target-language ">
+                                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/nuclear-oti-volta-occidental/northwest-oti-volta/safaliba-dagaare/dagaaric/north-west-dagaric/birifor/malba-birifor/index.html">Malba Birifor</a>
+                                                                                                                                                        </li>
+                                                                                                                                                        <li class="level-language target-language ">
+                                                                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/nuclear-oti-volta-occidental/northwest-oti-volta/safaliba-dagaare/dagaaric/north-west-dagaric/birifor/southern-birifor/index.html">Southern Birifor</a>
+                                                                                                                                                        </li>
+                                                                                                                                                    </ul>
+                                                                                                                                                </li>
+                                                                                                                                            </ul>
+                                                                                                                                        </li>
+                                                                                                                                    </ul>
+                                                                                                                                </li>
+                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/northern-central-gur/bwamu-oti-volta/oti-volta/nuclear-oti-volta/gurma-yom-oti-volta-occidental/oti-volta-occidental/nuclear-oti-volta-occidental/northwest-oti-volta/safaliba-dagaare/safaliba/index.html">Safaliba</a>
+                                                                                                                                </li>
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/index.html">Southern Central Gur</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/dogoso-khe/index.html">Dogoso-Khe</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/dogoso-khe/dogoso/index.html">Dogoso</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/dogoso-khe/khe/index.html">Khe</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/grusi/index.html">Grusi</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/grusi/east-west-grusi/index.html">East-West Grusi</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/grusi/east-west-grusi/western-grusi/index.html">Western Grusi</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/grusi/east-west-grusi/western-grusi/sisaala-chakali/index.html">Sisaala-Chakali</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/grusi/east-west-grusi/western-grusi/sisaala-chakali/chakalic/index.html">Chakalic</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/grusi/east-west-grusi/western-grusi/sisaala-chakali/chakalic/deg/index.html">Deg</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/grusi/east-west-grusi/western-grusi/siti/index.html">Siti</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/kaansa-dogose/index.html">Kaansa-Dogose</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/kaansa-dogose/dogose-khisa/index.html">Dogose-Khisa</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/kaansa-dogose/dogose-khisa/dogosé/index.html">Dogosé</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/kaansa-dogose/dogose-khisa/khisa/index.html">Khisa</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/kirma-tyurama/index.html">Kirma-Tyurama</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/kirma-tyurama/cerma/index.html">Cerma</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/kirma-tyurama/turka/index.html">Turka</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/lobiri-jaane/index.html">Lobiri-Jaane</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/central-gur/southern-central-gur/lobiri-jaane/lobi/index.html">Lobi</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/kulango-lorom/index.html">Kulango-Lorom</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/kulango-lorom/kulango/index.html">Kulango</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/kulango-lorom/kulango/bondoukou-kulango/index.html">Bondoukou Kulango</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/kulango-lorom/kulango/bouna-kulango/index.html">Bouna Kulango</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/kulango-lorom/teenic/index.html">Teenic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/kulango-lorom/teenic/loma-côte-divoire/index.html">Loma (Côte d'Ivoire)</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/kulango-lorom/teenic/téén/index.html">Téén</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/tusia/index.html">Tusia</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/gur/tusia/southern-toussian/index.html">Southern Toussian</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/index.html">Senufo</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/karaboro/index.html">Karaboro</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/karaboro/eastern-karaboro/index.html">Eastern Karaboro</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/north-senufo/index.html">North Senufo</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/north-senufo/senar-de-kankalaba/index.html">Senar de Kankalaba</a>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/north-senufo/supyiric/index.html">Supyiric</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/north-senufo/supyiric/supyire-senoufo/index.html">Supyire Senoufo</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-dialect target-language ">
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/north-senufo/supyiric/supyire-senoufo/shempire-senoufo/index.html">Shempire Senoufo</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/north-senufo/supyiric/sìcìté-sénoufo/index.html">Sìcìté Sénoufo</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-dialect target-language ">
+                                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/north-senufo/supyiric/sìcìté-sénoufo/syenara-senoufo/index.html">Syenara Senoufo</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/senari/index.html">Senari</a>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/south-senufo/index.html">South Senufo</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/south-senufo/nafanan/index.html">Nafanan</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/south-senufo/nyarafolo-senoufo/index.html">Nyarafolo Senoufo</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/south-senufo/palaka-senoufo/index.html">Palaka Senoufo</a>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/south-senufo/tagbana-jimini/index.html">Tagbana-Jimini</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/south-senufo/tagbana-jimini/djimini-senoufo/index.html">Djimini Senoufo</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/atlantic-congo/volta-congo/north-volta-congo/senufo/south-senufo/tagbana-jimini/tagwana-senoufo/index.html">Tagwana Senoufo</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/atlantic-congo/volta-congo/unclassified-volta-congo/index.html">Unclassified Volta-Congo</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/atlantic-congo/volta-congo/unclassified-volta-congo/aproumu-aizi/index.html">Aproumu Aizi</a>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/atlantic-congo/volta-congo/unclassified-volta-congo/mbre/index.html">Mbre</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/bookkeeping/index.html">Bookkeeping</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/bookkeeping/index.html">Bookkeeping</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/forest-maninka/index.html">Forest Maninka</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/indo-european/index.html">Indo-European</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/indo-european/index.html">Indo-European</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/indo-european/classical-indo-european/index.html">Classical Indo-European</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/indo-european/classical-indo-european/italic/index.html">Italic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/index.html">Latino-Faliscan</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/index.html">Latinic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/index.html">Imperial Latin</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/index.html">Romance</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/index.html">Italo-Western Romance</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/index.html">Western Romance</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/index.html">Shifted Western Romance</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/index.html">Northwestern Shifted Romance</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/index.html">Gallo-Rhaetian</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/index.html">Oil</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/central-oil/index.html">Central Oil</a>
+                                                                                                                            <ul class="language-subtree">
+                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/central-oil/macro-french/index.html">Macro-French</a>
+                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/central-oil/macro-french/global-french/index.html">Global French</a>
+                                                                                                                                            <ul class="language-subtree">
+                                                                                                                                                <li class="level-language target-language ">
+                                                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/northwestern-shifted-romance/gallo-rhaetian/oil/central-oil/macro-french/global-french/nouchi/index.html">Nouchi</a>
+                                                                                                                                                </li>
+                                                                                                                                            </ul>
+                                                                                                                                        </li>
+                                                                                                                                    </ul>
+                                                                                                                                </li>
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/kru/index.html">Kru</a></h3>
+                <span class="family-count">(29 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/kru/index.html">Kru</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/kru/eastern-kru/index.html">Eastern Kru</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/kru/eastern-kru/bakwe-wane/index.html">Bakwe-Wane</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/kru/eastern-kru/bakwe-wane/bakwé/index.html">Bakwé</a>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/kru/eastern-kru/bakwe-wane/wané/index.html">Wané</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/kru/eastern-kru/beteic/index.html">Beteic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/kru/eastern-kru/beteic/eastern-bete/index.html">Eastern Bete</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/kru/eastern-kru/beteic/eastern-bete/gagnoa-bété/index.html">Gagnoa Bété</a>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/kru/eastern-kru/beteic/eastern-bete/kouya/index.html">Kouya</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/kru/eastern-kru/beteic/western-bete/index.html">Western Bete</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/kru/eastern-kru/beteic/western-bete/daloa-bété/index.html">Daloa Bété</a>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/kru/eastern-kru/beteic/western-bete/godié/index.html">Godié</a>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/kru/eastern-kru/beteic/western-bete/guiberoua-béte/index.html">Guiberoua Béte</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/kru/eastern-kru/neyo-dida/index.html">Neyo-Dida</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/kru/eastern-kru/neyo-dida/dida/index.html">Dida</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/kru/eastern-kru/neyo-dida/dida/guebie-lakota-dida/index.html">Guebie-Lakota Dida</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/kru/eastern-kru/neyo-dida/dida/guebie-lakota-dida/gabogbo/index.html">Gabogbo</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/kru/eastern-kru/neyo-dida/dida/guebie-lakota-dida/lakota-dida/index.html">Lakota Dida</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/kru/eastern-kru/neyo-dida/dida/yocoboué-dida/index.html">Yocoboué Dida</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/kru/eastern-kru/neyo-dida/neyo/index.html">Neyo</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/kru/eastern-kru/unclassified-eastern-kru/index.html">Unclassified Eastern Kru</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/kru/eastern-kru/unclassified-eastern-kru/kodia/index.html">Kodia</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/kru/greater-western-kru/index.html">Greater Western Kru</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/kru/greater-western-kru/western-kru/index.html">Western Kru</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/index.html">Grebo-Aizi</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/aizi/index.html">Aizi</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/aizi/mobumrin-aizi/index.html">Mobumrin Aizi</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/aizi/tiagbamrin-aizi/index.html">Tiagbamrin Aizi</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/index.html">Grebo</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/ivorian-grebo/index.html">Ivorian Grebo</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/ivorian-grebo/pye-krumen/index.html">Pye Krumen</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/ivorian-grebo/tepo-plapo/index.html">Tepo-Plapo</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/ivorian-grebo/tepo-plapo/plapo-krumen/index.html">Plapo Krumen</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/ivorian-grebo/tepo-plapo/tepo-krumen/index.html">Tepo Krumen</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/liberian-grebo/index.html">Liberian Grebo</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/liberian-grebo/north-central-liberian-grebo/index.html">North-Central Liberian Grebo</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/liberian-grebo/north-central-liberian-grebo/barclayville-gboloo-central-liberian-grebo/index.html">Barclayville-Gboloo-Central Liberian Grebo</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/liberian-grebo/north-central-liberian-grebo/barclayville-gboloo-central-liberian-grebo/gboloo-central-grebo/index.html">Gboloo-Central Grebo</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/liberian-grebo/north-central-liberian-grebo/barclayville-gboloo-central-liberian-grebo/gboloo-central-grebo/gboloo-grebo/index.html">Gboloo Grebo</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/liberian-grebo/north-central-liberian-grebo/northern-grebo/index.html">Northern Grebo</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/kru/greater-western-kru/western-kru/grebo-aizi/grebo/liberian-grebo/southern-grebo/index.html">Southern Grebo</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/index.html">Wee-Bassa-Klao</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/wee/index.html">Wee</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/wee/guere-krahn/index.html">Guere-Krahn</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/wee/guere-krahn/daho-doo/index.html">Daho-Doo</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/wee/guere-krahn/glaro-twabo/index.html">Glaro-Twabo</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/wee/guere-krahn/glio-oubi/index.html">Glio-Oubi</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/wee/guere-krahn/guere/index.html">Guere</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/wee/guere-krahn/guere/wè-southern/index.html">Wè Southern</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/wee/guere-krahn/guere/wè-western/index.html">Wè Western</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/wee/guere-krahn/western-krahn/index.html">Western Krahn</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/wee/konobo-eastern-krahn/index.html">Konobo-Eastern Krahn</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/wee/nyabwa/index.html">Nyabwa</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/kru/greater-western-kru/western-kru/wee-bassa-klao/wee/wobe-wè-northern/index.html">Wobe-Wè Northern</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/mande/index.html">Mande</a></h3>
+                <span class="family-count">(28 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/mande/index.html">Mande</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/mande/eastern-mande/index.html">Eastern Mande</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/mande/eastern-mande/bisa-busa/index.html">Bisa-Busa</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/mande/eastern-mande/bisa-busa/bissa/index.html">Bissa</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/mande/eastern-mande/southeastern-mande/index.html">Southeastern Mande</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/index.html">Mano-Dan</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/guro-dan/index.html">Guro-Dan</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/guro-dan/dan-toura/index.html">Dan-Toura</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/guro-dan/dan-toura/dan/index.html">Dan</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-dialect target-language ">
+                                                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/guro-dan/dan-toura/dan/kla-dan/index.html">Kla-Dan</a>
+                                                                        </li>
+                                                                        <li class="level-dialect target-language ">
+                                                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/guro-dan/dan-toura/dan/nuclear-dan/index.html">Nuclear Dan</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/guro-dan/dan-toura/toura-goo/index.html">Toura-Goo</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/guro-dan/dan-toura/toura-goo/goo/index.html">Goo</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/guro-dan/dan-toura/toura-goo/toura-côte-divoire/index.html">Toura (Côte d'Ivoire)</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/guro-dan/guro-yaoure/index.html">Guro-Yaoure</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/guro-dan/guro-yaoure/guro/index.html">Guro</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/guro-dan/guro-yaoure/yaouré/index.html">Yaouré</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/mande/eastern-mande/southeastern-mande/mano-dan/mann/index.html">Mann</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/nwa-ben/index.html">Nwa-Ben</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/mande/eastern-mande/southeastern-mande/nwa-ben/ben-gban/index.html">Ben-Gban</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/nwa-ben/ben-gban/bengic/index.html">Bengic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/mande/eastern-mande/southeastern-mande/nwa-ben/ben-gban/bengic/beng/index.html">Beng</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/mande/eastern-mande/southeastern-mande/nwa-ben/ben-gban/bengic/ngen-of-djonkro/index.html">Ngen of Djonkro</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/nwa-ben/ben-gban/gban/index.html">Gban</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/mande/eastern-mande/southeastern-mande/nwa-ben/unclassified-nwa-ben/index.html">Unclassified Nwa-Ben</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/nwa-ben/unclassified-nwa-ben/gbin/index.html">† Gbin</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/mande/eastern-mande/southeastern-mande/nwa-ben/wan-mwan/index.html">Wan-Mwan</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/nwa-ben/wan-mwan/mwan/index.html">Mwan</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/mande/eastern-mande/southeastern-mande/nwa-ben/wan-mwan/wan/index.html">Wan</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/mande/western-mande/index.html">Western Mande</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/mande/western-mande/manding-kpelle/index.html">Manding-Kpelle</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/index.html">Central Mande</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/index.html">Manding-Jogo</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/jogo-jeri/index.html">Jogo-Jeri</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/jogo-jeri/jeri/index.html">Jeri</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/jogo-jeri/jeri/jeli/index.html">Jeli</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/jogo-jeri/jogo/index.html">Jogo</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/jogo-jeri/jogo/ligbi/index.html">Ligbi</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/jogo-jeri/jogo/tonjon/index.html">† Tonjon</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/index.html">Manding-Vai</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/index.html">Manding-Mokole</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/index.html">Manding</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/index.html">East Manding</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/bambara/index.html">Bambara</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/dyula/index.html">Dyula</a>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/manenkan/index.html">Manenkan</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/manenkan/eastern-maninkakan/index.html">Eastern Maninkakan</a>
+                                                                                                </li>
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/manenkan/konya-manya/index.html">Konya-Manya</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/manenkan/konya-manya/konyanka-maninka/index.html">Konyanka Maninka</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/maninka-mori/index.html">Maninka-Mori</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/maninka-mori/koro-koyaga/index.html">Koro-Koyaga</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/maninka-mori/koro-koyaga/koro-côte-divoire/index.html">Koro (Côte d'Ivoire)</a>
+                                                                                                        </li>
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/maninka-mori/koro-koyaga/koyaga/index.html">Koyaga</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/maninka-mori/mahou/index.html">Mahou</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/maninka-mori/wojenaka/index.html">Wojenaka</a>
+                                                                                                </li>
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/mande/western-mande/manding-kpelle/central-mande/manding-jogo/manding-vai/manding-mokole/manding/east-manding/maninka-mori/worodougou/index.html">Worodougou</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/mande/western-mande/manding-kpelle/southwest-mande/index.html">Southwest Mande</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/mande/western-mande/manding-kpelle/southwest-mande/kpelle/index.html">Kpelle</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/mande/western-mande/manding-kpelle/southwest-mande/kpelle/kono-guinea/index.html">Kono (Guinea)</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/siamou/index.html">Siamou</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/siamou/index.html">Siamou</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/sign-language/index.html">Sign Language</a></h3>
+                <span class="family-count">(2 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/sign-language/index.html">Sign Language</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sign-language/l1-sign-language/index.html">L1 Sign Language</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/index.html">LSFic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/index.html">ASLic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/american-sign/index.html">American Sign</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/american-sign/american-sign-language/index.html">American Sign Language</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sign-language/l1-sign-language/langue-des-signes-de-bouakako/index.html">Langue des Signes de Bouakako</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/unattested/index.html">Unattested</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/unattested/index.html">Unattested</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/unattested/atlantic-congo-unattested/index.html">Atlantic-Congo (Unattested)</a>
+                            <ul class="language-subtree">
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/unattested/atlantic-congo-unattested/esuma/index.html">† Esuma</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/unclassifiable/index.html">Unclassifiable</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/unclassifiable/index.html">Unclassifiable</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/unclassifiable/mangree/index.html">Mangree</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <!-- Tree toggle functionality -->
+    <script>
+        function toggleTree(toggle) {
+            const li = toggle.parentElement;
+            const subtree = li.querySelector('.language-subtree');
+            if (subtree) {
+                if (toggle.classList.contains('expanded')) {
+                    toggle.classList.remove('expanded');
+                    toggle.classList.add('collapsed');
+                    toggle.textContent = '▶';
+                    subtree.style.display = 'none';
+                } else {
+                    toggle.classList.remove('collapsed');
+                    toggle.classList.add('expanded');
+                    toggle.textContent = '▼';
+                    subtree.style.display = 'block';
+                }
+            }
+        }
+        
+        function expandAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('collapsed');
+                toggle.classList.add('expanded');
+                toggle.textContent = '▼';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'block';
+            });
+        }
+        
+        function collapseAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('expanded');
+                toggle.classList.add('collapsed');
+                toggle.textContent = '▶';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'none';
+            });
+        }
+    </script>
+    
+    <!-- Search functionality -->
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+</body>
+</html>

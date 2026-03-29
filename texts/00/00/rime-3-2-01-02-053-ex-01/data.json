@@ -1,0 +1,88 @@
+{
+  "id": "RIME-3-2.01.02.053-ex-01",
+  "title": "RIME 3 2.01.02.053, ex. 01",
+  "author": "anonymous",
+  "sources": [
+    "british-museum"
+  ],
+  "provenances": [
+    "Ur"
+  ],
+  "collections": [
+    "RIME"
+  ],
+  "date": "c. 2100–2000 BC",
+  "country": "IQ",
+  "language": "sume1241",
+  "pages": [
+    {
+      "works": [
+        {
+          "id": "shulgi-ningal",
+          "title": "To Ningal and Shulgi",
+          "viewerPage": "Stonus"
+        }
+      ]
+    },
+    {
+      "id": "Stonus",
+      "label": "Stonus",
+      "regions": [
+        {
+          "x": 0.11801242236024845,
+          "y": 0.04811623831775701,
+          "width": 0.8074534161490683,
+          "height": 0.1308411214953271,
+          "title": "",
+          "text": "<span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒀭</span><span class=\"nowrap\" style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒎏</span><span class=\"nowrap\" style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒃲</span>",
+          "workId": "shulgi-ningal"
+        },
+        {
+          "x": 0.11180124223602485,
+          "y": 0.16026577102803738,
+          "width": 0.8136645962732919,
+          "height": 0.11682242990654206,
+          "title": "",
+          "text": "<span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒎏</span><span class=\"nowrap\" style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒀀</span><span class=\"nowrap\" style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒉌</span>",
+          "workId": "shulgi-ningal"
+        },
+        {
+          "x": 0.11801242236024845,
+          "y": 0.2770882009345794,
+          "width": 0.8074534161490683,
+          "height": 0.1261682242990654,
+          "title": "",
+          "text": "<span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒀭</span><span class=\"nowrap\" style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒂄</span><span class=\"nowrap\" style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">&nbsp;&nbsp;</span><span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒄀</span>",
+          "workId": "shulgi-ningal"
+        },
+        {
+          "x": 0.09937888198757763,
+          "y": 0.3985835280373832,
+          "width": 0.8074534161490683,
+          "height": 0.102803738317757,
+          "title": "",
+          "text": "<span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒍑</span><span class=\"nowrap\" style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒆗 𒂵</span>",
+          "workId": "shulgi-ningal"
+        },
+        {
+          "x": 0.09937888198757763,
+          "y": 0.5013872663551402,
+          "width": 0.8136645962732919,
+          "height": 0.2336448598130841,
+          "title": "",
+          "text": "<span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒈗𒋀𒀊</span><br style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\"><span class=\"nowrap\" style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒆠𒈠</span>",
+          "workId": "shulgi-ningal"
+        },
+        {
+          "x": 0.08695652173913043,
+          "y": 0.7303592289719626,
+          "width": 0.8198757763975155,
+          "height": 0.22429906542056074,
+          "title": "",
+          "text": "<span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒈗 𒀭 𒌒</span><br style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\"><span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒁕</span><span class=\"nowrap\" style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒇹</span><span class=\"nowrap\" style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">&nbsp;&nbsp;&nbsp;</span><span style=\"color: rgb(0, 0, 0); font-family: Junicode, serif; font-size: 14px;\">𒁀</span>",
+          "workId": "shulgi-ningal"
+        }
+      ]
+    }
+  ]
+}

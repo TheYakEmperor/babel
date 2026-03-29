@@ -1,0 +1,80 @@
+{
+  "id": "6341",
+  "title": "Institute of Mediaeval Studies Library 6341",
+  "author": "John Russell Smith",
+  "sources": [
+    "University of St Michael's College"
+  ],
+  "provenances": [
+    "london"
+  ],
+  "date": "1842",
+  "country": "GB",
+  "language": "stan1293",
+  "pages": [
+    {
+      "works": [
+        {
+          "id": "nursery-rhymes-of-england",
+          "title": "The Nursery Rhymes of England.",
+          "viewerPage": "111nursery_pages-to-jpg-0007",
+          "subworks": [
+            {
+              "id": "humpty-dumpty",
+              "title": "Humpty Dumpty",
+              "viewerPage": "111nursery_pages-to-jpg-0131"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "111nursery pages-to-jpg-0131",
+      "label": "111nursery pages-to-jpg-0131",
+      "regions": [
+        {
+          "x": 0.3836329908675799,
+          "y": 0.09738685344827587,
+          "width": 0.16894977168949776,
+          "height": 0.02216748768472907,
+          "title": "Page title",
+          "text": "<div style=\"text-align: center;\"><b><span style=\"font-size: 11px;\"><span style=\"font-size: 12px;\"><span style=\"font-size: 14px;\">RIDDLES.</span></span></span></b></div>"
+        },
+        {
+          "x": 0.07769691780821919,
+          "y": 0.13433266625615764,
+          "width": 0.771689497716895,
+          "height": 0.17241379310344826,
+          "title": "Humpty Dumpty",
+          "text": "<div style=\"text-align: center;\"><b><span style=\"font-size: 14px;\">CLXXIII.</span></b></div><div style=\"text-align: center;\"><b><span style=\"font-size: 14px;\"><br></span></b></div><div style=\"text-align: center;\"><b><span style=\"font-size: 14px;\">[ᴀɴ ᴇɢɢ.]</span></b></div><div style=\"text-align: center;\"><b><span style=\"font-size: 14px;\"><br></span></b></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">Hᴜᴍᴘᴛʏ ᴅᴜᴍᴘᴛʏ sate on a wall,</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">Humpty dumpty had a great fall ;</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">Three score men and three score more,</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">Cannot place Humpty Dumpty as he was before.*</span></div>",
+          "workId": "humpty-dumpty"
+        },
+        {
+          "x": 0.1553224885844749,
+          "y": 0.3436922721674877,
+          "width": 0.5799086757990868,
+          "height": 0.24630541871921185,
+          "title": "Goosey gander",
+          "text": "<div style=\"text-align: center;\"><b><span style=\"font-size: 14px;\">CLXXIV.</span></b></div><div style=\"text-align: center;\"><b><span style=\"font-size: 14px;\"><br></span></b></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">&nbsp; &nbsp; Gᴏᴏꜱᴇʏ goosey gander,</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">&nbsp; &nbsp; Where shall I wander?</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">Up stairs, down stairs,</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">&nbsp; &nbsp; And in my lady’s chamber ;</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">There I met an old man,</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">&nbsp; &nbsp; That would not say his prayers ;</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">I took him by the left leg,</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">&nbsp; &nbsp; And threw him down stairs.</span></div>"
+        },
+        {
+          "x": 0.032034817351598174,
+          "y": 0.6170912869458128,
+          "width": 0.858447488584475,
+          "height": 0.22413793103448273,
+          "title": "A rainbow",
+          "text": "<div style=\"text-align: center;\"><b><span style=\"font-size: 14px;\">CLXXV.</span></b></div><div style=\"text-align: center;\"><b><span style=\"font-size: 14px;\"><br></span></b></div><div style=\"text-align: center;\"><b><span style=\"font-size: 14px;\">[ᴀ ʀᴀɪɴʙᴏᴡ.]</span></b></div><div style=\"text-align: center;\"><b><span style=\"font-size: 14px;\"><br></span></b></div><div style=\"text-align: left;\"><span style=\"font-size: 12px;\">[The allusion to Oliver Cromwell satisfactorily fixes the date of</span></div><div style=\"text-align: left;\"><span style=\"font-size: 12px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;this riddle to belong to the seventeeth century.]</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\"><br></span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">&nbsp; &nbsp; &nbsp; &nbsp; Pᴜʀᴘʟᴇ, yellow, red and green,</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">&nbsp; &nbsp; &nbsp; &nbsp; The king cannot reach it nor the queen ;</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">&nbsp; &nbsp; &nbsp; &nbsp; Nor can old Noll, whose power’s so great :</span></div><div style=\"text-align: left;\"><span style=\"font-size: 14px;\">&nbsp; &nbsp; &nbsp; &nbsp; Tell me this riddle while I count eight.</span></div>"
+        },
+        {
+          "x": 0.07313070776255708,
+          "y": 0.8436922721674878,
+          "width": 0.6529680365296804,
+          "height": 0.06896551724137934,
+          "title": "footnote",
+          "text": "<span style=\"font-size: 14px;\">* Sometimes the last two lines run as follows :</span><div><span style=\"font-size: 14px;\">&nbsp; &nbsp; &nbsp; &nbsp;“ All the king’s horses and all the king’s men,</span></div><div><span style=\"font-size: 14px;\">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Could not set Humpty Dumpty up again.”</span></div>",
+          "workId": "humpty-dumpty"
+        }
+      ]
+    }
+  ]
+}

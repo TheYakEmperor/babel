@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Languages of Malaysia — Babel</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Search languages, families, texts..." id="search-input">
+        <div class="search-results" id="search-results"></div>
+    </div>
+
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
+        <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+                <h3>Navigate</h3>
+                <ul>
+                    <li><a href="../../">Home</a></li>
+                    <li><a href="../../texts-index.html">All Texts</a></li>
+                    <li><a href="../../languages/">Languages</a></li>
+                    <li><a href="../../works/">Works Index</a></li>
+                    <li><a href="../../authors/">Authors</a></li>
+                    <li><a href="../../sources/">Sources</a></li>
+                    <li><a href="../../provenances/">Provenances</a></li>
+                    <li><a href="../../collections/">Collections</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="main-content">
+        <div class="country-header">
+            <img src="https://flagcdn.com/w160/my.png" 
+                 alt="Malaysia flag" 
+                 class="country-flag-large">
+            <h1>Languages of Malaysia</h1>
+        </div>
+        
+        <div class="metadata">
+            <p><strong>Languages:</strong> 137</p>
+            <p><strong>Language Families:</strong> 7</p>
+        </div>
+
+        <div class="locality-section">
+            <h3>Location</h3>
+            <div id="country-map-my" class="country-map"></div>
+        </div>
+        <script>
+            (function() {
+                var map = L.map('country-map-my').setView([4.210484, 101.975766], 4);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap',
+                    maxZoom: 19,
+                    minZoom: 2
+                }).addTo(map);
+                L.circleMarker([4.210484, 101.975766], {
+                    radius: 8,
+                    fillColor: '#B85A4F',
+                    color: '#8B4530',
+                    weight: 2.5,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(map).bindPopup('<b>Malaysia</b>');
+                setTimeout(function() { map.invalidateSize(); }, 150);
+            })();
+        </script>
+        <div class="tree-controls">
+            <h2>Languages by Family</h2>
+            <div class="tree-buttons">
+                <button onclick="expandAll()" class="tree-btn">Expand All</button>
+                <button onclick="collapseAll()" class="tree-btn">Collapse All</button>
+            </div>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/austroasiatic/index.html">Austroasiatic</a></h3>
+                <span class="family-count">(19 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/austroasiatic/index.html">Austroasiatic</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/austroasiatic/aslian/index.html">Aslian</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/index.html">Central-Northern Aslian</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/austroasiatic/aslian/central-northern-aslian/jah-hut/index.html">Jah Hut</a>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/index.html">North Aslian</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/chewong/index.html">Chewong</a>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/maniq-menraq-batek/index.html">Maniq-Menraq-Batek</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/maniq-menraq-batek/maniqic/index.html">Maniqic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/maniq-menraq-batek/maniqic/kensiu/index.html">Kensiu</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/maniq-menraq-batek/maniqic/kintaq/index.html">Kintaq</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/maniq-menraq-batek/maniqic/maniq/index.html">Maniq</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/maniq-menraq-batek/menraq-batek/index.html">Menraq-Batek</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/maniq-menraq-batek/menraq-batek/batekic/index.html">Batekic</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/maniq-menraq-batek/menraq-batek/batekic/batek/index.html">Batek</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/maniq-menraq-batek/menraq-batek/batekic/mintil/index.html">Mintil</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/maniq-menraq-batek/menraq-batek/jedek/index.html">Jedek</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/maniq-menraq-batek/menraq-batek/jehai/index.html">Jehai</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/north-aslian/maniq-menraq-batek/menraq-batek/minriq/index.html">Minriq</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austroasiatic/aslian/central-northern-aslian/senoic/index.html">Senoic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/senoic/lanoh-semnam-temiar/index.html">Lanoh-Semnam-Temiar</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austroasiatic/aslian/central-northern-aslian/senoic/lanoh-semnam-temiar/lanoh-semnam/index.html">Lanoh-Semnam</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/senoic/lanoh-semnam-temiar/lanoh-semnam/lanohic/index.html">Lanohic</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austroasiatic/aslian/central-northern-aslian/senoic/lanoh-semnam-temiar/lanoh-semnam/lanohic/lanoh/index.html">Lanoh</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austroasiatic/aslian/central-northern-aslian/senoic/lanoh-semnam-temiar/lanoh-semnam/lanohic/sabüm/index.html">† Sabüm</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/senoic/lanoh-semnam-temiar/lanoh-semnam/semnam/index.html">Semnam</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austroasiatic/aslian/central-northern-aslian/senoic/lanoh-semnam-temiar/temiar/index.html">Temiar</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/austroasiatic/aslian/central-northern-aslian/senoic/semai/index.html">Semai</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/austroasiatic/aslian/south-aslian/index.html">South Aslian</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/austroasiatic/aslian/south-aslian/besisi/index.html">Besisi</a>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austroasiatic/aslian/south-aslian/semelai-semaq/index.html">Semelai-Semaq</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/austroasiatic/aslian/south-aslian/semelai-semaq/semaq-beri/index.html">Semaq Beri</a>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/austroasiatic/aslian/south-aslian/semelai-semaq/semelai/index.html">Semelai</a>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/austroasiatic/aslian/south-aslian/semelai-semaq/temoq/index.html">Temoq</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/austronesian/index.html">Austronesian</a></h3>
+                <span class="family-count">(109 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/austronesian/index.html">Austronesian</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/austronesian/malayo-polynesian/index.html">Malayo-Polynesian</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/austronesian/malayo-polynesian/basap-greater-barito/index.html">Basap-Greater Barito</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/basap-greater-barito/greater-barito-linkage/index.html">Greater Barito linkage</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/basap-greater-barito/greater-barito-linkage/sama-bajaw/index.html">Sama-Bajaw</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/basap-greater-barito/greater-barito-linkage/sama-bajaw/sulu-borneo/index.html">Sulu-Borneo</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/basap-greater-barito/greater-barito-linkage/sama-bajaw/sulu-borneo/borneo-coast-bajaw/index.html">Borneo Coast Bajaw</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/basap-greater-barito/greater-barito-linkage/sama-bajaw/sulu-borneo/borneo-coast-bajaw/mapun/index.html">Mapun</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/basap-greater-barito/greater-barito-linkage/sama-bajaw/sulu-borneo/borneo-coast-bajaw/west-coast-bajau/index.html">West Coast Bajau</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/basap-greater-barito/greater-barito-linkage/sama-bajaw/sulu-borneo/inner-sulu-sama/index.html">Inner Sulu Sama</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/basap-greater-barito/greater-barito-linkage/sama-bajaw/sulu-borneo/inner-sulu-sama/balangingi/index.html">Balangingi</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/basap-greater-barito/greater-barito-linkage/sama-bajaw/sulu-borneo/inner-sulu-sama/southern-sama/index.html">Southern Sama</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/index.html">Greater Central Philippine</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/central-philippine/index.html">Central Philippine</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/central-philippine/bisayan/index.html">Bisayan</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/central-philippine/bisayan/south-bisayan/index.html">South Bisayan</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/central-philippine/bisayan/south-bisayan/butuan-tausug/index.html">Butuan-Tausug</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/central-philippine/bisayan/south-bisayan/butuan-tausug/tausug/index.html">Tausug</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/danaw/index.html">Danaw</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/danaw/iranun/index.html">Iranun</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-dialect target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/danaw/iranun/sabah-iranun/index.html">Sabah Iranun</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/palawanic-kalamian/index.html">Palawanic-Kalamian</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/palawanic-kalamian/palawanic/index.html">Palawanic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/palawanic-kalamian/palawanic/southern-palawanic/index.html">Southern Palawanic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/palawanic-kalamian/palawanic/southern-palawanic/molbog-palawan/index.html">Molbog-Palawan</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/greater-central-philippine/palawanic-kalamian/palawanic/southern-palawanic/molbog-palawan/molbog/index.html">Molbog</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/austronesian/malayo-polynesian/javanesic/index.html">Javanesic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/javanesic/modern-javanese/index.html">Modern Javanese</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/javanesic/modern-javanese/global-javanese/index.html">Global Javanese</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/javanesic/modern-javanese/global-javanese/javanese/index.html">Javanese</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/austronesian/malayo-polynesian/land-dayak/index.html">Land Dayak</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/land-dayak/benyadu-bekati/index.html">Benyadu-Bekati</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/land-dayak/benyadu-bekati/bakati/index.html">Bakati'</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/land-dayak/benyadu-bekati/bakati/rara-sara-bakati/index.html">Rara-Sara Bakati'</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/land-dayak/benyadu-bekati/bakati/rara-sara-bakati/rara-bakati/index.html">Rara Bakati'</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/land-dayak/bidayuh-southern-land-dayak/index.html">Bidayuh-Southern Land Dayak</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/land-dayak/bidayuh-southern-land-dayak/bidayuh/index.html">Bidayuh</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/land-dayak/bidayuh-southern-land-dayak/bidayuh/bukar-sadung-bidayuh/index.html">Bukar-Sadung Bidayuh</a>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/land-dayak/bidayuh-southern-land-dayak/bidayuh/central-western-bidayuh/index.html">Central-Western Bidayuh</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/land-dayak/bidayuh-southern-land-dayak/bidayuh/central-western-bidayuh/bau-jagoi-bidayuh/index.html">Bau-Jagoi Bidayuh</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/land-dayak/bidayuh-southern-land-dayak/bidayuh/central-western-bidayuh/biatah-bidayuh/index.html">Biatah Bidayuh</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/land-dayak/bidayuh-southern-land-dayak/bidayuh/tringgus-sembaan-bidayuh/index.html">Tringgus-Sembaan Bidayuh</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/land-dayak/bidayuh-southern-land-dayak/southern-land-dayak/index.html">Southern Land Dayak</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/land-dayak/bidayuh-southern-land-dayak/southern-land-dayak/mateq/index.html">Mateq</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/index.html">Malayo-Chamic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/index.html">Malayic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/duano/index.html">Duano</a>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/ibanic/index.html">Ibanic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/ibanic/iban-mualang-seberuang/index.html">Iban-Mualang-Seberuang</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/ibanic/iban-mualang-seberuang/iban-seberuang/index.html">Iban-Seberuang</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/ibanic/iban-mualang-seberuang/iban-seberuang/northern-iban/index.html">Northern Iban</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/ibanic/iban-mualang-seberuang/iban-seberuang/northern-iban/iban/index.html">Iban</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-dialect target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/ibanic/iban-mualang-seberuang/iban-seberuang/northern-iban/iban/sebuyau/index.html">Sebuyau</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/ibanic/iban-mualang-seberuang/iban-seberuang/northern-iban/remun/index.html">Remun</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/index.html">Nuclear Malayic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/betawic/index.html">Betawic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/betawic/cocos-islands-malay/index.html">Cocos Islands Malay</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/east-borneo-malay/index.html">East Borneo Malay</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/east-borneo-malay/banjar-berau-brunei-malay/index.html">Banjar-Berau-Brunei Malay</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/east-borneo-malay/banjar-berau-brunei-malay/banjar-bukit-malay/index.html">Banjar-Bukit Malay</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/east-borneo-malay/banjar-berau-brunei-malay/banjar-bukit-malay/banjar/index.html">Banjar</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/east-borneo-malay/banjar-berau-brunei-malay/berau-brunei-malay/index.html">Berau-Brunei Malay</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/east-borneo-malay/banjar-berau-brunei-malay/berau-brunei-malay/bruneic-malay/index.html">Bruneic Malay</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/east-borneo-malay/banjar-berau-brunei-malay/berau-brunei-malay/bruneic-malay/brunei-bacan-malay/index.html">Brunei-Bacan Malay</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/east-borneo-malay/banjar-berau-brunei-malay/berau-brunei-malay/bruneic-malay/brunei-bacan-malay/brunei/index.html">Brunei</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/east-borneo-malay/banjar-berau-brunei-malay/berau-brunei-malay/bruneic-malay/sabah-malay/index.html">Sabah Malay</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/greater-riau-johoric/index.html">Greater Riau-Johoric</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/greater-riau-johoric/central-malay/index.html">Central Malay</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/greater-riau-johoric/jakun/index.html">Jakun</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/greater-riau-johoric/northeastern-peninsular-malay/index.html">Northeastern Peninsular Malay</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/greater-riau-johoric/northeastern-peninsular-malay/kedah-perak-malay/index.html">Kedah-Perak Malay</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/greater-riau-johoric/northeastern-peninsular-malay/kelantan-pattani-malay/index.html">Kelantan-Pattani Malay</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/greater-riau-johoric/northeastern-peninsular-malay/urak-lawoi/index.html">Urak Lawoi'</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/greater-riau-johoric/orang-kanaq/index.html">Orang Kanaq</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/greater-riau-johoric/orang-seletar/index.html">Orang Seletar</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/greater-riau-johoric/temuan/index.html">Temuan</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/northern-sumatra-malay/index.html">Northern Sumatra Malay</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/northern-sumatra-malay/kerinci-minangkabau/index.html">Kerinci-Minangkabau</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/northern-sumatra-malay/kerinci-minangkabau/minangkabauic/index.html">Minangkabauic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/northern-sumatra-malay/kerinci-minangkabau/minangkabauic/negeri-sembilan-malay/index.html">Negeri Sembilan Malay</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/standard-malay-indonesian/index.html">Standard Malay-Indonesian</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/standard-malay-indonesian/standard-malay/index.html">Standard Malay</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/vehicular-malay/index.html">Vehicular Malay</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/vehicular-malay/baba-malay/index.html">Baba Malay</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/nuclear-malayic/vehicular-malay/malaccan-creole-malay/index.html">Malaccan Creole Malay</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/western-malayic-dayak/index.html">Western Malayic Dayak</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/malayo-chamic/malayic/western-malayic-dayak/kendayan-belangin/index.html">Kendayan-Belangin</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/index.html">North Borneo Malayo-Polynesian</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/index.html">Central Sarawak</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/melanau-kajang/index.html">Melanau-Kajang</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/melanau-kajang/kajang/index.html">Kajang</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/melanau-kajang/kajang/kajaman-lahanan/index.html">Kajaman-Lahanan</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/melanau-kajang/kajang/kajaman-lahanan/kajaman/index.html">Kajaman</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/melanau-kajang/kajang/kajaman-lahanan/lahanan/index.html">Lahanan</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/melanau-kajang/kajang/sekapan/index.html">Sekapan</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/melanau-kajang/melanau/index.html">Melanau</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/melanau-kajang/melanau/central-melanau/index.html">Central Melanau</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/melanau-kajang/melanau/daro-matu-melanau/index.html">Daro-Matu Melanau</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/melanau-kajang/melanau/sibu-kanowit-tanjong/index.html">Sibu-Kanowit-Tanjong</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/melanau-kajang/melanau/sibu-kanowit-tanjong/kanowit-tanjong-melanau/index.html">Kanowit-Tanjong Melanau</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/melanau-kajang/melanau/sibu-kanowit-tanjong/sibu-melanau/index.html">Sibu Melanau</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/punan-muller-schwaner/index.html">Punan-Muller-Schwaner</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/punan-muller-schwaner/punan/index.html">Punan</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/punan-muller-schwaner/punan/aput-busang-merah-kohi/index.html">Aput-Busang-Merah-Kohi</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/punan-muller-schwaner/punan/aput-busang-merah-kohi/punan-batu-1/index.html">Punan Batu 1</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/punan-muller-schwaner/punan/aput-busang-merah-kohi/sihan/index.html">Sihan</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/punan-muller-schwaner/punan/bukat-ukit-beketan-lugat-lisum/index.html">Bukat-Ukit-Beketan-Lugat-Lisum</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/punan-muller-schwaner/punan/bukat-ukit-beketan-lugat-lisum/bukat/index.html">Bukat</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/punan-muller-schwaner/punan/bukat-ukit-beketan-lugat-lisum/bukitan/index.html">Bukitan</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/punan-muller-schwaner/punan/bukat-ukit-beketan-lugat-lisum/ukit/index.html">Ukit</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/punan-muller-schwaner/punan/punan-tubu-bah/index.html">Punan Tubu-Bah</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/central-sarawak/punan-muller-schwaner/punan/punan-tubu-bah/punan-bah-biau/index.html">Punan Bah-Biau</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/kayan-murik-modang/index.html">Kayan-Murik-Modang</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/kayan-murik-modang/kayan-murik/index.html">Kayan-Murik</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/kayan-murik-modang/kayan-murik/kayanic/index.html">Kayanic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/kayan-murik-modang/kayan-murik/kayanic/baram-kayan/index.html">Baram Kayan</a>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/kayan-murik-modang/kayan-murik/kayanic/rejang-makaham-kayan/index.html">Rejang-Makaham Kayan</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/kayan-murik-modang/kayan-murik/kayanic/rejang-makaham-kayan/rejang-kayan/index.html">Rejang Kayan</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/kayan-murik-modang/kayan-murik/murik-malaysia/index.html">Murik (Malaysia)</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/index.html">North Sarawakan</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/index.html">Berawan-Lower Baram</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/berawan/index.html">Berawan</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/berawan/central-east-berawan/index.html">Central-East Berawan</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/berawan/central-east-berawan/central-berawan/index.html">Central Berawan</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/berawan/central-east-berawan/east-berawan/index.html">East Berawan</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/berawan/west-berawan/index.html">West Berawan</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/lower-baram/index.html">Lower Baram</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/lower-baram/central-lower-baram-a/index.html">Central Lower Baram A</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/lower-baram/central-lower-baram-a/kiput/index.html">Kiput</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/lower-baram/central-lower-baram-a/lemeting/index.html">Lemeting</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/lower-baram/central-lower-baram-b/index.html">Central Lower Baram B</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/lower-baram/central-lower-baram-b/lelak/index.html">† Lelak</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/berawan-lower-baram/lower-baram/central-lower-baram-b/narom/index.html">Narom</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-language target-language ">
+                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/bintulu/index.html">Bintulu</a>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/dayic/index.html">Dayic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/dayic/kelabit/index.html">Kelabit</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/dayic/lundayeh/index.html">Lundayeh</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/dayic/saban/index.html">Sa'ban</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/dayic/tring/index.html">Tring</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/index.html">Kenyahic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/highland-kenyah/index.html">Highland Kenyah</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/highland-kenyah/upper-pujungan/index.html">Upper Pujungan</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/highland-kenyah/upper-pujungan/uma-lasan/index.html">Uma' Lasan</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/highland-kenyah/usun-apau-kenyah/index.html">Usun Apau Kenyah</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/lowland-kenyah/index.html">Lowland Kenyah</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/lowland-kenyah/western-lowland-kenyah-penan/index.html">Western Lowland Kenyah-Penan</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/lowland-kenyah/western-lowland-kenyah-penan/penan/index.html">Penan</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/lowland-kenyah/western-lowland-kenyah-penan/penan/eastern-penan/index.html">Eastern Penan</a>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/lowland-kenyah/western-lowland-kenyah-penan/penan/western-penan-sebop/index.html">Western Penan-Sebop</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/lowland-kenyah/western-lowland-kenyah-penan/penan/western-penan-sebop/sebop/index.html">Sebop</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/lowland-kenyah/western-lowland-kenyah-penan/penan/western-penan-sebop/western-penan/index.html">Western Penan</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/north-sarawakan/kenyahic/lowland-kenyah/western-lowland-kenyah-penan/western-lowland-kenyah/index.html">Western Lowland Kenyah</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/index.html">Sabahan</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/northeast-sabahan/index.html">Northeast Sabahan</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/northeast-sabahan/bonggi/index.html">Bonggi</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/northeast-sabahan/idaan/index.html">Ida'an</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/index.html">Southwest Sabahan</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/index.html">Greater Dusunic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/bisaya-lotud/index.html">Bisaya-Lotud</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/bisaya-lotud/brunei-bisaya-dusun/index.html">Brunei Bisaya-Dusun</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/bisaya-lotud/lotud/index.html">Lotud</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/bisaya-lotud/sabah-bisaya/index.html">Sabah Bisaya</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/index.html">Dusunic</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/kadazan-sugut-minokok/index.html">Kadazan-Sugut-Minokok</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/kadazan-sugut-minokok/kadazan-dusun/index.html">Kadazan Dusun</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-dialect target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/kadazan-sugut-minokok/kadazan-dusun/coastal-kadazan/index.html">Coastal Kadazan</a>
+                                                                                        </li>
+                                                                                        <li class="level-dialect target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/kadazan-sugut-minokok/kadazan-dusun/kota-marudu-tinagas/index.html">Kota Marudu Tinagas</a>
+                                                                                        </li>
+                                                                                        <li class="level-dialect target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/kadazan-sugut-minokok/kadazan-dusun/tambunan-dusun/index.html">Tambunan Dusun</a>
+                                                                                        </li>
+                                                                                        <li class="level-dialect target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/kadazan-sugut-minokok/kadazan-dusun/tempasuk-dusun/index.html">Tempasuk Dusun</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/kadazan-sugut-minokok/sugut-minokok-kadazan/index.html">Sugut-Minokok Kadazan</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/kadazan-sugut-minokok/sugut-minokok-kadazan/minokok/index.html">Minokok</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/kadazan-sugut-minokok/sugut-minokok-kadazan/sugut-dusun/index.html">Sugut Dusun</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/kimaragang/index.html">Kimaragang</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/klias-river-kadazan/index.html">Klias River Kadazan</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/kota-marudu-talantang/index.html">Kota Marudu Talantang</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/kuijau/index.html">Kuijau</a>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/rungus-mangkaak-labuk/index.html">Rungus-Mangkaak-Labuk</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/rungus-mangkaak-labuk/dumpas-sukang/index.html">Dumpas-Sukang</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/rungus-mangkaak-labuk/dumpas-sukang/dumpas/index.html">Dumpas</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/rungus-mangkaak-labuk/dumpas-sukang/labuk-kinabatangan-kadazan/index.html">Labuk-Kinabatangan Kadazan</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/rungus-mangkaak-labuk/rungus/index.html">Rungus</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/dusunic/tobilung/index.html">Tobilung</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/paitanic/index.html">Paitanic</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/paitanic/abai-sungai/index.html">Abai Sungai</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/paitanic/serudung-murut/index.html">Serudung Murut</a>
+                                                                        </li>
+                                                                        <li class="level-language target-language ">
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/paitanic/tombonuo/index.html">Tombonuo</a>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/paitanic/upper-kinabatangan-lobu/index.html">Upper Kinabatangan-Lobu</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/paitanic/upper-kinabatangan-lobu/lanas-lobu/index.html">Lanas Lobu</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/paitanic/upper-kinabatangan-lobu/tampias-lobu/index.html">Tampias Lobu</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-dusunic/paitanic/upper-kinabatangan-lobu/upper-kinabatangan/index.html">Upper Kinabatangan</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/index.html">Greater Murutic</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/index.html">Murutic</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/eastern-murutic/index.html">Eastern Murutic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/eastern-murutic/kalabakan/index.html">Kalabakan</a>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/eastern-murutic/okolod/index.html">Okolod</a>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/eastern-murutic/selungai-sembakung-murut/index.html">Selungai-Sembakung Murut</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/eastern-murutic/selungai-sembakung-murut/selungai-murut/index.html">Selungai Murut</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/eastern-murutic/selungai-sembakung-murut/sembakung-murut/index.html">Sembakung Murut</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/northern-murutic/index.html">Northern Murutic</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/northern-murutic/gana/index.html">Gana</a>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/northern-murutic/lowland-murut/index.html">Lowland Murut</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/northern-murutic/lowland-murut/bookan/index.html">Bookan</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/northern-murutic/lowland-murut/keningau-murut/index.html">Keningau Murut</a>
+                                                                                        </li>
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/northern-murutic/lowland-murut/timugon-murut/index.html">Timugon Murut</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                                <li class="level-language target-language ">
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/northern-murutic/paluan/index.html">Paluan</a>
+                                                                                </li>
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/northern-murutic/sumambu-tagal/index.html">Sumambu-Tagal</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-language target-language ">
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/northern-murutic/sumambu-tagal/tagal-murut/index.html">Tagal Murut</a>
+                                                                                        </li>
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/northern-murutic/sumambu-tagal/tidung-bulusu/index.html">Tidung-Bulusu</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/northern-murutic/sumambu-tagal/tidung-bulusu/tidung/index.html">Tidung</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-language target-language ">
+                                                                                                            <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/murutic/northern-murutic/sumambu-tagal/tidung-bulusu/tidung/northern-tidung/index.html">Northern Tidung</a>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/papar/index.html">Papar</a>
+                                                                </li>
+                                                                <li class="level-language target-language ">
+                                                                    <a href="../../languages/austronesian/malayo-polynesian/north-borneo-malayo-polynesian/sabahan/southwest-sabahan/greater-murutic/tatana/index.html">Tatana</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/bookkeeping/index.html">Bookkeeping</a></h3>
+                <span class="family-count">(2 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/bookkeeping/index.html">Bookkeeping</a>
+                    <ul class="language-subtree">
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/balau/index.html">Balau</a>
+                        </li>
+                        <li class="level-language target-language ">
+                            <a href="../../languages/bookkeeping/seru/index.html">† Seru</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/indo-european/index.html">Indo-European</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/indo-european/index.html">Indo-European</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/indo-european/classical-indo-european/index.html">Classical Indo-European</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/indo-european/classical-indo-european/italic/index.html">Italic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/index.html">Latino-Faliscan</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/index.html">Latinic</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/index.html">Imperial Latin</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/index.html">Romance</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/index.html">Italo-Western Romance</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/index.html">Western Romance</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/index.html">Shifted Western Romance</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/index.html">Southwestern Shifted Romance</a>
+                                                                                                    <ul class="language-subtree">
+                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/index.html">West Ibero-Romance</a>
+                                                                                                            <ul class="language-subtree">
+                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/galician-romance/index.html">Galician Romance</a>
+                                                                                                                    <ul class="language-subtree">
+                                                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/galician-romance/macro-portuguese/index.html">Macro-Portuguese</a>
+                                                                                                                            <ul class="language-subtree">
+                                                                                                                                <li class="level-family intermediate-node has-children">
+                                                                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                                                                    <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/galician-romance/macro-portuguese/luso-asian-creole/index.html">Luso-Asian Creole</a>
+                                                                                                                                    <ul class="language-subtree">
+                                                                                                                                        <li class="level-language target-language ">
+                                                                                                                                            <a href="../../languages/indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/romance/italo-western-romance/western-romance/shifted-western-romance/southwestern-shifted-romance/west-ibero-romance/galician-romance/macro-portuguese/luso-asian-creole/malacca-batavia-portuguese-creole/index.html">Malacca-Batavia Portuguese Creole</a>
+                                                                                                                                        </li>
+                                                                                                                                    </ul>
+                                                                                                                                </li>
+                                                                                                                            </ul>
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/kenaboi/index.html">† Kenaboi</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-language target-language ">
+                    <a href="../../languages/kenaboi/index.html">† Kenaboi</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/sign-language/index.html">Sign Language</a></h3>
+                <span class="family-count">(4 languages)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/sign-language/index.html">Sign Language</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/sign-language/l1-sign-language/index.html">L1 Sign Language</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sign-language/l1-sign-language/cslic/index.html">CSLic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-language target-language ">
+                                            <a href="../../languages/sign-language/l1-sign-language/cslic/chinese-sign-language/index.html">Chinese Sign Language</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/index.html">LSFic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/index.html">ASLic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/malaysian-sign/index.html">Malaysian Sign</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/malaysian-sign/malaysian-sign-language/index.html">Malaysian Sign Language</a>
+                                                        </li>
+                                                        <li class="level-language target-language ">
+                                                            <a href="../../languages/sign-language/l1-sign-language/lsfic/aslic/malaysian-sign/selangor-sign-language/index.html">Selangor Sign Language</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="level-language target-language ">
+                                    <a href="../../languages/sign-language/l1-sign-language/penang-sign-language/index.html">Penang Sign Language</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="family-section">
+            <div class="family-header">
+                <h3><a href="../../languages/tai-kadai/index.html">Tai-Kadai</a></h3>
+                <span class="family-count">(1 language)</span>
+            </div>
+            <ul class="language-subtree">
+                <li class="level-family intermediate-node has-children">
+                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                    <a href="../../languages/tai-kadai/index.html">Tai-Kadai</a>
+                    <ul class="language-subtree">
+                        <li class="level-family intermediate-node has-children">
+                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                            <a href="../../languages/tai-kadai/kam-tai/index.html">Kam-Tai</a>
+                            <ul class="language-subtree">
+                                <li class="level-family intermediate-node has-children">
+                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                    <a href="../../languages/tai-kadai/kam-tai/daic-beic/index.html">Daic-Beic</a>
+                                    <ul class="language-subtree">
+                                        <li class="level-family intermediate-node has-children">
+                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                            <a href="../../languages/tai-kadai/kam-tai/daic-beic/daic/index.html">Daic</a>
+                                            <ul class="language-subtree">
+                                                <li class="level-family intermediate-node has-children">
+                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                    <a href="../../languages/tai-kadai/kam-tai/daic-beic/daic/central-southwestern-tai/index.html">Central-Southwestern Tai</a>
+                                                    <ul class="language-subtree">
+                                                        <li class="level-family intermediate-node has-children">
+                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                            <a href="../../languages/tai-kadai/kam-tai/daic-beic/daic/central-southwestern-tai/wenma-southwestern-tai/index.html">Wenma-Southwestern Tai</a>
+                                                            <ul class="language-subtree">
+                                                                <li class="level-family intermediate-node has-children">
+                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                    <a href="../../languages/tai-kadai/kam-tai/daic-beic/daic/central-southwestern-tai/wenma-southwestern-tai/sapa-southwestern-tai/index.html">Sapa-Southwestern Tai</a>
+                                                                    <ul class="language-subtree">
+                                                                        <li class="level-family intermediate-node has-children">
+                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                            <a href="../../languages/tai-kadai/kam-tai/daic-beic/daic/central-southwestern-tai/wenma-southwestern-tai/sapa-southwestern-tai/southwestern-tai/index.html">Southwestern Tai</a>
+                                                                            <ul class="language-subtree">
+                                                                                <li class="level-family intermediate-node has-children">
+                                                                                    <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                    <a href="../../languages/tai-kadai/kam-tai/daic-beic/daic/central-southwestern-tai/wenma-southwestern-tai/sapa-southwestern-tai/southwestern-tai/southwestern-thai-ph/index.html">Southwestern Thai PH</a>
+                                                                                    <ul class="language-subtree">
+                                                                                        <li class="level-family intermediate-node has-children">
+                                                                                            <span class="tree-toggle expanded" onclick="toggleTree(this)">▼</span>
+                                                                                            <a href="../../languages/tai-kadai/kam-tai/daic-beic/daic/central-southwestern-tai/wenma-southwestern-tai/sapa-southwestern-tai/southwestern-tai/southwestern-thai-ph/lao-thai/index.html">Lao-Thai</a>
+                                                                                            <ul class="language-subtree">
+                                                                                                <li class="level-language target-language ">
+                                                                                                    <a href="../../languages/tai-kadai/kam-tai/daic-beic/daic/central-southwestern-tai/wenma-southwestern-tai/sapa-southwestern-tai/southwestern-tai/southwestern-thai-ph/lao-thai/southern-thai/index.html">Southern Thai</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        </div>
+        <aside class="left-sidebar"></aside>
+    </div>
+    <!-- Tree toggle functionality -->
+    <script>
+        function toggleTree(toggle) {
+            const li = toggle.parentElement;
+            const subtree = li.querySelector('.language-subtree');
+            if (subtree) {
+                if (toggle.classList.contains('expanded')) {
+                    toggle.classList.remove('expanded');
+                    toggle.classList.add('collapsed');
+                    toggle.textContent = '▶';
+                    subtree.style.display = 'none';
+                } else {
+                    toggle.classList.remove('collapsed');
+                    toggle.classList.add('expanded');
+                    toggle.textContent = '▼';
+                    subtree.style.display = 'block';
+                }
+            }
+        }
+        
+        function expandAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('collapsed');
+                toggle.classList.add('expanded');
+                toggle.textContent = '▼';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'block';
+            });
+        }
+        
+        function collapseAll() {
+            document.querySelectorAll('.tree-toggle').forEach(toggle => {
+                toggle.classList.remove('expanded');
+                toggle.classList.add('collapsed');
+                toggle.textContent = '▶';
+                const subtree = toggle.parentElement.querySelector('.language-subtree');
+                if (subtree) subtree.style.display = 'none';
+            });
+        }
+    </script>
+    
+    <!-- Search functionality -->
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+</body>
+</html>

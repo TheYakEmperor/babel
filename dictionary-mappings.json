@@ -1,0 +1,21 @@
+{
+  "_comment": "Maps word forms (mutations, conjugations, etc.) to their base/dictionary forms",
+  "_usage": "Add entries like: \"mutated_form\": \"base_form\" or \"mutated_form\": [\"base1\", \"base2\"]",
+  
+  "welsh_soft_mutations": {
+    "_comment": "Soft mutation: c→g, p→b, t→d, g→∅, b→f, d→dd, ll→l, m→f, rh→r",
+    "glyd": "clyd"
+  },
+  
+  "welsh_nasal_mutations": {
+    "_comment": "Nasal mutation: c→ngh, p→mh, t→nh, g→ng, b→m, d→n"
+  },
+  
+  "welsh_aspirate_mutations": {
+    "_comment": "Aspirate mutation: c→ch, p→ph, t→th"
+  },
+  
+  "other_mappings": {
+    "_comment": "Any other word form mappings"
+  }
+}
