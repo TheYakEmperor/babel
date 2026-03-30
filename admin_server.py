@@ -116,6 +116,8 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 result = self.get_provenance(data)
             elif path == '/api/save-regions':
                 result = self.save_regions(data)
+            elif path == '/api/save-page-order':
+                result = self.save_page_order(data)
             elif path == '/api/rebuild-indexes':
                 result = self.rebuild_indexes()
             else:
@@ -654,6 +656,107 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             'success': True,
             'message': f'Regions saved for text "{text_id}"',
             'pagesUpdated': len(regions_data)
+        }
+    
+    def save_page_order(self, data):
+        """Save the order of pages (including blank pages) for a text."""
+        text_id = data.get('textId')
+        if not text_id:
+            raise ValueError('Text ID is required')
+        
+        pages_data = data.get('pages', [])  # Array of { label, filename, isBlank }
+        
+        # Find the text directory
+        texts_base = BASE_DIR / 'texts' / '00' / '00'
+        text_dir = texts_base / text_id
+        
+        # If folder doesn't exist by name, search by data.json id
+        if not text_dir.exists() or not (text_dir / 'data.json').exists():
+            text_dir = None
+            for d in texts_base.iterdir():
+                if d.is_dir():
+                    data_file = d / 'data.json'
+                    if data_file.exists():
+                        try:
+                            with open(data_file, 'r', encoding='utf-8') as f:
+                                existing = json.load(f)
+                                if existing.get('id') == text_id:
+                                    text_dir = d
+                                    break
+                        except:
+                            pass
+        
+        if not text_dir:
+            raise ValueError(f'Text "{text_id}" not found')
+        
+        data_path = text_dir / 'data.json'
+        
+        # Load existing data
+        with open(data_path, 'r', encoding='utf-8') as f:
+            text_data = json.load(f)
+        
+        # Create a mapping of existing page data (regions, works, etc.)
+        existing_pages = {(p.get('label') or p.get('id')): p for p in text_data.get('pages', [])}
+        
+        # Build new pages array in the specified order
+        new_pages = []
+        for page_info in pages_data:
+            label = page_info.get('label')
+            is_blank = page_info.get('isBlank', False)
+            
+            # Get existing page data if it exists
+            if label in existing_pages:
+                page_entry = existing_pages[label].copy()
+            else:
+                page_entry = {'id': label, 'label': label}
+            
+            # Update blank status
+            if is_blank:
+                page_entry['isBlank'] = True
+            elif 'isBlank' in page_entry:
+                del page_entry['isBlank']
+            
+            new_pages.append(page_entry)
+        
+        text_data['pages'] = new_pages
+        
+        # Also update images.json to reflect the new order (for non-blank pages)
+        images_json_path = text_dir / 'images.json'
+        if images_json_path.exists():
+            with open(images_json_path, 'r', encoding='utf-8') as f:
+                images_data = json.load(f)
+            
+            # Create mapping of filename to image entry
+            image_map = {}
+            for img in images_data.get('images', []):
+                filename = img['url'].split('/')[-1]
+                image_map[filename] = img
+            
+            # Rebuild images array in new order (skip blank pages)
+            new_images = []
+            for page_info in pages_data:
+                if not page_info.get('isBlank'):
+                    filename = page_info.get('filename')
+                    if filename and filename in image_map:
+                        new_images.append(image_map[filename])
+            
+            # Add any images that weren't in the pages list
+            for img in images_data.get('images', []):
+                if img not in new_images:
+                    new_images.append(img)
+            
+            images_data['images'] = new_images
+            with open(images_json_path, 'w', encoding='utf-8') as f:
+                json.dump(images_data, f, indent=2, ensure_ascii=False)
+        
+        # Save updated data.json
+        with open(data_path, 'w', encoding='utf-8') as f:
+            json.dump(text_data, f, indent=2, ensure_ascii=False)
+        
+        return {
+            'success': True,
+            'message': f'Page order saved for text "{text_id}"',
+            'pagesUpdated': len(new_pages)
         }
     
     # =========================================

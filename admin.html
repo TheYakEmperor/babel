@@ -256,6 +256,75 @@
             color: #166534;
         }
         
+        /* Drag-drop styling for page reordering */
+        .annotator-page-thumb.dragging {
+            opacity: 0.5;
+            border-color: #3b82f6;
+        }
+        
+        .annotator-page-thumb.drag-over {
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+        }
+        
+        /* Blank page styling */
+        .annotator-page-thumb.blank-page img {
+            display: none;
+        }
+        
+        .annotator-page-thumb.blank-page::before {
+            content: '';
+            display: block;
+            width: 100%;
+            padding-bottom: 130%;
+            background: linear-gradient(135deg, #f0f0f0 25%, #e0e0e0 25%, #e0e0e0 50%, #f0f0f0 50%, #f0f0f0 75%, #e0e0e0 75%);
+            background-size: 20px 20px;
+        }
+        
+        .annotator-page-thumb.blank-page .thumb-label {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .annotator-page-toolbar {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .annotator-page-toolbar button {
+            padding: 4px 8px;
+            font-size: 0.75em;
+            border: 1px solid #d1d5db;
+            background: white;
+            cursor: pointer;
+            border-radius: 0;
+        }
+        
+        .annotator-page-toolbar button:hover {
+            background: #f3f4f6;
+        }
+        
+        /* Blank page canvas placeholder */
+        .blank-page-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 600px;
+            height: 800px;
+            background: linear-gradient(135deg, #f8f8f8 25%, #e8e8e8 25%, #e8e8e8 50%, #f8f8f8 50%, #f8f8f8 75%, #e8e8e8 75%);
+            background-size: 30px 30px;
+            border: 2px dashed #9ca3af;
+            color: #6b7280;
+        }
+        
+        .blank-page-placeholder .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
         .annotator-main {
             display: flex;
             flex-direction: column;
@@ -703,6 +772,19 @@
                     </div>
                     <div class="image-preview-grid" id="text-images-preview"></div>
                 </div>
+                <div class="form-group" style="margin-top:15px; padding:15px; background:#fefce8; border:1px solid #fef08a; border-radius:0;">
+                    <label>Or: Create Blank Pages <span class="hint">(for copyrighted images - transcription only)</span></label>
+                    <div style="display:flex; gap:10px; align-items:end; margin-top:8px;">
+                        <div style="flex:1;">
+                            <input type="number" id="text-blank-pages" min="0" value="0" placeholder="0" style="width:100%;">
+                        </div>
+                        <div style="flex:2;">
+                            <input type="text" id="text-blank-prefix" placeholder="Page label prefix (e.g., 'f.' or leave blank)" style="width:100%;">
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="generateBlankPages()">Generate</button>
+                    </div>
+                    <p style="font-size:0.8em; color:#6b7280; margin-top:8px;">Creates numbered blank pages (e.g., "f.1r", "f.1v", "f.2r"...) that can be annotated without images.</p>
+                </div>
             </div>
             
             <div class="form-section">
@@ -966,6 +1048,10 @@
             <div class="annotator-container">
                 <div class="annotator-sidebar">
                     <h4>Pages</h4>
+                    <div class="annotator-page-toolbar">
+                        <button onclick="insertBlankPage()" title="Insert blank page">+ Blank</button>
+                        <button onclick="savePageOrder()" title="Save page order">Save Order</button>
+                    </div>
                     <div class="annotator-page-list" id="annotator-pages"></div>
                 </div>
                 
@@ -1346,6 +1432,21 @@
             // Convert flat works list back to pages structure for data.json
             const pages = buildPagesFromWorks(textEditorData.works);
             
+            // Add blank pages to pages array if any
+            if (textEditorData.blankPages && textEditorData.blankPages.length > 0) {
+                textEditorData.blankPages.forEach(bp => {
+                    // Check if page already exists
+                    const existing = pages.find(p => p.label === bp.label || p.id === bp.label);
+                    if (!existing) {
+                        pages.push({
+                            id: bp.label,
+                            label: bp.label,
+                            isBlank: true
+                        });
+                    }
+                });
+            }
+            
             const textData = {
                 id,
                 title: document.getElementById('text-title').value.trim(),
@@ -1357,7 +1458,8 @@
                 date: document.getElementById('text-date').value.trim() || undefined,
                 country: textEditorData.countries.length === 1 ? textEditorData.countries[0] : (textEditorData.countries.length ? textEditorData.countries : undefined),
                 language: textEditorData.languages.length === 1 ? textEditorData.languages[0] : (textEditorData.languages.length ? textEditorData.languages : undefined),
-                pages: pages.length ? pages : []
+                pages: pages.length ? pages : [],
+                blankPages: textEditorData.blankPages || undefined
             };
             
             try {
@@ -2825,6 +2927,54 @@
                 .substring(0, 50);
         }
         
+        // Generate blank pages for copyrighted content
+        function generateBlankPages() {
+            const count = parseInt(document.getElementById('text-blank-pages').value) || 0;
+            const prefix = document.getElementById('text-blank-prefix').value.trim();
+            
+            if (count <= 0) {
+                alert('Please enter a positive number of pages to create.');
+                return;
+            }
+            
+            // Generate folio-style labels: 1r, 1v, 2r, 2v, etc.
+            const blankPages = [];
+            for (let folio = 1; folio <= Math.ceil(count / 2); folio++) {
+                if (blankPages.length < count) {
+                    blankPages.push({
+                        label: `${prefix}${folio}r`,
+                        filename: `blank_${prefix}${folio}r`.replace(/\s+/g, '_'),
+                        isBlank: true
+                    });
+                }
+                if (blankPages.length < count) {
+                    blankPages.push({
+                        label: `${prefix}${folio}v`,
+                        filename: `blank_${prefix}${folio}v`.replace(/\s+/g, '_'),
+                        isBlank: true
+                    });
+                }
+            }
+            
+            // Store blank pages in textEditorData
+            textEditorData.blankPages = blankPages;
+            
+            // Show confirmation
+            const preview = document.getElementById('text-images-preview');
+            let html = `<div style="width:100%;margin-bottom:10px;"><strong style="color:#92400e;font-size:0.85em;">Blank Pages (${blankPages.length}):</strong></div>`;
+            html += blankPages.map((page, i) => `
+                <div class="image-preview" style="border-color:#fbbf24; background:linear-gradient(135deg, #fef3c7 25%, #fde68a 25%, #fde68a 50%, #fef3c7 50%, #fef3c7 75%, #fde68a 75%); background-size:20px 20px;">
+                    <div style="display:flex;align-items:center;justify-content:center;height:100px;font-size:0.9em;color:#92400e;">
+                        📄 ${escapeHtml(page.label)}
+                    </div>
+                    <span class="image-number" style="background:#f59e0b;">${i + 1}</span>
+                </div>
+            `).join('');
+            preview.innerHTML = html;
+            
+            showStatus(`Created ${count} blank page placeholders. Save to apply.`);
+        }
+        
         // Images - track selected pages for deletion
         let selectedPages = new Set();
         
@@ -3079,17 +3229,120 @@
         
         function renderAnnotatorPages() {
             const container = document.getElementById('annotator-pages');
-            container.innerHTML = annotatorData.pages.map(page => {
+            container.innerHTML = annotatorData.pages.map((page, index) => {
                 const hasRegions = annotatorData.regions[page.label]?.length > 0;
                 const isActive = page.label === annotatorData.currentPage;
+                const isBlank = page.isBlank;
                 return `
-                    <div class="annotator-page-thumb ${isActive ? 'active' : ''} ${hasRegions ? 'has-regions' : ''}" 
-                         onclick="selectAnnotatorPage('${escapeHtml(page.label)}')">
-                        <img src="${page.imageUrl}" alt="${escapeHtml(page.label)}">
+                    <div class="annotator-page-thumb ${isActive ? 'active' : ''} ${hasRegions ? 'has-regions' : ''} ${isBlank ? 'blank-page' : ''}" 
+                         draggable="true"
+                         data-index="${index}"
+                         data-label="${escapeHtml(page.label)}"
+                         onclick="selectAnnotatorPage('${escapeHtml(page.label)}')"
+                         ondragstart="handlePageDragStart(event)"
+                         ondragover="handlePageDragOver(event)"
+                         ondragleave="handlePageDragLeave(event)"
+                         ondrop="handlePageDrop(event)"
+                         ondragend="handlePageDragEnd(event)">
+                        <img src="${isBlank ? '' : page.imageUrl}" alt="${escapeHtml(page.label)}">
                         <div class="thumb-label">${escapeHtml(page.label)}${hasRegions ? '' : ''}</div>
                     </div>
                 `;
             }).join('');
+        }
+        
+        // Drag-drop handlers for page reordering
+        let draggedPageIndex = null;
+        
+        function handlePageDragStart(e) {
+            draggedPageIndex = parseInt(e.target.dataset.index);
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+        
+        function handlePageDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            const target = e.target.closest('.annotator-page-thumb');
+            if (target && parseInt(target.dataset.index) !== draggedPageIndex) {
+                target.classList.add('drag-over');
+            }
+        }
+        
+        function handlePageDragLeave(e) {
+            const target = e.target.closest('.annotator-page-thumb');
+            if (target) {
+                target.classList.remove('drag-over');
+            }
+        }
+        
+        function handlePageDrop(e) {
+            e.preventDefault();
+            const target = e.target.closest('.annotator-page-thumb');
+            if (!target) return;
+            
+            const targetIndex = parseInt(target.dataset.index);
+            target.classList.remove('drag-over');
+            
+            if (draggedPageIndex !== null && draggedPageIndex !== targetIndex) {
+                // Reorder pages array
+                const [movedPage] = annotatorData.pages.splice(draggedPageIndex, 1);
+                annotatorData.pages.splice(targetIndex, 0, movedPage);
+                annotatorData.pagesReordered = true;
+                renderAnnotatorPages();
+                showStatus('Pages reordered. Click "Save Order" to save changes.');
+            }
+        }
+        
+        function handlePageDragEnd(e) {
+            e.target.classList.remove('dragging');
+            document.querySelectorAll('.annotator-page-thumb').forEach(el => {
+                el.classList.remove('drag-over');
+            });
+            draggedPageIndex = null;
+        }
+        
+        // Insert blank page
+        function insertBlankPage() {
+            const label = prompt('Enter label for the blank page (e.g., "5r" or "missing page"):');
+            if (!label) return;
+            
+            // Find current page index to insert after
+            const currentIndex = annotatorData.pages.findIndex(p => p.label === annotatorData.currentPage);
+            const insertIndex = currentIndex >= 0 ? currentIndex + 1 : annotatorData.pages.length;
+            
+            const blankPage = {
+                label: label.trim(),
+                filename: `blank_${label.trim().replace(/\s+/g, '_')}`,
+                imageUrl: '',
+                isBlank: true
+            };
+            
+            annotatorData.pages.splice(insertIndex, 0, blankPage);
+            annotatorData.regions[blankPage.label] = [];
+            annotatorData.pagesReordered = true;
+            
+            renderAnnotatorPages();
+            selectAnnotatorPage(blankPage.label);
+            showStatus(`Blank page "${label}" inserted. Don't forget to save.`);
+        }
+        
+        // Save page order
+        async function savePageOrder() {
+            try {
+                await api('save-page-order', {
+                    textId: annotatorData.textId,
+                    pages: annotatorData.pages.map(p => ({
+                        label: p.label,
+                        filename: p.filename,
+                        isBlank: p.isBlank || false
+                    }))
+                });
+                annotatorData.pagesReordered = false;
+                showStatus('Page order saved successfully!');
+            } catch (e) {
+                showStatus('Error saving page order: ' + e.message, true);
+            }
         }
         
         function selectAnnotatorPage(pageLabel) {
@@ -3102,11 +3355,33 @@
             document.getElementById('annotator-page-label').textContent = `Page: ${pageLabel}`;
             
             const img = document.getElementById('annotator-image');
-            img.src = page.imageUrl;
-            img.onload = () => {
+            const wrapper = document.getElementById('annotator-canvas-wrapper');
+            
+            // Handle blank pages
+            if (page.isBlank) {
+                img.style.display = 'none';
+                // Add or update blank placeholder
+                let placeholder = wrapper.querySelector('.blank-page-placeholder');
+                if (!placeholder) {
+                    placeholder = document.createElement('div');
+                    placeholder.className = 'blank-page-placeholder';
+                    placeholder.innerHTML = '<div class="icon">📄</div><div>Blank Page</div><div style="font-size:0.9em;margin-top:5px;">Draw regions to add transcription</div>';
+                    wrapper.insertBefore(placeholder, wrapper.firstChild);
+                }
+                placeholder.style.display = 'flex';
                 setupAnnotatorCanvas();
                 drawAnnotatorRegions();
-            };
+            } else {
+                img.style.display = '';
+                const placeholder = wrapper.querySelector('.blank-page-placeholder');
+                if (placeholder) placeholder.style.display = 'none';
+                
+                img.src = page.imageUrl;
+                img.onload = () => {
+                    setupAnnotatorCanvas();
+                    drawAnnotatorRegions();
+                };
+            }
             
             renderAnnotatorPages();
             renderAnnotatorRegions();
