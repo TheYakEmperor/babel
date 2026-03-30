@@ -563,14 +563,28 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         # Include folder name for building URLs
         text_data['_folderName'] = text_dir.name
         
-        # Include image info (but not actual data - too large)
-        images_dir = text_dir / 'images'
-        if images_dir.exists():
-            import re
-            def natural_sort_key(s):
-                return [int(c) if c.isdigit() else c.lower() for c in re.split(r'(\d+)', s)]
-            text_data['_imageCount'] = len(list(images_dir.glob('*.*')))
-            text_data['_imageFiles'] = sorted([f.name for f in images_dir.glob('*.*')], key=natural_sort_key)
+        # Include image info from manifest (images are on B2, not local)
+        manifest_path = text_dir / 'images.json'
+        if manifest_path.exists():
+            try:
+                with open(manifest_path, 'r', encoding='utf-8') as f:
+                    manifest = json.load(f)
+                images_list = manifest.get('images', [])
+                text_data['_imageCount'] = len(images_list)
+                # Extract filenames from URLs like "images/001.jpg"
+                text_data['_imageFiles'] = [img['url'].split('/')[-1] for img in images_list]
+            except:
+                text_data['_imageCount'] = 0
+                text_data['_imageFiles'] = []
+        else:
+            # Fallback to scanning local directory (for local dev without B2)
+            images_dir = text_dir / 'images'
+            if images_dir.exists():
+                import re
+                def natural_sort_key(s):
+                    return [int(c) if c.isdigit() else c.lower() for c in re.split(r'(\d+)', s)]
+                text_data['_imageCount'] = len(list(images_dir.glob('*.*')))
+                text_data['_imageFiles'] = sorted([f.name for f in images_dir.glob('*.*')], key=natural_sort_key)
         
         return text_data
     

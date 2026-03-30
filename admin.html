@@ -1057,6 +1057,9 @@
     <script src="search-index.js"></script>
     <script src="search.js"></script>
     <script>
+        // Backblaze B2 configuration for image hosting
+        const B2_BASE_URL = 'https://babel-images.s3.us-east-005.backblazeb2.com';
+        
         async function api(endpoint, data = {}) {
             const response = await fetch('/api/' + endpoint, {
                 method: 'POST',
@@ -1300,11 +1303,11 @@
                     textEditorData.countries = [].concat(text.country || []);
                     // Load works from pages structure (flatten for simpler editing)
                     textEditorData.works = extractWorksFromPages(text.pages || []);
-                    // Load existing images from server
+                    // Load existing images from server (now on B2)
                     if (text._imageFiles && text._imageFiles.length > 0) {
                         textEditorData.existingImages = text._imageFiles.map(f => ({
                             name: f,
-                            url: `texts/00/00/${id}/images/${f}`
+                            url: `${B2_BASE_URL}/texts/00/00/${id}/images/${encodeURIComponent(f)}`
                         }));
                     }
                     document.getElementById('text-editor-title').textContent = 'Edit Text';
