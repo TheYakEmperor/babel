@@ -1371,8 +1371,12 @@
         
         async function openTextEditor(id = null) {
             currentEditId = id;
-            textEditorData = { authors: [], languages: [], countries: [], collections: [], sources: [], provenances: [], images: [], existingImages: [], works: [] };
+            textEditorData = { authors: [], languages: [], countries: [], collections: [], sources: [], provenances: [], images: [], existingImages: [], works: [], blankPages: [] };
             selectedPages.clear(); // Clear page selection when opening editor
+            
+            // Reset blank pages fields
+            document.getElementById('text-blank-pages').value = '0';
+            document.getElementById('text-blank-prefix').value = '';
             
             if (id) {
                 try {
