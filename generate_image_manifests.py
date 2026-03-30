@@ -8,6 +8,7 @@ import os
 import json
 from pathlib import Path
 from natsort import natsorted
+from urllib.parse import quote
 
 BASE_DIR = Path(__file__).parent
 TEXTS_DIR = BASE_DIR / 'texts'
@@ -39,11 +40,11 @@ def generate_manifests():
         except:
             image_files.sort()
         
-        # Create manifest
+        # Create manifest - URL-encode filenames for special characters like #
         manifest = {
             'images': [
                 {
-                    'url': f'images/{name}',
+                    'url': f'images/{quote(name, safe="")}',
                     'label': Path(name).stem.replace('_', ' ')
                 }
                 for name in image_files
