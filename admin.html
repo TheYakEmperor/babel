@@ -3157,6 +3157,7 @@
             annotatorData.currentPage = null;
             annotatorData.selectedRegion = null;
             annotatorData.isDrawing = false;
+            annotatorData.pagesReordered = false;
             
             document.getElementById('annotator-title').textContent = `Region Annotator: ${textId}`;
             document.getElementById('annotator-modal').classList.add('active');
@@ -3169,14 +3170,55 @@
                 const folderName = textData._folderName || textId;
                 annotatorData.folderName = folderName;
                 
-                // Build page list from images
-                if (textData._imageFiles && textData._imageFiles.length > 0) {
+                // Build page list - check if pagesData has ordering info with blank pages
+                const orderedPagesData = textData.pages || [];
+                const blankPages = orderedPagesData.filter(p => p.isBlank);
+                
+                if (blankPages.length > 0 && orderedPagesData.length > 0) {
+                    // Use ordered pages from data.json (includes blank pages)
+                    const imageFiles = textData._imageFiles || [];
+                    const imageMap = {};
+                    imageFiles.forEach(filename => {
+                        const label = filename.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
+                        imageMap[label] = {
+                            label: label,
+                            filename: filename,
+                            imageUrl: `${B2_BASE_URL}/texts/00/00/${folderName}/images/${encodeURIComponent(filename)}`,
+                            isBlank: false
+                        };
+                    });
+                    
+                    // Build ordered page list
+                    orderedPagesData.forEach(page => {
+                        const label = page.label || page.id;
+                        if (page.isBlank) {
+                            annotatorData.pages.push({
+                                label: label,
+                                filename: `blank_${label.replace(/\s+/g, '_')}`,
+                                imageUrl: '',
+                                isBlank: true
+                            });
+                        } else if (imageMap[label]) {
+                            annotatorData.pages.push(imageMap[label]);
+                        }
+                    });
+                    
+                    // Add any images not in orderedPagesData
+                    imageFiles.forEach(filename => {
+                        const label = filename.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
+                        if (!annotatorData.pages.find(p => p.label === label)) {
+                            annotatorData.pages.push(imageMap[label]);
+                        }
+                    });
+                } else if (textData._imageFiles && textData._imageFiles.length > 0) {
+                    // Standard case: just use image files
                     annotatorData.pages = textData._imageFiles.map(filename => {
                         const label = filename.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
                         return {
                             label: label,
                             filename: filename,
-                            imageUrl: `${B2_BASE_URL}/texts/00/00/${folderName}/images/${encodeURIComponent(filename)}`
+                            imageUrl: `${B2_BASE_URL}/texts/00/00/${folderName}/images/${encodeURIComponent(filename)}`,
+                            isBlank: false
                         };
                     });
                 }
@@ -3391,6 +3433,30 @@
             const wrapper = document.getElementById('annotator-canvas-wrapper');
             const img = document.getElementById('annotator-image');
             const canvas = document.getElementById('annotator-canvas');
+            const placeholder = wrapper.querySelector('.blank-page-placeholder');
+            
+            // Check if we're on a blank page
+            const currentPageData = annotatorData.pages.find(p => p.label === annotatorData.currentPage);
+            const isBlankPage = currentPageData && currentPageData.isBlank;
+            
+            let imgWidth, imgHeight, offsetX = 0, offsetY = 0;
+            
+            if (isBlankPage && placeholder) {
+                // Use placeholder dimensions for blank pages
+                imgWidth = placeholder.offsetWidth;
+                imgHeight = placeholder.offsetHeight;
+                
+                canvas.width = imgWidth;
+                canvas.height = imgHeight;
+                canvas.style.width = imgWidth + 'px';
+                canvas.style.height = imgHeight + 'px';
+                
+                const placeholderRect = placeholder.getBoundingClientRect();
+                const wrapperRect = wrapper.getBoundingClientRect();
+                canvas.style.left = (placeholderRect.left - wrapperRect.left + wrapper.scrollLeft) + 'px';
+                canvas.style.top = (placeholderRect.top - wrapperRect.top + wrapper.scrollTop) + 'px';
+                return;
+            }
             
             // Position canvas over image (accounting for object-fit: contain if present)
             const naturalWidth = img.naturalWidth;
@@ -3400,8 +3466,6 @@
             
             const computedStyle = window.getComputedStyle(img);
             const objectFit = computedStyle.objectFit;
-            
-            let imgWidth, imgHeight, offsetX = 0, offsetY = 0;
             
             if (objectFit === 'contain') {
                 const naturalRatio = naturalWidth / naturalHeight;
