@@ -144,7 +144,7 @@
             <ul class="text-list">
                 <li>
                     <div>
-                        <a href="texts/00/00/0000000000000001/index.html">Yr Arglwydd Iesu a Lefarodd</a>
+                        <a href="texts/00/00/0000000000000001/">Yr Arglwydd Iesu a Lefarodd</a>
                         <span class="text-id-small">0000000000000001</span>
                     </div>
                     <span class="text-lang">Welsh</span>
@@ -163,5 +163,17 @@
 
     <script src="search-index.js"></script>
     <script src="search.js"></script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
 </body>
 </html>

@@ -276,7 +276,7 @@
                         .catch(() => ({ id: authorSlug, name: authorRaw }));
                 })).then(authorInfos => {
                     const authorLinks = authorInfos.map(a => 
-                        `<a href="../../../../authors/${a.id}/index.html">${a.name}</a>`
+                        `<a href="../../../../authors/${a.id}/">${a.name}</a>`
                     ).join(', ');
                     const label = authorInfos.length > 1 ? 'Authors' : 'Author';
                     const authorP = document.createElement('p');
@@ -308,7 +308,7 @@
                         .catch(() => ({ id: sourceSlug, name: srcId }));
                 })).then(sourceInfos => {
                     const sourceLinks = sourceInfos.map(s => 
-                        `<a href="../../../../sources/${s.id}/index.html">${s.name}</a>`
+                        `<a href="../../../../sources/${s.id}/">${s.name}</a>`
                     ).join(', ');
                     const srcLabel = sourceInfos.length > 1 ? 'Sources' : 'Source';
                     const srcP = document.createElement('p');
@@ -338,7 +338,7 @@
                         .catch(() => ({ id: provSlug, name: provId }));
                 })).then(provInfos => {
                     const provLinks = provInfos.map(p => 
-                        `<a href="../../../../provenances/${p.id}/index.html">${p.name}</a>`
+                        `<a href="../../../../provenances/${p.id}/">${p.name}</a>`
                     ).join(', ');
                     const provLabel = provInfos.length > 1 ? 'Provenances' : 'Provenance';
                     const provP = document.createElement('p');
@@ -368,7 +368,7 @@
                         .catch(() => ({ id: collSlug, name: collId }));
                 })).then(collInfos => {
                     const collLinks = collInfos.map(c => 
-                        `<a href="../../../../collections/${c.id}/index.html">${c.name}</a>`
+                        `<a href="../../../../collections/${c.id}/">${c.name}</a>`
                     ).join(', ');
                     const collLabel = collInfos.length > 1 ? 'Collections' : 'Collection';
                     const collP = document.createElement('p');
