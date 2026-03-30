@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: TheYakEmperor/babel
   branch: main
 
 media_folder: "uploads"
