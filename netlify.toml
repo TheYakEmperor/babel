@@ -1,5 +1,12 @@
 # Netlify configuration
 
+# Strip index.html from URLs (redirect to clean URL)
+[[redirects]]
+  from = "/*/index.html"
+  to = "/:splat/"
+  status = 301
+  force = true
+
 # Redirect root to texts-index
 [[redirects]]
   from = "/"
@@ -9,6 +16,12 @@
 # Enable Netlify Identity for Decap CMS
 [build]
   publish = "."
+
+# Pretty URLs - serve index.html for directories
+[build.processing]
+  skip_processing = false
+[build.processing.html]
+  pretty_urls = true
 
 # Headers for security
 [[headers]]
