@@ -1,11 +1,5 @@
 # Netlify configuration
 
-# Redirect old admin.html to new Decap CMS
-[[redirects]]
-  from = "/admin.html"
-  to = "/admin/"
-  status = 301
-
 # Strip index.html from URLs (redirect to clean URL)
 [[redirects]]
   from = "/*/index.html"
@@ -19,7 +13,6 @@
   to = "/texts-index.html"
   status = 200
 
-# Enable Netlify Identity for Decap CMS
 [build]
   publish = "."
 
