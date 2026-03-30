@@ -2935,7 +2935,7 @@
                 if (result.remaining) {
                     textEditorData.existingImages = result.remaining.map(f => ({
                         name: f,
-                        url: `texts/00/00/${textId}/images/${f}`
+                        url: `${B2_BASE_URL}/texts/00/00/${textId}/images/${encodeURIComponent(f)}`
                     }));
                 } else {
                     // Remove deleted ones from existing list
@@ -3026,7 +3026,7 @@
                         return {
                             label: label,
                             filename: filename,
-                            imageUrl: `texts/00/00/${folderName}/images/${encodeURIComponent(filename)}`
+                            imageUrl: `${B2_BASE_URL}/texts/00/00/${folderName}/images/${encodeURIComponent(filename)}`
                         };
                     });
                 }
