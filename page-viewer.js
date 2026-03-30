@@ -151,11 +151,17 @@ function initPageViewer(pagesData) {
     
     // Get images from pagesData, manifest, or scan images/ directory
     async function detectImages() {
+        let imageList = [];
+        
         // First check if pagesData has image properties
         if (pagesData && pagesData.length > 0) {
             const fromData = pagesData
-                .filter(p => p.image)
-                .map(p => ({ url: p.image, label: p.label || '' }));
+                .filter(p => p.image || p.isBlank)
+                .map(p => ({ 
+                    url: p.image || '', 
+                    label: p.label || p.id || '',
+                    isBlank: p.isBlank || false
+                }));
             
             if (fromData.length > 0) {
                 return fromData;
@@ -168,10 +174,57 @@ function initPageViewer(pagesData) {
             if (manifestResp.ok) {
                 const manifest = await manifestResp.json();
                 if (manifest.images && manifest.images.length > 0) {
-                    return manifest.images;
+                    imageList = manifest.images;
                 }
             }
         } catch (e) {}
+        
+        // If we have images, check pagesData for blank pages and merge them
+        if (imageList.length > 0 && pagesData && pagesData.length > 0) {
+            // Build ordered list from pagesData, using imageList for non-blank pages
+            const blankPages = pagesData.filter(p => p.isBlank);
+            if (blankPages.length > 0) {
+                // Create a map from label to image entry
+                const imageMap = {};
+                imageList.forEach(img => {
+                    const label = img.label || getPageName(img);
+                    imageMap[label] = img;
+                });
+                
+                // Rebuild list from pagesData order
+                const orderedList = [];
+                pagesData.forEach(page => {
+                    const label = page.label || page.id;
+                    if (page.isBlank) {
+                        orderedList.push({
+                            url: '',
+                            label: label,
+                            isBlank: true
+                        });
+                    } else if (imageMap[label]) {
+                        orderedList.push(imageMap[label]);
+                    }
+                });
+                
+                // Add any images not in pagesData at the end
+                imageList.forEach(img => {
+                    const label = img.label || getPageName(img);
+                    if (!pagesData.find(p => (p.label || p.id) === label)) {
+                        orderedList.push(img);
+                    }
+                });
+                
+                if (orderedList.length > 0) {
+                    return orderedList;
+                }
+            }
+            
+            return imageList;
+        }
+        
+        if (imageList.length > 0) {
+            return imageList;
+        }
         
         // Scan images/ directory listing
         try {
@@ -221,7 +274,32 @@ function initPageViewer(pagesData) {
         return filename.replace(/\.[^.]+$/, '');
     }
     
+    function isPageBlank(item) {
+        return typeof item === 'object' && item.isBlank === true;
+    }
+    
+    // Data URI for blank page placeholder
+    const BLANK_PAGE_PLACEHOLDER = 'data:image/svg+xml,' + encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
+            <defs>
+                <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                    <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                </pattern>
+            </defs>
+            <rect width="600" height="800" fill="#f8f8f8"/>
+            <rect width="600" height="800" fill="url(#grid)"/>
+            <text x="300" y="380" text-anchor="middle" fill="#9ca3af" font-family="sans-serif" font-size="48">📄</text>
+            <text x="300" y="430" text-anchor="middle" fill="#6b7280" font-family="sans-serif" font-size="18">Blank Page</text>
+            <text x="300" y="460" text-anchor="middle" fill="#9ca3af" font-family="sans-serif" font-size="14">Transcription available</text>
+        </svg>
+    `);
+    
     function getPageUrl(item) {
+        // Handle blank pages
+        if (isPageBlank(item)) {
+            return BLANK_PAGE_PLACEHOLDER;
+        }
+        
         const url = typeof item === 'object' ? item.url : item;
         // If already absolute URL, return as-is
         if (url.startsWith('http://') || url.startsWith('https://')) {
