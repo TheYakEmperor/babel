@@ -460,6 +460,9 @@ function initPageViewer(pagesData) {
         images.forEach((url, i) => {
             const wrapper = document.createElement('div');
             wrapper.className = 'page-viewer-thumb-wrapper';
+            if (isPageBlank(url)) {
+                wrapper.classList.add('blank-page');
+            }
             
             const thumb = document.createElement('img');
             thumb.className = 'page-viewer-thumb';
