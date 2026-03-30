@@ -406,6 +406,10 @@ function initPageViewer(pagesData) {
                 } else {
                     showSingle(i);
                 }
+                // Update transcription panel if in transcription mode
+                if (isTranscriptionMode && transcriptionPanel && refreshTranscriptionPanel) {
+                    refreshTranscriptionPanel();
+                }
             });
             thumbContainer.appendChild(wrapper);
         });
