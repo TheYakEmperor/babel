@@ -3850,6 +3850,19 @@
         
         async function saveAllRegions() {
             try {
+                // Save page order first if pages were reordered or blank pages added
+                if (annotatorData.pagesReordered) {
+                    await api('save-page-order', {
+                        textId: annotatorData.textId,
+                        pages: annotatorData.pages.map(p => ({
+                            label: p.label,
+                            filename: p.filename,
+                            isBlank: p.isBlank || false
+                        }))
+                    });
+                    annotatorData.pagesReordered = false;
+                }
+                
                 await api('save-regions', {
                     textId: annotatorData.textId,
                     regions: annotatorData.regions

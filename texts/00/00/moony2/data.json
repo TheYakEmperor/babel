@@ -23,6 +23,41 @@
       ]
     },
     {
+      "id": "brroooon",
+      "label": "brroooon",
+      "isBlank": true,
+      "regions": [
+        {
+          "x": 0.425,
+          "y": 0.35974609375,
+          "width": 0.2866666666666667,
+          "height": 0.1675,
+          "title": "df",
+          "text": "shleeb"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "label": "2"
+    },
+    {
+      "id": "3",
+      "label": "3"
+    },
+    {
+      "id": "4",
+      "label": "4"
+    },
+    {
+      "id": "5",
+      "label": "5"
+    },
+    {
+      "id": "6",
+      "label": "6"
+    },
+    {
       "id": "coon",
       "label": "coon",
       "regions": [
