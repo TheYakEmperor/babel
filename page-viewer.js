@@ -153,17 +153,19 @@ function initPageViewer(pagesData) {
     async function detectImages() {
         let imageList = [];
         
-        // First check if pagesData has image properties
+        // First check if pagesData has image properties directly (inline images)
         if (pagesData && pagesData.length > 0) {
-            const fromData = pagesData
-                .filter(p => p.image || p.isBlank)
-                .map(p => ({ 
+            // Only use early return if ALL pages have image URLs (not just blank pages)
+            const pagesWithImages = pagesData.filter(p => p.image);
+            const blankPages = pagesData.filter(p => p.isBlank);
+            
+            // If we have image URLs for non-blank pages, use pagesData directly
+            if (pagesWithImages.length > 0 && pagesWithImages.length + blankPages.length === pagesData.length) {
+                const fromData = pagesData.map(p => ({ 
                     url: p.image || '', 
                     label: p.label || p.id || '',
                     isBlank: p.isBlank || false
                 }));
-            
-            if (fromData.length > 0) {
                 return fromData;
             }
         }
