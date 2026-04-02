@@ -5,7 +5,10 @@
   "author": "white-smith-music-pub-co",
   "source": "John Hay Library: Sheet Music Collection",
   "date": "1897",
-  "language": ["stan1293","earl1247"],
+  "language": [
+    "stan1293",
+    "earl1247"
+  ],
   "pages": [
     {
       "id": "page-1",
@@ -16,6 +19,20 @@
           "elementId": "coon-from-the-moon-1",
           "title": "The coon from the moon: a jolly Negro song",
           "content": ""
+        }
+      ]
+    },
+    {
+      "id": "coon",
+      "label": "coon",
+      "regions": [
+        {
+          "x": 0.325,
+          "y": 0.39599609375,
+          "width": 0.23,
+          "height": 0.13375,
+          "title": "g",
+          "text": "hoon"
         }
       ]
     }
