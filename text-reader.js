@@ -2217,6 +2217,15 @@ function _initTextReaderInternal() {
                 resultsHtml += oeHtml;
                 resultsHtml += '</div>';
             }
+            
+            // If no Wiktionary results and this is Ancient Greek, show Logeion link
+            if (!foundWiktionary && isAncientGreekLanguage(languages)) {
+                console.log('No Wiktionary entry, showing Logeion link for:', cleanWord);
+                const agHtml = createAncientGreekDictionaryLink(cleanWord);
+                resultsHtml += `<div class="dict-word-entry"><h3>${cleanWord}</h3>`;
+                resultsHtml += agHtml;
+                resultsHtml += '</div>';
+            }
         }
         
         // If no results at all, remove the tab and deselect

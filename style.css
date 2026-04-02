@@ -2955,7 +2955,8 @@ body.viewer-fullscreen .search-container {
 
 /* External dictionary fallback links (Tuvan Talking Dictionary, etc.) */
 .dict-tuvan-fallback,
-.dict-oe-fallback {
+.dict-oe-fallback,
+.dict-ag-fallback {
     margin: 8px 0;
     padding: 12px;
     background: rgba(255, 255, 255, 0.05);
@@ -2964,32 +2965,37 @@ body.viewer-fullscreen .search-container {
 }
 
 .dict-tuvan-fallback .dict-label,
-.dict-oe-fallback .dict-label {
+.dict-oe-fallback .dict-label,
+.dict-ag-fallback .dict-label {
     color: #888;
     font-size: 0.85em;
     margin-bottom: 6px;
 }
 
 .dict-tuvan-link,
-.dict-oe-link {
+.dict-oe-link,
+.dict-ag-link {
     margin: 8px 0;
 }
 
 .dict-tuvan-link a,
-.dict-oe-link a {
+.dict-oe-link a,
+.dict-ag-link a {
     color: #daa520;
     text-decoration: none;
     font-weight: 500;
 }
 
 .dict-tuvan-link a:hover,
-.dict-oe-link a:hover {
+.dict-oe-link a:hover,
+.dict-ag-link a:hover {
     color: #f0c040;
     text-decoration: underline;
 }
 
 .dict-tuvan-note,
-.dict-oe-note {
+.dict-oe-note,
+.dict-ag-note {
     color: #666;
     font-size: 0.8em;
     margin-top: 6px;
