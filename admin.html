@@ -1050,6 +1050,7 @@
                     <h4>Pages</h4>
                     <div class="annotator-page-toolbar">
                         <button onclick="insertBlankPage()" title="Insert blank page">+ Blank</button>
+                        <button onclick="deleteCurrentPage()" title="Delete current page">Delete</button>
                         <button onclick="savePageOrder()" title="Save page order">Save Order</button>
                     </div>
                     <div class="annotator-page-list" id="annotator-pages"></div>
@@ -3346,6 +3347,48 @@
                 el.classList.remove('drag-over');
             });
             draggedPageIndex = null;
+        }
+        
+        // Delete current page
+        function deleteCurrentPage() {
+            if (!annotatorData.currentPage) {
+                showStatus('No page selected', true);
+                return;
+            }
+            
+            const page = annotatorData.pages.find(p => p.label === annotatorData.currentPage);
+            if (!page) return;
+            
+            const isBlank = page.isBlank;
+            const warningMsg = isBlank 
+                ? `Delete blank page "${annotatorData.currentPage}"?`
+                : `Delete page "${annotatorData.currentPage}"? This will remove it from the page list (the image file will not be deleted).`;
+            
+            if (!confirm(warningMsg)) return;
+            
+            const currentIndex = annotatorData.pages.findIndex(p => p.label === annotatorData.currentPage);
+            
+            // Remove page from pages array
+            annotatorData.pages.splice(currentIndex, 1);
+            
+            // Remove regions for this page
+            delete annotatorData.regions[annotatorData.currentPage];
+            
+            annotatorData.pagesReordered = true;
+            
+            // Select adjacent page
+            if (annotatorData.pages.length > 0) {
+                const newIndex = Math.min(currentIndex, annotatorData.pages.length - 1);
+                annotatorData.currentPage = annotatorData.pages[newIndex].label;
+            } else {
+                annotatorData.currentPage = null;
+            }
+            
+            renderAnnotatorPages();
+            if (annotatorData.currentPage) {
+                selectAnnotatorPage(annotatorData.currentPage);
+            }
+            showStatus(`Page deleted. Don't forget to save.`);
         }
         
         // Insert blank page
