@@ -905,6 +905,36 @@ function _initTextReaderInternal() {
         return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
     
+    // Normalize Greek sigma variants (final sigma ς ↔ medial sigma σ)
+    function normalizeGreekSigma(str) {
+        // Convert all final sigmas to medial sigmas for consistent lookup
+        return str.replace(/ς/g, 'σ');
+    }
+    
+    // Generate Greek sigma variants (for lookup - try both ς and σ endings)
+    function getGreekSigmaVariants(word) {
+        const variants = [word];
+        // If word ends in σ, also try ς
+        if (word.endsWith('σ')) {
+            variants.push(word.slice(0, -1) + 'ς');
+        }
+        // If word ends in ς, also try σ
+        if (word.endsWith('ς')) {
+            variants.push(word.slice(0, -1) + 'σ');
+        }
+        // Also try all internal ς as σ and vice versa
+        if (word.includes('ς') || word.includes('σ')) {
+            variants.push(word.replace(/ς/g, 'σ'));
+            variants.push(word.replace(/σ/g, 'ς'));
+        }
+        return [...new Set(variants)];
+    }
+    
+    // Check if a word contains Greek characters
+    function isGreekWord(word) {
+        return /[\u0370-\u03FF\u1F00-\u1FFF]/.test(word);
+    }
+
     // Common accent variants for single letters (for exhaustive lookup)
     const ACCENT_VARIANTS = {
         'a': ['a', 'á', 'à', 'â', 'ä', 'ã', 'å', 'ā', 'ă', 'ą'],
@@ -1037,6 +1067,24 @@ function _initTextReaderInternal() {
                 const withoutLeadingCapital = withoutLeading.charAt(0).toUpperCase() + withoutLeading.slice(1);
                 await tryWord(withoutLeading);
                 await tryWord(withoutLeadingCapital);
+            }
+        }
+        
+        // For Greek words, also try sigma variants (ς ↔ σ)
+        if (isGreekWord(lowerWord)) {
+            console.log('Greek word detected, trying sigma variants');
+            const sigmaVariants = getGreekSigmaVariants(lowerWord);
+            for (const variant of sigmaVariants) {
+                if (variant !== lowerWord) {
+                    await tryWord(variant);
+                }
+            }
+            // Also try sigma variants with accents stripped
+            if (hasAccents) {
+                const plainSigmaVariants = getGreekSigmaVariants(plainWord);
+                for (const variant of plainSigmaVariants) {
+                    await tryWord(variant);
+                }
             }
         }
         
@@ -1197,6 +1245,12 @@ function _initTextReaderInternal() {
         'tuvan': ['tuvinian'],
         'modern greek': ['greek'],
         'greek': ['modern greek'],
+        // Ancient Greek - Glottolog uses "Ionic-Attic Ancient Greek", Wiktionary uses "Ancient Greek"
+        'ionic-attic ancient greek': ['ancient greek'],
+        'ancient greek': ['ionic-attic ancient greek'],
+        'koine greek': ['ancient greek', 'koine'],
+        'attic greek': ['ancient greek'],
+        'homeric greek': ['ancient greek'],
         'mandarin chinese': ['chinese', 'mandarin'],
         'chinese': ['mandarin chinese', 'mandarin'],
         'standard arabic': ['arabic'],
@@ -1276,6 +1330,38 @@ function _initTextReaderInternal() {
         html += 'Bosworth-Toller Anglo-Saxon Dictionary ↗</a>';
         html += '</div>';
         html += '<div class="dict-oe-note">(The standard Old English dictionary)</div>';
+        html += '</div>';
+        
+        return html;
+    }
+
+    // === ANCIENT GREEK DICTIONARY FALLBACK ===
+    // Logeion (University of Chicago): https://logeion.uchicago.edu/
+    // Used as a fallback for Ancient Greek words when Wiktionary has no entry
+    // Covers LSJ (Liddell-Scott-Jones), Middle Liddell, Slater, Autenrieth, and more
+    
+    // Check if language is Ancient Greek (various names)
+    function isAncientGreekLanguage(languages) {
+        const agNames = ['ancient greek', 'ionic-attic ancient greek', 'attic greek', 
+            'homeric greek', 'koine greek', 'classical greek', 'koine'];
+        return languages.some(lang => 
+            agNames.some(name => lang.toLowerCase().includes(name))
+        );
+    }
+    
+    // Create a link to Logeion search
+    function createAncientGreekDictionaryLink(word) {
+        // Strip accents for search - Logeion handles both with and without
+        const searchWord = stripAccents(word);
+        const searchUrl = `https://logeion.uchicago.edu/${encodeURIComponent(searchWord)}`;
+        
+        let html = '<div class="dict-ag-fallback">';
+        html += '<div class="dict-label">Not found in Wiktionary</div>';
+        html += '<div class="dict-ag-link">';
+        html += 'Try <a href="' + searchUrl + '" target="_blank" rel="noopener">';
+        html += 'Logeion ↗</a>';
+        html += '</div>';
+        html += '<div class="dict-ag-note">(LSJ, Middle Liddell, Slater & more)</div>';
         html += '</div>';
         
         return html;
