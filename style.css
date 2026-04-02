@@ -1755,7 +1755,6 @@ body.viewer-fullscreen .search-container {
 
 .pv-popup-region {
     padding: 12px 0;
-    padding-top: 24px; /* Make room for title and work caption */
     font-family: 'Junicode', 'EB Garamond', Georgia, serif;
     font-size: 1.1rem;
     line-height: 1.1;
@@ -1788,36 +1787,34 @@ body.viewer-fullscreen .search-container {
 }
 
 .pv-popup-region:first-child {
-    padding-top: 18px; /* Still need room for title on first region */
+    padding-top: 0;
 }
 
 .pv-popup-region:last-child {
     padding-bottom: 0;
 }
 
+/* Header row for title and work caption */
+.pv-region-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+    gap: 12px;
+}
+
 .pv-region-title-corner {
-    position: absolute;
-    top: 0;
-    right: 0;
     font-size: 0.75rem;
     color: #9ca3af;
     font-style: italic;
-    padding: 2px 0 2px 8px;
-}
-
-.pv-popup-region:first-child .pv-region-title-corner {
-    top: -2px;
+    margin-left: auto; /* Push to right when alone */
 }
 
 .pv-work-caption {
-    position: absolute;
-    top: 0;
-    left: 0;
     font-size: 0.75rem;
     font-weight: 500;
     color: #9ca3af;
     font-style: italic;
-    padding: 2px 8px 2px 0;
 }
 
 .pv-work-caption a {

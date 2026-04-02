@@ -1026,20 +1026,23 @@ function initPageViewer(pagesData) {
                             isFirstOfWork = false;
                         }
                         const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
-                        regionsHtml += `<div class="pv-popup-region">${workCaptionHtml}${titleHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
+                        const headerHtml = (workCaptionHtml || titleHtml) ? `<div class="pv-region-header">${workCaptionHtml}${titleHtml}</div>` : '';
+                        regionsHtml += `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
                     });
                 } else {
                     // No works - just show regions with titles
                     regionsHtml = selectedRegions.map(({ region }) => {
                         const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
-                        return `<div class="pv-popup-region">${titleHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
+                        const headerHtml = titleHtml ? `<div class="pv-region-header">${titleHtml}</div>` : '';
+                        return `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
                     }).join('');
                 }
             } else {
                 // Single region - show with title if present
                 const { region } = selectedRegions[0];
                 const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
-                regionsHtml = `<div class="pv-popup-region">${titleHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
+                const headerHtml = titleHtml ? `<div class="pv-region-header">${titleHtml}</div>` : '';
+                regionsHtml = `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
             }
             
             // Build work link if single region with work
@@ -1316,13 +1319,15 @@ function initPageViewer(pagesData) {
                         workCaptionHtml = `<span class="pv-work-caption">${captionContent}</span>`;
                     }
                     const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
-                    html += `<div class="pv-popup-region">${workCaptionHtml}${titleHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
+                    const headerHtml = (workCaptionHtml || titleHtml) ? `<div class="pv-region-header">${workCaptionHtml}${titleHtml}</div>` : '';
+                    html += `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
                 });
             } else {
                 // No works - just show regions with titles
                 allRegions.forEach((region) => {
                     const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
-                    html += `<div class="pv-popup-region">${titleHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
+                    const headerHtml = titleHtml ? `<div class="pv-region-header">${titleHtml}</div>` : '';
+                    html += `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
                 });
             }
             
@@ -1493,7 +1498,8 @@ function initPageViewer(pagesData) {
                     const text = node.textContent;
                     if (!text.trim()) return;
                     
-                    // Skip if inside title corner or work caption (check ancestors, not just parent)
+                    // Skip if inside title corner, work caption, or header row
+                    if (node.parentElement.closest('.pv-region-header')) return;
                     if (node.parentElement.closest('.pv-region-title-corner')) return;
                     if (node.parentElement.closest('.pv-work-caption')) return;
                     
