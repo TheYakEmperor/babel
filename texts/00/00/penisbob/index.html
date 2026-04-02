@@ -93,11 +93,12 @@
         if (entry) {
             return {
                 id: entry.id,
-                name: entry.name.replace(/^† /, ''), // Remove extinct marker
-                path: 'languages/' + entry.url
+                name: entry.name.replace(/^† /, ''), // Remove extinct marker (we'll add it via extinct flag)
+                path: 'languages/' + entry.url,
+                extinct: entry.extinct || false
             };
         }
-        return { id: langId, name: langId, path: null };
+        return { id: langId, name: langId, path: null, extinct: false };
     }
     
     // Format language(s) for display - supports single string, array of strings, or object/array of objects
@@ -114,16 +115,18 @@
                 return {
                     id: lang.id,
                     name: lang.name || lookup.name,
-                    path: lang.path || lookup.path
+                    path: lang.path || lookup.path,
+                    extinct: lookup.extinct
                 };
             }
         });
         
         // Build display HTML
         const links = langInfos.map(lang => {
+            const extMarker = lang.extinct ? '† ' : '';
             const link = lang.path ? 
-                `<a href="../../../../${lang.path}"><strong>${lang.name}</strong></a>` :
-                `<strong>${lang.name}</strong>`;
+                `<a href="../../../../${lang.path}"><strong>${extMarker}${lang.name}</strong></a>` :
+                `<strong>${extMarker}${lang.name}</strong>`;
             return link;
         });
         

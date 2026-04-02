@@ -168,6 +168,18 @@ function initPageViewer(pagesData) {
                 }));
                 return fromData;
             }
+            
+            // If ALL pages are blank (no images at all), still show them
+            if (blankPages.length > 0 && pagesWithImages.length === 0) {
+                const fromData = pagesData.filter(p => p.isBlank).map(p => ({ 
+                    url: '', 
+                    label: p.label || p.id || '',
+                    isBlank: true
+                }));
+                if (fromData.length > 0) {
+                    return fromData;
+                }
+            }
         }
         
         // Check for images.json manifest (for B2-hosted images)
