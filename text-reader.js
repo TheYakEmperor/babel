@@ -934,6 +934,34 @@ function _initTextReaderInternal() {
     function isGreekWord(word) {
         return /[\u0370-\u03FF\u1F00-\u1FFF]/.test(word);
     }
+    
+    // Check if a word looks like romanized Greek (common Greek consonant clusters)
+    function looksLikeRomanizedGreek(word) {
+        const greekPatterns = /^(ph|th|ch|ps|ks|x|rh)|ou|ai|ei|oi|au|eu|(os|on|es|is|as|us|oi|ai)$/i;
+        return greekPatterns.test(word) && /^[a-z]+$/i.test(word);
+    }
+    
+    // Convert romanized Greek to Greek script (basic transliteration)
+    function latinToGreek(word) {
+        const map = {
+            'th': 'θ', 'ph': 'φ', 'ch': 'χ', 'ps': 'ψ', 'ks': 'ξ', 'rh': 'ρ',
+            'ou': 'ου', 'ai': 'αι', 'ei': 'ει', 'oi': 'οι', 'au': 'αυ', 'eu': 'ευ',
+            'a': 'α', 'b': 'β', 'g': 'γ', 'd': 'δ', 'e': 'ε', 'z': 'ζ',
+            'h': 'η', 'i': 'ι', 'k': 'κ', 'l': 'λ', 'm': 'μ', 'n': 'ν',
+            'x': 'ξ', 'o': 'ο', 'p': 'π', 'r': 'ρ', 's': 'σ', 't': 'τ',
+            'u': 'υ', 'y': 'υ', 'w': 'ω', 'c': 'κ'
+        };
+        let result = word.toLowerCase();
+        // Replace digraphs first (longer sequences first)
+        for (const [latin, greek] of Object.entries(map).sort((a, b) => b[0].length - a[0].length)) {
+            result = result.split(latin).join(greek);
+        }
+        // Final sigma
+        if (result.endsWith('σ')) {
+            result = result.slice(0, -1) + 'ς';
+        }
+        return result;
+    }
 
     // Common accent variants for single letters (for exhaustive lookup)
     const ACCENT_VARIANTS = {
@@ -1088,6 +1116,20 @@ function _initTextReaderInternal() {
             }
         }
         
+        // For romanized Greek, also try the Greek script version
+        if (!isGreekWord(lowerWord) && looksLikeRomanizedGreek(plainWord)) {
+            console.log('Word looks like romanized Greek, trying Greek script');
+            const greekVersion = latinToGreek(plainWord);
+            await tryWord(greekVersion);
+            // Also try sigma variants
+            const greekSigmaVariants = getGreekSigmaVariants(greekVersion);
+            for (const variant of greekSigmaVariants) {
+                if (variant !== greekVersion) {
+                    await tryWord(variant);
+                }
+            }
+        }
+        
         // For single letters, try ALL accent variants (opensearch doesn't help here)
         if (plainWord.length === 1 && ACCENT_VARIANTS[plainWord]) {
             console.log('Single letter - trying all accent variants for:', plainWord);
@@ -1149,6 +1191,17 @@ function _initTextReaderInternal() {
             const candidatePages = new Set();
             // Limit to avoid too many API calls - prioritize common accents (grave, acute, circumflex)
             const priorityVariants = [lowerWord, plainWord, ...accentVariants.slice(0, 10)];
+            
+            // If word looks like romanized Greek, also search for Greek script version
+            if (looksLikeRomanizedGreek(plainWord)) {
+                const greekVersion = latinToGreek(plainWord);
+                console.log('Word looks like romanized Greek, also searching for:', greekVersion);
+                priorityVariants.push(greekVersion);
+                // Also try sigma variants
+                const greekSigmaVariants = getGreekSigmaVariants(greekVersion);
+                priorityVariants.push(...greekSigmaVariants);
+            }
+            
             const uniqueVariants = [...new Set(priorityVariants)];
             
             for (const variant of uniqueVariants) {
@@ -1175,8 +1228,29 @@ function _initTextReaderInternal() {
             console.log('Candidate pages from content search:', [...candidatePages]);
             
             // Fetch candidate pages and verify word appears as a FORM in:
-            // 1. Inflection TABLE cells (mutation/conjugation forms)
+            // 1. Any TABLE cells (not just named inflection tables - Greek uses el-decl, grc-decl, etc.)
             // 2. Headword line (plural, comparative, superlative, etc.)
+            // 3. Bold/strong text (forms are often bolded)
+            // Prepare Greek version for matching if applicable
+            const greekWord = looksLikeRomanizedGreek(plainWord) ? latinToGreek(plainWord) : null;
+            const greekWordStripped = greekWord ? stripAccents(greekWord) : null;
+            
+            // Helper to check if a form matches our target word
+            function formMatches(form) {
+                const formLower = form.toLowerCase();
+                const formPlain = stripAccents(formLower);
+                // Match against Latin version
+                if (formPlain === plainWord) return true;
+                // Match against Greek version (if we have one)
+                if (greekWordStripped) {
+                    // Also strip sigmas for comparison
+                    const formNoSigma = formPlain.replace(/[σς]/g, 'σ');
+                    const greekNoSigma = greekWordStripped.replace(/[σς]/g, 'σ');
+                    if (formNoSigma === greekNoSigma) return true;
+                }
+                return false;
+            }
+            
             for (const page of [...candidatePages].slice(0, 5)) {
                 const result = await lookupWiktionary(page);
                 if (!result.error && result.html) {
@@ -1184,24 +1258,45 @@ function _initTextReaderInternal() {
                     
                     let foundAsForm = false;
                     
-                    // Check inflection tables
-                    const tables = tempDoc.querySelectorAll('table.inflection-table, table[class*="inflection"]');
+                    // Check ALL tables - not just inflection-table (Greek uses grc-decl, el-decl, etc.)
+                    const tables = tempDoc.querySelectorAll('table');
                     for (const table of tables) {
-                        const cells = table.querySelectorAll('td');
+                        // Skip navboxes and non-inflection tables
+                        const tableClass = (table.className || '').toLowerCase();
+                        if (tableClass.includes('navbox') || tableClass.includes('metadata') || tableClass.includes('ambox')) continue;
+                        
+                        const cells = table.querySelectorAll('td, th');
                         for (const cell of cells) {
                             const cellText = cell.textContent.trim();
-                            const forms = cellText.split(/[,\/]+/).map(f => f.trim());
+                            // Split on commas, slashes, parentheses, and whitespace for forms
+                            const forms = cellText.split(/[,\/\(\)\s]+/).map(f => f.trim()).filter(f => f);
                             for (const form of forms) {
-                                const formPlain = stripAccents(form.toLowerCase());
-                                if (formPlain === plainWord && !form.includes(' ')) {
+                                if (formMatches(form) && !form.includes(' ') && form.length > 1) {
                                     foundAsForm = true;
-                                    console.log('MATCH FOUND in table cell:', form);
+                                    console.log('MATCH FOUND in table cell:', form, 'in table:', tableClass);
                                     break;
                                 }
                             }
                             if (foundAsForm) break;
                         }
                         if (foundAsForm) break;
+                    }
+                    
+                    // Check bold/strong text in the page (forms are often bolded)
+                    if (!foundAsForm) {
+                        const boldElements = tempDoc.querySelectorAll('b, strong');
+                        for (const bold of boldElements) {
+                            const boldText = bold.textContent.trim();
+                            const forms = boldText.split(/[,\/\(\)\s]+/).map(f => f.trim()).filter(f => f);
+                            for (const form of forms) {
+                                if (formMatches(form) && !form.includes(' ') && form.length > 1) {
+                                    foundAsForm = true;
+                                    console.log('MATCH FOUND in bold text:', form);
+                                    break;
+                                }
+                            }
+                            if (foundAsForm) break;
+                        }
                     }
                     
                     // Check headword lines for form-of (plural, comparative, etc.)
@@ -1212,8 +1307,7 @@ function _initTextReaderInternal() {
                             const formLinks = hwLine.querySelectorAll('b.form-of a, .form-of a, a.form-of');
                             for (const link of formLinks) {
                                 const linkText = link.textContent.trim();
-                                const linkPlain = stripAccents(linkText.toLowerCase());
-                                if (linkPlain === plainWord) {
+                                if (formMatches(linkText)) {
                                     foundAsForm = true;
                                     console.log('MATCH FOUND in headword line:', linkText);
                                     break;
