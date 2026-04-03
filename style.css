@@ -1765,7 +1765,8 @@ body.viewer-fullscreen .search-container {
 /* Region content wrapper - maintains its own intrinsic width */
 .pv-region-content {
     width: fit-content;
-    max-width: 100%;
+    max-width: calc(100% - 160px); /* Leave space for side titles */
+    margin: 0 80px; /* Center with side margins for titles */
 }
 
 /* Centered content keeps intrinsic width but centers the block */
@@ -1794,20 +1795,28 @@ body.viewer-fullscreen .search-container {
     padding-bottom: 0;
 }
 
-/* Header row for title and work caption */
+/* Header row for title and work caption - positioned alongside first line */
 .pv-region-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 10px;
-    gap: 12px;
+    pointer-events: none;
+}
+
+.pv-region-header > * {
+    pointer-events: auto;
 }
 
 .pv-region-title-corner {
     font-size: 0.75rem;
     color: #9ca3af;
     font-style: italic;
-    margin-left: auto; /* Push to right when alone */
+    margin-left: auto;
+    padding-left: 12px;
 }
 
 .pv-work-caption {
@@ -1815,6 +1824,7 @@ body.viewer-fullscreen .search-container {
     font-weight: 500;
     color: #9ca3af;
     font-style: italic;
+    padding-right: 12px;
 }
 
 .pv-work-caption a {
@@ -2090,15 +2100,23 @@ body.viewer-fullscreen .search-container {
 
 .pv-transcription-panel .pv-region-content {
     width: fit-content;
-    max-width: 100%;
+    max-width: calc(100% - 160px);
+    margin: 0 80px;
 }
 
 .pv-transcription-panel .pv-region-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 10px;
-    gap: 12px;
+    pointer-events: none;
+}
+
+.pv-transcription-panel .pv-region-header > * {
+    pointer-events: auto;
 }
 
 .pv-transcription-panel .pv-region-title-corner {
@@ -2106,6 +2124,7 @@ body.viewer-fullscreen .search-container {
     color: #9ca3af;
     font-style: italic;
     margin-left: auto;
+    padding-left: 12px;
 }
 
 .pv-transcription-panel .pv-work-caption {
@@ -2113,6 +2132,7 @@ body.viewer-fullscreen .search-container {
     font-weight: 500;
     color: #9ca3af;
     font-style: italic;
+    padding-right: 12px;
 }
 
 .pv-transcription-panel .pv-work-caption a {
