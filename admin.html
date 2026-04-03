@@ -3663,6 +3663,7 @@
                 const wrapperRect = wrapper.getBoundingClientRect();
                 canvas.style.left = (placeholderRect.left - wrapperRect.left + wrapper.scrollLeft) + 'px';
                 canvas.style.top = (placeholderRect.top - wrapperRect.top + wrapper.scrollTop) + 'px';
+                setupDrawHandlers();  // Enable click/drag on canvas
                 return;
             }
             
@@ -3703,6 +3704,7 @@
             const wrapperRect = wrapper.getBoundingClientRect();
             canvas.style.left = (imgRect.left - wrapperRect.left + wrapper.scrollLeft + offsetX) + 'px';
             canvas.style.top = (imgRect.top - wrapperRect.top + wrapper.scrollTop + offsetY) + 'px';
+            setupDrawHandlers();  // Enable click/drag on canvas
         }
         
         function drawAnnotatorRegions() {
@@ -3726,10 +3728,10 @@
                 ctx.fillStyle = isSelected ? 'rgba(239, 68, 68, 0.2)' : 'rgba(59, 130, 246, 0.15)';
                 ctx.fillRect(x, y, w, h);
                 
-                // Draw region number
+                // Draw region number with move indicator for selected
                 ctx.fillStyle = isSelected ? '#ef4444' : '#3b82f6';
                 ctx.font = 'bold 14px sans-serif';
-                ctx.fillText(`${i + 1}`, x + 5, y + 18);
+                ctx.fillText(`${i + 1}${isSelected ? ' ✥' : ''}`, x + 5, y + 18);
             });
         }
         
@@ -3743,7 +3745,10 @@
                 return;
             }
             
-            container.innerHTML = regions.map((region, i) => {
+            // Add instruction at top
+            let html = '<p style="color:#9ca3af;font-size:0.75em;margin:0 0 8px;text-align:center;">Drag regions on canvas to reposition</p>';
+            
+            html += regions.map((region, i) => {
                 // Strip HTML for preview
                 const plainText = (region.text || '').replace(/<[^>]*>/g, '').trim() || '(no text)';
                 const workName = region.workId ? (annotatorData.works.find(w => w.id === region.workId)?.title || '').replace(/^\s*└\s*/, '') : '';
@@ -3762,6 +3767,8 @@
                     <div class="region-preview">${plainText.substring(0, 50)}${plainText.length > 50 ? '...' : ''}</div>
                 </div>
             `}).join('');
+            
+            container.innerHTML = html;
             
             // Show editor if region selected
             if (annotatorData.selectedRegion !== null) {
@@ -3867,90 +3874,152 @@
             btn.textContent = annotatorData.isDrawing ? 'Cancel' : 'Draw Region';
             canvas.classList.toggle('drawing', annotatorData.isDrawing);
             
-            if (annotatorData.isDrawing) {
-                setupDrawHandlers();
-            }
+            setupDrawHandlers();  // Always ensure handlers are set up
         }
         
         let drawStart = null;
         let currentRect = null;
+        let draggedRegion = null;  // For moving regions on canvas
+        let dragOffset = null;     // Offset from region corner during drag
+        
+        // Find which region (if any) contains a point
+        function findRegionAtPoint(canvasX, canvasY) {
+            const canvas = document.getElementById('annotator-canvas');
+            const regions = annotatorData.regions[annotatorData.currentPage] || [];
+            
+            // Check in reverse order (top regions first)
+            for (let i = regions.length - 1; i >= 0; i--) {
+                const region = regions[i];
+                const x = region.x * canvas.width;
+                const y = region.y * canvas.height;
+                const w = region.width * canvas.width;
+                const h = region.height * canvas.height;
+                
+                if (canvasX >= x && canvasX <= x + w && canvasY >= y && canvasY <= y + h) {
+                    return i;
+                }
+            }
+            return -1;
+        }
         
         function setupDrawHandlers() {
             const canvas = document.getElementById('annotator-canvas');
             
             const onMouseDown = (e) => {
-                if (!annotatorData.isDrawing) return;
                 const rect = canvas.getBoundingClientRect();
                 const scaleX = canvas.width / rect.width;
                 const scaleY = canvas.height / rect.height;
-                drawStart = {
-                    x: (e.clientX - rect.left) * scaleX,
-                    y: (e.clientY - rect.top) * scaleY
-                };
-                currentRect = null;
+                const canvasX = (e.clientX - rect.left) * scaleX;
+                const canvasY = (e.clientY - rect.top) * scaleY;
+                
+                if (annotatorData.isDrawing) {
+                    // Drawing mode - start new region
+                    drawStart = {
+                        x: canvasX,
+                        y: canvasY
+                    };
+                    currentRect = null;
+                } else {
+                    // Not drawing - check if clicking on existing region to move it
+                    const regionIndex = findRegionAtPoint(canvasX, canvasY);
+                    if (regionIndex >= 0) {
+                        // Start dragging this region
+                        const region = annotatorData.regions[annotatorData.currentPage][regionIndex];
+                        const regionX = region.x * canvas.width;
+                        const regionY = region.y * canvas.height;
+                        
+                        draggedRegion = regionIndex;
+                        dragOffset = {
+                            x: canvasX - regionX,
+                            y: canvasY - regionY
+                        };
+                        
+                        // Select the region
+                        annotatorData.selectedRegion = regionIndex;
+                        renderAnnotatorRegions();
+                        drawAnnotatorRegions();
+                        
+                        canvas.style.cursor = 'grabbing';
+                    }
+                }
             };
             
             const onMouseMove = (e) => {
-                if (!annotatorData.isDrawing || !drawStart) return;
                 const rect = canvas.getBoundingClientRect();
                 const scaleX = canvas.width / rect.width;
                 const scaleY = canvas.height / rect.height;
                 const currentX = (e.clientX - rect.left) * scaleX;
                 const currentY = (e.clientY - rect.top) * scaleY;
                 
-                currentRect = {
-                    x: Math.min(drawStart.x, currentX),
-                    y: Math.min(drawStart.y, currentY),
-                    width: Math.abs(currentX - drawStart.x),
-                    height: Math.abs(currentY - drawStart.y)
-                };
-                
-                // Redraw with current selection
-                drawAnnotatorRegions();
-                const ctx = canvas.getContext('2d');
-                ctx.strokeStyle = 'rgba(239, 68, 68, 0.9)';
-                ctx.lineWidth = 2;
-                ctx.setLineDash([5, 3]);
-                ctx.strokeRect(currentRect.x, currentRect.y, currentRect.width, currentRect.height);
-                ctx.setLineDash([]);
+                if (annotatorData.isDrawing && drawStart) {
+                    // Drawing new region
+                    currentRect = {
+                        x: Math.min(drawStart.x, currentX),
+                        y: Math.min(drawStart.y, currentY),
+                        width: Math.abs(currentX - drawStart.x),
+                        height: Math.abs(currentY - drawStart.y)
+                    };
+                    
+                    // Redraw with current selection
+                    drawAnnotatorRegions();
+                    const ctx = canvas.getContext('2d');
+                    ctx.strokeStyle = 'rgba(239, 68, 68, 0.9)';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([5, 3]);
+                    ctx.strokeRect(currentRect.x, currentRect.y, currentRect.width, currentRect.height);
+                    ctx.setLineDash([]);
+                } else if (draggedRegion !== null && dragOffset) {
+                    // Moving existing region
+                    const region = annotatorData.regions[annotatorData.currentPage][draggedRegion];
+                    const newX = currentX - dragOffset.x;
+                    const newY = currentY - dragOffset.y;
+                    
+                    // Update region position (normalized)
+                    region.x = Math.max(0, Math.min(1 - region.width, newX / canvas.width));
+                    region.y = Math.max(0, Math.min(1 - region.height, newY / canvas.height));
+                    
+                    drawAnnotatorRegions();
+                } else if (!annotatorData.isDrawing) {
+                    // Update cursor based on hover
+                    const regionIndex = findRegionAtPoint(currentX, currentY);
+                    canvas.style.cursor = regionIndex >= 0 ? 'grab' : 'default';
+                }
             };
             
             const onMouseUp = (e) => {
-                if (!annotatorData.isDrawing || !drawStart || !currentRect) {
-                    drawStart = null;
-                    return;
-                }
-                
-                // Only add if region is large enough
-                if (currentRect.width > 20 && currentRect.height > 20) {
-                    // Normalize to 0-1 range
-                    const normalizedRegion = {
-                        x: currentRect.x / canvas.width,
-                        y: currentRect.y / canvas.height,
-                        width: currentRect.width / canvas.width,
-                        height: currentRect.height / canvas.height,
-                        title: '',
-                        text: ''
-                    };
-                    
-                    if (!annotatorData.regions[annotatorData.currentPage]) {
-                        annotatorData.regions[annotatorData.currentPage] = [];
+                if (annotatorData.isDrawing && drawStart && currentRect) {
+                    // Finished drawing new region
+                    if (currentRect.width > 20 && currentRect.height > 20) {
+                        const normalizedRegion = {
+                            x: currentRect.x / canvas.width,
+                            y: currentRect.y / canvas.height,
+                            width: currentRect.width / canvas.width,
+                            height: currentRect.height / canvas.height,
+                            title: '',
+                            text: ''
+                        };
+                        
+                        if (!annotatorData.regions[annotatorData.currentPage]) {
+                            annotatorData.regions[annotatorData.currentPage] = [];
+                        }
+                        annotatorData.regions[annotatorData.currentPage].push(normalizedRegion);
+                        
+                        annotatorData.selectedRegion = annotatorData.regions[annotatorData.currentPage].length - 1;
+                        toggleDrawMode();
+                        renderAnnotatorRegions();
+                        renderAnnotatorPages();
                     }
-                    annotatorData.regions[annotatorData.currentPage].push(normalizedRegion);
                     
-                    // Select the new region
-                    annotatorData.selectedRegion = annotatorData.regions[annotatorData.currentPage].length - 1;
-                    
-                    // Exit draw mode
-                    toggleDrawMode();
-                    
-                    renderAnnotatorRegions();
-                    renderAnnotatorPages();
+                    drawStart = null;
+                    currentRect = null;
+                    drawAnnotatorRegions();
+                } else if (draggedRegion !== null) {
+                    // Finished moving region
+                    canvas.style.cursor = 'grab';
+                    draggedRegion = null;
+                    dragOffset = null;
+                    renderAnnotatorPages(); // Update thumbnails if needed
                 }
-                
-                drawStart = null;
-                currentRect = null;
-                drawAnnotatorRegions();
             };
             
             // Remove old handlers and add new ones
@@ -3962,6 +4031,11 @@
                     drawStart = null;
                     currentRect = null;
                     drawAnnotatorRegions();
+                }
+                if (draggedRegion !== null) {
+                    canvas.style.cursor = 'default';
+                    draggedRegion = null;
+                    dragOffset = null;
                 }
             };
         }
