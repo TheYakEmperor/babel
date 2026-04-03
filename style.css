@@ -2093,25 +2093,26 @@ body.viewer-fullscreen .search-container {
     max-width: 100%;
 }
 
+.pv-transcription-panel .pv-region-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+    gap: 12px;
+}
+
 .pv-transcription-panel .pv-region-title-corner {
-    position: absolute;
-    top: 0;
-    right: 0;
     font-size: 0.75rem;
     color: #9ca3af;
     font-style: italic;
-    padding: 2px 0 2px 8px;
+    margin-left: auto;
 }
 
 .pv-transcription-panel .pv-work-caption {
-    position: absolute;
-    top: 0;
-    left: 0;
     font-size: 0.75rem;
     font-weight: 500;
     color: #9ca3af;
     font-style: italic;
-    padding: 2px 8px 2px 0;
 }
 
 .pv-transcription-panel .pv-work-caption a {
