@@ -1286,7 +1286,7 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         threading.Thread(target=rebuild, daemon=True).start()
     
     def _auto_git_commit(self):
-        """Auto-commit changes to git after saves."""
+        """Auto-commit and push changes to git after saves."""
         import subprocess
         try:
             # Stage all changes
@@ -1308,6 +1308,18 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             )
             if result.returncode == 0:
                 print(f"  [Auto-git] Committed: {msg}")
+                # Push to remote
+                push_result = subprocess.run(
+                    ['git', 'push'],
+                    cwd=str(BASE_DIR),
+                    capture_output=True,
+                    text=True,
+                    timeout=60
+                )
+                if push_result.returncode == 0:
+                    print("  [Auto-git] Pushed to remote")
+                else:
+                    print(f"  [Auto-git] Push failed: {push_result.stderr}")
             elif 'nothing to commit' in result.stdout or 'nothing to commit' in result.stderr:
                 print("  [Auto-git] No changes to commit")
             else:
