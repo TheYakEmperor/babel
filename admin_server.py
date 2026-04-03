@@ -652,6 +652,10 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         with open(data_path, 'w', encoding='utf-8') as f:
             json.dump(text_data, f, indent=2, ensure_ascii=False)
         
+        # Auto-commit to git
+        import threading
+        threading.Thread(target=self._auto_git_commit, daemon=True).start()
+        
         return {
             'success': True,
             'message': f'Regions saved for text "{text_id}"',
@@ -752,6 +756,10 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         # Save updated data.json
         with open(data_path, 'w', encoding='utf-8') as f:
             json.dump(text_data, f, indent=2, ensure_ascii=False)
+        
+        # Auto-commit to git
+        import threading
+        threading.Thread(target=self._auto_git_commit, daemon=True).start()
         
         return {
             'success': True,
@@ -1270,9 +1278,42 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                         print(f"  [Auto-rebuild] {script} completed")
                     except Exception as e:
                         print(f"  [Auto-rebuild] {script} failed: {e}")
+            
+            # Auto-commit after rebuilding indexes
+            self._auto_git_commit()
         
         # Run in background thread so save returns quickly
         threading.Thread(target=rebuild, daemon=True).start()
+    
+    def _auto_git_commit(self):
+        """Auto-commit changes to git after saves."""
+        import subprocess
+        try:
+            # Stage all changes
+            subprocess.run(
+                ['git', 'add', '-A'],
+                cwd=str(BASE_DIR),
+                capture_output=True,
+                timeout=30
+            )
+            # Commit with timestamp
+            from datetime import datetime
+            msg = f"Auto-commit from Content Manager at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+            result = subprocess.run(
+                ['git', 'commit', '-m', msg],
+                cwd=str(BASE_DIR),
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+            if result.returncode == 0:
+                print(f"  [Auto-git] Committed: {msg}")
+            elif 'nothing to commit' in result.stdout or 'nothing to commit' in result.stderr:
+                print("  [Auto-git] No changes to commit")
+            else:
+                print(f"  [Auto-git] Commit failed: {result.stderr}")
+        except Exception as e:
+            print(f"  [Auto-git] Error: {e}")
     
     def rebuild_indexes(self):
         """Rebuild all indexes by running the Python scripts."""
