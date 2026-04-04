@@ -1021,7 +1021,7 @@ li {
 .language-status {
     color: #888;
     font-size: 0.95em;
-    margin: 8px 0 8px 0;
+    margin: 0 0 8px 0;
     font-weight: 500;
     letter-spacing: 0.3px;
 }
@@ -1136,7 +1136,7 @@ li {
    ============================================================================ */
 
 .page-viewer {
-    margin: 15px 0;
+    margin: 15px 0 5px 0;
     background: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 0;
