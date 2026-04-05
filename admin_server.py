@@ -741,6 +741,10 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             else:
                 page_entry = {'id': label, 'label': label}
             
+            # Always ensure id and label match the current label (handles renames)
+            page_entry['id'] = label
+            page_entry['label'] = label
+            
             # Update blank status
             if is_blank:
                 page_entry['isBlank'] = True

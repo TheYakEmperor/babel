@@ -1433,6 +1433,11 @@
                         label: p.label || p.id,
                         isBlank: true
                     }));
+                    // Store ordered page list for dropdown (preserves order from data.json)
+                    textEditorData.orderedPages = (text.pages || []).filter(p => p.label || p.id).map(p => ({
+                        label: p.label || p.id,
+                        isBlank: p.isBlank || false
+                    }));
                     // Load existing images from server (now on B2)
                     if (text._imageFiles && text._imageFiles.length > 0) {
                         textEditorData.existingImages = text._imageFiles.map(f => ({
@@ -2658,24 +2663,29 @@
         
         // Works in Text
         function getPageOptions(selectedValue) {
-            // Generate <option> elements for page dropdown from existing images AND blank pages
-            const imagePages = (textEditorData.existingImages || []).map(img => ({
-                label: img.name.replace(/\.[^.]+$/, '').replace(/_/g, ' '),
-                isBlank: false
-            }));
-            const blankPages = (textEditorData.blankPages || []).map(bp => ({
-                label: bp.label,
-                isBlank: true
-            }));
+            // Generate <option> elements for page dropdown - use ordered list if available
+            let allPages;
             
-            // Combine and sort all pages
-            const allPages = [...imagePages, ...blankPages];
-            const sorted = allPages.sort((a, b) => 
-                a.label.localeCompare(b.label, undefined, { numeric: true, sensitivity: 'base' })
-            );
+            if (textEditorData.orderedPages && textEditorData.orderedPages.length > 0) {
+                // Use ordered pages from data.json (preserves actual page order)
+                allPages = textEditorData.orderedPages;
+            } else {
+                // Fallback: combine existingImages and blankPages, sort alphabetically
+                const imagePages = (textEditorData.existingImages || []).map(img => ({
+                    label: img.name.replace(/\.[^.]+$/, '').replace(/_/g, ' '),
+                    isBlank: false
+                }));
+                const blankPages = (textEditorData.blankPages || []).map(bp => ({
+                    label: bp.label,
+                    isBlank: true
+                }));
+                allPages = [...imagePages, ...blankPages].sort((a, b) => 
+                    a.label.localeCompare(b.label, undefined, { numeric: true, sensitivity: 'base' })
+                );
+            }
             
             let options = '<option value="">(none)</option>';
-            sorted.forEach(page => {
+            allPages.forEach(page => {
                 const selected = selectedValue === page.label ? ' selected' : '';
                 const blankIndicator = page.isBlank ? ' [blank]' : '';
                 options += `<option value="${escapeHtml(page.label)}"${selected}>${escapeHtml(page.label)}${blankIndicator}</option>`;
