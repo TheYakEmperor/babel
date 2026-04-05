@@ -186,8 +186,64 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         text_dir = existing_dir if existing_dir else (BASE_DIR / 'texts' / '00' / '00' / safe_id)
         text_dir.mkdir(parents=True, exist_ok=True)
         
+        # Load existing data to preserve page-specific data (regions, etc.)
+        existing_pages_data = {}
+        data_path = text_dir / 'data.json'
+        if data_path.exists():
+            try:
+                with open(data_path, 'r', encoding='utf-8') as f:
+                    existing_json = json.load(f)
+                    # Build map of existing page data by label/id
+                    for p in existing_json.get('pages', []):
+                        key = p.get('label') or p.get('id')
+                        if key:
+                            existing_pages_data[key] = p
+            except:
+                pass
+        
         # Prepare data.json (remove internal fields)
         json_data = {k: v for k, v in data.items() if not k.startswith('_') and v}
+        
+        # Merge new pages with existing page data (PRESERVE regions and other page-specific data)
+        if 'pages' in json_data:
+            merged_pages = []
+            for new_page in json_data['pages']:
+                # Works-only page entry (no label/id) - keep as is
+                if not new_page.get('label') and not new_page.get('id'):
+                    merged_pages.append(new_page)
+                    continue
+                
+                key = new_page.get('label') or new_page.get('id')
+                if key and key in existing_pages_data:
+                    # Merge: start with existing data, overlay new data (but KEEP regions)
+                    merged = existing_pages_data[key].copy()
+                    # Only update specific fields from new_page, NEVER delete regions
+                    if 'label' in new_page:
+                        merged['label'] = new_page['label']
+                    if 'id' in new_page:
+                        merged['id'] = new_page['id']
+                    if 'isBlank' in new_page:
+                        merged['isBlank'] = new_page['isBlank']
+                    elif 'isBlank' in merged and not new_page.get('isBlank'):
+                        del merged['isBlank']
+                    if 'works' in new_page:
+                        merged['works'] = new_page['works']
+                    merged_pages.append(merged)
+                else:
+                    merged_pages.append(new_page)
+            
+            # Also preserve any existing pages that weren't in the new list
+            new_keys = set()
+            for p in json_data['pages']:
+                key = p.get('label') or p.get('id')
+                if key:
+                    new_keys.add(key)
+            for key, existing_page in existing_pages_data.items():
+                if key not in new_keys and existing_page.get('regions'):
+                    # This page has regions but wasn't in new list - preserve it!
+                    merged_pages.append(existing_page)
+            
+            json_data['pages'] = merged_pages
         
         # Ensure pages array exists (required by text-reader.js)
         if 'pages' not in json_data:

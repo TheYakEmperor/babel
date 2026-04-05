@@ -32,11 +32,6 @@
           "id": "eb-whale",
           "title": "[The Whale]",
           "viewerPage": "36"
-        },
-        {
-          "id": "eb-panther",
-          "title": "[The Panther]",
-          "viewerPage": "35"
         }
       ]
     },
@@ -218,7 +213,26 @@
     {
       "id": "36",
       "label": "36",
-      "isBlank": true
+      "isBlank": true,
+      "regions": [
+        {
+          "x": 0.23166666666666666,
+          "y": 0.27912109375,
+          "width": 0.6366666666666667,
+          "height": 0.1575,
+          "title": "",
+          "text": "þæt&nbsp;ƿæꞅ&nbsp;ſƿete ſtenc ƿlitig"
+        },
+        {
+          "x": 0.22333333333333333,
+          "y": 0.48662109375,
+          "width": 0.6216666666666667,
+          "height": 0.23,
+          "title": "",
+          "text": "whale",
+          "workId": "eb-whale"
+        }
+      ]
     },
     {
       "id": "37",
