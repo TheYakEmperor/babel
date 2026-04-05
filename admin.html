@@ -1428,6 +1428,11 @@
                     textEditorData.countries = [].concat(text.country || []);
                     // Load works from pages structure (flatten for simpler editing)
                     textEditorData.works = extractWorksFromPages(text.pages || []);
+                    // Load existing blank pages from pages data
+                    textEditorData.blankPages = (text.pages || []).filter(p => p.isBlank).map(p => ({
+                        label: p.label || p.id,
+                        isBlank: true
+                    }));
                     // Load existing images from server (now on B2)
                     if (text._imageFiles && text._imageFiles.length > 0) {
                         textEditorData.existingImages = text._imageFiles.map(f => ({
@@ -2653,18 +2658,27 @@
         
         // Works in Text
         function getPageOptions(selectedValue) {
-            // Generate <option> elements for page dropdown from existing images
-            const pages = textEditorData.existingImages || [];
-            // Sort naturally (2 before 10)
-            const sorted = [...pages].sort((a, b) => 
-                a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' })
+            // Generate <option> elements for page dropdown from existing images AND blank pages
+            const imagePages = (textEditorData.existingImages || []).map(img => ({
+                label: img.name.replace(/\.[^.]+$/, '').replace(/_/g, ' '),
+                isBlank: false
+            }));
+            const blankPages = (textEditorData.blankPages || []).map(bp => ({
+                label: bp.label,
+                isBlank: true
+            }));
+            
+            // Combine and sort all pages
+            const allPages = [...imagePages, ...blankPages];
+            const sorted = allPages.sort((a, b) => 
+                a.label.localeCompare(b.label, undefined, { numeric: true, sensitivity: 'base' })
             );
+            
             let options = '<option value="">(none)</option>';
-            sorted.forEach(img => {
-                // Extract label from filename (remove extension, replace _ with space to match page-viewer)
-                const label = img.name.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
-                const selected = selectedValue === label ? ' selected' : '';
-                options += `<option value="${escapeHtml(label)}"${selected}>${escapeHtml(label)}</option>`;
+            sorted.forEach(page => {
+                const selected = selectedValue === page.label ? ' selected' : '';
+                const blankIndicator = page.isBlank ? ' [blank]' : '';
+                options += `<option value="${escapeHtml(page.label)}"${selected}>${escapeHtml(page.label)}${blankIndicator}</option>`;
             });
             return options;
         }
