@@ -32,6 +32,11 @@
           "id": "eb-whale",
           "title": "[The Whale]",
           "viewerPage": "36"
+        },
+        {
+          "id": "eb-panther",
+          "title": "[The Panther]",
+          "viewerPage": "35"
         }
       ]
     },
