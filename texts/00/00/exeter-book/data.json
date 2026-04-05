@@ -27,6 +27,11 @@
         {
           "id": "eb-riddle-20",
           "title": "Riddle 20"
+        },
+        {
+          "id": "eb-whale",
+          "title": "[The Whale]",
+          "viewerPage": "36"
         }
       ]
     },
@@ -1434,1402 +1439,1122 @@
   "blankPages": [
     {
       "label": "1",
-      "filename": "blank_1",
       "isBlank": true
     },
     {
       "label": "2",
-      "filename": "blank_2",
       "isBlank": true
     },
     {
       "label": "3",
-      "filename": "blank_3",
       "isBlank": true
     },
     {
       "label": "4",
-      "filename": "blank_4",
       "isBlank": true
     },
     {
       "label": "5",
-      "filename": "blank_5",
       "isBlank": true
     },
     {
       "label": "6",
-      "filename": "blank_6",
       "isBlank": true
     },
     {
       "label": "7",
-      "filename": "blank_7",
       "isBlank": true
     },
     {
       "label": "8",
-      "filename": "blank_8",
       "isBlank": true
     },
     {
       "label": "9",
-      "filename": "blank_9",
       "isBlank": true
     },
     {
       "label": "10",
-      "filename": "blank_10",
       "isBlank": true
     },
     {
       "label": "11",
-      "filename": "blank_11",
       "isBlank": true
     },
     {
       "label": "12",
-      "filename": "blank_12",
       "isBlank": true
     },
     {
       "label": "13",
-      "filename": "blank_13",
       "isBlank": true
     },
     {
       "label": "14",
-      "filename": "blank_14",
       "isBlank": true
     },
     {
       "label": "15",
-      "filename": "blank_15",
       "isBlank": true
     },
     {
       "label": "16",
-      "filename": "blank_16",
       "isBlank": true
     },
     {
       "label": "17",
-      "filename": "blank_17",
       "isBlank": true
     },
     {
       "label": "18",
-      "filename": "blank_18",
       "isBlank": true
     },
     {
-      "label": "19",
-      "filename": "blank_19",
+      "label": "1r",
       "isBlank": true
     },
     {
       "label": "20",
-      "filename": "blank_20",
       "isBlank": true
     },
     {
       "label": "21",
-      "filename": "blank_21",
       "isBlank": true
     },
     {
       "label": "22",
-      "filename": "blank_22",
       "isBlank": true
     },
     {
       "label": "23",
-      "filename": "blank_23",
       "isBlank": true
     },
     {
       "label": "24",
-      "filename": "blank_24",
       "isBlank": true
     },
     {
       "label": "25",
-      "filename": "blank_25",
       "isBlank": true
     },
     {
       "label": "26",
-      "filename": "blank_26",
       "isBlank": true
     },
     {
       "label": "27",
-      "filename": "blank_27",
       "isBlank": true
     },
     {
       "label": "28",
-      "filename": "blank_28",
       "isBlank": true
     },
     {
       "label": "29",
-      "filename": "blank_29",
       "isBlank": true
     },
     {
       "label": "30",
-      "filename": "blank_30",
       "isBlank": true
     },
     {
       "label": "31",
-      "filename": "blank_31",
       "isBlank": true
     },
     {
       "label": "32",
-      "filename": "blank_32",
       "isBlank": true
     },
     {
       "label": "33",
-      "filename": "blank_33",
       "isBlank": true
     },
     {
       "label": "34",
-      "filename": "blank_34",
       "isBlank": true
     },
     {
       "label": "35",
-      "filename": "blank_35",
       "isBlank": true
     },
     {
       "label": "36",
-      "filename": "blank_36",
       "isBlank": true
     },
     {
       "label": "37",
-      "filename": "blank_37",
       "isBlank": true
     },
     {
       "label": "38",
-      "filename": "blank_38",
       "isBlank": true
     },
     {
       "label": "39",
-      "filename": "blank_39",
       "isBlank": true
     },
     {
       "label": "40",
-      "filename": "blank_40",
       "isBlank": true
     },
     {
       "label": "41",
-      "filename": "blank_41",
       "isBlank": true
     },
     {
       "label": "42",
-      "filename": "blank_42",
       "isBlank": true
     },
     {
       "label": "43",
-      "filename": "blank_43",
       "isBlank": true
     },
     {
       "label": "44",
-      "filename": "blank_44",
       "isBlank": true
     },
     {
       "label": "45",
-      "filename": "blank_45",
       "isBlank": true
     },
     {
       "label": "46",
-      "filename": "blank_46",
       "isBlank": true
     },
     {
       "label": "47",
-      "filename": "blank_47",
       "isBlank": true
     },
     {
       "label": "48",
-      "filename": "blank_48",
       "isBlank": true
     },
     {
       "label": "49",
-      "filename": "blank_49",
       "isBlank": true
     },
     {
       "label": "50",
-      "filename": "blank_50",
       "isBlank": true
     },
     {
       "label": "51",
-      "filename": "blank_51",
       "isBlank": true
     },
     {
       "label": "52",
-      "filename": "blank_52",
       "isBlank": true
     },
     {
       "label": "53",
-      "filename": "blank_53",
       "isBlank": true
     },
     {
       "label": "54",
-      "filename": "blank_54",
       "isBlank": true
     },
     {
       "label": "55",
-      "filename": "blank_55",
       "isBlank": true
     },
     {
       "label": "56",
-      "filename": "blank_56",
       "isBlank": true
     },
     {
       "label": "57",
-      "filename": "blank_57",
       "isBlank": true
     },
     {
       "label": "58",
-      "filename": "blank_58",
       "isBlank": true
     },
     {
       "label": "59",
-      "filename": "blank_59",
       "isBlank": true
     },
     {
       "label": "60",
-      "filename": "blank_60",
       "isBlank": true
     },
     {
       "label": "61",
-      "filename": "blank_61",
       "isBlank": true
     },
     {
       "label": "62",
-      "filename": "blank_62",
       "isBlank": true
     },
     {
       "label": "63",
-      "filename": "blank_63",
       "isBlank": true
     },
     {
       "label": "64",
-      "filename": "blank_64",
       "isBlank": true
     },
     {
       "label": "65",
-      "filename": "blank_65",
       "isBlank": true
     },
     {
       "label": "66",
-      "filename": "blank_66",
       "isBlank": true
     },
     {
       "label": "67",
-      "filename": "blank_67",
       "isBlank": true
     },
     {
       "label": "68",
-      "filename": "blank_68",
       "isBlank": true
     },
     {
       "label": "69",
-      "filename": "blank_69",
       "isBlank": true
     },
     {
       "label": "70",
-      "filename": "blank_70",
       "isBlank": true
     },
     {
       "label": "71",
-      "filename": "blank_71",
       "isBlank": true
     },
     {
       "label": "72",
-      "filename": "blank_72",
       "isBlank": true
     },
     {
       "label": "73",
-      "filename": "blank_73",
       "isBlank": true
     },
     {
       "label": "74",
-      "filename": "blank_74",
       "isBlank": true
     },
     {
       "label": "75",
-      "filename": "blank_75",
       "isBlank": true
     },
     {
       "label": "76",
-      "filename": "blank_76",
       "isBlank": true
     },
     {
       "label": "77",
-      "filename": "blank_77",
       "isBlank": true
     },
     {
       "label": "78",
-      "filename": "blank_78",
       "isBlank": true
     },
     {
       "label": "79",
-      "filename": "blank_79",
       "isBlank": true
     },
     {
       "label": "80",
-      "filename": "blank_80",
       "isBlank": true
     },
     {
       "label": "81",
-      "filename": "blank_81",
       "isBlank": true
     },
     {
       "label": "82",
-      "filename": "blank_82",
       "isBlank": true
     },
     {
       "label": "83",
-      "filename": "blank_83",
       "isBlank": true
     },
     {
       "label": "84",
-      "filename": "blank_84",
       "isBlank": true
     },
     {
       "label": "85",
-      "filename": "blank_85",
       "isBlank": true
     },
     {
       "label": "86",
-      "filename": "blank_86",
       "isBlank": true
     },
     {
       "label": "87",
-      "filename": "blank_87",
       "isBlank": true
     },
     {
       "label": "88",
-      "filename": "blank_88",
       "isBlank": true
     },
     {
       "label": "89",
-      "filename": "blank_89",
       "isBlank": true
     },
     {
       "label": "90",
-      "filename": "blank_90",
       "isBlank": true
     },
     {
       "label": "91",
-      "filename": "blank_91",
       "isBlank": true
     },
     {
       "label": "92",
-      "filename": "blank_92",
       "isBlank": true
     },
     {
       "label": "93",
-      "filename": "blank_93",
       "isBlank": true
     },
     {
       "label": "94",
-      "filename": "blank_94",
       "isBlank": true
     },
     {
       "label": "95",
-      "filename": "blank_95",
       "isBlank": true
     },
     {
       "label": "96",
-      "filename": "blank_96",
       "isBlank": true
     },
     {
       "label": "97",
-      "filename": "blank_97",
       "isBlank": true
     },
     {
       "label": "98",
-      "filename": "blank_98",
       "isBlank": true
     },
     {
       "label": "99",
-      "filename": "blank_99",
       "isBlank": true
     },
     {
       "label": "100",
-      "filename": "blank_100",
       "isBlank": true
     },
     {
       "label": "101",
-      "filename": "blank_101",
       "isBlank": true
     },
     {
       "label": "102",
-      "filename": "blank_102",
       "isBlank": true
     },
     {
       "label": "103",
-      "filename": "blank_103",
       "isBlank": true
     },
     {
       "label": "104",
-      "filename": "blank_104",
       "isBlank": true
     },
     {
       "label": "105",
-      "filename": "blank_105",
       "isBlank": true
     },
     {
       "label": "106",
-      "filename": "blank_106",
       "isBlank": true
     },
     {
       "label": "107",
-      "filename": "blank_107",
       "isBlank": true
     },
     {
       "label": "108",
-      "filename": "blank_108",
       "isBlank": true
     },
     {
       "label": "109",
-      "filename": "blank_109",
       "isBlank": true
     },
     {
       "label": "110",
-      "filename": "blank_110",
       "isBlank": true
     },
     {
       "label": "111",
-      "filename": "blank_111",
       "isBlank": true
     },
     {
       "label": "112",
-      "filename": "blank_112",
       "isBlank": true
     },
     {
       "label": "113",
-      "filename": "blank_113",
       "isBlank": true
     },
     {
       "label": "114",
-      "filename": "blank_114",
       "isBlank": true
     },
     {
       "label": "115",
-      "filename": "blank_115",
       "isBlank": true
     },
     {
       "label": "116",
-      "filename": "blank_116",
       "isBlank": true
     },
     {
       "label": "117",
-      "filename": "blank_117",
       "isBlank": true
     },
     {
       "label": "118",
-      "filename": "blank_118",
       "isBlank": true
     },
     {
       "label": "119",
-      "filename": "blank_119",
       "isBlank": true
     },
     {
       "label": "120",
-      "filename": "blank_120",
       "isBlank": true
     },
     {
       "label": "121",
-      "filename": "blank_121",
       "isBlank": true
     },
     {
       "label": "122",
-      "filename": "blank_122",
       "isBlank": true
     },
     {
       "label": "123",
-      "filename": "blank_123",
       "isBlank": true
     },
     {
       "label": "124",
-      "filename": "blank_124",
       "isBlank": true
     },
     {
       "label": "125",
-      "filename": "blank_125",
       "isBlank": true
     },
     {
       "label": "126",
-      "filename": "blank_126",
       "isBlank": true
     },
     {
       "label": "127",
-      "filename": "blank_127",
       "isBlank": true
     },
     {
       "label": "128",
-      "filename": "blank_128",
       "isBlank": true
     },
     {
       "label": "129",
-      "filename": "blank_129",
       "isBlank": true
     },
     {
       "label": "130",
-      "filename": "blank_130",
       "isBlank": true
     },
     {
       "label": "131",
-      "filename": "blank_131",
       "isBlank": true
     },
     {
       "label": "132",
-      "filename": "blank_132",
       "isBlank": true
     },
     {
       "label": "133",
-      "filename": "blank_133",
       "isBlank": true
     },
     {
       "label": "134",
-      "filename": "blank_134",
       "isBlank": true
     },
     {
       "label": "135",
-      "filename": "blank_135",
       "isBlank": true
     },
     {
       "label": "136",
-      "filename": "blank_136",
       "isBlank": true
     },
     {
       "label": "137",
-      "filename": "blank_137",
       "isBlank": true
     },
     {
       "label": "138",
-      "filename": "blank_138",
       "isBlank": true
     },
     {
       "label": "139",
-      "filename": "blank_139",
       "isBlank": true
     },
     {
       "label": "140",
-      "filename": "blank_140",
       "isBlank": true
     },
     {
       "label": "141",
-      "filename": "blank_141",
       "isBlank": true
     },
     {
       "label": "142",
-      "filename": "blank_142",
       "isBlank": true
     },
     {
       "label": "143",
-      "filename": "blank_143",
       "isBlank": true
     },
     {
       "label": "144",
-      "filename": "blank_144",
       "isBlank": true
     },
     {
       "label": "145",
-      "filename": "blank_145",
       "isBlank": true
     },
     {
       "label": "146",
-      "filename": "blank_146",
       "isBlank": true
     },
     {
       "label": "147",
-      "filename": "blank_147",
       "isBlank": true
     },
     {
       "label": "148",
-      "filename": "blank_148",
       "isBlank": true
     },
     {
       "label": "149",
-      "filename": "blank_149",
       "isBlank": true
     },
     {
       "label": "150",
-      "filename": "blank_150",
       "isBlank": true
     },
     {
       "label": "151",
-      "filename": "blank_151",
       "isBlank": true
     },
     {
       "label": "152",
-      "filename": "blank_152",
       "isBlank": true
     },
     {
       "label": "153",
-      "filename": "blank_153",
       "isBlank": true
     },
     {
       "label": "154",
-      "filename": "blank_154",
       "isBlank": true
     },
     {
       "label": "155",
-      "filename": "blank_155",
       "isBlank": true
     },
     {
       "label": "156",
-      "filename": "blank_156",
       "isBlank": true
     },
     {
       "label": "157",
-      "filename": "blank_157",
       "isBlank": true
     },
     {
       "label": "158",
-      "filename": "blank_158",
       "isBlank": true
     },
     {
       "label": "159",
-      "filename": "blank_159",
       "isBlank": true
     },
     {
       "label": "160",
-      "filename": "blank_160",
       "isBlank": true
     },
     {
       "label": "161",
-      "filename": "blank_161",
       "isBlank": true
     },
     {
       "label": "162",
-      "filename": "blank_162",
       "isBlank": true
     },
     {
       "label": "163",
-      "filename": "blank_163",
       "isBlank": true
     },
     {
       "label": "164",
-      "filename": "blank_164",
       "isBlank": true
     },
     {
       "label": "165",
-      "filename": "blank_165",
       "isBlank": true
     },
     {
       "label": "166",
-      "filename": "blank_166",
       "isBlank": true
     },
     {
       "label": "167",
-      "filename": "blank_167",
       "isBlank": true
     },
     {
       "label": "168",
-      "filename": "blank_168",
       "isBlank": true
     },
     {
       "label": "169",
-      "filename": "blank_169",
       "isBlank": true
     },
     {
       "label": "170",
-      "filename": "blank_170",
       "isBlank": true
     },
     {
       "label": "171",
-      "filename": "blank_171",
       "isBlank": true
     },
     {
       "label": "172",
-      "filename": "blank_172",
       "isBlank": true
     },
     {
       "label": "173",
-      "filename": "blank_173",
       "isBlank": true
     },
     {
       "label": "174",
-      "filename": "blank_174",
       "isBlank": true
     },
     {
       "label": "175",
-      "filename": "blank_175",
       "isBlank": true
     },
     {
       "label": "176",
-      "filename": "blank_176",
       "isBlank": true
     },
     {
       "label": "177",
-      "filename": "blank_177",
       "isBlank": true
     },
     {
       "label": "178",
-      "filename": "blank_178",
       "isBlank": true
     },
     {
       "label": "179",
-      "filename": "blank_179",
       "isBlank": true
     },
     {
       "label": "180",
-      "filename": "blank_180",
       "isBlank": true
     },
     {
       "label": "181",
-      "filename": "blank_181",
       "isBlank": true
     },
     {
       "label": "182",
-      "filename": "blank_182",
       "isBlank": true
     },
     {
       "label": "183",
-      "filename": "blank_183",
       "isBlank": true
     },
     {
       "label": "184",
-      "filename": "blank_184",
       "isBlank": true
     },
     {
       "label": "185",
-      "filename": "blank_185",
       "isBlank": true
     },
     {
       "label": "186",
-      "filename": "blank_186",
       "isBlank": true
     },
     {
       "label": "187",
-      "filename": "blank_187",
       "isBlank": true
     },
     {
       "label": "188",
-      "filename": "blank_188",
       "isBlank": true
     },
     {
       "label": "189",
-      "filename": "blank_189",
       "isBlank": true
     },
     {
       "label": "190",
-      "filename": "blank_190",
       "isBlank": true
     },
     {
       "label": "191",
-      "filename": "blank_191",
       "isBlank": true
     },
     {
       "label": "192",
-      "filename": "blank_192",
       "isBlank": true
     },
     {
       "label": "193",
-      "filename": "blank_193",
       "isBlank": true
     },
     {
       "label": "194",
-      "filename": "blank_194",
       "isBlank": true
     },
     {
       "label": "195",
-      "filename": "blank_195",
       "isBlank": true
     },
     {
       "label": "196",
-      "filename": "blank_196",
       "isBlank": true
     },
     {
       "label": "197",
-      "filename": "blank_197",
       "isBlank": true
     },
     {
       "label": "198",
-      "filename": "blank_198",
       "isBlank": true
     },
     {
       "label": "199",
-      "filename": "blank_199",
       "isBlank": true
     },
     {
       "label": "200",
-      "filename": "blank_200",
       "isBlank": true
     },
     {
       "label": "201",
-      "filename": "blank_201",
       "isBlank": true
     },
     {
       "label": "202",
-      "filename": "blank_202",
       "isBlank": true
     },
     {
       "label": "203",
-      "filename": "blank_203",
       "isBlank": true
     },
     {
       "label": "204",
-      "filename": "blank_204",
       "isBlank": true
     },
     {
       "label": "205",
-      "filename": "blank_205",
       "isBlank": true
     },
     {
       "label": "206",
-      "filename": "blank_206",
       "isBlank": true
     },
     {
       "label": "207",
-      "filename": "blank_207",
       "isBlank": true
     },
     {
       "label": "208",
-      "filename": "blank_208",
       "isBlank": true
     },
     {
       "label": "209",
-      "filename": "blank_209",
       "isBlank": true
     },
     {
       "label": "210",
-      "filename": "blank_210",
       "isBlank": true
     },
     {
       "label": "211",
-      "filename": "blank_211",
       "isBlank": true
     },
     {
       "label": "212",
-      "filename": "blank_212",
       "isBlank": true
     },
     {
       "label": "213",
-      "filename": "blank_213",
       "isBlank": true
     },
     {
       "label": "214",
-      "filename": "blank_214",
       "isBlank": true
     },
     {
       "label": "215",
-      "filename": "blank_215",
       "isBlank": true
     },
     {
       "label": "216",
-      "filename": "blank_216",
       "isBlank": true
     },
     {
       "label": "217",
-      "filename": "blank_217",
       "isBlank": true
     },
     {
       "label": "218",
-      "filename": "blank_218",
       "isBlank": true
     },
     {
       "label": "219",
-      "filename": "blank_219",
       "isBlank": true
     },
     {
       "label": "220",
-      "filename": "blank_220",
       "isBlank": true
     },
     {
       "label": "221",
-      "filename": "blank_221",
       "isBlank": true
     },
     {
       "label": "222",
-      "filename": "blank_222",
       "isBlank": true
     },
     {
       "label": "223",
-      "filename": "blank_223",
       "isBlank": true
     },
     {
       "label": "224",
-      "filename": "blank_224",
       "isBlank": true
     },
     {
       "label": "225",
-      "filename": "blank_225",
       "isBlank": true
     },
     {
       "label": "226",
-      "filename": "blank_226",
       "isBlank": true
     },
     {
       "label": "227",
-      "filename": "blank_227",
       "isBlank": true
     },
     {
       "label": "228",
-      "filename": "blank_228",
       "isBlank": true
     },
     {
       "label": "229",
-      "filename": "blank_229",
       "isBlank": true
     },
     {
       "label": "230",
-      "filename": "blank_230",
       "isBlank": true
     },
     {
       "label": "231",
-      "filename": "blank_231",
       "isBlank": true
     },
     {
       "label": "232",
-      "filename": "blank_232",
       "isBlank": true
     },
     {
       "label": "233",
-      "filename": "blank_233",
       "isBlank": true
     },
     {
       "label": "234",
-      "filename": "blank_234",
       "isBlank": true
     },
     {
       "label": "235",
-      "filename": "blank_235",
       "isBlank": true
     },
     {
       "label": "236",
-      "filename": "blank_236",
       "isBlank": true
     },
     {
       "label": "237",
-      "filename": "blank_237",
       "isBlank": true
     },
     {
       "label": "238",
-      "filename": "blank_238",
       "isBlank": true
     },
     {
       "label": "239",
-      "filename": "blank_239",
       "isBlank": true
     },
     {
       "label": "240",
-      "filename": "blank_240",
       "isBlank": true
     },
     {
       "label": "241",
-      "filename": "blank_241",
       "isBlank": true
     },
     {
       "label": "242",
-      "filename": "blank_242",
       "isBlank": true
     },
     {
       "label": "243",
-      "filename": "blank_243",
       "isBlank": true
     },
     {
       "label": "244",
-      "filename": "blank_244",
       "isBlank": true
     },
     {
       "label": "245",
-      "filename": "blank_245",
       "isBlank": true
     },
     {
       "label": "246",
-      "filename": "blank_246",
       "isBlank": true
     },
     {
       "label": "247",
-      "filename": "blank_247",
       "isBlank": true
     },
     {
       "label": "248",
-      "filename": "blank_248",
       "isBlank": true
     },
     {
       "label": "249",
-      "filename": "blank_249",
       "isBlank": true
     },
     {
       "label": "250",
-      "filename": "blank_250",
       "isBlank": true
     },
     {
       "label": "251",
-      "filename": "blank_251",
       "isBlank": true
     },
     {
       "label": "252",
-      "filename": "blank_252",
       "isBlank": true
     },
     {
       "label": "253",
-      "filename": "blank_253",
       "isBlank": true
     },
     {
       "label": "254",
-      "filename": "blank_254",
       "isBlank": true
     },
     {
       "label": "255",
-      "filename": "blank_255",
       "isBlank": true
     },
     {
       "label": "256",
-      "filename": "blank_256",
       "isBlank": true
     },
     {
       "label": "257",
-      "filename": "blank_257",
       "isBlank": true
     },
     {
       "label": "258",
-      "filename": "blank_258",
       "isBlank": true
     },
     {
       "label": "259",
-      "filename": "blank_259",
       "isBlank": true
     },
     {
       "label": "260",
-      "filename": "blank_260",
       "isBlank": true
     },
     {
       "label": "261",
-      "filename": "blank_261",
       "isBlank": true
     },
     {
       "label": "262",
-      "filename": "blank_262",
       "isBlank": true
     },
     {
       "label": "263",
-      "filename": "blank_263",
       "isBlank": true
     },
     {
       "label": "264",
-      "filename": "blank_264",
       "isBlank": true
     },
     {
       "label": "265",
-      "filename": "blank_265",
       "isBlank": true
     },
     {
       "label": "266",
-      "filename": "blank_266",
       "isBlank": true
     },
     {
       "label": "267",
-      "filename": "blank_267",
       "isBlank": true
     },
     {
       "label": "268",
-      "filename": "blank_268",
       "isBlank": true
     },
     {
       "label": "269",
-      "filename": "blank_269",
       "isBlank": true
     },
     {
       "label": "270",
-      "filename": "blank_270",
       "isBlank": true
     },
     {
       "label": "271",
-      "filename": "blank_271",
       "isBlank": true
     },
     {
       "label": "272",
-      "filename": "blank_272",
       "isBlank": true
     },
     {
       "label": "273",
-      "filename": "blank_273",
       "isBlank": true
     },
     {
       "label": "274",
-      "filename": "blank_274",
       "isBlank": true
     },
     {
       "label": "275",
-      "filename": "blank_275",
       "isBlank": true
     },
     {
       "label": "276",
-      "filename": "blank_276",
       "isBlank": true
     },
     {
       "label": "277",
-      "filename": "blank_277",
       "isBlank": true
     },
     {
       "label": "278",
-      "filename": "blank_278",
       "isBlank": true
     },
     {
       "label": "279",
-      "filename": "blank_279",
       "isBlank": true
     },
     {
       "label": "280",
-      "filename": "blank_280",
       "isBlank": true
     }
   ]
