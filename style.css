@@ -215,14 +215,9 @@ body::after {
     margin: 0 auto;
 }
 
-/* Header logo container above content */
+/* Header logo container above content - HIDDEN (moved to search bar) */
 .header-logo-container {
-    background: rgba(50, 50, 50, 0.5);
-    padding: 3px 15px;
-    margin-top: 0;
-    margin-bottom: 8px;
-    border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: none;
 }
 
 .header-logo {
@@ -240,6 +235,21 @@ body::after {
     mix-blend-mode: screen;
     display: block;
     vertical-align: middle;
+}
+
+/* Search bar logo (black, on the right) */
+.search-logo {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 28px;
+    width: auto;
+    opacity: 0.85;
+}
+
+.search-logo:hover {
+    opacity: 1;
 }
 
 /* Container inside page-wrapper - flexbox with sidebar column */

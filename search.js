@@ -1,6 +1,38 @@
 // Simple search functionality
 console.log('[search] search.js loaded');
 
+// === ADD LOGO TO SEARCH BAR ===
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchContainer = document.querySelector('.search-container');
+        if (searchContainer) {
+            // Determine the correct path to the logo based on page depth
+            let logoPath = 'Wikilogo.webp';
+            const pathMatch = window.location.pathname.match(/\/[^/]+/g);
+            if (pathMatch) {
+                const depth = pathMatch.length - 1; // -1 because we don't count the filename
+                if (depth > 0) {
+                    logoPath = '../'.repeat(depth) + 'Wikilogo.webp';
+                }
+            }
+            // Try to get path from existing logo references
+            const existingLogo = document.querySelector('.header-logo img, .sidebar-logo img');
+            if (existingLogo && existingLogo.src) {
+                logoPath = existingLogo.src.replace(window.location.origin, '');
+                // Make sure it's the Wikilogo
+                if (!logoPath.includes('Wikilogo')) {
+                    logoPath = existingLogo.src;
+                }
+            }
+            
+            const logoLink = document.createElement('a');
+            logoLink.href = logoPath.replace('Wikilogo.webp', '');
+            logoLink.innerHTML = `<img src="${logoPath}" alt="Babel Archive" class="search-logo">`;
+            searchContainer.appendChild(logoLink);
+        }
+    });
+})();
+
 // === MOVE SEARCH INTO SIDEBAR & SCROLL BEHAVIOR ===
 (function() {
     // Run immediately for sidebar positioning (no flash)
