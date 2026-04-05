@@ -1,54 +1,43 @@
 // Simple search functionality
 console.log('[search] search.js loaded');
 
-// === ADD LOGO TO SEARCH BAR ===
+// === ADD LOGO TO SEARCH BAR & SIDEBAR DECORATION ===
 (function() {
     document.addEventListener('DOMContentLoaded', function() {
+        // Determine the correct path base based on page depth
+        let basePath = '';
+        const pathMatch = window.location.pathname.match(/\/[^/]+/g);
+        if (pathMatch) {
+            const depth = pathMatch.length - 1; // -1 because we don't count the filename
+            if (depth > 0) {
+                basePath = '../'.repeat(depth);
+            }
+        }
+        // Try to get path from existing logo references
+        const existingLogo = document.querySelector('.header-logo img, .sidebar-logo img');
+        if (existingLogo && existingLogo.src) {
+            const existingPath = existingLogo.src.replace(window.location.origin, '');
+            if (existingPath.includes('Wikilogo')) {
+                basePath = existingPath.replace('Wikilogo.webp', '');
+            }
+        }
+        
         const searchContainer = document.querySelector('.search-container');
         if (searchContainer) {
-            // Determine the correct path to the logo based on page depth
-            let logoPath = 'Wikilogo.webp';
-            const pathMatch = window.location.pathname.match(/\/[^/]+/g);
-            if (pathMatch) {
-                const depth = pathMatch.length - 1; // -1 because we don't count the filename
-                if (depth > 0) {
-                    logoPath = '../'.repeat(depth) + 'Wikilogo.webp';
-                }
-            }
-            // Try to get path from existing logo references
-            const existingLogo = document.querySelector('.header-logo img, .sidebar-logo img');
-            if (existingLogo && existingLogo.src) {
-                logoPath = existingLogo.src.replace(window.location.origin, '');
-                // Make sure it's the Wikilogo
-                if (!logoPath.includes('Wikilogo')) {
-                    logoPath = existingLogo.src;
-                }
-            }
-            
             const logoLink = document.createElement('a');
-            logoLink.href = logoPath.replace('Wikilogo.webp', '');
-            logoLink.innerHTML = `<img src="${logoPath}" alt="Babel Archive" class="search-logo">`;
+            logoLink.href = basePath || './';
+            logoLink.innerHTML = `<img src="${basePath}Wikilogo.webp" alt="Babel Archive" class="search-logo">`;
             searchContainer.insertBefore(logoLink, searchContainer.firstChild);
         }
         
         // === ADD SIDEBAR DECORATION IMAGES ===
         const leftSidebar = document.querySelector('.left-sidebar');
         if (leftSidebar) {
-            // Calculate path based on page depth
-            let basePath = 'background-image/';
-            const pathMatch = window.location.pathname.match(/\/[^/]+/g);
-            if (pathMatch) {
-                const depth = pathMatch.length - 1;
-                if (depth > 0) {
-                    basePath = '../'.repeat(depth) + 'background-image/';
-                }
-            }
-            
             const decorDiv = document.createElement('div');
             decorDiv.className = 'sidebar-decoration';
             decorDiv.innerHTML = `
-                <img src="${basePath}grannyniggles.gif" alt="">
-                <img src="${basePath}construction.jpg" alt="Under Construction">
+                <img src="${basePath}background-image/grannyniggles.gif" alt="">
+                <img src="${basePath}background-image/construction.jpg" alt="Under Construction">
             `;
             leftSidebar.insertBefore(decorDiv, leftSidebar.firstChild);
         }
