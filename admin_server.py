@@ -722,11 +722,15 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         with open(data_path, 'r', encoding='utf-8') as f:
             text_data = json.load(f)
         
-        # Create a mapping of existing page data (regions, works, etc.)
-        existing_pages = {(p.get('label') or p.get('id')): p for p in text_data.get('pages', [])}
+        # Preserve page entries that only contain works (no label/id) - these define works for the text
+        works_only_pages = [p for p in text_data.get('pages', []) if 'works' in p and not p.get('label') and not p.get('id')]
         
-        # Build new pages array in the specified order
-        new_pages = []
+        # Create a mapping of existing page data (regions, works, etc.) by label
+        existing_pages = {(p.get('label') or p.get('id')): p for p in text_data.get('pages', []) if p.get('label') or p.get('id')}
+        
+        # Build new pages array: start with works-only entries, then add ordered pages
+        new_pages = works_only_pages.copy()
+        
         for page_info in pages_data:
             label = page_info.get('label')
             is_blank = page_info.get('isBlank', False)
