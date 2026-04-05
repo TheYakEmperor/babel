@@ -30,6 +30,28 @@ console.log('[search] search.js loaded');
             logoLink.innerHTML = `<img src="${logoPath}" alt="Babel Archive" class="search-logo">`;
             searchContainer.insertBefore(logoLink, searchContainer.firstChild);
         }
+        
+        // === ADD SIDEBAR DECORATION IMAGES ===
+        const rightSidebar = document.querySelector('.right-sidebar');
+        if (rightSidebar) {
+            // Calculate path based on page depth
+            let basePath = 'background-image/';
+            const pathMatch = window.location.pathname.match(/\/[^/]+/g);
+            if (pathMatch) {
+                const depth = pathMatch.length - 1;
+                if (depth > 0) {
+                    basePath = '../'.repeat(depth) + 'background-image/';
+                }
+            }
+            
+            const decorDiv = document.createElement('div');
+            decorDiv.className = 'sidebar-decoration';
+            decorDiv.innerHTML = `
+                <img src="${basePath}grannyniggles.gif" alt="">
+                <img src="${basePath}construction.jpg" alt="Under Construction">
+            `;
+            rightSidebar.insertBefore(decorDiv, rightSidebar.firstChild);
+        }
     });
 })();
 

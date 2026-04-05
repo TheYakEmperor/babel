@@ -242,9 +242,9 @@ body::after {
 .search-logo {
     position: absolute;
     left: 20px;
-    top: 0;
-    bottom: 0;
-    height: 100%;
+    top: 2px;
+    bottom: 2px;
+    height: calc(100% - 4px);
     width: auto;
     padding: 0;
     opacity: 0.95;
@@ -253,6 +253,19 @@ body::after {
 
 .search-logo:hover {
     opacity: 1;
+}
+
+/* Sidebar decoration images */
+.sidebar-decoration {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.sidebar-decoration img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 /* Container inside page-wrapper - flexbox with sidebar column */
