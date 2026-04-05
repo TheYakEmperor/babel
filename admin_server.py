@@ -510,13 +510,36 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                     try:
                         with open(item / 'data.json', 'r', encoding='utf-8') as f:
                             data = json.load(f)
-                            texts.append({
-                                'id': item.name,
-                                'title': data.get('title', item.name),
-                                'date': data.get('date', ''),
-                                'pages': len(data.get('pages', [])),
-                                'hasImages': (item / 'images').exists() and any((item / 'images').iterdir()) if (item / 'images').exists() else False
-                            })
+                        
+                        # Count pages from images.json manifest if it exists, otherwise count local images or pages array
+                        page_count = 0
+                        images_json = item / 'images.json'
+                        local_images = item / 'images'
+                        
+                        if images_json.exists():
+                            try:
+                                with open(images_json, 'r', encoding='utf-8') as imgf:
+                                    img_data = json.load(imgf)
+                                    page_count = len(img_data.get('images', []))
+                            except:
+                                pass
+                        
+                        if page_count == 0 and local_images.exists():
+                            try:
+                                page_count = len([f for f in local_images.iterdir() if f.suffix.lower() in ('.jpg', '.jpeg', '.png', '.webp', '.gif')])
+                            except:
+                                pass
+                        
+                        if page_count == 0:
+                            page_count = len(data.get('pages', []))
+                        
+                        texts.append({
+                            'id': item.name,
+                            'title': data.get('title', item.name),
+                            'date': data.get('date', ''),
+                            'pages': page_count,
+                            'hasImages': page_count > 0
+                        })
                     except:
                         texts.append({
                             'id': item.name,
