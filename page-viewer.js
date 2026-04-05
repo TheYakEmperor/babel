@@ -1351,6 +1351,9 @@ function initPageViewer(pagesData) {
                 btn.classList.toggle('active', isTranscriptionMode);
             }
             
+            // Add/remove class on viewer for CSS styling
+            viewer.classList.toggle('transcription-mode', isTranscriptionMode);
+            
             if (isTranscriptionMode) {
                 // Hide image viewer components but keep thumbnails for navigation
                 mainContainer.style.display = 'none';

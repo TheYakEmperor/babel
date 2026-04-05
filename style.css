@@ -1177,6 +1177,11 @@ body.has-page-viewer .language-status {
     width: 111.11%;
 }
 
+/* Transcription mode - match the visual spacing of normal page viewer */
+.page-viewer.transcription-mode {
+    margin-bottom: -50px;
+}
+
 /* Fullscreen mode */
 body.viewer-fullscreen {
     overflow: hidden;
@@ -2103,7 +2108,7 @@ body.viewer-fullscreen .search-container {
     border-radius: 0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 
 .pv-transcription-panel .pv-transcription-content {
