@@ -241,7 +241,7 @@ body::after {
 /* Search bar logo (white, on the left) */
 .search-logo {
     position: absolute;
-    left: 20px;
+    left: 5px;
     top: 2px;
     bottom: 2px;
     height: calc(100% - 4px);

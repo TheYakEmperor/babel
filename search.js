@@ -32,8 +32,8 @@ console.log('[search] search.js loaded');
         }
         
         // === ADD SIDEBAR DECORATION IMAGES ===
-        const rightSidebar = document.querySelector('.right-sidebar');
-        if (rightSidebar) {
+        const leftSidebar = document.querySelector('.left-sidebar');
+        if (leftSidebar) {
             // Calculate path based on page depth
             let basePath = 'background-image/';
             const pathMatch = window.location.pathname.match(/\/[^/]+/g);
@@ -50,7 +50,7 @@ console.log('[search] search.js loaded');
                 <img src="${basePath}grannyniggles.gif" alt="">
                 <img src="${basePath}construction.jpg" alt="Under Construction">
             `;
-            rightSidebar.insertBefore(decorDiv, rightSidebar.firstChild);
+            leftSidebar.insertBefore(decorDiv, leftSidebar.firstChild);
         }
     });
 })();
