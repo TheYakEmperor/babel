@@ -1179,12 +1179,12 @@ body.has-page-viewer .language-status {
 
 /* Transcription mode - match the visual spacing of normal page viewer */
 .page-viewer.transcription-mode {
-    margin-bottom: 0;
+    margin-bottom: -50px;  /* Keep same as normal mode */
 }
 
-/* Fix language-status spacing when in transcription mode */
-body.viewer-transcription-mode .language-status {
-    margin-top: 15px;
+/* Transcription panel margin adjustment */
+.page-viewer.transcription-mode .pv-transcription-panel {
+    margin-bottom: 0;  /* Remove panel's margin so page-viewer controls spacing */
 }
 
 /* Fullscreen mode */
