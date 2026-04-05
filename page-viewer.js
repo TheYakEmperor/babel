@@ -463,6 +463,7 @@ function initPageViewer(pagesData) {
         
         images = found;
         viewer.style.display = 'block';
+        document.body.classList.add('has-page-viewer');
         
         // Set title if in fullscreen title element exists
         const pvTitle = document.getElementById('pv-title');

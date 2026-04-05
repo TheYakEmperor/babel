@@ -28,7 +28,7 @@ console.log('[search] search.js loaded');
             const logoLink = document.createElement('a');
             logoLink.href = logoPath.replace('Wikilogo.webp', '');
             logoLink.innerHTML = `<img src="${logoPath}" alt="Babel Archive" class="search-logo">`;
-            searchContainer.appendChild(logoLink);
+            searchContainer.insertBefore(logoLink, searchContainer.firstChild);
         }
     });
 })();
