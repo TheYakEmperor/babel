@@ -99,7 +99,17 @@
     {
       "id": "1r",
       "label": "1r",
-      "isBlank": true
+      "isBlank": true,
+      "regions": [
+        {
+          "x": 0.35,
+          "y": 0.53099609375,
+          "width": 0.38666666666666666,
+          "height": 0.32,
+          "title": "",
+          "text": "poo"
+        }
+      ]
     },
     {
       "id": "20",
