@@ -572,6 +572,10 @@ function initPageViewer(pagesData) {
                 } else {
                     showSingle(idx);
                 }
+                // Update transcription panel if in transcription mode
+                if (isTranscriptionMode && transcriptionPanel && refreshTranscriptionPanel) {
+                    refreshTranscriptionPanel();
+                }
                 return true;
             }
             return false;
@@ -1351,8 +1355,9 @@ function initPageViewer(pagesData) {
                 btn.classList.toggle('active', isTranscriptionMode);
             }
             
-            // Add/remove class on viewer for CSS styling
+            // Add/remove class on viewer and body for CSS styling
             viewer.classList.toggle('transcription-mode', isTranscriptionMode);
+            document.body.classList.toggle('viewer-transcription-mode', isTranscriptionMode);
             
             if (isTranscriptionMode) {
                 // Hide image viewer components but keep thumbnails for navigation
