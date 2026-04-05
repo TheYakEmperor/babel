@@ -7,30 +7,6 @@
   "language": "olde1238",
   "pages": [
     {
-      "works": [
-        {
-          "id": "eb-riddle-16",
-          "title": "Riddle 16"
-        },
-        {
-          "id": "eb-riddle-17",
-          "title": "Riddle 17"
-        },
-        {
-          "id": "eb-riddle-18",
-          "title": "Riddle 18"
-        },
-        {
-          "id": "eb-riddle-19",
-          "title": "Riddle 19"
-        },
-        {
-          "id": "eb-riddle-20",
-          "title": "Riddle 20"
-        }
-      ]
-    },
-    {
       "id": "1",
       "label": "1",
       "isBlank": true
@@ -121,8 +97,8 @@
       "isBlank": true
     },
     {
-      "id": "19",
-      "label": "19",
+      "id": "1r",
+      "label": "1r",
       "isBlank": true
     },
     {
