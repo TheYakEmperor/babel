@@ -249,6 +249,37 @@
             padding: 4px;
             background: #f3f4f6;
             color: #374151;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        
+        .annotator-page-thumb .thumb-label .label-text {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .annotator-page-thumb .thumb-rename-btn {
+            display: none;
+            background: none;
+            border: none;
+            padding: 0 2px;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #6b7280;
+            flex-shrink: 0;
+        }
+        
+        .annotator-page-thumb:hover .thumb-rename-btn {
+            display: inline-block;
+        }
+        
+        .annotator-page-thumb .thumb-rename-btn:hover {
+            color: #2563eb;
         }
         
         .annotator-page-thumb.has-regions .thumb-label {
@@ -3286,7 +3317,10 @@
                          ondrop="handlePageDrop(event)"
                          ondragend="handlePageDragEnd(event)">
                         <img src="${isBlank ? '' : page.imageUrl}" alt="${escapeHtml(page.label)}">
-                        <div class="thumb-label">${escapeHtml(page.label)}${hasRegions ? '' : ''}</div>
+                        <div class="thumb-label">
+                            <span class="label-text">${escapeHtml(page.label)}</span>
+                            <button class="thumb-rename-btn" onclick="event.stopPropagation(); renamePageByLabel('${escapeHtml(page.label)}')" title="Rename page">✎</button>
+                        </div>
                     </div>
                 `;
             }).join('');
@@ -3434,8 +3468,11 @@
                 showStatus('No page selected', true);
                 return;
             }
-            
-            const oldLabel = annotatorData.currentPage;
+            renamePageByLabel(annotatorData.currentPage);
+        }
+        
+        // Rename a specific page by label
+        function renamePageByLabel(oldLabel) {
             const newLabel = prompt(`Rename page "${oldLabel}" to:`, oldLabel);
             if (!newLabel || newLabel === oldLabel) return;
             
@@ -3460,11 +3497,16 @@
                 delete annotatorData.regions[oldLabel];
             }
             
-            annotatorData.currentPage = newLabel;
+            // Update current page if it was the renamed one
+            if (annotatorData.currentPage === oldLabel) {
+                annotatorData.currentPage = newLabel;
+            }
             annotatorData.pagesReordered = true;
             
             renderAnnotatorPages();
-            selectAnnotatorPage(newLabel);
+            if (annotatorData.currentPage === newLabel) {
+                selectAnnotatorPage(newLabel);
+            }
             showStatus(`Page renamed to "${newLabel}". Don't forget to save.`);
         }
         
