@@ -364,15 +364,16 @@ body::after {
 }
 
 .sidebar-links ul {
-    list-style: none;
+    list-style: disc;
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 18px;
     max-width: 100%;
 }
 
 .sidebar-links li {
     margin: 0 0 5px 0;
     padding: 0;
+    display: list-item;
 }
 
 .sidebar-links a {

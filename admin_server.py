@@ -957,12 +957,80 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         safe_id = re.sub(r'[^a-zA-Z0-9_-]', '-', author_id.lower())
         author_dir = BASE_DIR / 'authors' / safe_id
         author_json = author_dir / 'author.json'
+        author_index = author_dir / 'index.html'
         
         if not author_json.exists():
             author_dir.mkdir(parents=True, exist_ok=True)
             # Use the original author name as-is (preserves casing like "ITV Digital")
             with open(author_json, 'w', encoding='utf-8') as f:
                 json.dump({'name': author_id}, f, indent=2, ensure_ascii=False)
+        
+        # Also create index.html if it doesn't exist
+        if not author_index.exists():
+            self._create_author_index_html(author_index, author_id, safe_id)
+    
+    def _create_author_index_html(self, path, author_name, author_id):
+        """Create a basic author index.html page."""
+        import html
+        escaped_name = html.escape(author_name)
+        
+        content = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{escaped_name}</title>
+    <link rel="icon" type="image/webp" href="../../favicon.webp">
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+    
+    <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
+    <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../">Home</a></li>
+                <li><a href="../../texts-index.html">All Texts</a></li>
+                <li><a href="../../languages/">Languages</a></li>
+                <li><a href="../../works/">Works Index</a></li>
+                <li><a href="../../authors/">Authors</a></li>
+                <li><a href="../../sources/">Sources</a></li>
+                <li><a href="../../provenances/">Provenances</a></li>
+                <li><a href="../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
+        <h1>{escaped_name}</h1>
+
+        <div class="metadata">
+            <p><strong>Author ID:</strong> <code>{author_id}</code></p>
+        </div>
+
+        <p><em>This author page was auto-generated. Run the indexer to populate works and texts.</em></p>
+</div>
+        <aside class="left-sidebar"></aside>
+    </div>
+</div>
+
+    <script src="../../search-index.js"></script>
+    <script src="../../search.js"></script>
+</body>
+</html>'''
+        
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write(content)
     
     def create_author(self, data):
         """Create or update an author."""
