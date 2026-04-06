@@ -371,9 +371,10 @@ body::after {
 }
 
 .sidebar-links li {
-    margin: 0 0 5px 0;
+    margin: 0;
     padding: 0;
     display: list-item;
+    line-height: 1.4;
 }
 
 .sidebar-links a {
@@ -381,7 +382,7 @@ body::after {
     text-decoration: none;
     font-size: 0.85rem;
     display: inline;
-    padding: 2px 0;
+    padding: 0;
     margin: 0;
     transition: color 0.2s;
 }
