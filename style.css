@@ -380,7 +380,7 @@ body::after {
 .sidebar-links a {
     color: #0000ff;
     text-decoration: underline;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     display: inline;
     padding: 0;
     margin: 0;
