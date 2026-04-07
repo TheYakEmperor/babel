@@ -374,7 +374,7 @@ body::after {
     margin: 0;
     padding: 0;
     display: list-item;
-    line-height: 1.4;
+    line-height: 1.2;
 }
 
 .sidebar-links a {
