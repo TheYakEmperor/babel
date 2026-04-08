@@ -361,6 +361,20 @@ def generate_work_page(work_id, work_info, texts, base_dir, metadata, all_works,
         if contains_items:
             contains_html = '\n'.join(contains_items)
     
+    # Handle "referentialWorks" - related/linked works
+    referential_works = work_meta.get('referentialWorks', [])
+    if isinstance(referential_works, str):
+        referential_works = [referential_works] if referential_works else []
+    referential_works_html = ''
+    if referential_works:
+        ref_items = []
+        for ref_id in referential_works:
+            ref_meta = metadata.get(ref_id, {})
+            ref_title = ref_meta.get('fullTitle') or ref_meta.get('title') or ref_id
+            ref_items.append(f'<li><a href="../{ref_id}/index.html">{ref_title}</a></li>')
+        if ref_items:
+            referential_works_html = '\n'.join(ref_items)
+    
     # Generate author link(s) if author exists - support string or array
     author_html = ''
     if author_id:
@@ -557,7 +571,14 @@ def generate_work_page(work_id, work_info, texts, base_dir, metadata, all_works,
 {contains_html}
             </ul>
         </section>
-''' if contains_html else ''}{texts_section}</div>
+''' if contains_html else ''}{f'''
+        <section class="related-works-section">
+            <h2>Related Works</h2>
+            <ul class="related-works-list">
+{referential_works_html}
+            </ul>
+        </section>
+''' if referential_works_html else ''}{texts_section}</div>
         <aside class="left-sidebar"></aside>
     </div>
 </div>

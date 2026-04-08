@@ -408,6 +408,31 @@ function initPageViewer(pagesData) {
             audio.style.marginTop = '10px';
             audio.className = 'page-viewer-media';
             container.appendChild(audio);
+        } else if (mediaType === 'image-audio') {
+            // Show image with audio controls below
+            imgElement.style.display = '';
+            imgElement.src = url;
+            
+            // Get audio URL from item
+            const audioFile = typeof item === 'object' ? item.audioFile : null;
+            if (audioFile) {
+                let audioUrl;
+                if (audioFile.startsWith('http://') || audioFile.startsWith('https://')) {
+                    audioUrl = audioFile;
+                } else if (textPath) {
+                    audioUrl = `${B2_BASE_URL}/texts/${textPath}/images/${audioFile}`;
+                } else {
+                    audioUrl = `images/${audioFile}`;
+                }
+                
+                const audio = document.createElement('audio');
+                audio.src = audioUrl;
+                audio.controls = true;
+                audio.style.width = '100%';
+                audio.style.marginTop = '10px';
+                audio.className = 'page-viewer-media';
+                container.appendChild(audio);
+            }
         } else {
             // Normal image
             imgElement.style.display = '';

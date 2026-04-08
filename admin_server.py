@@ -791,6 +791,7 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             label = page_info.get('label')
             is_blank = page_info.get('isBlank', False)
             media_type = page_info.get('mediaType')
+            audio_file = page_info.get('audioFile')
             
             # Get existing page data if it exists
             if label in existing_pages:
@@ -808,11 +809,18 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             elif 'isBlank' in page_entry:
                 del page_entry['isBlank']
             
-            # Update media type (video, audio, or None for images)
+            # Update media type (video, audio, image-audio, or None for images)
             if media_type:
                 page_entry['mediaType'] = media_type
             elif 'mediaType' in page_entry and not media_type:
                 # Keep existing mediaType if not explicitly cleared
+                pass
+            
+            # Update audio file for image-audio pages
+            if audio_file:
+                page_entry['audioFile'] = audio_file
+            elif 'audioFile' in page_entry and not audio_file:
+                # Keep existing audioFile if not explicitly cleared
                 pass
             
             new_pages.append(page_entry)

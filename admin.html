@@ -904,6 +904,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label>Related Works <span class="hint">(referenced or linked works)</span></label>
+                    <div class="tag-input-container" id="work-referentialworks-container">
+                        <div class="autocomplete-wrapper">
+                            <input type="text" class="tag-input" id="work-referentialworks-input" placeholder="Type to search works..." autocomplete="off">
+                            <div class="autocomplete-dropdown" id="work-referentialworks-dropdown"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <div class="modal-footer">
@@ -1084,12 +1093,15 @@
                         <button onclick="insertImagePage()" title="Insert page from image file">+ Image</button>
                         <button onclick="insertVideoPage()" title="Insert page from video file">+ Video</button>
                         <button onclick="insertAudioPage()" title="Insert page from audio file">+ Audio</button>
+                        <button onclick="insertImageAudioPage()" title="Insert image with audio">+ Img+Audio</button>
                         <button onclick="renamePage()" title="Rename current page">Rename</button>
                         <button onclick="deleteCurrentPage()" title="Delete current page">Delete</button>
                         <button onclick="savePageOrder()" title="Save page order">Save Order</button>
                         <input type="file" id="image-page-input" accept="image/*" style="display:none" onchange="handleImagePageUpload(event)">
                         <input type="file" id="video-page-input" accept="video/*" style="display:none" onchange="handleVideoPageUpload(event)">
                         <input type="file" id="audio-page-input" accept="audio/*" style="display:none" onchange="handleAudioPageUpload(event)">
+                        <input type="file" id="imgaudio-image-input" accept="image/*" style="display:none" onchange="handleImgAudioImageUpload(event)">
+                        <input type="file" id="imgaudio-audio-input" accept="audio/*" style="display:none" onchange="handleImgAudioAudioUpload(event)">
                     </div>
                     <div class="annotator-page-list" id="annotator-pages"></div>
                 </div>
@@ -1582,7 +1594,7 @@
         }
         
         // Work Editor
-        let workEditorData = { authors: [], languages: [], aliases: [], belongsTo: '' };
+        let workEditorData = { authors: [], languages: [], aliases: [], belongsTo: '', referentialWorks: [] };
         let cachedWorksList = [];
         
         // Author Editor
@@ -1602,7 +1614,7 @@
         
         async function openWorkEditor(id = null) {
             currentEditId = id;
-            workEditorData = { authors: [], languages: [], aliases: [], belongsTo: '' };
+            workEditorData = { authors: [], languages: [], aliases: [], belongsTo: '', referentialWorks: [] };
             
             // Pre-load works list for belongsTo autocomplete
             await getWorksList();
@@ -1619,6 +1631,7 @@
                     workEditorData.authors = [].concat(work.author || []);
                     workEditorData.languages = [].concat(work.original_language || []);
                     workEditorData.aliases = [].concat(work.alias || []);
+                    workEditorData.referentialWorks = [].concat(work.referentialWorks || []);
                     document.getElementById('work-editor-title').textContent = 'Edit Work';
                     document.getElementById('work-id').disabled = true;
                 } catch (e) {
@@ -1660,7 +1673,8 @@
                 original_language: workEditorData.languages.length === 1 ? workEditorData.languages[0] : (workEditorData.languages.length ? workEditorData.languages : undefined),
                 alias: workEditorData.aliases.length ? workEditorData.aliases : undefined,
                 genre: document.getElementById('work-genre').value.trim() || undefined,
-                belongsTo: workEditorData.belongsTo || undefined
+                belongsTo: workEditorData.belongsTo || undefined,
+                referentialWorks: workEditorData.referentialWorks.length ? workEditorData.referentialWorks : undefined
             };
             
             try {
@@ -2252,6 +2266,21 @@
                 belongsToContainer.innerHTML = tagHtml + inputHtml;
                 setupBelongsToInput();
             }
+            
+            // Handle referentialWorks (array of work IDs)
+            const refWorksContainer = document.getElementById('work-referentialworks-container');
+            if (refWorksContainer) {
+                const inputHtml = `<div class="autocomplete-wrapper"><input type="text" class="tag-input" id="work-referentialworks-input" placeholder="Type to search works..." autocomplete="off"><div class="autocomplete-dropdown" id="work-referentialworks-dropdown"></div></div>`;
+                
+                const tagHtml = workEditorData.referentialWorks.map((v, i) => {
+                    const work = cachedWorksList.find(w => w.id === v);
+                    const displayName = work ? `${work.title} (${v})` : v;
+                    return `<span class="tag">${escapeHtml(displayName)} <span class="remove-tag" data-p="work" data-f="referentialWorks" data-i="${i}">&times;</span></span>`;
+                }).join('');
+                
+                refWorksContainer.innerHTML = tagHtml + inputHtml;
+                setupReferentialWorksInput();
+            }
         }
         
         function setupBelongsToInput() {
@@ -2344,6 +2373,107 @@
                     const item = e.target.closest('.autocomplete-item');
                     if (item) {
                         setValue(item.dataset.value);
+                        hideDropdown();
+                    }
+                };
+            }
+        }
+        
+        function setupReferentialWorksInput() {
+            const input = document.getElementById('work-referentialworks-input');
+            const dropdown = document.getElementById('work-referentialworks-dropdown');
+            if (!input) return;
+            
+            let selectedIndex = -1;
+            const currentWorkId = document.getElementById('work-id').value;
+            
+            function addValue(v) {
+                if (!workEditorData.referentialWorks.includes(v)) {
+                    workEditorData.referentialWorks.push(v);
+                    renderWorkTagInputs();
+                }
+            }
+            
+            function showDropdown(items) {
+                if (!dropdown) return;
+                if (items.length === 0) {
+                    dropdown.classList.remove('active');
+                    return;
+                }
+                selectedIndex = -1;
+                dropdown.innerHTML = items.slice(0, 50).map((item, i) => {
+                    return `<div class="autocomplete-item" data-value="${item.id}" data-index="${i}">
+                        <span class="ac-name">${escapeHtml(item.title || item.id)}</span>
+                        <span class="ac-meta">${item.date || ''}</span>
+                        <span class="ac-id">${item.id}</span>
+                    </div>`;
+                }).join('');
+                dropdown.classList.add('active');
+            }
+            
+            function hideDropdown() {
+                if (dropdown) dropdown.classList.remove('active');
+            }
+            
+            function selectItem(index) {
+                const items = dropdown.querySelectorAll('.autocomplete-item');
+                items.forEach((el, i) => el.classList.toggle('selected', i === index));
+                if (items[index]) items[index].scrollIntoView({ block: 'nearest' });
+            }
+            
+            input.oninput = () => {
+                const query = input.value.toLowerCase().trim();
+                if (!query || query.length < 1) { hideDropdown(); return; }
+                
+                const matches = cachedWorksList
+                    .filter(w => w.id !== currentWorkId) // Can't reference itself
+                    .filter(w => !workEditorData.referentialWorks.includes(w.id)) // Not already added
+                    .filter(w => 
+                        (w.title || '').toLowerCase().includes(query) || w.id.toLowerCase().includes(query)
+                    )
+                    .sort((a, b) => {
+                        const aStart = (a.title || '').toLowerCase().startsWith(query) || a.id.startsWith(query) ? 0 : 1;
+                        const bStart = (b.title || '').toLowerCase().startsWith(query) || b.id.startsWith(query) ? 0 : 1;
+                        return aStart - bStart || (a.title || a.id).localeCompare(b.title || b.id);
+                    });
+                showDropdown(matches);
+            };
+            
+            input.onkeydown = (e) => {
+                const items = dropdown ? dropdown.querySelectorAll('.autocomplete-item') : [];
+                
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (items.length > 0) {
+                        selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+                        selectItem(selectedIndex);
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (items.length > 0) {
+                        selectedIndex = Math.max(selectedIndex - 1, 0);
+                        selectItem(selectedIndex);
+                    }
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (selectedIndex >= 0 && items[selectedIndex]) {
+                        addValue(items[selectedIndex].dataset.value);
+                        input.value = '';
+                    }
+                    hideDropdown();
+                } else if (e.key === 'Escape') {
+                    hideDropdown();
+                }
+            };
+            
+            input.onblur = () => setTimeout(hideDropdown, 200);
+            
+            if (dropdown) {
+                dropdown.onclick = (e) => {
+                    const item = e.target.closest('.autocomplete-item');
+                    if (item) {
+                        addValue(item.dataset.value);
+                        input.value = '';
                         hideDropdown();
                     }
                 };
@@ -3481,7 +3611,8 @@
                         label: p.label,
                         filename: p.filename,
                         isBlank: p.isBlank || false,
-                        mediaType: p.mediaType || null
+                        mediaType: p.mediaType || null,
+                        audioFile: p.audioFile || null
                     }))
                 });
                 annotatorData.pagesReordered = false;
@@ -3754,6 +3885,108 @@
             renderAnnotatorPages();
             selectAnnotatorPage(newPage.label);
             showStatus(`${mediaType.charAt(0).toUpperCase() + mediaType.slice(1)} page "${label}" inserted. Don't forget to save.`);
+        }
+        
+        // Image + Audio combo - state for multi-step upload
+        let imgAudioState = { imageFile: null, imageData: null };
+        
+        // Start image+audio upload process
+        function insertImageAudioPage() {
+            imgAudioState = { imageFile: null, imageData: null };
+            document.getElementById('imgaudio-image-input').click();
+        }
+        
+        // Handle image selection for image+audio
+        async function handleImgAudioImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            event.target.value = '';
+            
+            try {
+                const base64Data = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+                imgAudioState.imageFile = file;
+                imgAudioState.imageData = base64Data;
+                showStatus('Image selected. Now select an audio file...');
+                document.getElementById('imgaudio-audio-input').click();
+            } catch (e) {
+                showStatus('Error reading image: ' + e.message, true);
+            }
+        }
+        
+        // Handle audio selection for image+audio
+        async function handleImgAudioAudioUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            event.target.value = '';
+            
+            if (!imgAudioState.imageFile) {
+                showStatus('Please select an image first', true);
+                return;
+            }
+            
+            try {
+                const audioBase64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+                
+                const defaultLabel = imgAudioState.imageFile.name.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
+                const label = prompt('Enter label for the new image+audio page:', defaultLabel);
+                if (!label) {
+                    imgAudioState = { imageFile: null, imageData: null };
+                    return;
+                }
+                
+                if (annotatorData.pages.some(p => p.label === label)) {
+                    showStatus(`A page with label "${label}" already exists`, true);
+                    imgAudioState = { imageFile: null, imageData: null };
+                    return;
+                }
+                
+                showStatus('Uploading image and audio...');
+                
+                // Upload both files
+                await api('upload-images', {
+                    id: annotatorData.textId,
+                    images: [
+                        { name: imgAudioState.imageFile.name, data: imgAudioState.imageData },
+                        { name: file.name, data: audioBase64 }
+                    ]
+                });
+                
+                const currentIndex = annotatorData.pages.findIndex(p => p.label === annotatorData.currentPage);
+                const insertIndex = currentIndex >= 0 ? currentIndex + 1 : annotatorData.pages.length;
+                
+                const newPage = {
+                    label: label.trim(),
+                    filename: imgAudioState.imageFile.name,
+                    imageUrl: `${B2_BASE_URL}/texts/00/00/${annotatorData.folderName}/images/${encodeURIComponent(imgAudioState.imageFile.name)}`,
+                    audioFile: file.name,
+                    audioUrl: `${B2_BASE_URL}/texts/00/00/${annotatorData.folderName}/images/${encodeURIComponent(file.name)}`,
+                    isBlank: false,
+                    mediaType: 'image-audio'
+                };
+                
+                annotatorData.pages.splice(insertIndex, 0, newPage);
+                annotatorData.regions[newPage.label] = [];
+                annotatorData.pagesReordered = true;
+                
+                renderAnnotatorPages();
+                selectAnnotatorPage(newPage.label);
+                showStatus(`Image+audio page "${label}" inserted. Don't forget to save.`);
+                
+                imgAudioState = { imageFile: null, imageData: null };
+            } catch (e) {
+                showStatus('Error uploading: ' + e.message, true);
+                imgAudioState = { imageFile: null, imageData: null };
+            }
         }
         
         function selectAnnotatorPage(pageLabel) {
