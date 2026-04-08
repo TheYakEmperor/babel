@@ -67,8 +67,6 @@
             </div>
             <div class="page-viewer-thumbnails" id="pv-thumbnails"></div>
         </div>
-        <p class="language-status" id="language-status"></p>
-        
 <div class="metadata" id="metadata"></div>
 
         <section>
@@ -246,7 +244,6 @@
             
             // Language(s) - support string, array of strings, object, or array of objects
             const langResult = formatLanguages(data.language);
-            document.getElementById('language-status').innerHTML = `Text in ${langResult.html}`;
             
             // Set data attributes on html for other scripts
             document.documentElement.dataset.languageId = langResult.ids.join(',');
@@ -262,6 +259,7 @@
             const titleDisplay = data.titleTranslation ? 
                 `${data.title} <em>(${data.titleTranslation})</em>` : data.title;
             metaHtml += `<p><strong>Title:</strong> ${titleDisplay}</p>`;
+            metaHtml += `<p><strong>Language:</strong> ${langResult.html}</p>`;
             // Author(s) - look up from author.json
             // Slugify author name to match directory structure
             const slugifyAuthor = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
