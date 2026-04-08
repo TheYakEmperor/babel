@@ -292,6 +292,34 @@ function initPageViewer(pagesData) {
         return typeof item === 'object' && item.isBlank === true;
     }
     
+    // Detect media type from filename or page data
+    function getMediaType(item) {
+        // Check if explicitly set in page data
+        if (typeof item === 'object' && item.mediaType) {
+            return item.mediaType;
+        }
+        
+        // Detect from filename/url
+        const url = typeof item === 'object' ? (item.url || item.filename || '') : item;
+        const ext = url.split('.').pop().toLowerCase();
+        
+        const videoExts = ['mp4', 'webm', 'ogg', 'mov', 'avi', 'mkv'];
+        const audioExts = ['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a'];
+        
+        if (videoExts.includes(ext)) return 'video';
+        if (audioExts.includes(ext)) return 'audio';
+        return 'image';
+    }
+    
+    // Audio placeholder SVG
+    const AUDIO_PLACEHOLDER = 'data:image/svg+xml,' + encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+            <rect width="600" height="400" fill="#1a1a2e"/>
+            <text x="300" y="180" text-anchor="middle" fill="#e0e0e0" font-family="sans-serif" font-size="64">🎵</text>
+            <text x="300" y="250" text-anchor="middle" fill="#9ca3af" font-family="sans-serif" font-size="18">Audio Track</text>
+        </svg>
+    `);
+    
     // Data URI for blank page placeholder
     const BLANK_PAGE_PLACEHOLDER = 'data:image/svg+xml,' + encodeURIComponent(`
         <svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
@@ -340,6 +368,53 @@ function initPageViewer(pagesData) {
         return spreads;
     }
     
+    // Clear any video/audio elements from a container
+    function clearMediaElements(container) {
+        const video = container.querySelector('video');
+        const audio = container.querySelector('audio');
+        if (video) video.remove();
+        if (audio) audio.remove();
+    }
+    
+    // Show media in container based on type
+    function showMediaInContainer(container, imgElement, item) {
+        const mediaType = getMediaType(item);
+        const url = getPageUrl(item);
+        
+        // Clear any existing media elements
+        clearMediaElements(container);
+        
+        if (mediaType === 'video') {
+            // Hide image, show video
+            imgElement.style.display = 'none';
+            
+            const video = document.createElement('video');
+            video.src = url;
+            video.controls = true;
+            video.style.maxWidth = '100%';
+            video.style.maxHeight = '100%';
+            video.style.objectFit = 'contain';
+            video.className = 'page-viewer-media';
+            container.appendChild(video);
+        } else if (mediaType === 'audio') {
+            // Show audio placeholder image and audio controls
+            imgElement.style.display = '';
+            imgElement.src = AUDIO_PLACEHOLDER;
+            
+            const audio = document.createElement('audio');
+            audio.src = url;
+            audio.controls = true;
+            audio.style.width = '100%';
+            audio.style.marginTop = '10px';
+            audio.className = 'page-viewer-media';
+            container.appendChild(audio);
+        } else {
+            // Normal image
+            imgElement.style.display = '';
+            imgElement.src = url;
+        }
+    }
+    
     function showSingle(index) {
         if (index < 0 || index >= images.length) return;
         currentIndex = index;
@@ -347,10 +422,12 @@ function initPageViewer(pagesData) {
         
         mainContainer.classList.remove('dual-page');
         mainImage.classList.remove('solo');
-        mainImage.src = getPageUrl(images[index]);
+        
+        showMediaInContainer(container1, mainImage, images[index]);
         mainImage.alt = getPageName(images[index]);
         container1.style.display = '';
         container2.style.display = 'none';
+        clearMediaElements(container2);
         
         countDisplay.textContent = getPageName(images[index]);
         prevBtn.disabled = index === 0;
@@ -374,21 +451,22 @@ function initPageViewer(pagesData) {
         mainContainer.classList.add('dual-page');
         
         if (spread.length === 1) {
-            mainImage.src = getPageUrl(images[spread[0]]);
+            showMediaInContainer(container1, mainImage, images[spread[0]]);
             mainImage.alt = getPageName(images[spread[0]]);
             mainImage.classList.add('solo');
             container1.classList.add('solo');
             container1.style.display = '';
             container2.style.display = 'none';
+            clearMediaElements(container2);
             countDisplay.textContent = getPageName(images[spread[0]]);
         } else {
-            mainImage.src = getPageUrl(images[spread[0]]);
+            showMediaInContainer(container1, mainImage, images[spread[0]]);
             mainImage.alt = getPageName(images[spread[0]]);
             mainImage.classList.remove('solo');
             container1.classList.remove('solo');
             container1.style.display = '';
             
-            mainImage2.src = getPageUrl(images[spread[1]]);
+            showMediaInContainer(container2, mainImage2, images[spread[1]]);
             mainImage2.alt = getPageName(images[spread[1]]);
             container2.style.display = '';
             
