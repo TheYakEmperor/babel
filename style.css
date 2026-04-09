@@ -46,7 +46,7 @@ body::before {
     right: 0;
     bottom: 0;
     background: url('background-image/background-image.jpg') repeat;
-    filter: sepia(100%) saturate(200%) brightness(0.9) hue-rotate(-10deg);
+    filter: sepia(100%) saturate(350%) brightness(0.85) contrast(1.1) hue-rotate(-15deg);
     z-index: -1;
 }
 
@@ -306,7 +306,7 @@ body::before {
 }
 
 .search-container.stepped + .page-wrapper {
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 /* Header logo container above content - HIDDEN (moved to search bar) */
