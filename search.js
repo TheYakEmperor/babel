@@ -1,14 +1,14 @@
 // Simple search functionality
 console.log('[search] search.js loaded');
 
-// === ADD LOGO TO SEARCH BAR & SIDEBAR DECORATION ===
+// === CONVERT TO STEPPED SEARCH BAR ===
 (function() {
     document.addEventListener('DOMContentLoaded', function() {
         // Determine the correct path base based on page depth
         let basePath = '';
         const pathMatch = window.location.pathname.match(/\/[^/]+/g);
         if (pathMatch) {
-            const depth = pathMatch.length - 1; // -1 because we don't count the filename
+            const depth = pathMatch.length - 1;
             if (depth > 0) {
                 basePath = '../'.repeat(depth);
             }
@@ -17,64 +17,36 @@ console.log('[search] search.js loaded');
         const existingLogo = document.querySelector('.header-logo img, .sidebar-logo img');
         if (existingLogo && existingLogo.src) {
             const existingPath = existingLogo.src.replace(window.location.origin, '');
-            if (existingPath.includes('Wikilogo')) {
-                basePath = existingPath.replace('Wikilogo.webp', '');
+            if (existingPath.includes('1111babel')) {
+                basePath = existingPath.replace('background-image/1111babel.png', '');
             }
         }
         
         const searchContainer = document.querySelector('.search-container');
-        // Only add logo if one doesn't already exist
-        if (searchContainer && !searchContainer.querySelector('.search-logo')) {
-            const logoLink = document.createElement('a');
-            logoLink.href = basePath || './';
-            logoLink.innerHTML = `<img src="${basePath}Wikilogo.webp" alt="Babel Archive" class="search-logo">`;
-            searchContainer.insertBefore(logoLink, searchContainer.firstChild);
-        }
         
-        // === ADD RAINBOW BUTTONS TO NON-STEPPED PAGES ===
+        // Convert non-stepped search containers to stepped
         if (searchContainer && !searchContainer.classList.contains('stepped')) {
-            // Check if rainbow buttons already exist
-            if (!searchContainer.querySelector('.rainbow-buttons')) {
-                // Wrap existing search input in a wrapper
-                const searchBar = searchContainer.querySelector('.search-bar');
-                const searchResults = searchContainer.querySelector('.search-results');
-                
-                // Create left rainbow buttons
-                const leftRainbow = document.createElement('div');
-                leftRainbow.className = 'rainbow-buttons';
-                leftRainbow.innerHTML = `
+            // Add stepped class
+            searchContainer.classList.add('stepped');
+            
+            // Completely replace content with stepped version
+            searchContainer.innerHTML = `
+                <a href="${basePath || './'}"><img src="${basePath}Wikilogo.webp" alt="Babel Archive" class="search-logo"></a>
+                <div class="rainbow-buttons">
                     <a href="#" class="rainbow-btn" style="background:#ff0000; color:#fff;">Link-1</a>
                     <a href="#" class="rainbow-btn" style="background:#ffa500; color:#000;">Link-2</a>
                     <a href="#" class="rainbow-btn" style="background:#ffff00; color:#000;">Link-3</a>
-                `;
-                
-                // Create right rainbow buttons
-                const rightRainbow = document.createElement('div');
-                rightRainbow.className = 'rainbow-buttons';
-                rightRainbow.innerHTML = `
+                </div>
+                <div class="search-bar-wrapper">
+                    <input type="text" id="searchInput" class="search-bar" placeholder="Search...">
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+                <div class="rainbow-buttons">
                     <a href="#" class="rainbow-btn" style="background:#008001; color:#fff;">Link-4</a>
                     <a href="#" class="rainbow-btn" style="background:#0000ff; color:#fff;">Link-5</a>
                     <a href="#" class="rainbow-btn" style="background:#800080; color:#fff;">Link-7</a>
-                `;
-                
-                // Create search wrapper
-                const searchWrapper = document.createElement('div');
-                searchWrapper.className = 'search-bar-wrapper';
-                if (searchBar) {
-                    searchWrapper.appendChild(searchBar);
-                }
-                if (searchResults) {
-                    searchWrapper.appendChild(searchResults);
-                }
-                
-                // Clear and rebuild search container content
-                const logoLink = searchContainer.querySelector('a');
-                searchContainer.innerHTML = '';
-                if (logoLink) searchContainer.appendChild(logoLink);
-                searchContainer.appendChild(leftRainbow);
-                searchContainer.appendChild(searchWrapper);
-                searchContainer.appendChild(rightRainbow);
-            }
+                </div>
+            `;
         }
         
         // === ADD SIDEBAR DECORATION IMAGES ===
