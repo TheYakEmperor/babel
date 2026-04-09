@@ -134,21 +134,6 @@ body::after {
     width: auto;
 }
 
-.header-bar-spacer {
-    display: none;
-}
-
-.search-container.stepped .header-bar-spacer {
-    display: flex;
-    background: #000;
-    padding: 8px 15px;
-    border-bottom: 1px solid #222;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 50px;
-}
-
 .search-container.stepped .search-bar-wrapper {
     background: #000;
     padding: 8px 15px;
