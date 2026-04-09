@@ -339,25 +339,26 @@ body::after {
 
 /* On stepped homepage, style the logo's parent anchor */
 .search-container.stepped > a:first-child {
-    position: absolute;
-    left: 0;
-    top: 0;
-    background: #000;
-    padding: 8px 15px;
-    border-bottom: 1px solid #222;
-    display: flex;
-    align-items: center;
-    height: 37px;
-    box-sizing: content-box;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    background: #000 !important;
+    padding: 8px 15px !important;
+    border-bottom: 1px solid #222 !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 37px !important;
+    box-sizing: content-box !important;
 }
 
 .search-container.stepped .search-logo {
-    position: static;
-    height: 34px;
-    top: auto;
-    left: auto;
-    bottom: auto;
-    transform: none;
+    position: static !important;
+    height: 34px !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    filter: invert(1) brightness(1.5) !important;
 }
 
 .search-logo:hover {
