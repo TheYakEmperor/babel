@@ -32,7 +32,7 @@ body {
     font-family: 'Junicode', 'EB Garamond', 'Palatino Linotype', 'Book Antiqua', serif;
     font-size: 0.93em;
     line-height: 1.7;
-    color: #333;
+    color: #000;
     background: url('background-image/background-image.jpg') repeat;
     overflow-x: hidden;
     position: relative;
