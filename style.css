@@ -343,22 +343,27 @@ body::after {
     left: 0 !important;
     top: 0 !important;
     background: #000 !important;
-    padding: 8px 15px !important;
+    padding: 0 !important;
     border-bottom: 1px solid #222 !important;
     display: flex !important;
     align-items: center !important;
-    height: 37px !important;
-    box-sizing: content-box !important;
+    justify-content: center !important;
+    width: 54px !important;
+    height: 54px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
 }
 
 .search-container.stepped .search-logo {
     position: static !important;
-    height: 34px !important;
+    height: 48px !important;
+    width: 48px !important;
     top: auto !important;
     left: auto !important;
     bottom: auto !important;
     transform: none !important;
     filter: invert(1) brightness(1.5) !important;
+    object-fit: cover !important;
 }
 
 .search-logo:hover {
