@@ -1539,7 +1539,7 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         import threading
         
         def rebuild():
-            scripts = ['index_works.py', 'index_authors.py', 'index_texts.py', 'index_sources.py', 'index_provenances.py', 'index_collections.py']
+            scripts = ['index_works.py', 'index_authors.py', 'index_texts.py', 'index_sources.py', 'index_provenances.py', 'index_collections.py', 'index_groups.py']
             for script in scripts:
                 if (BASE_DIR / script).exists():
                     try:

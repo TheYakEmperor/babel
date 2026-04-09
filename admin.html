@@ -1432,6 +1432,33 @@
             }
         }
         
+        async function loadGroups() {
+            const list = document.getElementById('groups-list');
+            list.innerHTML = '<div class="loading">Loading...</div>';
+            try {
+                const result = await api('list-groups');
+                if (result.groups.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><p>No groups yet.</p></div>';
+                    return;
+                }
+                list.innerHTML = result.groups.map(g => `
+                    <div class="item-card">
+                        <div class="item-card-info">
+                            <h3>${escapeHtml(g.name)}</h3>
+                            <div class="meta">ID: ${g.id}
+                            <a href="groups/${g.id}/" class="view-link" target="_blank">View →</a></div>
+                        </div>
+                        <div class="item-card-actions">
+                            <button class="btn btn-secondary" onclick="editGroup('${g.id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteGroup('${g.id}')">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><p>Error: ${escapeHtml(e.message)}</p></div>`;
+            }
+        }
+        
         async function loadSources() {
             const list = document.getElementById('sources-list');
             list.innerHTML = '<div class="loading">Loading...</div>';
@@ -1592,6 +1619,7 @@
                 sources: textEditorData.sources.length ? textEditorData.sources : undefined,
                 provenances: textEditorData.provenances.length ? textEditorData.provenances : undefined,
                 collections: textEditorData.collections.length ? textEditorData.collections : undefined,
+                groups: textEditorData.groups.length ? textEditorData.groups : undefined,
                 date: document.getElementById('text-date').value.trim() || undefined,
                 country: textEditorData.countries.length === 1 ? textEditorData.countries[0] : (textEditorData.countries.length ? textEditorData.countries : undefined),
                 language: textEditorData.languages.length === 1 ? textEditorData.languages[0] : (textEditorData.languages.length ? textEditorData.languages : undefined),
@@ -1941,6 +1969,93 @@
             }
         }
         
+        // Group Editor
+        let currentGroupId = null;
+        let cachedGroups = [];
+        
+        async function getGroupsList() {
+            if (cachedGroups.length === 0) {
+                try {
+                    const result = await api('list-groups');
+                    cachedGroups = result.groups || [];
+                } catch (e) {
+                    cachedGroups = [];
+                }
+            }
+            return cachedGroups;
+        }
+        getGroupsList(); // Pre-fetch on page load
+        
+        async function openGroupEditor(id = null) {
+            currentGroupId = id;
+            
+            if (id) {
+                try {
+                    const grp = await api('get-group', { id });
+                    document.getElementById('group-id').value = grp.id || id;
+                    document.getElementById('group-name').value = grp.name || '';
+                    document.getElementById('group-description').value = grp.description || '';
+                    document.getElementById('group-editor-title').textContent = 'Edit Group';
+                    document.getElementById('group-id').disabled = true;
+                } catch (e) {
+                    showStatus('Error: ' + e.message, true);
+                    return;
+                }
+            } else {
+                document.getElementById('group-id').value = '';
+                document.getElementById('group-name').value = '';
+                document.getElementById('group-description').value = '';
+                document.getElementById('group-editor-title').textContent = 'New Group';
+                document.getElementById('group-id').disabled = false;
+            }
+            
+            document.getElementById('group-editor-modal').classList.add('active');
+        }
+        
+        function closeGroupEditor() {
+            document.getElementById('group-editor-modal').classList.remove('active');
+        }
+        
+        async function saveGroup() {
+            const id = document.getElementById('group-id').value.trim();
+            if (!id) { alert('Please enter a group ID'); return; }
+            
+            const btn = document.getElementById('save-group-btn');
+            btn.disabled = true; btn.textContent = 'Saving...';
+            
+            const data = {
+                id,
+                name: document.getElementById('group-name').value.trim(),
+                description: document.getElementById('group-description').value.trim() || undefined
+            };
+            
+            try {
+                const result = await api('group', data);
+                showStatus(result.message);
+                closeGroupEditor();
+                loadGroups();
+                cachedGroups = []; // Clear cache to reload
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            } finally {
+                btn.disabled = false; btn.textContent = 'Save Group';
+            }
+        }
+        
+        async function editGroup(id) { await openGroupEditor(id); }
+        
+        async function deleteGroup(id) {
+            if (!confirm(`Delete group "${id}"?`)) return;
+            try {
+                const result = await api('delete-group', { id });
+                showStatus(result.message);
+                loadGroups();
+                cachedGroups = [];
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            }
+        }
+        
         // Source Editor
         let currentSourceId = null;
         
@@ -2263,14 +2378,14 @@
         getProvenancesList(); // Pre-fetch on page load
         
         function renderTagInputs(prefix) {
-            ['authors', 'languages', 'countries', 'collections', 'sources', 'provenances'].forEach(field => {
+            ['authors', 'languages', 'countries', 'collections', 'groups', 'sources', 'provenances'].forEach(field => {
                 const container = document.getElementById(`${prefix}-${field}-container`);
                 if (!container) return;
                 const data = prefix === 'text' ? textEditorData : workEditorData;
                 if (!data[field]) return;
                 
-                const needsAutocomplete = ['authors', 'languages', 'countries', 'collections', 'sources', 'provenances'].includes(field);
-                const placeholders = { collections: 'collection-id', sources: 'source-id', provenances: 'provenance-id' };
+                const needsAutocomplete = ['authors', 'languages', 'countries', 'collections', 'groups', 'sources', 'provenances'].includes(field);
+                const placeholders = { collections: 'collection-id', groups: 'group-id', sources: 'source-id', provenances: 'provenance-id' };
                 const placeholder = placeholders[field] || 'Type to search...';
                 const inputHtml = needsAutocomplete
                     ? `<div class="autocomplete-wrapper"><input type="text" class="tag-input" id="${prefix}-${field}-input" placeholder="${placeholder}" autocomplete="off"><div class="autocomplete-dropdown" id="${prefix}-${field}-dropdown"></div></div>`
@@ -2284,6 +2399,9 @@
                     } else if (field === 'authors') {
                         const author = cachedAuthors.find(a => a.id === v);
                         if (author) displayName = `${author.name} (${v})`;
+                    } else if (field === 'groups') {
+                        const grp = cachedGroups.find(g => g.id === v);
+                        if (grp) displayName = `${grp.name} (${v})`;
                     } else if (field === 'countries') {
                         const country = cachedCountries.find(c => c.code === v);
                         if (country) displayName = `${country.name} (${v})`;
@@ -2305,11 +2423,11 @@
         }
         
         function renderWorkTagInputs() {
-            ['authors', 'languages', 'aliases'].forEach(field => {
+            ['authors', 'languages', 'aliases', 'groups'].forEach(field => {
                 const container = document.getElementById(`work-${field}-container`);
                 if (!container) return;
                 
-                const needsAutocomplete = field === 'authors' || field === 'languages';
+                const needsAutocomplete = field === 'authors' || field === 'languages' || field === 'groups';
                 const inputHtml = needsAutocomplete
                     ? `<div class="autocomplete-wrapper"><input type="text" class="tag-input" id="work-${field}-input" placeholder="Type to search..." autocomplete="off"><div class="autocomplete-dropdown" id="work-${field}-dropdown"></div></div>`
                     : `<input type="text" class="tag-input" id="work-${field}-input" placeholder="...">`;
@@ -2322,6 +2440,9 @@
                     } else if (field === 'authors') {
                         const author = cachedAuthors.find(a => a.id === v);
                         if (author) displayName = `${author.name} (${v})`;
+                    } else if (field === 'groups') {
+                        const grp = cachedGroups.find(g => g.id === v);
+                        if (grp) displayName = `${grp.name} (${v})`;
                     }
                     return `<span class="tag">${escapeHtml(displayName)} <span class="remove-tag" data-p="work" data-f="${field}" data-i="${i}">&times;</span></span>`;
                 }).join('') + inputHtml;
@@ -2559,16 +2680,31 @@
         }
         
         function renderAuthorTagInputs() {
-            const container = document.getElementById('author-aliases-container');
-            if (!container) return;
+            // Aliases field
+            const aliasContainer = document.getElementById('author-aliases-container');
+            if (aliasContainer) {
+                const inputHtml = `<input type="text" class="tag-input" id="author-aliases-input" placeholder="Alternative name">`;
+                
+                aliasContainer.innerHTML = authorEditorData.aliases.map((v, i) => {
+                    return `<span class="tag">${escapeHtml(v)} <span class="remove-tag" data-p="author" data-f="aliases" data-i="${i}">&times;</span></span>`;
+                }).join('') + inputHtml;
+                
+                setupTagInput('author', 'aliases');
+            }
             
-            const inputHtml = `<input type="text" class="tag-input" id="author-aliases-input" placeholder="Alternative name">`;
-            
-            container.innerHTML = authorEditorData.aliases.map((v, i) => {
-                return `<span class="tag">${escapeHtml(v)} <span class="remove-tag" data-p="author" data-f="aliases" data-i="${i}">&times;</span></span>`;
-            }).join('') + inputHtml;
-            
-            setupTagInput('author', 'aliases');
+            // Groups field
+            const groupsContainer = document.getElementById('author-groups-container');
+            if (groupsContainer) {
+                const inputHtml = `<div class="autocomplete-wrapper"><input type="text" class="tag-input" id="author-groups-input" placeholder="Type to search..." autocomplete="off"><div class="autocomplete-dropdown" id="author-groups-dropdown"></div></div>`;
+                
+                groupsContainer.innerHTML = authorEditorData.groups.map((v, i) => {
+                    const grp = cachedGroups.find(g => g.id === v);
+                    const displayName = grp ? `${grp.name} (${v})` : v;
+                    return `<span class="tag">${escapeHtml(displayName)} <span class="remove-tag" data-p="author" data-f="groups" data-i="${i}">&times;</span></span>`;
+                }).join('') + inputHtml;
+                
+                setupTagInput('author', 'groups');
+            }
         }
         
         function setupTagInput(prefix, field) {
@@ -2629,6 +2765,11 @@
                         return `<div class="autocomplete-item" data-value="${item.id}" data-index="${i}">
                             <span class="ac-name">${escapeHtml(item.name)}</span>
                             <span class="ac-meta">${escapeHtml(item.location || '')}</span>
+                            <span class="ac-id">${item.id}</span>
+                        </div>`;
+                    } else if (field === 'groups') {
+                        return `<div class="autocomplete-item" data-value="${item.id}" data-index="${i}">
+                            <span class="ac-name">${escapeHtml(item.name)}</span>
                             <span class="ac-id">${item.id}</span>
                         </div>`;
                     }
@@ -2699,6 +2840,15 @@
                     getProvenancesList();
                     matches = cachedProvenancesList.filter(p => 
                         p.name.toLowerCase().includes(query) || p.id.toLowerCase().includes(query)
+                    ).sort((a, b) => {
+                        const aStart = a.name.toLowerCase().startsWith(query) || a.id.startsWith(query) ? 0 : 1;
+                        const bStart = b.name.toLowerCase().startsWith(query) || b.id.startsWith(query) ? 0 : 1;
+                        return aStart - bStart || a.name.localeCompare(b.name);
+                    });
+                } else if (field === 'groups') {
+                    getGroupsList();
+                    matches = cachedGroups.filter(g => 
+                        g.name.toLowerCase().includes(query) || g.id.toLowerCase().includes(query)
                     ).sort((a, b) => {
                         const aStart = a.name.toLowerCase().startsWith(query) || a.id.startsWith(query) ? 0 : 1;
                         const bStart = b.name.toLowerCase().startsWith(query) || b.id.startsWith(query) ? 0 : 1;
