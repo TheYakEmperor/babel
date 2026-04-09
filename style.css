@@ -69,8 +69,12 @@ body::before {
 }
 
 /* Hide non-stepped search container contents until JS converts it */
+.search-container:not(.stepped) {
+    min-height: 54px; /* Prevent layout shift */
+}
 .search-container:not(.stepped) > * {
-    visibility: hidden;
+    opacity: 0 !important;
+    visibility: hidden !important;
 }
 
 /* Home page stepped header */
