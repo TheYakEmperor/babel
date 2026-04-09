@@ -23,7 +23,8 @@ console.log('[search] search.js loaded');
         }
         
         const searchContainer = document.querySelector('.search-container');
-        if (searchContainer) {
+        // Only add logo if one doesn't already exist
+        if (searchContainer && !searchContainer.querySelector('.search-logo')) {
             const logoLink = document.createElement('a');
             logoLink.href = basePath || './';
             logoLink.innerHTML = `<img src="${basePath}Wikilogo.webp" alt="Babel Archive" class="search-logo">`;
