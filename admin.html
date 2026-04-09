@@ -610,6 +610,7 @@
                 <button data-section="works">Works</button>
                 <button data-section="authors">Authors</button>
                 <button data-section="collections">Collections</button>
+                <button data-section="groups">Groups</button>
                 <button data-section="sources">Sources</button>
                 <button data-section="provenances">Provenances</button>
                 <button data-section="tools">Tools</button>
@@ -664,6 +665,18 @@
                 </div>
             </div>
             <div class="item-list" id="collections-list"><div class="loading">Loading collections...</div></div>
+        </div>
+        
+        <!-- Groups Section -->
+        <div class="admin-section" id="section-groups">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Groups (Categories)</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-secondary" onclick="loadGroups()">Refresh</button>
+                    <button class="btn btn-primary" onclick="openGroupEditor()">+ New Group</button>
+                </div>
+            </div>
+            <div class="item-list" id="groups-list"><div class="loading">Loading groups...</div></div>
         </div>
         
         <!-- Sources Section -->
@@ -751,6 +764,12 @@
                     <label>Collection(s) <span class="hint">(collection codes, press Enter to add)</span></label>
                     <div class="tag-input-container" id="text-collections-container">
                         <input type="text" class="tag-input" id="text-collections-input" placeholder="cotton-library">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Group(s) <span class="hint">(category tags, press Enter to add)</span></label>
+                    <div class="tag-input-container" id="text-groups-container">
+                        <input type="text" class="tag-input" id="text-groups-input" placeholder="medieval-manuscripts">
                     </div>
                 </div>
             </div>
@@ -915,6 +934,16 @@
                 </div>
             </div>
             
+            <div class="form-section">
+                <h3>Groups</h3>
+                <div class="form-group">
+                    <label>Group(s) <span class="hint">(category tags)</span></label>
+                    <div class="tag-input-container" id="work-groups-container">
+                        <input type="text" class="tag-input" id="work-groups-input" placeholder="medieval-manuscripts">
+                    </div>
+                </div>
+            </div>
+            
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeWorkEditor()">Cancel</button>
                 <button class="btn btn-primary" onclick="saveWork()" id="save-work-btn">Save Work</button>
@@ -969,6 +998,16 @@
                 </div>
             </div>
             
+            <div class="form-section">
+                <h3>Groups</h3>
+                <div class="form-group">
+                    <label>Group(s) <span class="hint">(category tags)</span></label>
+                    <div class="tag-input-container" id="author-groups-container">
+                        <input type="text" class="tag-input" id="author-groups-input" placeholder="medieval-poets">
+                    </div>
+                </div>
+            </div>
+            
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeAuthorEditor()">Cancel</button>
                 <button class="btn btn-primary" onclick="saveAuthor()" id="save-author-btn">Save Author</button>
@@ -1003,6 +1042,37 @@
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeCollectionEditor()">Cancel</button>
                 <button class="btn btn-primary" onclick="saveCollection()" id="save-collection-btn">Save Collection</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Group Editor Modal -->
+    <div class="modal-overlay" id="group-editor-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="group-editor-title">New Group</h2>
+                <button class="modal-close" onclick="closeGroupEditor()">&times;</button>
+            </div>
+            
+            <div class="form-section">
+                <h3>Group Information</h3>
+                <div class="form-group">
+                    <label>ID <span class="hint">(e.g., "medieval-manuscripts")</span></label>
+                    <input type="text" id="group-id" placeholder="group-id">
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="group-name" placeholder="Medieval Manuscripts">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="group-description" placeholder="Description of the group/category..."></textarea>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeGroupEditor()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveGroup()" id="save-group-btn">Save Group</button>
             </div>
         </div>
     </div>
@@ -1246,6 +1316,7 @@
                 else if (section === 'works') loadWorks();
                 else if (section === 'authors') loadAuthors();
                 else if (section === 'collections') loadCollections();
+                else if (section === 'groups') loadGroups();
                 else if (section === 'sources') loadSources();
                 else if (section === 'provenances') loadProvenances();
             });
@@ -1416,13 +1487,13 @@
         }
         
         // Text Editor
-        let textEditorData = { authors: [], languages: [], countries: [], collections: [], sources: [], provenances: [], images: [], existingImages: [], works: [] };
+        let textEditorData = { authors: [], languages: [], countries: [], collections: [], groups: [], sources: [], provenances: [], images: [], existingImages: [], works: [] };
         let currentEditId = null;
         let cachedProvenances = [];
         
         async function openTextEditor(id = null) {
             currentEditId = id;
-            textEditorData = { authors: [], languages: [], countries: [], collections: [], sources: [], provenances: [], images: [], existingImages: [], works: [], blankPages: [] };
+            textEditorData = { authors: [], languages: [], countries: [], collections: [], groups: [], sources: [], provenances: [], images: [], existingImages: [], works: [], blankPages: [] };
             selectedPages.clear(); // Clear page selection when opening editor
             
             // Reset blank pages fields
@@ -1439,6 +1510,7 @@
                     textEditorData.sources = [].concat(text.sources || (text.source ? [text.source] : []));
                     textEditorData.provenances = [].concat(text.provenances || (text.provenance ? [text.provenance] : []));
                     textEditorData.collections = [].concat(text.collections || []);
+                    textEditorData.groups = [].concat(text.groups || []);
                     textEditorData.authors = [].concat(text.author || []);
                     textEditorData.languages = [].concat(text.language || []);
                     textEditorData.countries = [].concat(text.country || []);
@@ -1594,11 +1666,11 @@
         }
         
         // Work Editor
-        let workEditorData = { authors: [], languages: [], aliases: [], belongsTo: '', referentialWorks: [] };
+        let workEditorData = { authors: [], languages: [], aliases: [], groups: [], belongsTo: '', referentialWorks: [] };
         let cachedWorksList = [];
         
         // Author Editor
-        let authorEditorData = { aliases: [] };
+        let authorEditorData = { aliases: [], groups: [] };
         
         async function getWorksList() {
             if (cachedWorksList.length === 0) {
@@ -1614,7 +1686,7 @@
         
         async function openWorkEditor(id = null) {
             currentEditId = id;
-            workEditorData = { authors: [], languages: [], aliases: [], belongsTo: '', referentialWorks: [] };
+            workEditorData = { authors: [], languages: [], aliases: [], groups: [], belongsTo: '', referentialWorks: [] };
             
             // Pre-load works list for belongsTo autocomplete
             await getWorksList();
@@ -1632,6 +1704,7 @@
                     workEditorData.languages = [].concat(work.original_language || []);
                     workEditorData.aliases = [].concat(work.alias || []);
                     workEditorData.referentialWorks = [].concat(work.referentialWorks || []);
+                    workEditorData.groups = [].concat(work.groups || []);
                     document.getElementById('work-editor-title').textContent = 'Edit Work';
                     document.getElementById('work-id').disabled = true;
                 } catch (e) {
@@ -1674,7 +1747,8 @@
                 alias: workEditorData.aliases.length ? workEditorData.aliases : undefined,
                 genre: document.getElementById('work-genre').value.trim() || undefined,
                 belongsTo: workEditorData.belongsTo || undefined,
-                referentialWorks: workEditorData.referentialWorks.length ? workEditorData.referentialWorks : undefined
+                referentialWorks: workEditorData.referentialWorks.length ? workEditorData.referentialWorks : undefined,
+                groups: workEditorData.groups.length ? workEditorData.groups : undefined
             };
             
             try {
@@ -1706,8 +1780,9 @@
         async function openAuthorEditor(id = null) {
             currentEditId = id;
             
-            // Clear author aliases
+            // Clear author aliases and groups
             authorEditorData.aliases = [];
+            authorEditorData.groups = [];
             renderAuthorTagInputs();
             
             if (id) {
@@ -1722,9 +1797,11 @@
                     document.getElementById('author-editor-title').textContent = 'Edit Author';
                     document.getElementById('author-id').disabled = true;
                     
-                    // Load aliases
+                    // Load aliases and groups
                     const aliases = author.alias || [];
                     authorEditorData.aliases = Array.isArray(aliases) ? [...aliases] : [aliases];
+                    const groups = author.groups || [];
+                    authorEditorData.groups = Array.isArray(groups) ? [...groups] : [groups];
                     renderAuthorTagInputs();
                 } catch (e) {
                     showStatus('Error: ' + e.message, true);
@@ -1762,7 +1839,8 @@
                 death: document.getElementById('author-death').value.trim() || undefined,
                 nationality: document.getElementById('author-nationality').value.trim() || undefined,
                 description: document.getElementById('author-description').value.trim() || undefined,
-                alias: authorEditorData.aliases.length > 0 ? authorEditorData.aliases : undefined
+                alias: authorEditorData.aliases.length > 0 ? authorEditorData.aliases : undefined,
+                groups: authorEditorData.groups.length > 0 ? authorEditorData.groups : undefined
             };
             
             try {

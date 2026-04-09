@@ -76,6 +76,8 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 result = self.create_source(data)
             elif path == '/api/provenance':
                 result = self.create_provenance(data)
+            elif path == '/api/group':
+                result = self.create_group(data)
             elif path == '/api/delete-text':
                 result = self.delete_text(data)
             elif path == '/api/delete-pages':
@@ -90,6 +92,8 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 result = self.delete_source(data)
             elif path == '/api/delete-provenance':
                 result = self.delete_provenance(data)
+            elif path == '/api/delete-group':
+                result = self.delete_group(data)
             elif path == '/api/list-texts':
                 result = self.list_texts()
             elif path == '/api/list-works':
@@ -102,6 +106,8 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 result = self.list_sources()
             elif path == '/api/list-provenances':
                 result = self.list_provenances()
+            elif path == '/api/list-groups':
+                result = self.list_groups()
             elif path == '/api/get-text':
                 result = self.get_text(data)
             elif path == '/api/get-work':
@@ -114,6 +120,8 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 result = self.get_source(data)
             elif path == '/api/get-provenance':
                 result = self.get_provenance(data)
+            elif path == '/api/get-group':
+                result = self.get_group(data)
             elif path == '/api/save-regions':
                 result = self.save_regions(data)
             elif path == '/api/save-page-order':
@@ -1226,6 +1234,101 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             }
         else:
             raise ValueError(f'Collection "{collection_id}" not found')
+    
+    # =========================================
+    # GROUP OPERATIONS
+    # =========================================
+    def create_group(self, data):
+        """Create or update a group (category)."""
+        group_id = data.get('id')
+        if not group_id:
+            raise ValueError('Group ID is required')
+        
+        safe_id = re.sub(r'[^a-zA-Z0-9_-]', '-', group_id.lower())
+        group_dir = BASE_DIR / 'groups' / safe_id
+        group_dir.mkdir(parents=True, exist_ok=True)
+        
+        group_data = {
+            'id': safe_id,
+            'name': data.get('name', safe_id.replace('-', ' ').title()),
+            'description': data.get('description', '')
+        }
+        
+        with open(group_dir / 'group.json', 'w', encoding='utf-8') as f:
+            json.dump(group_data, f, indent=2, ensure_ascii=False)
+        
+        self._auto_rebuild_indexes()
+        return {'message': f'Group "{safe_id}" saved successfully'}
+    
+    def delete_group(self, data):
+        """Delete a group."""
+        group_id = data.get('id')
+        if not group_id:
+            raise ValueError('Group ID is required')
+        
+        group_dir = BASE_DIR / 'groups' / group_id
+        if group_dir.exists():
+            import shutil
+            shutil.rmtree(group_dir)
+            self._auto_rebuild_indexes()
+            return {'message': f'Group "{group_id}" deleted'}
+        else:
+            raise ValueError(f'Group "{group_id}" not found')
+    
+    def list_groups(self):
+        """List all groups."""
+        groups_dir = BASE_DIR / 'groups'
+        groups = []
+        
+        if groups_dir.exists():
+            for item in groups_dir.iterdir():
+                if item.is_dir():
+                    json_path = item / 'group.json'
+                    if json_path.exists():
+                        try:
+                            with open(json_path, 'r', encoding='utf-8') as f:
+                                data = json.load(f)
+                                groups.append({
+                                    'id': item.name,
+                                    'name': data.get('name', item.name.replace('-', ' ').title())
+                                })
+                        except:
+                            groups.append({
+                                'id': item.name,
+                                'name': item.name.replace('-', ' ').title()
+                            })
+                    else:
+                        # Directory exists without JSON - still list it
+                        groups.append({
+                            'id': item.name,
+                            'name': item.name.replace('-', ' ').title()
+                        })
+        
+        return {'groups': sorted(groups, key=lambda x: x['name'].lower())}
+    
+    def get_group(self, data):
+        """Get a group's full data."""
+        group_id = data.get('id')
+        if not group_id:
+            raise ValueError('Group ID is required')
+        
+        group_dir = BASE_DIR / 'groups' / group_id
+        group_path = group_dir / 'group.json'
+        
+        if group_path.exists():
+            with open(group_path, 'r', encoding='utf-8') as f:
+                group_data = json.load(f)
+            group_data['id'] = group_id
+            return group_data
+        elif group_dir.exists():
+            # Directory exists but no JSON - return default data
+            return {
+                'id': group_id,
+                'name': group_id.replace('-', ' ').title(),
+                'description': ''
+            }
+        else:
+            raise ValueError(f'Group "{group_id}" not found')
     
     # =========================================
     # SOURCE OPERATIONS
