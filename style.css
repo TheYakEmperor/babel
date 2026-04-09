@@ -366,7 +366,7 @@ body::after {
 .sidebar-links ul {
     list-style: disc;
     margin: 0;
-    padding: 0 0 0 18px;
+    padding: 0 0 0 12px;
     max-width: 100%;
 }
 
@@ -375,6 +375,10 @@ body::after {
     padding: 0;
     display: list-item;
     line-height: 1.2;
+}
+
+.sidebar-links li::marker {
+    font-size: 0.6em;
 }
 
 .sidebar-links a {
