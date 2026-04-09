@@ -33,14 +33,21 @@ body {
     font-size: 0.93em;
     line-height: 1.7;
     color: #000;
-    background: linear-gradient(rgba(218, 165, 32, 0.25), rgba(218, 165, 32, 0.25)), url('background-image/background-image.jpg') repeat;
+    background: transparent;
     overflow-x: hidden;
     position: relative;
 }
 
-body::before,
-body::after {
-    display: none;
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('background-image/background-image.jpg') repeat;
+    filter: sepia(100%) saturate(200%) brightness(0.9) hue-rotate(-10deg);
+    z-index: -1;
 }
 
 /* ============================================================================
