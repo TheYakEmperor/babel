@@ -88,7 +88,9 @@
         }
         .grass-banner {
             position: relative;
-            width: 100%;
+            width: calc(100% - 60px);
+            margin-left: 30px;
+            margin-right: 30px;
             height: 160px;
             background: url('background-image/grass.png') repeat-x bottom;
             background-size: auto 80px;
@@ -96,6 +98,7 @@
             display: flex;
             justify-content: space-around;
             align-items: flex-end;
+            overflow: hidden;
         }
         .grass-banner img {
             width: 130px;
