@@ -52,18 +52,20 @@ body::after {
     width: 100%;
     z-index: 1000;
     background: #000000;
-    border-bottom: 1px solid #222;
+    border-bottom: none;
     padding: 0;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 20px;
 }
 
 .rainbow-buttons {
     display: flex;
     align-items: center;
     height: 20px;
+    background: #000;
 }
 
 .rainbow-btn {
@@ -86,6 +88,8 @@ body::after {
     align-items: center;
     padding: 8px 15px;
     position: relative;
+    background: #000;
+    border-bottom: 1px solid #222;
 }
 
 .search-container .search-bar {
