@@ -98,10 +98,14 @@
             align-items: flex-end;
         }
         .grass-banner img {
-            width: 80px;
-            height: auto;
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
             position: relative;
             bottom: 10px;
+        }
+        .grass-banner img.flip-left {
+            transform: scaleX(-1);
         }
     </style>
 </head>
@@ -111,13 +115,17 @@
             <a href="#" class="rainbow-btn" style="background:#ff0000;">Link-1</a>
             <a href="#" class="rainbow-btn" style="background:#ff7f00;">Link-2</a>
             <a href="#" class="rainbow-btn" style="background:#ffff00; color:#000;">Link-3</a>
+        </div>
+        <div class="search-bar-wrapper">
+            <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
+            <div id="searchResults" class="search-results"></div>
+        </div>
+        <div class="rainbow-buttons">
             <a href="#" class="rainbow-btn" style="background:#00ff00; color:#000;">Link-4</a>
             <a href="#" class="rainbow-btn" style="background:#0000ff;">Link-5</a>
             <a href="#" class="rainbow-btn" style="background:#4b0082;">Link-6</a>
             <a href="#" class="rainbow-btn" style="background:#9400d3;">Link-7</a>
         </div>
-        <input type="text" id="searchInput" class="search-bar" placeholder="Search languages and dialects...">
-        <div id="searchResults" class="search-results"></div>
     </div>
     
     <div class="page-wrapper">
@@ -147,7 +155,7 @@
         
         <div class="grass-banner">
             <img src="background-image/fan1.gif" alt="">
-            <img src="background-image/fan2.gif" alt="">
+            <img src="background-image/fan2.gif" alt="" class="flip-left">
             <img src="background-image/fan3.gif" alt="">
             <img src="background-image/fan4.gif" alt="">
         </div>

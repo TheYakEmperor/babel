@@ -53,44 +53,48 @@ body::after {
     z-index: 1000;
     background: #000000;
     border-bottom: 1px solid #222;
-    padding: 8px 20px;
+    padding: 0;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 15px;
+    align-items: stretch;
 }
 
 .rainbow-buttons {
     display: flex;
-    gap: 4px;
 }
 
 .rainbow-btn {
-    padding: 5px 10px;
+    padding: 0 12px;
     color: #fff;
     text-decoration: none;
     font-size: 0.8rem;
     font-weight: 500;
-    border-radius: 3px;
+    display: flex;
+    align-items: center;
 }
 
 .rainbow-btn:hover {
     opacity: 0.85;
 }
 
+.search-container .search-bar-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    position: relative;
+}
+
 .search-container .search-bar {
     width: 100%;
-    max-width: 500px;
+    min-width: 400px;
 }
 
 .search-container .search-results {
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 500px;
+    left: 0;
+    right: 0;
     margin-top: 0;
     border-top: none;
     border-radius: 0;
