@@ -31,6 +31,52 @@ console.log('[search] search.js loaded');
             searchContainer.insertBefore(logoLink, searchContainer.firstChild);
         }
         
+        // === ADD RAINBOW BUTTONS TO NON-STEPPED PAGES ===
+        if (searchContainer && !searchContainer.classList.contains('stepped')) {
+            // Check if rainbow buttons already exist
+            if (!searchContainer.querySelector('.rainbow-buttons')) {
+                // Wrap existing search input in a wrapper
+                const searchBar = searchContainer.querySelector('.search-bar');
+                const searchResults = searchContainer.querySelector('.search-results');
+                
+                // Create left rainbow buttons
+                const leftRainbow = document.createElement('div');
+                leftRainbow.className = 'rainbow-buttons';
+                leftRainbow.innerHTML = `
+                    <a href="#" class="rainbow-btn" style="background:#ff0000; color:#fff;">Link-1</a>
+                    <a href="#" class="rainbow-btn" style="background:#ffa500; color:#000;">Link-2</a>
+                    <a href="#" class="rainbow-btn" style="background:#ffff00; color:#000;">Link-3</a>
+                `;
+                
+                // Create right rainbow buttons
+                const rightRainbow = document.createElement('div');
+                rightRainbow.className = 'rainbow-buttons';
+                rightRainbow.innerHTML = `
+                    <a href="#" class="rainbow-btn" style="background:#008001; color:#fff;">Link-4</a>
+                    <a href="#" class="rainbow-btn" style="background:#0000ff; color:#fff;">Link-5</a>
+                    <a href="#" class="rainbow-btn" style="background:#800080; color:#fff;">Link-7</a>
+                `;
+                
+                // Create search wrapper
+                const searchWrapper = document.createElement('div');
+                searchWrapper.className = 'search-bar-wrapper';
+                if (searchBar) {
+                    searchWrapper.appendChild(searchBar);
+                }
+                if (searchResults) {
+                    searchWrapper.appendChild(searchResults);
+                }
+                
+                // Clear and rebuild search container content
+                const logoLink = searchContainer.querySelector('a');
+                searchContainer.innerHTML = '';
+                if (logoLink) searchContainer.appendChild(logoLink);
+                searchContainer.appendChild(leftRainbow);
+                searchContainer.appendChild(searchWrapper);
+                searchContainer.appendChild(rightRainbow);
+            }
+        }
+        
         // === ADD SIDEBAR DECORATION IMAGES ===
         const leftSidebar = document.querySelector('.left-sidebar');
         if (leftSidebar) {

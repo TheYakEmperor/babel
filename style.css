@@ -90,11 +90,17 @@ body::before {
 .rainbow-buttons {
     display: flex;
     gap: 0;
+    align-items: center;
 }
 
 .search-container.stepped .rainbow-buttons {
     height: 27px;
     background: #000;
+}
+
+/* Non-stepped pages rainbow buttons styling */
+.search-container:not(.stepped) .rainbow-buttons {
+    height: 100%;
 }
 
 .rainbow-btn {
@@ -105,6 +111,7 @@ body::before {
     font-weight: 500;
     display: flex;
     align-items: center;
+    height: 100%;
 }
 
 .rainbow-btn:hover {
@@ -146,6 +153,13 @@ body::before {
     padding: 8px 15px;
     border-bottom: 1px solid #222;
     position: relative;
+}
+
+/* Non-stepped pages search bar wrapper */
+.search-container:not(.stepped) .search-bar-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .search-container .search-results {
