@@ -243,11 +243,6 @@ body::after {
     margin: 0 auto;
 }
 
-/* Extra top margin when following stepped header */
-.search-container.stepped + .page-wrapper {
-    margin-top: 25px;
-}
-
 /* Header logo container above content - HIDDEN (moved to search bar) */
 .header-logo-container {
     display: none;
