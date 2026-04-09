@@ -63,8 +63,9 @@ body::after {
 /* Home page stepped header */
 .search-container.stepped {
     padding: 0;
-    height: 20px;
+    height: auto;
     border-bottom: none;
+    align-items: flex-start;
 }
 
 .rainbow-buttons {
@@ -274,6 +275,11 @@ body::after {
     padding: 8px 20px 40px 20px;
     max-width: 1450px;
     margin: 0 auto;
+}
+
+/* Extra top margin when following stepped header */
+.search-container.stepped + .page-wrapper {
+    margin-top: 25px;
 }
 
 /* Header logo container above content - HIDDEN (moved to search bar) */
