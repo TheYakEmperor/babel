@@ -46,7 +46,7 @@ body::before {
     right: 0;
     bottom: 0;
     background: url('background-image/background-image.jpg') repeat;
-    filter: invert(1) sepia(100%) saturate(300%) brightness(0.85) contrast(1.15) hue-rotate(-15deg);
+    filter: invert(1) sepia(100%) saturate(300%) brightness(0.85) contrast(1.4) hue-rotate(-15deg);
     z-index: -1;
 }
 
