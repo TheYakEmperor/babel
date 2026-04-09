@@ -132,6 +132,7 @@ body::after {
 .header-bar-logo img {
     height: 18px;
     width: auto;
+    background: #000;
 }
 
 .search-container.stepped .search-bar-wrapper {
