@@ -9,7 +9,9 @@ console.log('[search] search.js loaded');
         const stylesheet = document.querySelector('link[href*="style.css"]');
         if (stylesheet) {
             const href = stylesheet.getAttribute('href');
-            return href.replace('style.css', '');
+            const basePath = href.replace('style.css', '');
+            console.log('[search] Found stylesheet:', href, '-> basePath:', basePath);
+            return basePath;
         }
         // Fallback: check favicon
         const favicon = document.querySelector('link[href*="favicon"]');
@@ -17,10 +19,12 @@ console.log('[search] search.js loaded');
             const href = favicon.getAttribute('href');
             return href.replace(/favicon\.(webp|ico|png)/, '');
         }
+        console.log('[search] No stylesheet found, using empty basePath');
         return '';
     }
     
     const basePath = getBasePath();
+    console.log('[search] Using basePath:', basePath);
     const searchContainer = document.querySelector('.search-container');
     
     // Convert non-stepped search containers to stepped immediately
@@ -46,6 +50,12 @@ console.log('[search] search.js loaded');
                 <a href="#" class="rainbow-btn" style="background:#800080; color:#fff;">Link-7</a>
             </div>
         `;
+        
+        // Prevent browser scroll restoration and ensure page stays at top
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
     }
     
     // === ADD SIDEBAR DECORATION IMAGES (after DOM ready) ===
