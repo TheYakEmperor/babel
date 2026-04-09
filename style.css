@@ -57,21 +57,24 @@ body::after {
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: center;
 }
 
 .rainbow-buttons {
     display: flex;
+    align-items: center;
+    height: 20px;
 }
 
 .rainbow-btn {
-    padding: 0 12px;
+    padding: 0 10px;
     color: #fff;
     text-decoration: none;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: 500;
     display: flex;
     align-items: center;
+    height: 100%;
 }
 
 .rainbow-btn:hover {
