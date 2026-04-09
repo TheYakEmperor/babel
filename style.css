@@ -68,6 +68,11 @@ body::before {
     gap: 10px;
 }
 
+/* Hide non-stepped search container contents until JS converts it */
+.search-container:not(.stepped) > * {
+    visibility: hidden;
+}
+
 /* Home page stepped header */
 .search-container.stepped {
     padding: 0;

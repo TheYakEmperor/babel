@@ -1,57 +1,57 @@
 // Simple search functionality
 console.log('[search] search.js loaded');
 
-// === CONVERT TO STEPPED SEARCH BAR ===
+// === CONVERT TO STEPPED SEARCH BAR (runs immediately) ===
 (function() {
+    // Get base path from existing relative links in the page
+    function getBasePath() {
+        // Check stylesheet link which is always present
+        const stylesheet = document.querySelector('link[href*="style.css"]');
+        if (stylesheet) {
+            const href = stylesheet.getAttribute('href');
+            return href.replace('style.css', '');
+        }
+        // Fallback: check favicon
+        const favicon = document.querySelector('link[href*="favicon"]');
+        if (favicon) {
+            const href = favicon.getAttribute('href');
+            return href.replace(/favicon\.(webp|ico|png)/, '');
+        }
+        return '';
+    }
+    
+    const basePath = getBasePath();
+    const searchContainer = document.querySelector('.search-container');
+    
+    // Convert non-stepped search containers to stepped immediately
+    if (searchContainer && !searchContainer.classList.contains('stepped')) {
+        // Add stepped class
+        searchContainer.classList.add('stepped');
+        
+        // Completely replace content with stepped version
+        searchContainer.innerHTML = `
+            <a href="${basePath || './'}"><img src="${basePath}Wikilogo.webp" alt="Babel Archive" class="search-logo"></a>
+            <div class="rainbow-buttons">
+                <a href="#" class="rainbow-btn" style="background:#ff0000; color:#fff;">Link-1</a>
+                <a href="#" class="rainbow-btn" style="background:#ffa500; color:#000;">Link-2</a>
+                <a href="#" class="rainbow-btn" style="background:#ffff00; color:#000;">Link-3</a>
+            </div>
+            <div class="search-bar-wrapper">
+                <input type="text" id="searchInput" class="search-bar" placeholder="Search...">
+                <div id="searchResults" class="search-results"></div>
+            </div>
+            <div class="rainbow-buttons">
+                <a href="#" class="rainbow-btn" style="background:#008001; color:#fff;">Link-4</a>
+                <a href="#" class="rainbow-btn" style="background:#0000ff; color:#fff;">Link-5</a>
+                <a href="#" class="rainbow-btn" style="background:#800080; color:#fff;">Link-7</a>
+            </div>
+        `;
+    }
+    
+    // === ADD SIDEBAR DECORATION IMAGES (after DOM ready) ===
     document.addEventListener('DOMContentLoaded', function() {
-        // Determine the correct path base based on page depth
-        let basePath = '';
-        const pathMatch = window.location.pathname.match(/\/[^/]+/g);
-        if (pathMatch) {
-            const depth = pathMatch.length - 1;
-            if (depth > 0) {
-                basePath = '../'.repeat(depth);
-            }
-        }
-        // Try to get path from existing logo references
-        const existingLogo = document.querySelector('.header-logo img, .sidebar-logo img');
-        if (existingLogo && existingLogo.src) {
-            const existingPath = existingLogo.src.replace(window.location.origin, '');
-            if (existingPath.includes('1111babel')) {
-                basePath = existingPath.replace('background-image/1111babel.png', '');
-            }
-        }
-        
-        const searchContainer = document.querySelector('.search-container');
-        
-        // Convert non-stepped search containers to stepped
-        if (searchContainer && !searchContainer.classList.contains('stepped')) {
-            // Add stepped class
-            searchContainer.classList.add('stepped');
-            
-            // Completely replace content with stepped version
-            searchContainer.innerHTML = `
-                <a href="${basePath || './'}"><img src="${basePath}Wikilogo.webp" alt="Babel Archive" class="search-logo"></a>
-                <div class="rainbow-buttons">
-                    <a href="#" class="rainbow-btn" style="background:#ff0000; color:#fff;">Link-1</a>
-                    <a href="#" class="rainbow-btn" style="background:#ffa500; color:#000;">Link-2</a>
-                    <a href="#" class="rainbow-btn" style="background:#ffff00; color:#000;">Link-3</a>
-                </div>
-                <div class="search-bar-wrapper">
-                    <input type="text" id="searchInput" class="search-bar" placeholder="Search...">
-                    <div id="searchResults" class="search-results"></div>
-                </div>
-                <div class="rainbow-buttons">
-                    <a href="#" class="rainbow-btn" style="background:#008001; color:#fff;">Link-4</a>
-                    <a href="#" class="rainbow-btn" style="background:#0000ff; color:#fff;">Link-5</a>
-                    <a href="#" class="rainbow-btn" style="background:#800080; color:#fff;">Link-7</a>
-                </div>
-            `;
-        }
-        
-        // === ADD SIDEBAR DECORATION IMAGES ===
         const leftSidebar = document.querySelector('.left-sidebar');
-        if (leftSidebar) {
+        if (leftSidebar && !leftSidebar.querySelector('.sidebar-decoration')) {
             const decorDiv = document.createElement('div');
             decorDiv.className = 'sidebar-decoration';
             decorDiv.innerHTML = `
