@@ -469,7 +469,7 @@ body::after {
    ============================================================================ */
 
 h1 {
-    color: #2c3e50;
+    color: #000;
     border-bottom: 2px solid #4a5568;
     padding: 12px 0;
     letter-spacing: 1px;
@@ -479,7 +479,7 @@ h1 {
 }
 
 h2 {
-    color: #2c3e50;
+    color: #000;
     margin-top: 25px;
     margin-bottom: 15px;
     font-size: 1.4em;
@@ -676,7 +676,7 @@ a:has-text(†) {
 }
 
 .coordinates strong {
-    color: #2c3e50;
+    color: #000;
     font-family: 'Courier New', monospace;
 }
 
