@@ -1167,11 +1167,11 @@
                         <button onclick="renamePage()" title="Rename current page">Rename</button>
                         <button onclick="deleteCurrentPage()" title="Delete current page">Delete</button>
                         <button onclick="savePageOrder()" title="Save page order">Save Order</button>
-                        <input type="file" id="image-page-input" accept="image/*" style="display:none" onchange="handleImagePageUpload(event)">
-                        <input type="file" id="video-page-input" accept="video/*" style="display:none" onchange="handleVideoPageUpload(event)">
-                        <input type="file" id="audio-page-input" accept="audio/*" style="display:none" onchange="handleAudioPageUpload(event)">
-                        <input type="file" id="imgaudio-image-input" accept="image/*" style="display:none" onchange="handleImgAudioImageUpload(event)">
-                        <input type="file" id="imgaudio-audio-input" accept="audio/*" style="display:none" onchange="handleImgAudioAudioUpload(event)">
+                        <input type="file" id="image-page-input" accept="image/*" multiple style="display:none" onchange="handleImagePageUpload(event)">
+                        <input type="file" id="video-page-input" accept="video/*" multiple style="display:none" onchange="handleVideoPageUpload(event)">
+                        <input type="file" id="audio-page-input" accept="audio/*" multiple style="display:none" onchange="handleAudioPageUpload(event)">
+                        <input type="file" id="imgaudio-image-input" accept="image/*" multiple style="display:none" onchange="handleImgAudioImageUpload(event)">
+                        <input type="file" id="imgaudio-audio-input" accept="audio/*" multiple style="display:none" onchange="handleImgAudioAudioUpload(event)">
                     </div>
                     <div class="annotator-page-list" id="annotator-pages"></div>
                 </div>
@@ -3924,33 +3924,85 @@
             document.getElementById('image-page-input').click();
         }
         
-        // Handle image file upload
+        // Handle image file upload (supports multiple files)
         async function handleImagePageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+            const files = Array.from(event.target.files);
+            if (files.length === 0) return;
             
             // Reset input for future uploads
             event.target.value = '';
             
-            try {
-                // Read file as base64
-                const base64Data = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-                
-                if (imageUploadMode === 'convert') {
-                    // Convert blank page to image
+            if (imageUploadMode === 'convert') {
+                // Convert mode only uses first file
+                const file = files[0];
+                try {
+                    const base64Data = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
                     await convertBlankPageToImage(file.name, base64Data);
-                } else {
-                    // Insert new image page
-                    await insertNewImagePage(file.name, base64Data);
+                } catch (e) {
+                    showStatus('Error uploading image: ' + e.message, true);
                 }
-            } catch (e) {
-                showStatus('Error uploading image: ' + e.message, true);
+                return;
             }
+            
+            // Insert mode - handle multiple files
+            showStatus(`Uploading ${files.length} image(s)...`);
+            let successCount = 0;
+            
+            for (const file of files) {
+                try {
+                    const base64Data = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+                    
+                    // Use filename (without extension) as label
+                    let label = file.name.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
+                    
+                    // Ensure unique label
+                    let suffix = 1;
+                    let originalLabel = label;
+                    while (annotatorData.pages.some(p => p.label === label)) {
+                        label = `${originalLabel} (${suffix++})`;
+                    }
+                    
+                    // Upload to server
+                    await api('upload-images', {
+                        id: annotatorData.textId,
+                        images: [{ name: file.name, data: base64Data }]
+                    });
+                    
+                    const currentIndex = annotatorData.pages.findIndex(p => p.label === annotatorData.currentPage);
+                    const insertIndex = currentIndex >= 0 ? currentIndex + 1 + successCount : annotatorData.pages.length;
+                    
+                    const newPage = {
+                        label: label.trim(),
+                        filename: file.name,
+                        imageUrl: `${B2_BASE_URL}/texts/00/00/${annotatorData.folderName}/images/${encodeURIComponent(file.name)}`,
+                        isBlank: false
+                    };
+                    
+                    annotatorData.pages.splice(insertIndex, 0, newPage);
+                    annotatorData.regions[newPage.label] = [];
+                    successCount++;
+                } catch (e) {
+                    console.error(`Error uploading ${file.name}:`, e);
+                }
+            }
+            
+            annotatorData.pagesReordered = true;
+            renderAnnotatorPages();
+            
+            if (successCount > 0) {
+                selectAnnotatorPage(annotatorData.pages[annotatorData.pages.length - successCount].label);
+            }
+            showStatus(`${successCount} of ${files.length} image page(s) inserted. Don't forget to save.`);
         }
         
         // Insert new image page
@@ -4030,23 +4082,62 @@
             document.getElementById('video-page-input').click();
         }
         
-        // Handle video file upload
+        // Handle video file upload (supports multiple files)
         async function handleVideoPageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+            const files = Array.from(event.target.files);
+            if (files.length === 0) return;
             event.target.value = '';
             
-            try {
-                const base64Data = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-                await insertNewMediaPage(file.name, base64Data, 'video');
-            } catch (e) {
-                showStatus('Error uploading video: ' + e.message, true);
+            showStatus(`Uploading ${files.length} video file(s)...`);
+            let successCount = 0;
+            
+            for (const file of files) {
+                try {
+                    const base64Data = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+                    
+                    let label = file.name.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
+                    let suffix = 1;
+                    let originalLabel = label;
+                    while (annotatorData.pages.some(p => p.label === label)) {
+                        label = `${originalLabel} (${suffix++})`;
+                    }
+                    
+                    await api('upload-images', {
+                        id: annotatorData.textId,
+                        images: [{ name: file.name, data: base64Data }]
+                    });
+                    
+                    const currentIndex = annotatorData.pages.findIndex(p => p.label === annotatorData.currentPage);
+                    const insertIndex = currentIndex >= 0 ? currentIndex + 1 + successCount : annotatorData.pages.length;
+                    
+                    const newPage = {
+                        label: label.trim(),
+                        filename: file.name,
+                        imageUrl: `${B2_BASE_URL}/texts/00/00/${annotatorData.folderName}/images/${encodeURIComponent(file.name)}`,
+                        isBlank: false,
+                        mediaType: 'video'
+                    };
+                    
+                    annotatorData.pages.splice(insertIndex, 0, newPage);
+                    annotatorData.regions[newPage.label] = [];
+                    successCount++;
+                } catch (e) {
+                    console.error(`Error uploading ${file.name}:`, e);
+                }
             }
+            
+            annotatorData.pagesReordered = true;
+            renderAnnotatorPages();
+            
+            if (successCount > 0) {
+                selectAnnotatorPage(annotatorData.pages[annotatorData.pages.length - successCount].label);
+            }
+            showStatus(`${successCount} of ${files.length} video page(s) inserted. Don't forget to save.`);
         }
         
         // Insert new page from audio file
@@ -4054,23 +4145,62 @@
             document.getElementById('audio-page-input').click();
         }
         
-        // Handle audio file upload
+        // Handle audio file upload (supports multiple files)
         async function handleAudioPageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+            const files = Array.from(event.target.files);
+            if (files.length === 0) return;
             event.target.value = '';
             
-            try {
-                const base64Data = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-                await insertNewMediaPage(file.name, base64Data, 'audio');
-            } catch (e) {
-                showStatus('Error uploading audio: ' + e.message, true);
+            showStatus(`Uploading ${files.length} audio file(s)...`);
+            let successCount = 0;
+            
+            for (const file of files) {
+                try {
+                    const base64Data = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+                    
+                    let label = file.name.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
+                    let suffix = 1;
+                    let originalLabel = label;
+                    while (annotatorData.pages.some(p => p.label === label)) {
+                        label = `${originalLabel} (${suffix++})`;
+                    }
+                    
+                    await api('upload-images', {
+                        id: annotatorData.textId,
+                        images: [{ name: file.name, data: base64Data }]
+                    });
+                    
+                    const currentIndex = annotatorData.pages.findIndex(p => p.label === annotatorData.currentPage);
+                    const insertIndex = currentIndex >= 0 ? currentIndex + 1 + successCount : annotatorData.pages.length;
+                    
+                    const newPage = {
+                        label: label.trim(),
+                        filename: file.name,
+                        imageUrl: `${B2_BASE_URL}/texts/00/00/${annotatorData.folderName}/images/${encodeURIComponent(file.name)}`,
+                        isBlank: false,
+                        mediaType: 'audio'
+                    };
+                    
+                    annotatorData.pages.splice(insertIndex, 0, newPage);
+                    annotatorData.regions[newPage.label] = [];
+                    successCount++;
+                } catch (e) {
+                    console.error(`Error uploading ${file.name}:`, e);
+                }
             }
+            
+            annotatorData.pagesReordered = true;
+            renderAnnotatorPages();
+            
+            if (successCount > 0) {
+                selectAnnotatorPage(annotatorData.pages[annotatorData.pages.length - successCount].label);
+            }
+            showStatus(`${successCount} of ${files.length} audio page(s) inserted. Don't forget to save.`);
         }
         
         // Insert new media page (video or audio)
@@ -4115,105 +4245,135 @@
             showStatus(`${mediaType.charAt(0).toUpperCase() + mediaType.slice(1)} page "${label}" inserted. Don't forget to save.`);
         }
         
-        // Image + Audio combo - state for multi-step upload
-        let imgAudioState = { imageFile: null, imageData: null };
+        // Image + Audio combo - state for multi-step upload (supports multiple files)
+        let imgAudioState = { imageFiles: [], imageDataMap: {} };
         
         // Start image+audio upload process
         function insertImageAudioPage() {
-            imgAudioState = { imageFile: null, imageData: null };
+            imgAudioState = { imageFiles: [], imageDataMap: {} };
             document.getElementById('imgaudio-image-input').click();
         }
         
-        // Handle image selection for image+audio
+        // Handle image selection for image+audio (supports multiple)
         async function handleImgAudioImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+            const files = Array.from(event.target.files);
+            if (files.length === 0) return;
             event.target.value = '';
             
+            showStatus(`Reading ${files.length} image(s)...`);
+            
             try {
-                const base64Data = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-                imgAudioState.imageFile = file;
-                imgAudioState.imageData = base64Data;
-                showStatus('Image selected. Now select an audio file...');
+                for (const file of files) {
+                    const base64Data = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+                    const baseName = file.name.replace(/\.[^.]+$/, '');
+                    imgAudioState.imageFiles.push(file);
+                    imgAudioState.imageDataMap[baseName] = { file, data: base64Data };
+                }
+                showStatus(`${files.length} image(s) selected. Now select ${files.length} matching audio file(s)...`);
                 document.getElementById('imgaudio-audio-input').click();
             } catch (e) {
-                showStatus('Error reading image: ' + e.message, true);
+                showStatus('Error reading images: ' + e.message, true);
+                imgAudioState = { imageFiles: [], imageDataMap: {} };
             }
         }
         
-        // Handle audio selection for image+audio
+        // Handle audio selection for image+audio (supports multiple, matches by filename)
         async function handleImgAudioAudioUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+            const files = Array.from(event.target.files);
+            if (files.length === 0) return;
             event.target.value = '';
             
-            if (!imgAudioState.imageFile) {
-                showStatus('Please select an image first', true);
+            if (imgAudioState.imageFiles.length === 0) {
+                showStatus('Please select image(s) first', true);
                 return;
             }
             
+            showStatus(`Uploading ${imgAudioState.imageFiles.length} image+audio pair(s)...`);
+            let successCount = 0;
+            
             try {
-                const audioBase64 = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-                
-                const defaultLabel = imgAudioState.imageFile.name.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
-                const label = prompt('Enter label for the new image+audio page:', defaultLabel);
-                if (!label) {
-                    imgAudioState = { imageFile: null, imageData: null };
-                    return;
+                // Build audio data map by base name
+                const audioDataMap = {};
+                for (const file of files) {
+                    const baseName = file.name.replace(/\.[^.]+$/, '');
+                    const audioBase64 = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+                    audioDataMap[baseName] = { file, data: audioBase64 };
                 }
                 
-                if (annotatorData.pages.some(p => p.label === label)) {
-                    showStatus(`A page with label "${label}" already exists`, true);
-                    imgAudioState = { imageFile: null, imageData: null };
-                    return;
+                // Match images with audio by base name
+                for (const imgFile of imgAudioState.imageFiles) {
+                    const baseName = imgFile.name.replace(/\.[^.]+$/, '');
+                    const imgEntry = imgAudioState.imageDataMap[baseName];
+                    const audioEntry = audioDataMap[baseName];
+                    
+                    if (!audioEntry) {
+                        console.warn(`No matching audio for image: ${imgFile.name}`);
+                        continue;
+                    }
+                    
+                    let label = baseName.replace(/_/g, ' ');
+                    let suffix = 1;
+                    let originalLabel = label;
+                    while (annotatorData.pages.some(p => p.label === label)) {
+                        label = `${originalLabel} (${suffix++})`;
+                    }
+                    
+                    // Upload both files
+                    await api('upload-images', {
+                        id: annotatorData.textId,
+                        images: [
+                            { name: imgFile.name, data: imgEntry.data },
+                            { name: audioEntry.file.name, data: audioEntry.data }
+                        ]
+                    });
+                    
+                    const currentIndex = annotatorData.pages.findIndex(p => p.label === annotatorData.currentPage);
+                    const insertIndex = currentIndex >= 0 ? currentIndex + 1 + successCount : annotatorData.pages.length;
+                    
+                    const newPage = {
+                        label: label.trim(),
+                        filename: imgFile.name,
+                        imageUrl: `${B2_BASE_URL}/texts/00/00/${annotatorData.folderName}/images/${encodeURIComponent(imgFile.name)}`,
+                        audioFile: audioEntry.file.name,
+                        audioUrl: `${B2_BASE_URL}/texts/00/00/${annotatorData.folderName}/images/${encodeURIComponent(audioEntry.file.name)}`,
+                        isBlank: false,
+                        mediaType: 'image-audio'
+                    };
+                    
+                    annotatorData.pages.splice(insertIndex, 0, newPage);
+                    annotatorData.regions[newPage.label] = [];
+                    successCount++;
                 }
                 
-                showStatus('Uploading image and audio...');
-                
-                // Upload both files
-                await api('upload-images', {
-                    id: annotatorData.textId,
-                    images: [
-                        { name: imgAudioState.imageFile.name, data: imgAudioState.imageData },
-                        { name: file.name, data: audioBase64 }
-                    ]
-                });
-                
-                const currentIndex = annotatorData.pages.findIndex(p => p.label === annotatorData.currentPage);
-                const insertIndex = currentIndex >= 0 ? currentIndex + 1 : annotatorData.pages.length;
-                
-                const newPage = {
-                    label: label.trim(),
-                    filename: imgAudioState.imageFile.name,
-                    imageUrl: `${B2_BASE_URL}/texts/00/00/${annotatorData.folderName}/images/${encodeURIComponent(imgAudioState.imageFile.name)}`,
-                    audioFile: file.name,
-                    audioUrl: `${B2_BASE_URL}/texts/00/00/${annotatorData.folderName}/images/${encodeURIComponent(file.name)}`,
-                    isBlank: false,
-                    mediaType: 'image-audio'
-                };
-                
-                annotatorData.pages.splice(insertIndex, 0, newPage);
-                annotatorData.regions[newPage.label] = [];
                 annotatorData.pagesReordered = true;
-                
                 renderAnnotatorPages();
-                selectAnnotatorPage(newPage.label);
-                showStatus(`Image+audio page "${label}" inserted. Don't forget to save.`);
                 
-                imgAudioState = { imageFile: null, imageData: null };
+                if (successCount > 0) {
+                    selectAnnotatorPage(annotatorData.pages[annotatorData.pages.length - successCount].label);
+                }
+                
+                const unmatchedCount = imgAudioState.imageFiles.length - successCount;
+                let msg = `${successCount} image+audio page(s) inserted.`;
+                if (unmatchedCount > 0) {
+                    msg += ` ${unmatchedCount} image(s) had no matching audio (filenames must match).`;
+                }
+                msg += ` Don't forget to save.`;
+                showStatus(msg);
+                
+                imgAudioState = { imageFiles: [], imageDataMap: {} };
             } catch (e) {
                 showStatus('Error uploading: ' + e.message, true);
-                imgAudioState = { imageFile: null, imageData: null };
+                imgAudioState = { imageFiles: [], imageDataMap: {} };
             }
         }
         
