@@ -1,6 +1,29 @@
 // Simple search functionality
 console.log('[search] search.js loaded');
 
+// === FETCH RETRY FOR DATA.JSON (fixes intermittent loading failures) ===
+(function() {
+    const originalFetch = window.fetch;
+    window.fetch = function(url, options) {
+        // Only add retry logic for data.json
+        if (typeof url === 'string' && url.endsWith('data.json')) {
+            return (async function() {
+                for (let i = 0; i < 3; i++) {
+                    try {
+                        const response = await originalFetch(url, { ...options, cache: 'no-cache' });
+                        if (response.ok) return response;
+                    } catch (e) {
+                        if (i === 2) throw e;
+                    }
+                    await new Promise(r => setTimeout(r, 150 * (i + 1)));
+                }
+                return originalFetch(url, options);
+            })();
+        }
+        return originalFetch.apply(this, arguments);
+    };
+})();
+
 // === CONVERT TO STEPPED SEARCH BAR (runs immediately) ===
 (function() {
     // Get base path from existing relative links in the page
