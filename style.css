@@ -1581,7 +1581,7 @@ body.viewer-fullscreen .search-container {
     justify-content: center;
     min-height: 400px;
     padding: 15px;
-    background: #e8e8e8;
+    background: #000;
     overflow: hidden;
     gap: 10px;
     cursor: default;

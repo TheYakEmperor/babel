@@ -2784,12 +2784,17 @@ function _initTextReaderInternal() {
         
         if (!pageViewer || !pvTitle || !pageTitle) return;
         
-        // Create a MutationObserver to watch for class changes
+        // Store the text title (not 'Page Viewer') to always show it
+        const textTitle = pageTitle.textContent;
+        // Set it immediately
+        pvTitle.textContent = textTitle;
+        
+        // Create a MutationObserver to watch for class changes - but always keep the text title
         const observer = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.attributeName === 'class') {
-                    const isFullscreen = pageViewer.classList.contains('fullscreen');
-                    pvTitle.textContent = isFullscreen ? pageTitle.textContent : 'Page Viewer';
+                    // Always show the text title, not "Page Viewer"
+                    pvTitle.textContent = textTitle;
                 }
             });
         });
