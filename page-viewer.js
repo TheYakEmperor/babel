@@ -153,13 +153,12 @@ function initPageViewer(pagesData) {
     async function detectImages() {
         let imageList = [];
         
-        // First check if pagesData has image properties directly (inline images)
+        // First check if pagesData has image properties directly (inline images with URLs)
         if (pagesData && pagesData.length > 0) {
-            // Only use early return if ALL pages have image URLs (not just blank pages)
             const pagesWithImages = pagesData.filter(p => p.image);
             const blankPages = pagesData.filter(p => p.isBlank);
             
-            // If we have image URLs for non-blank pages, use pagesData directly
+            // Only use pagesData directly if ALL pages have image URLs (not just blank pages)
             if (pagesWithImages.length > 0 && pagesWithImages.length + blankPages.length === pagesData.length) {
                 const fromData = pagesData.map(p => ({ 
                     url: p.image || '', 
@@ -168,29 +167,15 @@ function initPageViewer(pagesData) {
                 }));
                 return fromData;
             }
-            
-            // If ALL pages are blank (no images at all), still show them
-            if (blankPages.length > 0 && pagesWithImages.length === 0) {
-                const fromData = pagesData.filter(p => p.isBlank).map(p => ({ 
-                    url: '', 
-                    label: p.label || p.id || '',
-                    isBlank: true
-                }));
-                if (fromData.length > 0) {
-                    return fromData;
-                }
-            }
+            // DO NOT return early for blank-only pagesData - fall through to check images.json
         }
         
-        // Check for images.json manifest (for B2-hosted images)
-        // This is now the single source of truth - it contains both regular images AND blank pages
+        // images.json is the single source of truth - contains both regular images AND blank pages
         try {
             const manifestResp = await fetch('images.json');
             if (manifestResp.ok) {
                 const manifest = await manifestResp.json();
                 if (manifest.images && manifest.images.length > 0) {
-                    // images.json is authoritative - return it directly
-                    // It already contains blank pages marked with isBlank: true
                     return manifest.images;
                 }
             }
