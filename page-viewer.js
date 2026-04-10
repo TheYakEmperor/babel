@@ -207,6 +207,7 @@ function initPageViewer(pagesData) {
                 
                 // Rebuild list from pagesData order
                 const orderedList = [];
+                let matchedCount = 0;
                 pagesData.forEach(page => {
                     const label = page.label || page.id;
                     if (page.isBlank) {
@@ -217,6 +218,7 @@ function initPageViewer(pagesData) {
                         });
                     } else if (imageMap[label]) {
                         orderedList.push(imageMap[label]);
+                        matchedCount++;
                     }
                 });
                 
@@ -228,7 +230,9 @@ function initPageViewer(pagesData) {
                     }
                 });
                 
-                if (orderedList.length > 0) {
+                // Only use merged list if most images were matched
+                // Otherwise fall back to imageList (prevents blank-page bug)
+                if (orderedList.length > 0 && matchedCount >= imageList.length / 2) {
                     return orderedList;
                 }
             }
