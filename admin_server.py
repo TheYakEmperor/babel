@@ -869,7 +869,7 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         
         text_data['pages'] = new_pages
         
-        # Also update images.json to reflect the new order (for non-blank pages)
+        # Also update images.json to reflect the new order (INCLUDING blank pages)
         images_json_path = text_dir / 'images.json'
         if images_json_path.exists():
             with open(images_json_path, 'r', encoding='utf-8') as f:
@@ -878,20 +878,37 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             # Create mapping of filename to image entry
             image_map = {}
             for img in images_data.get('images', []):
-                filename = img['url'].split('/')[-1]
-                image_map[filename] = img
+                if img.get('isBlank'):
+                    continue  # Skip existing blank entries (we'll rebuild from pages_data)
+                filename = img['url'].split('/')[-1] if img.get('url') else ''
+                if filename:
+                    image_map[filename] = img
+                # Also map by label for audio/video files
+                label = img.get('label', '')
+                if label:
+                    image_map[label] = img
             
-            # Rebuild images array in new order (skip blank pages)
+            # Rebuild images array in new order (INCLUDING blank pages)
             new_images = []
             for page_info in pages_data:
-                if not page_info.get('isBlank'):
+                if page_info.get('isBlank'):
+                    # Add blank page entry
+                    new_images.append({
+                        'url': '',
+                        'label': page_info.get('label', ''),
+                        'isBlank': True
+                    })
+                else:
                     filename = page_info.get('filename')
+                    label = page_info.get('label')
                     if filename and filename in image_map:
                         new_images.append(image_map[filename])
+                    elif label and label in image_map:
+                        new_images.append(image_map[label])
             
             # Add any images that weren't in the pages list
             for img in images_data.get('images', []):
-                if img not in new_images:
+                if img not in new_images and not img.get('isBlank'):
                     new_images.append(img)
             
             images_data['images'] = new_images

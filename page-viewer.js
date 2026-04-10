@@ -183,68 +183,47 @@ function initPageViewer(pagesData) {
         }
         
         // Check for images.json manifest (for B2-hosted images)
+        // This is now the single source of truth - it contains both regular images AND blank pages
         try {
             const manifestResp = await fetch('images.json');
             if (manifestResp.ok) {
                 const manifest = await manifestResp.json();
                 if (manifest.images && manifest.images.length > 0) {
-                    imageList = manifest.images;
+                    // images.json is authoritative - return it directly
+                    // It already contains blank pages marked with isBlank: true
+                    return manifest.images;
                 }
             }
         } catch (e) {}
         
-        // If we have images, check pagesData for blank pages and merge them
-        if (imageList.length > 0 && pagesData && pagesData.length > 0) {
-            // Build ordered list from pagesData, using imageList for non-blank pages
-            const blankPages = pagesData.filter(p => p.isBlank);
-            if (blankPages.length > 0) {
-                // Create a map from label to image entry
-                const imageMap = {};
-                imageList.forEach(img => {
-                    const label = img.label || getPageName(img);
-                    imageMap[label] = img;
-                });
-                
-                // Rebuild list from pagesData order
-                const orderedList = [];
-                let matchedCount = 0;
-                pagesData.forEach(page => {
-                    const label = page.label || page.id;
-                    if (page.isBlank) {
-                        orderedList.push({
-                            url: '',
-                            label: label,
-                            isBlank: true
+        // Fallback: check pagesData from data.json for embedded page info
+        if (pagesData && pagesData.length > 0) {
+            // Build list from pagesData - handles both blank and image pages
+            const pageList = [];
+            pagesData.forEach(page => {
+                const label = page.label || page.id;
+                if (page.isBlank) {
+                    pageList.push({
+                        url: '',
+                        label: label,
+                        isBlank: true
+                    });
+                } else if (page.images && page.images.length > 0) {
+                    // Page has embedded images
+                    page.images.forEach(img => {
+                        pageList.push({
+                            url: img.url || img,
+                            label: img.label || label
                         });
-                    } else if (imageMap[label]) {
-                        orderedList.push(imageMap[label]);
-                        matchedCount++;
-                    }
-                });
-                
-                // Add any images not in pagesData at the end
-                imageList.forEach(img => {
-                    const label = img.label || getPageName(img);
-                    if (!pagesData.find(p => (p.label || p.id) === label)) {
-                        orderedList.push(img);
-                    }
-                });
-                
-                // Only use merged list if most images were matched
-                // Otherwise fall back to imageList (prevents blank-page bug)
-                if (orderedList.length > 0 && matchedCount >= imageList.length / 2) {
-                    return orderedList;
+                    });
                 }
+            });
+            if (pageList.length > 0) {
+                return pageList;
             }
-            
-            return imageList;
         }
         
-        if (imageList.length > 0) {
-            return imageList;
-        }
-        
-        // Scan images/ directory listing
+        // Last resort: Scan images/ directory listing
         try {
             const resp = await fetch('images/');
             if (resp.ok) {
