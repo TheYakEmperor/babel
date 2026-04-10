@@ -1621,6 +1621,27 @@ body.viewer-fullscreen .search-container {
     user-select: none;
 }
 
+/* Audio/Video controls in page viewer */
+.page-viewer-media {
+    pointer-events: auto !important;
+    z-index: 100;
+}
+
+.page-viewer-image-container audio.page-viewer-media {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 400px;
+}
+
+.page-viewer-image-container video.page-viewer-media {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
 /* Zoom controls */
 .page-viewer-zoom-controls {
     position: absolute;

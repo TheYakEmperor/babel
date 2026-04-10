@@ -320,6 +320,15 @@ function initPageViewer(pagesData) {
         </svg>
     `);
     
+    // Video placeholder SVG
+    const VIDEO_PLACEHOLDER = 'data:image/svg+xml,' + encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+            <rect width="600" height="400" fill="#1a1a2e"/>
+            <text x="300" y="180" text-anchor="middle" fill="#e0e0e0" font-family="sans-serif" font-size="64">🎬</text>
+            <text x="300" y="250" text-anchor="middle" fill="#9ca3af" font-family="sans-serif" font-size="18">Video</text>
+        </svg>
+    `);
+    
     // Data URI for blank page placeholder
     const BLANK_PAGE_PLACEHOLDER = 'data:image/svg+xml,' + encodeURIComponent(`
         <svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
@@ -352,6 +361,19 @@ function initPageViewer(pagesData) {
             return `${B2_BASE_URL}/texts/${textPath}/${url}`;
         }
         return url;
+    }
+    
+    // Get thumbnail URL - returns placeholders for non-image media types
+    function getThumbnailUrl(item) {
+        const mediaType = getMediaType(item);
+        if (mediaType === 'audio') {
+            return AUDIO_PLACEHOLDER;
+        }
+        if (mediaType === 'video') {
+            return VIDEO_PLACEHOLDER;
+        }
+        // For images (including blank pages), use normal page URL
+        return getPageUrl(item);
     }
     
     function getSpreads() {
@@ -404,8 +426,6 @@ function initPageViewer(pagesData) {
             const audio = document.createElement('audio');
             audio.src = url;
             audio.controls = true;
-            audio.style.width = '100%';
-            audio.style.marginTop = '10px';
             audio.className = 'page-viewer-media';
             container.appendChild(audio);
         } else if (mediaType === 'image-audio') {
@@ -428,8 +448,6 @@ function initPageViewer(pagesData) {
                 const audio = document.createElement('audio');
                 audio.src = audioUrl;
                 audio.controls = true;
-                audio.style.width = '100%';
-                audio.style.marginTop = '10px';
                 audio.className = 'page-viewer-media';
                 container.appendChild(audio);
             }
@@ -584,7 +602,7 @@ function initPageViewer(pagesData) {
             
             const thumb = document.createElement('img');
             thumb.className = 'page-viewer-thumb';
-            thumb.src = getPageUrl(url);
+            thumb.src = getThumbnailUrl(url);
             thumb.alt = getPageName(url);
             
             const label = document.createElement('span');
