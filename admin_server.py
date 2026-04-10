@@ -509,15 +509,17 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             <div id="text-body"></div>
         </div>
     </div>
-    <script src="../../../../search-index.js"></script>
+    <script src="../../../../search-index.js" defer></script>
     <script src="../../../../search.js"></script>
     <script>
-        fetch('data.json')
-            .then(r => r.json())
-            .then(data => {
-                document.title = data.title;
-                document.getElementById('page-title').textContent = data.title;
-            });
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('data.json')
+                .then(r => r.json())
+                .then(data => {
+                    document.title = data.title;
+                    document.getElementById('page-title').textContent = data.title;
+                });
+        });
     </script>
 </body>
 </html>'''
