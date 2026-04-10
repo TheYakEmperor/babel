@@ -693,12 +693,17 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 with open(manifest_path, 'r', encoding='utf-8') as f:
                     manifest = json.load(f)
                 images_list = manifest.get('images', [])
-                text_data['_imageCount'] = len(images_list)
-                # Extract filenames from URLs like "images/001.jpg"
-                text_data['_imageFiles'] = [img['url'].split('/')[-1] for img in images_list]
+                # Filter out blank pages for image count
+                real_images = [img for img in images_list if not img.get('isBlank')]
+                text_data['_imageCount'] = len(real_images)
+                # Extract filenames from URLs like "images/001.jpg" (skip blank pages)
+                text_data['_imageFiles'] = [img['url'].split('/')[-1] for img in real_images if img.get('url')]
+                # Also include the full images list for the annotator
+                text_data['_imagesManifest'] = images_list
             except:
                 text_data['_imageCount'] = 0
                 text_data['_imageFiles'] = []
+                text_data['_imagesManifest'] = []
         else:
             # Fallback to scanning local directory (for local dev without B2)
             images_dir = text_dir / 'images'

@@ -3615,48 +3615,31 @@
                 const folderName = textData._folderName || textId;
                 annotatorData.folderName = folderName;
                 
-                // Build page list - check if pagesData has ordering info with blank pages
-                const orderedPagesData = textData.pages || [];
-                const blankPages = orderedPagesData.filter(p => p.isBlank);
+                // Check for images manifest (authoritative source with blank pages)
+                const imagesManifest = textData._imagesManifest || [];
                 
-                if (blankPages.length > 0 && orderedPagesData.length > 0) {
-                    // Use ordered pages from data.json (includes blank pages)
-                    const imageFiles = textData._imageFiles || [];
-                    const imageMap = {};
-                    imageFiles.forEach(filename => {
-                        const label = filename.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
-                        imageMap[label] = {
-                            label: label,
-                            filename: filename,
-                            imageUrl: `${B2_BASE_URL}/texts/00/00/${folderName}/images/${encodeURIComponent(filename)}`,
-                            isBlank: false
-                        };
-                    });
-                    
-                    // Build ordered page list
-                    orderedPagesData.forEach(page => {
-                        const label = page.label || page.id;
-                        if (page.isBlank) {
-                            annotatorData.pages.push({
-                                label: label,
-                                filename: `blank_${label.replace(/\s+/g, '_')}`,
+                if (imagesManifest.length > 0) {
+                    // Use images.json manifest (includes blank pages properly ordered)
+                    annotatorData.pages = imagesManifest.map(img => {
+                        if (img.isBlank) {
+                            return {
+                                label: img.label || '',
+                                filename: `blank_${(img.label || '').replace(/\s+/g, '_')}`,
                                 imageUrl: '',
                                 isBlank: true
-                            });
-                        } else if (imageMap[label]) {
-                            annotatorData.pages.push(imageMap[label]);
-                        }
-                    });
-                    
-                    // Add any images not in orderedPagesData
-                    imageFiles.forEach(filename => {
-                        const label = filename.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
-                        if (!annotatorData.pages.find(p => p.label === label)) {
-                            annotatorData.pages.push(imageMap[label]);
+                            };
+                        } else {
+                            const filename = img.url ? img.url.split('/').pop() : '';
+                            return {
+                                label: img.label || filename.replace(/\.[^.]+$/, '').replace(/_/g, ' '),
+                                filename: filename,
+                                imageUrl: img.url ? `${B2_BASE_URL}/texts/00/00/${folderName}/${img.url}` : '',
+                                isBlank: false
+                            };
                         }
                     });
                 } else if (textData._imageFiles && textData._imageFiles.length > 0) {
-                    // Standard case: just use image files
+                    // Fallback: just use image files (no blank pages)
                     annotatorData.pages = textData._imageFiles.map(filename => {
                         const label = filename.replace(/\.[^.]+$/, '').replace(/_/g, ' ');
                         return {
