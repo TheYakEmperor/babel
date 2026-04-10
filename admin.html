@@ -3565,6 +3565,35 @@
             isDrawing: false
         };
         
+        // Placeholder SVGs for media files
+        const AUDIO_PLACEHOLDER = 'data:image/svg+xml,' + encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+                <rect width="600" height="400" fill="#1a1a2e"/>
+                <text x="300" y="180" text-anchor="middle" fill="#e0e0e0" font-family="sans-serif" font-size="64">🎵</text>
+                <text x="300" y="250" text-anchor="middle" fill="#9ca3af" font-family="sans-serif" font-size="18">Audio Track</text>
+            </svg>
+        `);
+        
+        const VIDEO_PLACEHOLDER = 'data:image/svg+xml,' + encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+                <rect width="600" height="400" fill="#1a1a2e"/>
+                <text x="300" y="180" text-anchor="middle" fill="#e0e0e0" font-family="sans-serif" font-size="64">🎬</text>
+                <text x="300" y="250" text-anchor="middle" fill="#9ca3af" font-family="sans-serif" font-size="18">Video</text>
+            </svg>
+        `);
+        
+        // Get thumbnail URL - returns placeholders for audio/video files
+        function getAnnotatorThumbnailUrl(page) {
+            if (page.isBlank) return '';
+            const url = page.imageUrl || '';
+            const ext = url.split('.').pop().toLowerCase().split('?')[0];
+            const audioExts = ['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a'];
+            const videoExts = ['mp4', 'webm', 'mov', 'avi', 'mkv'];
+            if (audioExts.includes(ext)) return AUDIO_PLACEHOLDER;
+            if (videoExts.includes(ext)) return VIDEO_PLACEHOLDER;
+            return url;
+        }
+
         async function openAnnotator(textId) {
             annotatorData.textId = textId;
             annotatorData.pages = [];
@@ -3702,7 +3731,7 @@
                          ondragleave="handlePageDragLeave(event)"
                          ondrop="handlePageDrop(event)"
                          ondragend="handlePageDragEnd(event)">
-                        <img src="${isBlank ? '' : page.imageUrl}" alt="${escapeHtml(page.label)}">
+                        <img src="${getAnnotatorThumbnailUrl(page)}" alt="${escapeHtml(page.label)}">
                         <div class="thumb-label">
                             <span class="label-text">${escapeHtml(page.label)}</span>
                             <button class="thumb-rename-btn" onclick="event.stopPropagation(); renamePageByLabel('${escapeHtml(page.label)}')" title="Rename page">✎</button>
@@ -4408,7 +4437,7 @@
                 const placeholder = wrapper.querySelector('.blank-page-placeholder');
                 if (placeholder) placeholder.style.display = 'none';
                 
-                img.src = page.imageUrl;
+                img.src = getAnnotatorThumbnailUrl(page);
                 img.onload = () => {
                     setupAnnotatorCanvas();
                     drawAnnotatorRegions();
