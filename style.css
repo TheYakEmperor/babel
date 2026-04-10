@@ -1532,14 +1532,14 @@ body.viewer-fullscreen .search-container {
     align-items: center;
     justify-content: space-between;
     padding: 10px 15px;
-    background: #000;
-    border-bottom: 1px solid #333;
+    background: #f0f0f0;
+    border-bottom: 1px solid #ddd;
 }
 
 .page-viewer-header h3 {
     margin: 0;
     font-size: 1rem;
-    color: #fff;
+    color: #555;
 }
 
 .page-viewer-controls {
@@ -1571,7 +1571,7 @@ body.viewer-fullscreen .search-container {
 
 .page-viewer-count {
     font-size: 0.9rem;
-    color: #fff;
+    color: #666;
 }
 
 .page-viewer-main {
@@ -1684,8 +1684,8 @@ body.viewer-fullscreen .search-container {
     gap: 8px;
     padding: 10px 15px;
     overflow-x: auto;
-    background: #000;
-    border-top: 1px solid #333;
+    background: #f0f0f0;
+    border-top: 1px solid #ddd;
 }
 
 .page-viewer-thumb-wrapper {
@@ -1707,12 +1707,12 @@ body.viewer-fullscreen .search-container {
 }
 
 .page-viewer-thumb-wrapper.active .page-viewer-thumb {
-    border-color: #fff;
+    border-color: #4a5568;
 }
 
 .page-viewer-thumb-label {
     font-size: 0.7rem;
-    color: #ccc;
+    color: #666;
     margin-top: 3px;
     max-width: 60px;
     overflow: hidden;
