@@ -147,6 +147,38 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()
     
+    def do_GET(self):
+        """Handle GET requests with no-cache headers for JSON files."""
+        path = urlparse(self.path).path
+        
+        # Add no-cache headers for JSON files to prevent stale data
+        if path.endswith('.json'):
+            try:
+                # Translate URL path to file path
+                file_path = BASE_DIR / path.lstrip('/')
+                if file_path.exists() and file_path.is_file():
+                    with open(file_path, 'rb') as f:
+                        content = f.read()
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'application/json')
+                    self.send_header('Content-Length', len(content))
+                    self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                    self.send_header('Pragma', 'no-cache')
+                    self.send_header('Expires', '0')
+                    self.send_header('Access-Control-Allow-Origin', '*')
+                    self.end_headers()
+                    self.wfile.write(content)
+                    return
+                else:
+                    self.send_error(404, 'File not found')
+                    return
+            except Exception as e:
+                self.send_error(500, str(e))
+                return
+        
+        # For non-JSON files, use the default handler
+        super().do_GET()
+    
     def send_json_response(self, code, data):
         self.send_response(code)
         self.send_header('Content-Type', 'application/json')
