@@ -227,6 +227,11 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         """Handle GET requests with no-cache headers for JSON files."""
         path = urlparse(self.path).path
         
+        # Serve texts-index.html for root path
+        if path == '/' or path == '':
+            self.path = '/texts-index.html'
+            path = '/texts-index.html'
+        
         # Add no-cache headers for JSON files to prevent stale data
         if path.endswith('.json'):
             try:
