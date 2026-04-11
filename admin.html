@@ -3394,11 +3394,22 @@
         // Images - track selected pages for deletion
         let selectedPages = new Set();
         
+        // Get thumbnail URL for edit tab - returns placeholders for audio/video
+        function getEditTabThumbnailUrl(filename, url) {
+            const ext = filename.split('.').pop().toLowerCase();
+            const audioExts = ['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a'];
+            const videoExts = ['mp4', 'webm', 'mov', 'avi', 'mkv'];
+            if (audioExts.includes(ext)) return AUDIO_PLACEHOLDER;
+            if (videoExts.includes(ext)) return VIDEO_PLACEHOLDER;
+            return url;
+        }
+
         function renderTextImages() {
             const preview = document.getElementById('text-images-preview');
             const deleteControls = document.getElementById('image-delete-controls');
             const hasExisting = textEditorData.existingImages && textEditorData.existingImages.length > 0;
             const hasNew = textEditorData.images && textEditorData.images.length > 0;
+            const hasBlank = textEditorData.blankPages && textEditorData.blankPages.length > 0;
             
             // Update delete controls visibility
             if (deleteControls) {
@@ -3406,14 +3417,26 @@
                 document.getElementById('selected-count').textContent = selectedPages.size;
             }
             
-            if (!hasExisting && !hasNew) { 
+            if (!hasExisting && !hasNew && !hasBlank) { 
                 preview.innerHTML = ''; 
                 return; 
             }
             
             let html = '';
             
-            // Show existing images first (clickable for selection)
+            // Show blank pages first
+            if (hasBlank) {
+                html += `<div style="width:100%;margin-bottom:10px;"><strong style="color:#f59e0b;font-size:0.85em;">Blank Pages (${textEditorData.blankPages.length}):</strong></div>`;
+                html += textEditorData.blankPages.map((page, i) => `
+                    <div class="image-preview" style="border-color:#f59e0b;">
+                        <img src="${BLANK_PLACEHOLDER}" alt="${escapeHtml(page.label)}" style="object-fit:contain;background:#f9fafb;">
+                        <span style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);font-size:0.7em;color:#666;white-space:nowrap;">${escapeHtml(page.label)}</span>
+                        <span class="image-number" style="background:#f59e0b;">📄</span>
+                    </div>
+                `).join('');
+            }
+            
+            // Show existing images (clickable for selection)
             if (hasExisting) {
                 html += `<div style="width:100%;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
                     <strong style="color:#6b7280;font-size:0.85em;">Existing Images (${textEditorData.existingImages.length}):</strong>
@@ -3421,9 +3444,10 @@
                 </div>`;
                 html += textEditorData.existingImages.map((img, i) => {
                     const isSelected = selectedPages.has(img.name);
+                    const thumbUrl = getEditTabThumbnailUrl(img.name, img.url);
                     return `
                     <div class="image-preview ${isSelected ? 'selected' : ''}" style="border-color:#22c55e;" onclick="togglePageSelection('${escapeHtml(img.name)}')" data-filename="${escapeHtml(img.name)}">
-                        <img src="${img.url}" alt="${escapeHtml(img.name)}">
+                        <img src="${thumbUrl}" alt="${escapeHtml(img.name)}">
                         <div class="select-checkbox">${isSelected ? '' : ''}</div>
                         <span class="image-number" style="background:#22c55e;">${i+1}</span>
                     </div>
