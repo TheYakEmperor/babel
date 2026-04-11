@@ -1528,6 +1528,7 @@
         function updateUserUI(user) {
             const userInfo = document.getElementById('user-info');
             const loginPrompt = document.getElementById('login-prompt');
+            const adminButtons = document.getElementById('admin-buttons');
             
             if (user) {
                 userInfo.style.display = 'flex';
@@ -1535,9 +1536,17 @@
                 document.getElementById('user-username').textContent = user.username;
                 document.getElementById('user-role').textContent = user.role;
                 document.getElementById('user-role').className = 'role ' + user.role;
+                
+                // Show admin buttons only for admins
+                if (adminButtons) {
+                    adminButtons.style.display = (user.role === 'admin') ? 'inline' : 'none';
+                }
             } else {
                 userInfo.style.display = 'none';
                 loginPrompt.style.display = 'block';
+                if (adminButtons) {
+                    adminButtons.style.display = 'none';
+                }
             }
         }
         
