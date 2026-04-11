@@ -1484,6 +1484,11 @@
         // Backblaze B2 configuration for image hosting
         const B2_BASE_URL = 'https://babel-images.s3.us-east-005.backblazeb2.com';
         
+        // API Server Configuration
+        // For local development: '' (empty string, uses same origin)
+        // For production: 'https://your-server.com' (without trailing slash)
+        const API_BASE_URL = '';
+        
         // =============================================================================
         // AUTHENTICATION STATE
         // =============================================================================
@@ -2066,9 +2071,10 @@
                 headers['Authorization'] = 'Bearer ' + token;
             }
             
-            const response = await fetch('/api/' + endpoint, {
+            const response = await fetch(API_BASE_URL + '/api/' + endpoint, {
                 method: 'POST',
                 headers,
+                credentials: API_BASE_URL ? 'include' : 'same-origin',
                 body: JSON.stringify(data)
             });
             
