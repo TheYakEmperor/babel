@@ -16,6 +16,7 @@ import base64
 import re
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
+import wiki_db
 
 # B2 Configuration for image hosting
 B2_ENABLED = True  # Set to False to use local storage only
@@ -128,6 +129,56 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 result = self.save_page_order(data)
             elif path == '/api/rebuild-indexes':
                 result = self.rebuild_indexes()
+            # Authentication endpoints
+            elif path == '/api/auth/register':
+                result = self.auth_register(data)
+            elif path == '/api/auth/login':
+                result = self.auth_login(data)
+            elif path == '/api/auth/logout':
+                result = self.auth_logout()
+            elif path == '/api/auth/me':
+                result = self.auth_get_current_user()
+            elif path == '/api/auth/verify-email':
+                result = self.auth_verify_email(data)
+            elif path == '/api/auth/change-password':
+                result = self.auth_change_password(data)
+            # User management (admin only)
+            elif path == '/api/users/list':
+                result = self.users_list(data)
+            elif path == '/api/users/update-role':
+                result = self.users_update_role(data)
+            # Revision history
+            elif path == '/api/revisions/list':
+                result = self.revisions_list(data)
+            elif path == '/api/revisions/get':
+                result = self.revisions_get(data)
+            elif path == '/api/revisions/recent':
+                result = self.revisions_recent(data)
+            # Page locking
+            elif path == '/api/lock/acquire':
+                result = self.lock_acquire(data)
+            elif path == '/api/lock/release':
+                result = self.lock_release(data)
+            elif path == '/api/lock/check':
+                result = self.lock_check(data)
+            elif path == '/api/lock/force-release':
+                result = self.lock_force_release(data)
+            # Watchlist
+            elif path == '/api/watchlist/add':
+                result = self.watchlist_add(data)
+            elif path == '/api/watchlist/remove':
+                result = self.watchlist_remove(data)
+            elif path == '/api/watchlist/list':
+                result = self.watchlist_list()
+            elif path == '/api/watchlist/changes':
+                result = self.watchlist_changes(data)
+            # Moderation
+            elif path == '/api/moderation/pending':
+                result = self.moderation_pending(data)
+            elif path == '/api/moderation/approve':
+                result = self.moderation_approve(data)
+            elif path == '/api/moderation/reject':
+                result = self.moderation_reject(data)
             else:
                 self.send_error_response(404, f'Unknown endpoint: {path}')
                 return
