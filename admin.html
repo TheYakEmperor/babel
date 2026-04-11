@@ -708,6 +708,12 @@
                     <button data-section="tools">Tools</button>
                 </div>
                 <div class="user-info" id="user-info" style="display: none;">
+                    <button class="btn" onclick="openRecentChangesModal()" style="padding: 5px 10px; font-size: 0.8em; background: #eee;">Recent</button>
+                    <button class="btn" onclick="openWatchlistModal()" style="padding: 5px 10px; font-size: 0.8em; background: #eee;">Watchlist</button>
+                    <span class="admin-only" id="admin-buttons" style="display: none;">
+                        <button class="btn" onclick="openUsersModal()" style="padding: 5px 10px; font-size: 0.8em; background: #ffe0e0;">Users</button>
+                        <button class="btn" onclick="openModerationModal()" style="padding: 5px 10px; font-size: 0.8em; background: #ffe0e0;">Moderation</button>
+                    </span>
                     <span class="username" id="user-username"></span>
                     <span class="role" id="user-role"></span>
                     <button class="btn btn-secondary" onclick="logout()" style="padding: 5px 10px; font-size: 0.8em;">Logout</button>
@@ -1453,6 +1459,25 @@
         </div>
     </div>
     
+    <!-- Watchlist Modal -->
+    <div class="modal-overlay" id="watchlist-modal">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2>My Watchlist</h2>
+                <button class="modal-close" onclick="closeWatchlistModal()">&times;</button>
+            </div>
+            <div id="watchlist-content">
+                <div id="watchlist-items">
+                    <div class="loading">Loading watchlist...</div>
+                </div>
+                <div id="watchlist-changes" style="margin-top: 20px; display: none;">
+                    <h3 style="margin-bottom: 10px;">Recent Changes to Watched Items</h3>
+                    <div id="watchlist-changes-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script src="search-index.js" defer></script>
     <script src="search.js"></script>
     <script>
@@ -1826,6 +1851,108 @@
             }
         }
         
+        // Watchlist
+        function openWatchlistModal() {
+            if (!currentUser) {
+                showStatus('Please log in to view your watchlist', true);
+                openAuthModal();
+                return;
+            }
+            document.getElementById('watchlist-modal').classList.add('active');
+            loadWatchlist();
+        }
+        
+        function closeWatchlistModal() {
+            document.getElementById('watchlist-modal').classList.remove('active');
+        }
+        
+        async function loadWatchlist() {
+            const itemsDiv = document.getElementById('watchlist-items');
+            const changesDiv = document.getElementById('watchlist-changes');
+            itemsDiv.innerHTML = '<div class="loading">Loading...</div>';
+            changesDiv.style.display = 'none';
+            
+            try {
+                const result = await api('watchlist/list', {});
+                if (result.items && result.items.length > 0) {
+                    itemsDiv.innerHTML = `
+                        <div style="margin-bottom: 15px; color: #666;">
+                            You are watching ${result.items.length} item(s)
+                        </div>
+                        ${result.items.map(item => `
+                            <div class="change-item" style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>${escapeHtml(item.entity_type)}: <strong>${escapeHtml(item.entity_id)}</strong></span>
+                                <button class="btn btn-danger" style="padding: 3px 10px; font-size: 0.85em;" 
+                                        onclick="unwatchItem('${escapeHtml(item.entity_type)}', '${escapeHtml(item.entity_id)}')">
+                                    Unwatch
+                                </button>
+                            </div>
+                        `).join('')}
+                    `;
+                    
+                    // Load changes for watched items
+                    loadWatchlistChanges();
+                } else {
+                    itemsDiv.innerHTML = `
+                        <div class="empty-state">
+                            <p>Your watchlist is empty.</p>
+                            <p style="font-size: 0.9em; color: #666;">Use the "Watch" button when viewing texts, works, or authors to add them to your watchlist.</p>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                itemsDiv.innerHTML = `<div class="empty-state"><p>Error: ${escapeHtml(e.message)}</p></div>`;
+            }
+        }
+        
+        async function loadWatchlistChanges() {
+            const changesDiv = document.getElementById('watchlist-changes');
+            const listDiv = document.getElementById('watchlist-changes-list');
+            
+            try {
+                const result = await api('watchlist/changes', { limit: 20 });
+                if (result.changes && result.changes.length > 0) {
+                    changesDiv.style.display = 'block';
+                    listDiv.innerHTML = result.changes.map(change => `
+                        <div class="change-item">
+                            <div class="change-info">
+                                <span class="change-entity">${escapeHtml(change.entity_type)}: ${escapeHtml(change.entity_id)}</span>
+                                <span class="change-meta">by ${escapeHtml(change.username || 'Anonymous')} · ${formatDate(change.timestamp)}</span>
+                            </div>
+                            <span class="change-action ${change.action}">${change.action}</span>
+                        </div>
+                    `).join('');
+                }
+            } catch (e) {
+                console.error('Failed to load watchlist changes:', e);
+            }
+        }
+        
+        async function watchItem(entityType, entityId) {
+            if (!currentUser) {
+                showStatus('Please log in to use the watchlist', true);
+                openAuthModal();
+                return;
+            }
+            
+            try {
+                await api('watchlist/add', { entityType, entityId });
+                showStatus(`Added to watchlist: ${entityType} "${entityId}"`);
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            }
+        }
+        
+        async function unwatchItem(entityType, entityId) {
+            try {
+                await api('watchlist/remove', { entityType, entityId });
+                showStatus(`Removed from watchlist: ${entityType} "${entityId}"`);
+                loadWatchlist();
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            }
+        }
+        
         // Check auth on page load
         document.addEventListener('DOMContentLoaded', () => {
             checkAuth();
@@ -1849,12 +1976,78 @@
                     closeRecentChangesModal();
                     closeUsersModal();
                     closeModerationModal();
+                    closeWatchlistModal();
                 }
             });
         });
         
         // =============================================================================
         // END AUTHENTICATION
+        // =============================================================================
+        
+        // =============================================================================
+        // PAGE LOCKING
+        // =============================================================================
+        let activeLocks = {};  // {entityType_entityId: lockInterval}
+        
+        async function acquireLock(entityType, entityId) {
+            if (!currentUser) return true; // Allow anonymous edits (will be tracked)
+            
+            try {
+                const result = await api('lock/acquire', { entityType, entityId });
+                if (result.success) {
+                    // Auto-extend lock every 10 minutes (locks last 15 min by default)
+                    const key = `${entityType}_${entityId}`;
+                    if (activeLocks[key]) clearInterval(activeLocks[key]);
+                    activeLocks[key] = setInterval(() => {
+                        api('lock/acquire', { entityType, entityId }).catch(() => {});
+                    }, 10 * 60 * 1000);
+                    return true;
+                }
+            } catch (e) {
+                if (e.message && e.message.includes('locked by')) {
+                    showStatus(e.message, true);
+                    return false;
+                }
+                // Lock service might be unavailable - allow edit anyway
+                console.warn('Lock service unavailable:', e);
+                return true;
+            }
+            return true;
+        }
+        
+        function releaseLock(entityType, entityId) {
+            const key = `${entityType}_${entityId}`;
+            if (activeLocks[key]) {
+                clearInterval(activeLocks[key]);
+                delete activeLocks[key];
+            }
+            
+            // Fire and forget release
+            if (currentUser) {
+                api('lock/release', { entityType, entityId }).catch(() => {});
+            }
+        }
+        
+        async function checkLock(entityType, entityId) {
+            try {
+                const result = await api('lock/check', { entityType, entityId });
+                return result;
+            } catch (e) {
+                return { locked: false };
+            }
+        }
+        
+        // Release all locks on page unload
+        window.addEventListener('beforeunload', () => {
+            Object.keys(activeLocks).forEach(key => {
+                const [entityType, entityId] = key.split('_');
+                releaseLock(entityType, entityId);
+            });
+        });
+        
+        // =============================================================================
+        // END PAGE LOCKING
         // =============================================================================
         
         async function api(endpoint, data = {}) {
@@ -2112,12 +2305,21 @@
         // Text Editor
         let textEditorData = { authors: [], languages: [], countries: [], collections: [], groups: [], sources: [], provenances: [], images: [], existingImages: [], works: [] };
         let currentEditId = null;
+        let currentEditType = null;  // For page locking
         let cachedProvenances = [];
         
         async function openTextEditor(id = null) {
             currentEditId = id;
+            currentEditType = 'text';
             textEditorData = { authors: [], languages: [], countries: [], collections: [], groups: [], sources: [], provenances: [], images: [], existingImages: [], works: [], blankPages: [] };
             selectedPages.clear(); // Clear page selection when opening editor
+            
+            // Try to acquire lock if editing existing text
+            if (id && !(await acquireLock('text', id))) {
+                currentEditId = null;
+                currentEditType = null;
+                return; // Lock failed, don't open editor
+            }
             
             // Reset blank pages fields
             document.getElementById('text-blank-pages').value = '0';
@@ -2194,6 +2396,11 @@
         }
         
         function closeTextEditor() {
+            // Release lock if we had one
+            if (currentEditId && currentEditType === 'text') {
+                releaseLock('text', currentEditId);
+            }
+            currentEditType = null;
             document.getElementById('text-editor-modal').classList.remove('active');
         }
         
@@ -2326,7 +2533,15 @@
         
         async function openWorkEditor(id = null) {
             currentEditId = id;
+            currentEditType = 'work';
             workEditorData = { authors: [], languages: [], aliases: [], groups: [], belongsTo: '', referentialWorks: [] };
+            
+            // Try to acquire lock if editing existing work
+            if (id && !(await acquireLock('work', id))) {
+                currentEditId = null;
+                currentEditType = null;
+                return;
+            }
             
             // Pre-load works list for belongsTo autocomplete
             await getWorksList();
@@ -2367,6 +2582,10 @@
         }
         
         function closeWorkEditor() {
+            if (currentEditId && currentEditType === 'work') {
+                releaseLock('work', currentEditId);
+            }
+            currentEditType = null;
             document.getElementById('work-editor-modal').classList.remove('active');
         }
         
@@ -2420,6 +2639,14 @@
         // Author Editor
         async function openAuthorEditor(id = null) {
             currentEditId = id;
+            currentEditType = 'author';
+            
+            // Try to acquire lock if editing existing author
+            if (id && !(await acquireLock('author', id))) {
+                currentEditId = null;
+                currentEditType = null;
+                return;
+            }
             
             // Clear author aliases and groups
             authorEditorData.aliases = [];
@@ -2463,6 +2690,10 @@
         }
         
         function closeAuthorEditor() {
+            if (currentEditId && currentEditType === 'author') {
+                releaseLock('author', currentEditId);
+            }
+            currentEditType = null;
             document.getElementById('author-editor-modal').classList.remove('active');
         }
         

@@ -279,6 +279,7 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         
         # Load existing data to preserve page-specific data (regions, etc.)
         existing_pages_data = {}
+        existing_json = None  # For revision tracking
         data_path = text_dir / 'data.json'
         if data_path.exists():
             try:
@@ -382,6 +383,20 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         # Write data.json
         with open(text_dir / 'data.json', 'w', encoding='utf-8') as f:
             json.dump(json_data, f, indent=2, ensure_ascii=False)
+        
+        # Track revision (existing_json was loaded earlier, may be None for new texts)
+        is_new = existing_dir is None
+        old_data = existing_json if data_path.exists() else None
+        try:
+            self._track_revision(
+                entity_type='text',
+                entity_id=text_id,
+                action='create' if is_new else 'update',
+                data_before=old_data,
+                data_after=json_data
+            )
+        except Exception as e:
+            print(f"Warning: Failed to track revision: {e}")
         
         # Copy template index.html if it doesn't exist
         # Copy dynamic index.html template (not TEMPLATE.html which is for manual editing)
@@ -585,7 +600,30 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         
         text_dir = BASE_DIR / 'texts' / '00' / '00' / text_id
         if text_dir.exists():
+            # Load existing data for revision tracking
+            old_data = None
+            data_path = text_dir / 'data.json'
+            if data_path.exists():
+                try:
+                    with open(data_path, 'r', encoding='utf-8') as f:
+                        old_data = json.load(f)
+                except:
+                    pass
+            
             shutil.rmtree(text_dir)
+            
+            # Track deletion
+            try:
+                self._track_revision(
+                    entity_type='text',
+                    entity_id=text_id,
+                    action='delete',
+                    data_before=old_data,
+                    data_after=None
+                )
+            except Exception as e:
+                print(f"Warning: Failed to track revision: {e}")
+            
             return {'success': True, 'message': f'Text "{text_id}" deleted'}
         else:
             raise ValueError(f'Text "{text_id}" not found')
@@ -800,9 +838,11 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         
         data_path = text_dir / 'data.json'
         
-        # Load existing data
+        # Load existing data (also used for revision tracking)
         with open(data_path, 'r', encoding='utf-8') as f:
             text_data = json.load(f)
+        
+        old_pages = text_data.get('pages', []).copy() if 'pages' in text_data else []
         
         # Ensure pages array exists
         if 'pages' not in text_data:
@@ -828,6 +868,19 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         # Save updated data
         with open(data_path, 'w', encoding='utf-8') as f:
             json.dump(text_data, f, indent=2, ensure_ascii=False)
+        
+        # Track revision
+        try:
+            self._track_revision(
+                entity_type='regions',
+                entity_id=text_id,
+                action='update',
+                data_before={'pages': old_pages},
+                data_after={'pages': text_data['pages']},
+                is_minor=True  # Region edits are typically minor
+            )
+        except Exception as e:
+            print(f"Warning: Failed to track revision: {e}")
         
         # Auto-commit to git
         import threading
@@ -1002,11 +1055,35 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         work_dir = BASE_DIR / 'works' / safe_id
         work_dir.mkdir(parents=True, exist_ok=True)
         
+        # Load existing data for revision tracking
+        is_new = True
+        old_data = None
+        work_path = work_dir / 'work.json'
+        if work_path.exists():
+            is_new = False
+            try:
+                with open(work_path, 'r', encoding='utf-8') as f:
+                    old_data = json.load(f)
+            except:
+                pass
+        
         # Prepare work.json
         work_data = {k: v for k, v in data.items() if k != 'id' and v}
         
-        with open(work_dir / 'work.json', 'w', encoding='utf-8') as f:
+        with open(work_path, 'w', encoding='utf-8') as f:
             json.dump(work_data, f, indent=2, ensure_ascii=False)
+        
+        # Track revision
+        try:
+            self._track_revision(
+                entity_type='work',
+                entity_id=work_id,
+                action='create' if is_new else 'update',
+                data_before=old_data,
+                data_after=work_data
+            )
+        except Exception as e:
+            print(f"Warning: Failed to track revision: {e}")
         
         # Auto-rebuild indexes
         self._auto_rebuild_indexes()
@@ -1026,7 +1103,30 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         
         work_dir = BASE_DIR / 'works' / work_id
         if work_dir.exists():
+            # Load existing data for revision tracking
+            old_data = None
+            work_path = work_dir / 'work.json'
+            if work_path.exists():
+                try:
+                    with open(work_path, 'r', encoding='utf-8') as f:
+                        old_data = json.load(f)
+                except:
+                    pass
+            
             shutil.rmtree(work_dir)
+            
+            # Track deletion
+            try:
+                self._track_revision(
+                    entity_type='work',
+                    entity_id=work_id,
+                    action='delete',
+                    data_before=old_data,
+                    data_after=None
+                )
+            except Exception as e:
+                print(f"Warning: Failed to track revision: {e}")
+            
             return {'success': True, 'message': f'Work "{work_id}" deleted'}
         else:
             raise ValueError(f'Work "{work_id}" not found')
@@ -1177,11 +1277,35 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         author_dir = BASE_DIR / 'authors' / safe_id
         author_dir.mkdir(parents=True, exist_ok=True)
         
+        # Load existing data for revision tracking
+        is_new = True
+        old_data = None
+        author_path = author_dir / 'author.json'
+        if author_path.exists():
+            is_new = False
+            try:
+                with open(author_path, 'r', encoding='utf-8') as f:
+                    old_data = json.load(f)
+            except:
+                pass
+        
         # Prepare author.json
         author_data = {k: v for k, v in data.items() if k != 'id' and v}
         
-        with open(author_dir / 'author.json', 'w', encoding='utf-8') as f:
+        with open(author_path, 'w', encoding='utf-8') as f:
             json.dump(author_data, f, indent=2, ensure_ascii=False)
+        
+        # Track revision
+        try:
+            self._track_revision(
+                entity_type='author',
+                entity_id=author_id,
+                action='create' if is_new else 'update',
+                data_before=old_data,
+                data_after=author_data
+            )
+        except Exception as e:
+            print(f"Warning: Failed to track revision: {e}")
         
         # Auto-rebuild indexes
         self._auto_rebuild_indexes()
@@ -1201,7 +1325,30 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         
         author_dir = BASE_DIR / 'authors' / author_id
         if author_dir.exists():
+            # Load existing data for revision tracking
+            old_data = None
+            author_path = author_dir / 'author.json'
+            if author_path.exists():
+                try:
+                    with open(author_path, 'r', encoding='utf-8') as f:
+                        old_data = json.load(f)
+                except:
+                    pass
+            
             shutil.rmtree(author_dir)
+            
+            # Track deletion
+            try:
+                self._track_revision(
+                    entity_type='author',
+                    entity_id=author_id,
+                    action='delete',
+                    data_before=old_data,
+                    data_after=None
+                )
+            except Exception as e:
+                print(f"Warning: Failed to track revision: {e}")
+            
             return {'success': True, 'message': f'Author "{author_id}" deleted'}
         else:
             raise ValueError(f'Author "{author_id}" not found')
@@ -1263,14 +1410,38 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         collection_dir = BASE_DIR / 'collections' / safe_id
         collection_dir.mkdir(parents=True, exist_ok=True)
         
+        # Load existing data for revision tracking
+        is_new = True
+        old_data = None
+        collection_path = collection_dir / 'collection.json'
+        if collection_path.exists():
+            is_new = False
+            try:
+                with open(collection_path, 'r', encoding='utf-8') as f:
+                    old_data = json.load(f)
+            except:
+                pass
+        
         collection_data = {
             'id': safe_id,
             'name': data.get('name', safe_id.replace('-', ' ').title()),
             'description': data.get('description', '')
         }
         
-        with open(collection_dir / 'collection.json', 'w', encoding='utf-8') as f:
+        with open(collection_path, 'w', encoding='utf-8') as f:
             json.dump(collection_data, f, indent=2, ensure_ascii=False)
+        
+        # Track revision
+        try:
+            self._track_revision(
+                entity_type='collection',
+                entity_id=collection_id,
+                action='create' if is_new else 'update',
+                data_before=old_data,
+                data_after=collection_data
+            )
+        except Exception as e:
+            print(f"Warning: Failed to track revision: {e}")
         
         self._auto_rebuild_indexes()
         return {'message': f'Collection "{safe_id}" saved successfully'}
@@ -1283,8 +1454,31 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         
         collection_dir = BASE_DIR / 'collections' / collection_id
         if collection_dir.exists():
+            # Load existing data for revision tracking
+            old_data = None
+            collection_path = collection_dir / 'collection.json'
+            if collection_path.exists():
+                try:
+                    with open(collection_path, 'r', encoding='utf-8') as f:
+                        old_data = json.load(f)
+                except:
+                    pass
+            
             import shutil
             shutil.rmtree(collection_dir)
+            
+            # Track deletion
+            try:
+                self._track_revision(
+                    entity_type='collection',
+                    entity_id=collection_id,
+                    action='delete',
+                    data_before=old_data,
+                    data_after=None
+                )
+            except Exception as e:
+                print(f"Warning: Failed to track revision: {e}")
+            
             self._auto_rebuild_indexes()
             return {'message': f'Collection "{collection_id}" deleted'}
         else:
@@ -1358,14 +1552,38 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         group_dir = BASE_DIR / 'groups' / safe_id
         group_dir.mkdir(parents=True, exist_ok=True)
         
+        # Load existing data for revision tracking
+        is_new = True
+        old_data = None
+        group_path = group_dir / 'group.json'
+        if group_path.exists():
+            is_new = False
+            try:
+                with open(group_path, 'r', encoding='utf-8') as f:
+                    old_data = json.load(f)
+            except:
+                pass
+        
         group_data = {
             'id': safe_id,
             'name': data.get('name', safe_id.replace('-', ' ').title()),
             'description': data.get('description', '')
         }
         
-        with open(group_dir / 'group.json', 'w', encoding='utf-8') as f:
+        with open(group_path, 'w', encoding='utf-8') as f:
             json.dump(group_data, f, indent=2, ensure_ascii=False)
+        
+        # Track revision
+        try:
+            self._track_revision(
+                entity_type='group',
+                entity_id=group_id,
+                action='create' if is_new else 'update',
+                data_before=old_data,
+                data_after=group_data
+            )
+        except Exception as e:
+            print(f"Warning: Failed to track revision: {e}")
         
         self._auto_rebuild_indexes()
         return {'message': f'Group "{safe_id}" saved successfully'}
@@ -1378,8 +1596,31 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         
         group_dir = BASE_DIR / 'groups' / group_id
         if group_dir.exists():
+            # Load existing data for revision tracking
+            old_data = None
+            group_path = group_dir / 'group.json'
+            if group_path.exists():
+                try:
+                    with open(group_path, 'r', encoding='utf-8') as f:
+                        old_data = json.load(f)
+                except:
+                    pass
+            
             import shutil
             shutil.rmtree(group_dir)
+            
+            # Track deletion
+            try:
+                self._track_revision(
+                    entity_type='group',
+                    entity_id=group_id,
+                    action='delete',
+                    data_before=old_data,
+                    data_after=None
+                )
+            except Exception as e:
+                print(f"Warning: Failed to track revision: {e}")
+            
             self._auto_rebuild_indexes()
             return {'message': f'Group "{group_id}" deleted'}
         else:
@@ -1453,6 +1694,18 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         source_dir = BASE_DIR / 'sources' / safe_id
         source_dir.mkdir(parents=True, exist_ok=True)
         
+        # Load existing data for revision tracking
+        is_new = True
+        old_data = None
+        source_path = source_dir / 'source.json'
+        if source_path.exists():
+            is_new = False
+            try:
+                with open(source_path, 'r', encoding='utf-8') as f:
+                    old_data = json.load(f)
+            except:
+                pass
+        
         source_data = {
             'id': safe_id,
             'name': data.get('name', safe_id.replace('-', ' ').title()),
@@ -1460,8 +1713,20 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             'description': data.get('description', '')
         }
         
-        with open(source_dir / 'source.json', 'w', encoding='utf-8') as f:
+        with open(source_path, 'w', encoding='utf-8') as f:
             json.dump(source_data, f, indent=2, ensure_ascii=False)
+        
+        # Track revision
+        try:
+            self._track_revision(
+                entity_type='source',
+                entity_id=source_id,
+                action='create' if is_new else 'update',
+                data_before=old_data,
+                data_after=source_data
+            )
+        except Exception as e:
+            print(f"Warning: Failed to track revision: {e}")
         
         self._auto_rebuild_indexes()
         return {'message': f'Source "{safe_id}" saved successfully'}
@@ -1474,8 +1739,31 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         
         source_dir = BASE_DIR / 'sources' / source_id
         if source_dir.exists():
+            # Load existing data for revision tracking
+            old_data = None
+            source_path = source_dir / 'source.json'
+            if source_path.exists():
+                try:
+                    with open(source_path, 'r', encoding='utf-8') as f:
+                        old_data = json.load(f)
+                except:
+                    pass
+            
             import shutil
             shutil.rmtree(source_dir)
+            
+            # Track deletion
+            try:
+                self._track_revision(
+                    entity_type='source',
+                    entity_id=source_id,
+                    action='delete',
+                    data_before=old_data,
+                    data_after=None
+                )
+            except Exception as e:
+                print(f"Warning: Failed to track revision: {e}")
+            
             self._auto_rebuild_indexes()
             return {'message': f'Source "{source_id}" deleted'}
         else:
@@ -1553,6 +1841,18 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         provenance_dir = BASE_DIR / 'provenances' / safe_id
         provenance_dir.mkdir(parents=True, exist_ok=True)
         
+        # Load existing data for revision tracking
+        is_new = True
+        old_data = None
+        provenance_path = provenance_dir / 'provenance.json'
+        if provenance_path.exists():
+            is_new = False
+            try:
+                with open(provenance_path, 'r', encoding='utf-8') as f:
+                    old_data = json.load(f)
+            except:
+                pass
+        
         provenance_data = {
             'id': safe_id,
             'name': data.get('name', safe_id.replace('-', ' ').title()),
@@ -1560,8 +1860,20 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             'description': data.get('description', '')
         }
         
-        with open(provenance_dir / 'provenance.json', 'w', encoding='utf-8') as f:
+        with open(provenance_path, 'w', encoding='utf-8') as f:
             json.dump(provenance_data, f, indent=2, ensure_ascii=False)
+        
+        # Track revision
+        try:
+            self._track_revision(
+                entity_type='provenance',
+                entity_id=provenance_id,
+                action='create' if is_new else 'update',
+                data_before=old_data,
+                data_after=provenance_data
+            )
+        except Exception as e:
+            print(f"Warning: Failed to track revision: {e}")
         
         self._auto_rebuild_indexes()
         return {'message': f'Provenance "{safe_id}" saved successfully'}
@@ -1574,8 +1886,31 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         
         provenance_dir = BASE_DIR / 'provenances' / provenance_id
         if provenance_dir.exists():
+            # Load existing data for revision tracking
+            old_data = None
+            provenance_path = provenance_dir / 'provenance.json'
+            if provenance_path.exists():
+                try:
+                    with open(provenance_path, 'r', encoding='utf-8') as f:
+                        old_data = json.load(f)
+                except:
+                    pass
+            
             import shutil
             shutil.rmtree(provenance_dir)
+            
+            # Track deletion
+            try:
+                self._track_revision(
+                    entity_type='provenance',
+                    entity_id=provenance_id,
+                    action='delete',
+                    data_before=old_data,
+                    data_after=None
+                )
+            except Exception as e:
+                print(f"Warning: Failed to track revision: {e}")
+            
             self._auto_rebuild_indexes()
             return {'message': f'Provenance "{provenance_id}" deleted'}
         else:
@@ -1897,6 +2232,46 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             raise ValueError(f'Insufficient permissions. Required: {min_role}')
         
         return user
+    
+    def _get_client_ip(self):
+        """Get client IP address from request headers."""
+        # Check for forwarded IP (behind proxy)
+        forwarded = self.headers.get('X-Forwarded-For')
+        if forwarded:
+            return forwarded.split(',')[0].strip()
+        return self.client_address[0] if self.client_address else None
+    
+    def _track_revision(self, entity_type: str, entity_id: str, action: str,
+                        data_before: dict = None, data_after: dict = None,
+                        summary: str = None, is_minor: bool = False):
+        """Track a revision in the wiki database. Call after successful save."""
+        user = self._get_current_user()
+        
+        # Get user info or use anonymous
+        user_id = user['id'] if user else None
+        username = user['username'] if user else 'Anonymous'
+        
+        # Determine if this edit needs moderation (new editors)
+        needs_approval = False
+        if user and user['role'] == 'pending':
+            needs_approval = True
+        elif user and user['role'] == 'editor' and user.get('edit_count', 0) < 5:
+            # First 5 edits by editors go through moderation
+            needs_approval = True
+        
+        return wiki_db.create_revision(
+            entity_type=entity_type,
+            entity_id=entity_id,
+            user_id=user_id,
+            username=username,
+            action=action,
+            data_before=data_before,
+            data_after=data_after,
+            summary=summary,
+            ip_address=self._get_client_ip(),
+            is_minor=is_minor,
+            needs_approval=needs_approval
+        )
     
     def _get_client_ip(self):
         """Get client IP address."""
