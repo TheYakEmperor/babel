@@ -1543,23 +1543,38 @@
                     textEditorData.countries = [].concat(text.country || []);
                     // Load works from pages structure (flatten for simpler editing)
                     textEditorData.works = extractWorksFromPages(text.pages || []);
-                    // Load existing blank pages from pages data
-                    textEditorData.blankPages = (text.pages || []).filter(p => p.isBlank).map(p => ({
-                        label: p.label || p.id,
-                        isBlank: true
-                    }));
-                    // Store ordered page list for dropdown (preserves order from data.json)
-                    textEditorData.orderedPages = (text.pages || []).filter(p => p.label || p.id).map(p => ({
-                        label: p.label || p.id,
-                        isBlank: p.isBlank || false
-                    }));
-                    // Load existing images from server (now on B2)
-                    if (text._imageFiles && text._imageFiles.length > 0) {
-                        textEditorData.existingImages = text._imageFiles.map(f => ({
-                            name: f,
-                            url: `${B2_BASE_URL}/texts/00/00/${id}/images/${encodeURIComponent(f)}`
+                    // Load unified ordered page list from images manifest (includes blank pages in order)
+                    const manifest = text._imagesManifest || [];
+                    if (manifest.length > 0) {
+                        textEditorData.orderedPages = manifest.map(img => {
+                            if (img.isBlank) {
+                                return { label: img.label || '', isBlank: true };
+                            } else {
+                                const filename = img.url ? img.url.split('/').pop() : '';
+                                return {
+                                    label: img.label || filename.replace(/\.[^.]+$/, ''),
+                                    filename: filename,
+                                    url: img.url ? `${B2_BASE_URL}/texts/00/00/${id}/${img.url}` : '',
+                                    isBlank: false
+                                };
+                            }
+                        });
+                    } else if (text._imageFiles && text._imageFiles.length > 0) {
+                        // Fallback: just image files (no blank pages)
+                        textEditorData.orderedPages = text._imageFiles.map(f => ({
+                            label: f.replace(/\.[^.]+$/, ''),
+                            filename: f,
+                            url: `${B2_BASE_URL}/texts/00/00/${id}/images/${encodeURIComponent(f)}`,
+                            isBlank: false
                         }));
                     }
+                    // Legacy: keep existingImages for deletion functionality
+                    textEditorData.existingImages = (textEditorData.orderedPages || []).filter(p => !p.isBlank).map(p => ({
+                        name: p.filename,
+                        url: p.url
+                    }));
+                    // Legacy: keep blankPages array
+                    textEditorData.blankPages = (textEditorData.orderedPages || []).filter(p => p.isBlank)
                     document.getElementById('text-editor-title').textContent = 'Edit Text';
                     document.getElementById('text-id').disabled = true;
                 } catch (e) {
@@ -3407,9 +3422,8 @@
         function renderTextImages() {
             const preview = document.getElementById('text-images-preview');
             const deleteControls = document.getElementById('image-delete-controls');
-            const hasExisting = textEditorData.existingImages && textEditorData.existingImages.length > 0;
+            const hasOrdered = textEditorData.orderedPages && textEditorData.orderedPages.length > 0;
             const hasNew = textEditorData.images && textEditorData.images.length > 0;
-            const hasBlank = textEditorData.blankPages && textEditorData.blankPages.length > 0;
             
             // Update delete controls visibility
             if (deleteControls) {
@@ -3417,41 +3431,41 @@
                 document.getElementById('selected-count').textContent = selectedPages.size;
             }
             
-            if (!hasExisting && !hasNew && !hasBlank) { 
+            if (!hasOrdered && !hasNew) { 
                 preview.innerHTML = ''; 
                 return; 
             }
             
             let html = '';
             
-            // Show blank pages first
-            if (hasBlank) {
-                html += `<div style="width:100%;margin-bottom:10px;"><strong style="color:#f59e0b;font-size:0.85em;">Blank Pages (${textEditorData.blankPages.length}):</strong></div>`;
-                html += textEditorData.blankPages.map((page, i) => `
-                    <div class="image-preview" style="border-color:#f59e0b;">
-                        <img src="${BLANK_PLACEHOLDER}" alt="${escapeHtml(page.label)}" style="object-fit:contain;background:#f9fafb;">
-                        <span style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);font-size:0.7em;color:#666;white-space:nowrap;">${escapeHtml(page.label)}</span>
-                        <span class="image-number" style="background:#f59e0b;">📄</span>
-                    </div>
-                `).join('');
-            }
-            
-            // Show existing images (clickable for selection)
-            if (hasExisting) {
+            // Show all pages in order (images and blank pages intermixed)
+            if (hasOrdered) {
+                const imageCount = textEditorData.orderedPages.filter(p => !p.isBlank).length;
                 html += `<div style="width:100%;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
-                    <strong style="color:#6b7280;font-size:0.85em;">Existing Images (${textEditorData.existingImages.length}):</strong>
-                    <button class="btn btn-secondary" style="padding:4px 10px;font-size:0.8em;" onclick="selectAllPages()">Select All</button>
+                    <strong style="color:#6b7280;font-size:0.85em;">Pages (${textEditorData.orderedPages.length}):</strong>
+                    ${imageCount > 0 ? `<button class="btn btn-secondary" style="padding:4px 10px;font-size:0.8em;" onclick="selectAllPages()">Select All Images</button>` : ''}
                 </div>`;
-                html += textEditorData.existingImages.map((img, i) => {
-                    const isSelected = selectedPages.has(img.name);
-                    const thumbUrl = getEditTabThumbnailUrl(img.name, img.url);
-                    return `
-                    <div class="image-preview ${isSelected ? 'selected' : ''}" style="border-color:#22c55e;" onclick="togglePageSelection('${escapeHtml(img.name)}')" data-filename="${escapeHtml(img.name)}">
-                        <img src="${thumbUrl}" alt="${escapeHtml(img.name)}">
-                        <div class="select-checkbox">${isSelected ? '' : ''}</div>
-                        <span class="image-number" style="background:#22c55e;">${i+1}</span>
-                    </div>
-                `}).join('');
+                html += textEditorData.orderedPages.map((page, i) => {
+                    if (page.isBlank) {
+                        return `
+                        <div class="image-preview" style="border-color:#f59e0b;">
+                            <img src="${BLANK_PLACEHOLDER}" alt="${escapeHtml(page.label)}" style="object-fit:contain;background:#f9fafb;">
+                            <span style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);font-size:0.7em;color:#666;white-space:nowrap;">${escapeHtml(page.label)}</span>
+                            <span class="image-number" style="background:#f59e0b;">${i+1}</span>
+                        </div>
+                    `;
+                    } else {
+                        const isSelected = selectedPages.has(page.filename);
+                        const thumbUrl = getEditTabThumbnailUrl(page.filename || '', page.url || '');
+                        return `
+                        <div class="image-preview ${isSelected ? 'selected' : ''}" style="border-color:#22c55e;" onclick="togglePageSelection('${escapeHtml(page.filename)}')" data-filename="${escapeHtml(page.filename)}">
+                            <img src="${thumbUrl}" alt="${escapeHtml(page.label)}">
+                            <div class="select-checkbox">${isSelected ? '' : ''}</div>
+                            <span class="image-number" style="background:#22c55e;">${i+1}</span>
+                        </div>
+                    `;
+                    }
+                }).join('');
             }
             
             // Show newly uploaded images
