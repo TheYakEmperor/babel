@@ -905,11 +905,14 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                     })
                 else:
                     filename = page_info.get('filename')
-                    label = page_info.get('label')
+                    new_label = page_info.get('label')
                     if filename and filename in image_map:
-                        new_images.append(image_map[filename])
-                    elif label and label in image_map:
-                        new_images.append(image_map[label])
+                        # Copy image entry and UPDATE the label to the new name
+                        img_entry = image_map[filename].copy()
+                        img_entry['label'] = new_label
+                        new_images.append(img_entry)
+                    elif new_label and new_label in image_map:
+                        new_images.append(image_map[new_label])
             
             # Add any images that weren't in the pages list
             for img in images_data.get('images', []):
