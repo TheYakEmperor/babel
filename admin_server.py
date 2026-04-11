@@ -5,6 +5,14 @@ Run this instead of the regular http.server when you want to use the admin inter
 
 Usage: python3 admin_server.py
 Then visit http://localhost:8000/admin.html
+
+For production deployment, set environment variables:
+  BABEL_HOST=0.0.0.0          # Listen on all interfaces
+  BABEL_PORT=8000             # Port to listen on
+  BABEL_CORS_ORIGIN=https://babel-archive.netlify.app  # Allowed origin for CORS
+  B2_KEY_ID=xxx               # Backblaze B2 key ID
+  B2_APP_KEY=xxx              # Backblaze B2 app key
+  BABEL_SECRET_KEY=xxx        # Secret for session tokens (auto-generated if not set)
 """
 
 import http.server
@@ -18,12 +26,17 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 import wiki_db
 
+# Server Configuration (from environment or defaults)
+HOST = os.environ.get('BABEL_HOST', 'localhost')  # Use '0.0.0.0' for production
+PORT = int(os.environ.get('BABEL_PORT', '8000'))
+CORS_ORIGIN = os.environ.get('BABEL_CORS_ORIGIN', '*')  # Restrict in production!
+
 # B2 Configuration for image hosting
 B2_ENABLED = True  # Set to False to use local storage only
 B2_BUCKET_NAME = 'babel-images'
 B2_ENDPOINT = 'https://s3.us-east-005.backblazeb2.com'
-B2_KEY_ID = '00509c8683970ee0000000001'
-B2_APP_KEY = 'K0058TrmHhioyjUFihUUEnmDf+0+doU'
+B2_KEY_ID = os.environ.get('B2_KEY_ID', '00509c8683970ee0000000001')
+B2_APP_KEY = os.environ.get('B2_APP_KEY', 'K0058TrmHhioyjUFihUUEnmDf+0+doU')
 
 # Initialize B2 client if credentials available
 _b2_client = None
@@ -42,12 +55,24 @@ def get_b2_client():
             print('Warning: boto3 not installed, B2 uploads disabled')
     return _b2_client
 
-PORT = 8000
 BASE_DIR = Path(__file__).parent.resolve()
 
 class AdminHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(BASE_DIR), **kwargs)
+    
+    def send_cors_headers(self):
+        """Send CORS headers for cross-origin requests."""
+        self.send_header('Access-Control-Allow-Origin', CORS_ORIGIN)
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        self.send_header('Access-Control-Allow-Credentials', 'true')
+    
+    def do_OPTIONS(self):
+        """Handle CORS preflight requests."""
+        self.send_response(200)
+        self.send_cors_headers()
+        self.end_headers()
     
     def do_POST(self):
         """Handle POST requests for creating/updating content."""
@@ -233,14 +258,14 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
     def send_json_response(self, code, data):
         self.send_response(code)
         self.send_header('Content-Type', 'application/json')
-        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_cors_headers()
         self.end_headers()
         self.wfile.write(json.dumps(data).encode('utf-8'))
     
     def send_error_response(self, code, message):
         self.send_response(code)
         self.send_header('Content-Type', 'application/json')
-        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_cors_headers()
         self.end_headers()
         self.wfile.write(json.dumps({'error': message}).encode('utf-8'))
     
@@ -2569,13 +2594,25 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
 
 
 def run_server():
-    with socketserver.TCPServer(("", PORT), AdminHandler) as httpd:
+    # Allow socket reuse to avoid "Address already in use" errors
+    socketserver.TCPServer.allow_reuse_address = True
+    
+    with socketserver.TCPServer((HOST, PORT), AdminHandler) as httpd:
+        is_production = HOST == '0.0.0.0'
+        
         print(f"=" * 50)
         print(f"  Babel Admin Server")
         print(f"=" * 50)
-        print(f"  Server running at: http://localhost:{PORT}")
-        print(f"  Admin panel:       http://localhost:{PORT}/admin.html")
+        if is_production:
+            print(f"  Mode:              PRODUCTION")
+            print(f"  Listening on:      {HOST}:{PORT}")
+            print(f"  CORS origin:       {CORS_ORIGIN}")
+        else:
+            print(f"  Mode:              LOCAL")
+            print(f"  Server running at: http://localhost:{PORT}")
+            print(f"  Admin panel:       http://localhost:{PORT}/admin.html")
         print(f"  Base directory:    {BASE_DIR}")
+        print(f"  Wiki database:     {BASE_DIR / 'wiki.db'}")
         print(f"=" * 50)
         print(f"  Press Ctrl+C to stop")
         print()
