@@ -689,11 +689,18 @@ function initPageViewer(pagesData) {
         // Override placeholder with real implementation
         window.goToViewerPageByLabel = function(label) {
             const result = navigateToLabel(label);
-            // Scroll the page viewer into view
-            const viewer = document.getElementById('page-viewer');
-            if (viewer) {
-                viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+            // Scroll the page viewer into view with offset for fixed header
+            setTimeout(() => {
+                const viewer = document.getElementById('page-viewer');
+                if (viewer) {
+                    const headerOffset = 80; // Account for fixed header
+                    const elementPosition = viewer.getBoundingClientRect().top + window.scrollY;
+                    window.scrollTo({
+                        top: elementPosition - headerOffset,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 50);
             return result;
         };
         
