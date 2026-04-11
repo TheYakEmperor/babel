@@ -688,7 +688,13 @@ function initPageViewer(pagesData) {
         
         // Override placeholder with real implementation
         window.goToViewerPageByLabel = function(label) {
-            return navigateToLabel(label);
+            const result = navigateToLabel(label);
+            // Scroll the page viewer into view
+            const viewer = document.getElementById('page-viewer');
+            if (viewer) {
+                viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            return result;
         };
         
         // Mark as ready and process any pending calls
