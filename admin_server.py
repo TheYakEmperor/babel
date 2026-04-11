@@ -1861,6 +1861,337 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             'message': 'All indexes rebuilt successfully' if all_success else 'Some indexes failed to rebuild'
         }
 
+    # =========================================
+    # AUTHENTICATION
+    # =========================================
+    
+    def _get_session_token(self):
+        """Extract session token from Authorization header or cookie."""
+        auth_header = self.headers.get('Authorization', '')
+        if auth_header.startswith('Bearer '):
+            return auth_header[7:]
+        
+        # Check cookie
+        cookie_header = self.headers.get('Cookie', '')
+        for cookie in cookie_header.split(';'):
+            cookie = cookie.strip()
+            if cookie.startswith('session='):
+                return cookie[8:]
+        return None
+    
+    def _get_current_user(self):
+        """Get current user from session. Returns None if not logged in."""
+        token = self._get_session_token()
+        if token:
+            return wiki_db.get_user_from_session(token)
+        return None
+    
+    def _require_auth(self, min_role='viewer'):
+        """Check authentication and minimum role. Raises if unauthorized."""
+        user = self._get_current_user()
+        if not user:
+            raise ValueError('Authentication required')
+        
+        role_levels = {'pending': 0, 'viewer': 1, 'editor': 2, 'admin': 3}
+        if role_levels.get(user['role'], 0) < role_levels.get(min_role, 0):
+            raise ValueError(f'Insufficient permissions. Required: {min_role}')
+        
+        return user
+    
+    def _get_client_ip(self):
+        """Get client IP address."""
+        forwarded = self.headers.get('X-Forwarded-For')
+        if forwarded:
+            return forwarded.split(',')[0].strip()
+        return self.client_address[0] if self.client_address else None
+    
+    def auth_register(self, data):
+        """Register a new user."""
+        username = data.get('username', '').strip()
+        email = data.get('email', '').strip()
+        password = data.get('password', '')
+        
+        if not username or len(username) < 3:
+            raise ValueError('Username must be at least 3 characters')
+        if not email or '@' not in email:
+            raise ValueError('Valid email is required')
+        if not password or len(password) < 6:
+            raise ValueError('Password must be at least 6 characters')
+        
+        # Validate username format
+        if not re.match(r'^[a-zA-Z0-9_-]+$', username):
+            raise ValueError('Username can only contain letters, numbers, underscores, and hyphens')
+        
+        result = wiki_db.create_user(username, email, password)
+        if 'error' in result:
+            raise ValueError(result['error'])
+        
+        return {
+            'success': True,
+            'message': 'Registration successful! Please check your email to verify your account.',
+            'user': {
+                'id': result['id'],
+                'username': result['username'],
+                'email': result['email']
+            }
+        }
+    
+    def auth_login(self, data):
+        """Log in a user."""
+        username = data.get('username', '').strip()
+        password = data.get('password', '')
+        
+        if not username or not password:
+            raise ValueError('Username and password are required')
+        
+        ip_address = self._get_client_ip()
+        user_agent = self.headers.get('User-Agent', '')
+        
+        result = wiki_db.login(username, password, ip_address, user_agent)
+        if 'error' in result:
+            raise ValueError(result['error'])
+        
+        return {
+            'success': True,
+            'session_token': result['session_token'],
+            'user': result['user']
+        }
+    
+    def auth_logout(self):
+        """Log out current user."""
+        token = self._get_session_token()
+        if token:
+            wiki_db.logout(token)
+        return {'success': True, 'message': 'Logged out'}
+    
+    def auth_get_current_user(self):
+        """Get current logged in user."""
+        user = self._get_current_user()
+        if user:
+            return {'success': True, 'user': user}
+        return {'success': False, 'user': None}
+    
+    def auth_verify_email(self, data):
+        """Verify email with token."""
+        token = data.get('token', '')
+        if not token:
+            raise ValueError('Verification token is required')
+        
+        if wiki_db.verify_email(token):
+            return {'success': True, 'message': 'Email verified! You can now edit.'}
+        raise ValueError('Invalid or expired verification token')
+    
+    def auth_change_password(self, data):
+        """Change password for current user."""
+        user = self._require_auth()
+        
+        new_password = data.get('newPassword', '')
+        if not new_password or len(new_password) < 6:
+            raise ValueError('New password must be at least 6 characters')
+        
+        wiki_db.change_password(user['id'], new_password)
+        return {'success': True, 'message': 'Password changed successfully'}
+    
+    # =========================================
+    # USER MANAGEMENT (Admin only)
+    # =========================================
+    
+    def users_list(self, data):
+        """List all users."""
+        self._require_auth('admin')
+        role_filter = data.get('role')
+        users = wiki_db.list_users(role_filter)
+        return {'success': True, 'users': users}
+    
+    def users_update_role(self, data):
+        """Update user role."""
+        self._require_auth('admin')
+        
+        user_id = data.get('userId')
+        new_role = data.get('role')
+        
+        if not user_id or not new_role:
+            raise ValueError('User ID and role are required')
+        
+        if wiki_db.update_user_role(user_id, new_role):
+            return {'success': True, 'message': f'User role updated to {new_role}'}
+        raise ValueError('Failed to update user role')
+    
+    # =========================================
+    # REVISION HISTORY
+    # =========================================
+    
+    def revisions_list(self, data):
+        """List revisions for an entity."""
+        entity_type = data.get('entityType')
+        entity_id = data.get('entityId')
+        limit = data.get('limit', 50)
+        offset = data.get('offset', 0)
+        
+        revisions = wiki_db.get_revisions(entity_type, entity_id, limit, offset)
+        return {'success': True, 'revisions': revisions}
+    
+    def revisions_get(self, data):
+        """Get a specific revision."""
+        revision_id = data.get('revisionId')
+        if not revision_id:
+            raise ValueError('Revision ID is required')
+        
+        revision = wiki_db.get_revision(revision_id)
+        if revision:
+            return {'success': True, 'revision': revision}
+        raise ValueError('Revision not found')
+    
+    def revisions_recent(self, data):
+        """Get recent changes."""
+        limit = data.get('limit', 50)
+        include_minor = data.get('includeMinor', True)
+        
+        changes = wiki_db.get_recent_changes(limit, include_minor)
+        return {'success': True, 'changes': changes}
+    
+    # =========================================
+    # PAGE LOCKING
+    # =========================================
+    
+    def lock_acquire(self, data):
+        """Acquire edit lock on an entity."""
+        user = self._require_auth('editor')
+        
+        entity_type = data.get('entityType')
+        entity_id = data.get('entityId')
+        duration = data.get('duration', 15)
+        
+        if not entity_type or not entity_id:
+            raise ValueError('Entity type and ID are required')
+        
+        result = wiki_db.acquire_lock(entity_type, entity_id, user['id'], duration)
+        if 'error' in result:
+            raise ValueError(result['error'])
+        
+        return {'success': True, **result}
+    
+    def lock_release(self, data):
+        """Release edit lock."""
+        user = self._require_auth('editor')
+        
+        entity_type = data.get('entityType')
+        entity_id = data.get('entityId')
+        
+        if not entity_type or not entity_id:
+            raise ValueError('Entity type and ID are required')
+        
+        wiki_db.release_lock(entity_type, entity_id, user['id'])
+        return {'success': True, 'message': 'Lock released'}
+    
+    def lock_check(self, data):
+        """Check if entity is locked."""
+        entity_type = data.get('entityType')
+        entity_id = data.get('entityId')
+        
+        if not entity_type or not entity_id:
+            raise ValueError('Entity type and ID are required')
+        
+        result = wiki_db.check_lock(entity_type, entity_id)
+        return {'success': True, **result}
+    
+    def lock_force_release(self, data):
+        """Force release a lock (admin only)."""
+        self._require_auth('admin')
+        
+        entity_type = data.get('entityType')
+        entity_id = data.get('entityId')
+        
+        if not entity_type or not entity_id:
+            raise ValueError('Entity type and ID are required')
+        
+        wiki_db.force_release_lock(entity_type, entity_id)
+        return {'success': True, 'message': 'Lock force-released'}
+    
+    # =========================================
+    # WATCHLIST
+    # =========================================
+    
+    def watchlist_add(self, data):
+        """Add entity to watchlist."""
+        user = self._require_auth('viewer')
+        
+        entity_type = data.get('entityType')
+        entity_id = data.get('entityId')
+        
+        if not entity_type or not entity_id:
+            raise ValueError('Entity type and ID are required')
+        
+        wiki_db.add_to_watchlist(user['id'], entity_type, entity_id)
+        return {'success': True, 'message': 'Added to watchlist'}
+    
+    def watchlist_remove(self, data):
+        """Remove entity from watchlist."""
+        user = self._require_auth('viewer')
+        
+        entity_type = data.get('entityType')
+        entity_id = data.get('entityId')
+        
+        if not entity_type or not entity_id:
+            raise ValueError('Entity type and ID are required')
+        
+        wiki_db.remove_from_watchlist(user['id'], entity_type, entity_id)
+        return {'success': True, 'message': 'Removed from watchlist'}
+    
+    def watchlist_list(self):
+        """Get user's watchlist."""
+        user = self._require_auth('viewer')
+        items = wiki_db.get_watchlist(user['id'])
+        return {'success': True, 'watchlist': items}
+    
+    def watchlist_changes(self, data):
+        """Get changes to watched entities."""
+        user = self._require_auth('viewer')
+        
+        since = data.get('since')
+        limit = data.get('limit', 50)
+        
+        changes = wiki_db.get_watchlist_changes(user['id'], since, limit)
+        return {'success': True, 'changes': changes}
+    
+    # =========================================
+    # MODERATION
+    # =========================================
+    
+    def moderation_pending(self, data):
+        """Get pending moderation items."""
+        self._require_auth('admin')
+        
+        limit = data.get('limit', 50)
+        items = wiki_db.get_pending_moderations(limit)
+        return {'success': True, 'pending': items}
+    
+    def moderation_approve(self, data):
+        """Approve a moderation item."""
+        user = self._require_auth('admin')
+        
+        moderation_id = data.get('moderationId')
+        if not moderation_id:
+            raise ValueError('Moderation ID is required')
+        
+        if wiki_db.approve_moderation(moderation_id, user['id']):
+            return {'success': True, 'message': 'Edit approved'}
+        raise ValueError('Failed to approve edit')
+    
+    def moderation_reject(self, data):
+        """Reject a moderation item."""
+        user = self._require_auth('admin')
+        
+        moderation_id = data.get('moderationId')
+        reason = data.get('reason', '')
+        
+        if not moderation_id:
+            raise ValueError('Moderation ID is required')
+        
+        if wiki_db.reject_moderation(moderation_id, user['id'], reason):
+            return {'success': True, 'message': 'Edit rejected'}
+        raise ValueError('Failed to reject edit')
+
 
 def run_server():
     with socketserver.TCPServer(("", PORT), AdminHandler) as httpd:
