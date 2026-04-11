@@ -1459,10 +1459,414 @@
         // Backblaze B2 configuration for image hosting
         const B2_BASE_URL = 'https://babel-images.s3.us-east-005.backblazeb2.com';
         
+        // =============================================================================
+        // AUTHENTICATION STATE
+        // =============================================================================
+        let currentUser = null;
+        
+        function getSessionToken() {
+            return localStorage.getItem('sessionToken');
+        }
+        
+        function setSessionToken(token) {
+            if (token) {
+                localStorage.setItem('sessionToken', token);
+            } else {
+                localStorage.removeItem('sessionToken');
+            }
+        }
+        
+        async function checkAuth() {
+            const token = getSessionToken();
+            if (!token) {
+                updateUserUI(null);
+                return null;
+            }
+            
+            try {
+                const result = await api('auth/me', {});
+                if (result.success && result.user) {
+                    currentUser = result.user;
+                    updateUserUI(result.user);
+                    return result.user;
+                }
+            } catch (e) {
+                console.log('Session invalid');
+            }
+            
+            // Session invalid, clear it
+            setSessionToken(null);
+            updateUserUI(null);
+            return null;
+        }
+        
+        function updateUserUI(user) {
+            const userInfo = document.getElementById('user-info');
+            const loginPrompt = document.getElementById('login-prompt');
+            
+            if (user) {
+                userInfo.style.display = 'flex';
+                loginPrompt.style.display = 'none';
+                document.getElementById('user-username').textContent = user.username;
+                document.getElementById('user-role').textContent = user.role;
+                document.getElementById('user-role').className = 'role ' + user.role;
+            } else {
+                userInfo.style.display = 'none';
+                loginPrompt.style.display = 'block';
+            }
+        }
+        
+        function openAuthModal() {
+            document.getElementById('auth-modal').classList.add('active');
+            showAuthTab('login');
+            clearAuthMessages();
+        }
+        
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.remove('active');
+            clearAuthForms();
+        }
+        
+        function showAuthTab(tab) {
+            document.querySelectorAll('.auth-tabs button').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.querySelector('.auth-tabs button:first-child').classList.add('active');
+                document.getElementById('auth-login-form').classList.add('active');
+                document.getElementById('auth-modal-title').textContent = 'Login';
+            } else {
+                document.querySelector('.auth-tabs button:last-child').classList.add('active');
+                document.getElementById('auth-register-form').classList.add('active');
+                document.getElementById('auth-modal-title').textContent = 'Register';
+            }
+            clearAuthMessages();
+        }
+        
+        function clearAuthMessages() {
+            document.getElementById('auth-error').classList.remove('visible');
+            document.getElementById('auth-success').classList.remove('visible');
+        }
+        
+        function clearAuthForms() {
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+            document.getElementById('register-username').value = '';
+            document.getElementById('register-email').value = '';
+            document.getElementById('register-password').value = '';
+            document.getElementById('register-confirm').value = '';
+            clearAuthMessages();
+        }
+        
+        function showAuthError(message) {
+            const el = document.getElementById('auth-error');
+            el.textContent = message;
+            el.classList.add('visible');
+            document.getElementById('auth-success').classList.remove('visible');
+        }
+        
+        function showAuthSuccess(message) {
+            const el = document.getElementById('auth-success');
+            el.textContent = message;
+            el.classList.add('visible');
+            document.getElementById('auth-error').classList.remove('visible');
+        }
+        
+        async function submitLogin() {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+            
+            if (!username || !password) {
+                showAuthError('Please enter username and password');
+                return;
+            }
+            
+            try {
+                const result = await api('auth/login', { username, password });
+                if (result.success) {
+                    setSessionToken(result.session_token);
+                    currentUser = result.user;
+                    updateUserUI(result.user);
+                    closeAuthModal();
+                    showStatus('Welcome, ' + result.user.username + '!');
+                }
+            } catch (e) {
+                showAuthError(e.message);
+            }
+        }
+        
+        async function submitRegister() {
+            const username = document.getElementById('register-username').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            
+            if (!username || !email || !password) {
+                showAuthError('Please fill in all fields');
+                return;
+            }
+            
+            if (password !== confirm) {
+                showAuthError('Passwords do not match');
+                return;
+            }
+            
+            try {
+                const result = await api('auth/register', { username, email, password });
+                if (result.success) {
+                    showAuthSuccess('Registration successful! For now, you can log in directly (email verification coming soon).');
+                    // Auto-login after registration (since we're not doing email verification yet)
+                    setTimeout(() => {
+                        showAuthTab('login');
+                        document.getElementById('login-username').value = username;
+                    }, 2000);
+                }
+            } catch (e) {
+                showAuthError(e.message);
+            }
+        }
+        
+        async function logout() {
+            try {
+                await api('auth/logout', {});
+            } catch (e) {
+                // Ignore errors
+            }
+            setSessionToken(null);
+            currentUser = null;
+            updateUserUI(null);
+            showStatus('Logged out');
+        }
+        
+        function requireAuth(minRole = 'editor') {
+            if (!currentUser) {
+                showStatus('Please log in to perform this action', true);
+                openAuthModal();
+                return false;
+            }
+            
+            const roleLevels = { pending: 0, viewer: 1, editor: 2, admin: 3 };
+            if (roleLevels[currentUser.role] < roleLevels[minRole]) {
+                showStatus(`Insufficient permissions. Required role: ${minRole}`, true);
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Recent Changes
+        function openRecentChangesModal() {
+            document.getElementById('recent-changes-modal').classList.add('active');
+            loadRecentChanges();
+        }
+        
+        function closeRecentChangesModal() {
+            document.getElementById('recent-changes-modal').classList.remove('active');
+        }
+        
+        async function loadRecentChanges() {
+            const list = document.getElementById('recent-changes-list');
+            list.innerHTML = '<div class="loading">Loading...</div>';
+            
+            try {
+                const result = await api('revisions/recent', { limit: 50 });
+                if (result.changes && result.changes.length > 0) {
+                    list.innerHTML = result.changes.map(change => `
+                        <div class="change-item">
+                            <div class="change-info">
+                                <span class="change-entity">${escapeHtml(change.entity_type)}: ${escapeHtml(change.entity_id)}</span>
+                                <span class="change-meta">by ${escapeHtml(change.username || 'Anonymous')} · ${formatDate(change.timestamp)}</span>
+                                ${change.summary ? `<span class="change-meta">${escapeHtml(change.summary)}</span>` : ''}
+                            </div>
+                            <span class="change-action ${change.action}">${change.action}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    list.innerHTML = '<div class="empty-state"><p>No changes yet</p></div>';
+                }
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><p>Error: ${escapeHtml(e.message)}</p></div>`;
+            }
+        }
+        
+        function formatDate(isoString) {
+            if (!isoString) return '';
+            const date = new Date(isoString);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        }
+        
+        // Users Management (Admin)
+        function openUsersModal() {
+            if (!requireAuth('admin')) return;
+            document.getElementById('users-modal').classList.add('active');
+            loadUsers();
+        }
+        
+        function closeUsersModal() {
+            document.getElementById('users-modal').classList.remove('active');
+        }
+        
+        async function loadUsers() {
+            const list = document.getElementById('users-list');
+            list.innerHTML = '<div class="loading">Loading...</div>';
+            
+            try {
+                const result = await api('users/list', {});
+                if (result.users && result.users.length > 0) {
+                    list.innerHTML = `
+                        <table style="width:100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background:#f3f4f6;">
+                                    <th style="padding:10px;text-align:left;">Username</th>
+                                    <th style="padding:10px;text-align:left;">Email</th>
+                                    <th style="padding:10px;text-align:left;">Role</th>
+                                    <th style="padding:10px;text-align:left;">Edits</th>
+                                    <th style="padding:10px;text-align:left;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${result.users.map(u => `
+                                    <tr style="border-bottom:1px solid #e5e7eb;">
+                                        <td style="padding:10px;">${escapeHtml(u.username)}</td>
+                                        <td style="padding:10px;">${escapeHtml(u.email)}</td>
+                                        <td style="padding:10px;">
+                                            <select onchange="updateUserRole(${u.id}, this.value)" ${u.id === currentUser?.id ? 'disabled' : ''}>
+                                                <option value="pending" ${u.role === 'pending' ? 'selected' : ''}>Pending</option>
+                                                <option value="viewer" ${u.role === 'viewer' ? 'selected' : ''}>Viewer</option>
+                                                <option value="editor" ${u.role === 'editor' ? 'selected' : ''}>Editor</option>
+                                                <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
+                                            </select>
+                                        </td>
+                                        <td style="padding:10px;">${u.edit_count || 0}</td>
+                                        <td style="padding:10px;">
+                                            ${u.id !== currentUser?.id ? `<button class="btn btn-danger" style="padding:3px 8px;font-size:0.8em;">Ban</button>` : ''}
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                } else {
+                    list.innerHTML = '<div class="empty-state"><p>No users yet</p></div>';
+                }
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><p>Error: ${escapeHtml(e.message)}</p></div>`;
+            }
+        }
+        
+        async function updateUserRole(userId, role) {
+            try {
+                await api('users/update-role', { userId, role });
+                showStatus('User role updated');
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+                loadUsers(); // Refresh to revert
+            }
+        }
+        
+        // Moderation Queue (Admin)
+        function openModerationModal() {
+            if (!requireAuth('admin')) return;
+            document.getElementById('moderation-modal').classList.add('active');
+            loadModerationQueue();
+        }
+        
+        function closeModerationModal() {
+            document.getElementById('moderation-modal').classList.remove('active');
+        }
+        
+        async function loadModerationQueue() {
+            const list = document.getElementById('moderation-list');
+            list.innerHTML = '<div class="loading">Loading...</div>';
+            
+            try {
+                const result = await api('moderation/pending', { limit: 50 });
+                if (result.pending && result.pending.length > 0) {
+                    list.innerHTML = result.pending.map(item => `
+                        <div class="change-item" style="flex-direction:column; align-items:stretch;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <div class="change-info">
+                                    <span class="change-entity">${escapeHtml(item.entity_type)}: ${escapeHtml(item.entity_id)}</span>
+                                    <span class="change-meta">by ${escapeHtml(item.username || 'Anonymous')} · ${formatDate(item.timestamp)}</span>
+                                </div>
+                                <span class="change-action ${item.action}">${item.action}</span>
+                            </div>
+                            <div style="display:flex; gap:10px;">
+                                <button class="btn btn-success" onclick="approveMod(${item.id})">Approve</button>
+                                <button class="btn btn-danger" onclick="rejectMod(${item.id})">Reject</button>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    list.innerHTML = '<div class="empty-state"><p>No pending edits</p></div>';
+                }
+            } catch (e) {
+                list.innerHTML = `<div class="empty-state"><p>Error: ${escapeHtml(e.message)}</p></div>`;
+            }
+        }
+        
+        async function approveMod(moderationId) {
+            try {
+                await api('moderation/approve', { moderationId });
+                showStatus('Edit approved');
+                loadModerationQueue();
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            }
+        }
+        
+        async function rejectMod(moderationId) {
+            const reason = prompt('Rejection reason (optional):');
+            try {
+                await api('moderation/reject', { moderationId, reason });
+                showStatus('Edit rejected');
+                loadModerationQueue();
+            } catch (e) {
+                showStatus('Error: ' + e.message, true);
+            }
+        }
+        
+        // Check auth on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            
+            // Keyboard support for auth modal
+            ['login-username', 'login-password'].forEach(id => {
+                document.getElementById(id)?.addEventListener('keydown', e => {
+                    if (e.key === 'Enter') submitLogin();
+                });
+            });
+            ['register-username', 'register-email', 'register-password', 'register-confirm'].forEach(id => {
+                document.getElementById(id)?.addEventListener('keydown', e => {
+                    if (e.key === 'Enter') submitRegister();
+                });
+            });
+            
+            // Escape key to close modals
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    closeAuthModal();
+                    closeRecentChangesModal();
+                    closeUsersModal();
+                    closeModerationModal();
+                }
+            });
+        });
+        
+        // =============================================================================
+        // END AUTHENTICATION
+        // =============================================================================
+        
         async function api(endpoint, data = {}) {
+            const token = getSessionToken();
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) {
+                headers['Authorization'] = 'Bearer ' + token;
+            }
+            
             const response = await fetch('/api/' + endpoint, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers,
                 body: JSON.stringify(data)
             });
             
@@ -1794,6 +2198,7 @@
         }
         
         async function saveText() {
+            if (!requireAuth()) return;
             const id = document.getElementById('text-id').value.trim();
             if (!id) { alert('Please enter a text ID'); return; }
             
@@ -1966,6 +2371,7 @@
         }
         
         async function saveWork() {
+            if (!requireAuth()) return;
             const id = document.getElementById('work-id').value.trim();
             if (!id) { alert('Please enter a work ID'); return; }
             
@@ -2061,6 +2467,7 @@
         }
         
         async function saveAuthor() {
+            if (!requireAuth()) return;
             const id = document.getElementById('author-id').value.trim();
             if (!id) { alert('Please enter an author ID'); return; }
             
@@ -2137,6 +2544,7 @@
         }
         
         async function saveCollection() {
+            if (!requireAuth()) return;
             const id = document.getElementById('collection-id').value.trim();
             if (!id) { alert('Please enter a collection ID'); return; }
             
@@ -2165,6 +2573,7 @@
         async function editCollection(id) { await openCollectionEditor(id); }
         
         async function deleteCollection(id) {
+            if (!requireAuth()) return;
             if (!confirm(`Delete collection "${id}"?`)) return;
             try {
                 const result = await api('delete-collection', { id });
@@ -2224,6 +2633,7 @@
         }
         
         async function saveGroup() {
+            if (!requireAuth()) return;
             const id = document.getElementById('group-id').value.trim();
             if (!id) { alert('Please enter a group ID'); return; }
             
@@ -2252,6 +2662,7 @@
         async function editGroup(id) { await openGroupEditor(id); }
         
         async function deleteGroup(id) {
+            if (!requireAuth()) return;
             if (!confirm(`Delete group "${id}"?`)) return;
             try {
                 const result = await api('delete-group', { id });
@@ -2299,6 +2710,7 @@
         }
         
         async function saveSource() {
+            if (!requireAuth()) return;
             const id = document.getElementById('source-id').value.trim();
             if (!id) { alert('Please enter a source ID'); return; }
             
@@ -2328,6 +2740,7 @@
         async function editSource(id) { await openSourceEditor(id); }
         
         async function deleteSource(id) {
+            if (!requireAuth()) return;
             if (!confirm(`Delete source "${id}"?`)) return;
             try {
                 const result = await api('delete-source', { id });
@@ -2375,6 +2788,7 @@
         }
         
         async function saveProvenance() {
+            if (!requireAuth()) return;
             const id = document.getElementById('provenance-id').value.trim();
             if (!id) { alert('Please enter a provenance ID'); return; }
             
@@ -2404,6 +2818,7 @@
         async function editProvenance(id) { await openProvenanceEditor(id); }
         
         async function deleteProvenance(id) {
+            if (!requireAuth()) return;
             if (!confirm(`Delete provenance "${id}"?`)) return;
             try {
                 const result = await api('delete-provenance', { id });
@@ -3708,6 +4123,7 @@
         }
         
         async function deleteSelectedPages() {
+            if (!requireAuth()) return;
             if (selectedPages.size === 0) return;
             
             const count = selectedPages.size;
@@ -4083,6 +4499,7 @@
         
         // Save page order
         async function savePageOrder() {
+            if (!requireAuth()) return;
             try {
                 await api('save-page-order', {
                     textId: annotatorData.textId,
@@ -5160,6 +5577,7 @@
         }
         
         async function saveAllRegions() {
+            if (!requireAuth()) return;
             try {
                 // Save page order first if pages were reordered or blank pages added
                 if (annotatorData.pagesReordered) {
