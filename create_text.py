@@ -280,7 +280,7 @@ def create_text_html(config, lang_info, text_id, lang_details):
     <meta name="language-native" content="{native_name}">
     <meta name="iso-639-3" content="{iso_code}">
     <meta name="text-id" content="{id_str}">
-    <title>{title} — Text Archive</title>
+    <title>{title} | Babel Archive</title>
     <link rel="stylesheet" href="{rel_prefix}style.css">
 </head>
 <body>

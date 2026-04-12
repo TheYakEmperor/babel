@@ -431,7 +431,7 @@ def generate_author_page(author_id, author_name, entries, base_dir, metadata, al
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{author_name}</title>
+    <title>{author_name} | Babel Archive</title>
     <link rel="icon" type="image/webp" href="../../favicon.webp">
     <link rel="stylesheet" href="../../style.css">
 </head>
@@ -703,7 +703,7 @@ def generate_authors_index(authors_dir, all_authors, author_names):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authors</title>
+    <title>Authors | Babel Archive</title>
     <link rel="icon" type="image/webp" href="../favicon.webp">
     <link rel="stylesheet" href="../style.css">
 </head>

@@ -169,7 +169,7 @@ def generate_collection_page(collection_name, collection_id, text_entries, base_
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{escape_html(collection_name)}</title>
+    <title>{escape_html(collection_name)} | Babel Archive</title>
     <link rel="icon" type="image/webp" href="../../favicon.webp">
     <link rel="stylesheet" href="../../style.css">
 </head>
@@ -323,7 +323,7 @@ def generate_collections_index(all_collections):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Collections</title>
+    <title>Collections | Babel Archive</title>
     <link rel="icon" type="image/webp" href="../favicon.webp">
     <link rel="stylesheet" href="../style.css">
 </head>

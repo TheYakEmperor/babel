@@ -169,7 +169,7 @@ def generate_provenance_page(provenance_name, provenance_id, text_entries, base_
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{escape_html(provenance_name)}</title>
+    <title>{escape_html(provenance_name)} | Babel Archive</title>
     <link rel="icon" type="image/webp" href="../../favicon.webp">
     <link rel="stylesheet" href="../../style.css">
 </head>
@@ -326,7 +326,7 @@ def generate_provenances_index(all_provenances):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Provenances</title>
+    <title>Provenances | Babel Archive</title>
     <link rel="icon" type="image/webp" href="../favicon.webp">
     <link rel="stylesheet" href="../style.css">
 </head>

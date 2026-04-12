@@ -177,7 +177,7 @@ def generate_group_page(group_id, texts, works, authors):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{escape_html(group_name)}</title>
+    <title>{escape_html(group_name)} | Babel Archive</title>
     <link rel="icon" type="image/webp" href="../../favicon.webp">
     <link rel="stylesheet" href="../../style.css">
 </head>

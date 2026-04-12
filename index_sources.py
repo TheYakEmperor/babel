@@ -169,7 +169,7 @@ def generate_source_page(source_name, source_id, text_entries, base_dir):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{escape_html(source_name)}</title>
+    <title>{escape_html(source_name)} | Babel Archive</title>
     <link rel="icon" type="image/webp" href="../../favicon.webp">
     <link rel="stylesheet" href="../../style.css">
 </head>
@@ -326,7 +326,7 @@ def generate_sources_index(all_sources):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sources</title>
+    <title>Sources | Babel Archive</title>
     <link rel="icon" type="image/webp" href="../favicon.webp">
     <link rel="stylesheet" href="../style.css">
 </head>
