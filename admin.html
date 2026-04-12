@@ -1661,8 +1661,8 @@
             try {
                 const result = await api('auth/register', { username, email, password });
                 if (result.success) {
-                    showAuthSuccess('Registration successful! For now, you can log in directly (email verification coming soon).');
-                    // Auto-login after registration (since we're not doing email verification yet)
+                    showAuthSuccess('Registration successful! You can now log in.');
+                    // Auto-switch to login form
                     setTimeout(() => {
                         showAuthTab('login');
                         document.getElementById('login-username').value = username;

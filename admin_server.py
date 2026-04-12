@@ -2342,7 +2342,7 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         
         return {
             'success': True,
-            'message': 'Registration successful! Please check your email to verify your account.',
+            'message': 'Registration successful! You can now log in.',
             'user': {
                 'id': result['id'],
                 'username': result['username'],

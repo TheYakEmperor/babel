@@ -187,12 +187,11 @@ def create_user(username: str, email: str, password: str) -> dict:
         return {'error': 'Email already registered'}
     
     password_hash = hash_password(password)
-    verification_token = secrets.token_urlsafe(32)
     
     c.execute('''
-        INSERT INTO users (username, email, password_hash, role, verification_token)
+        INSERT INTO users (username, email, password_hash, role, email_verified)
         VALUES (?, ?, ?, ?, ?)
-    ''', (username, email, password_hash, 'pending', verification_token))
+    ''', (username, email, password_hash, 'editor', 1))
     
     user_id = c.lastrowid
     conn.commit()
@@ -202,8 +201,7 @@ def create_user(username: str, email: str, password: str) -> dict:
         'id': user_id,
         'username': username,
         'email': email,
-        'role': 'pending',
-        'verification_token': verification_token
+        'role': 'editor'
     }
 
 def verify_email(token: str) -> bool:
@@ -235,10 +233,6 @@ def login(username: str, password: str, ip_address: str = None, user_agent: str 
     if not user or not verify_password(password, user['password_hash']):
         conn.close()
         return {'error': 'Invalid username or password'}
-    
-    if not user['email_verified'] and user['role'] != 'admin':
-        conn.close()
-        return {'error': 'Please verify your email address'}
     
     # Create session token
     session_token = secrets.token_urlsafe(32)
