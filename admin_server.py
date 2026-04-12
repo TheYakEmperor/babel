@@ -612,7 +612,7 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             fetch('data.json')
                 .then(r => r.json())
                 .then(data => {
-                    document.title = data.title;
+                    document.title = data.title + ' | Babel Archive';
                     document.getElementById('page-title').textContent = data.title;
                 });
         });

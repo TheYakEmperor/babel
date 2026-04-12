@@ -240,7 +240,7 @@
         })
         .then(data => {
             // Update page title
-            document.title = data.title;
+            document.title = data.title + ' | Babel Archive';
             document.getElementById('page-title').textContent = data.title;
             document.getElementById('pv-title').textContent = data.title;
             
