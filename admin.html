@@ -856,6 +856,10 @@
                     <input type="text" id="text-title-translation" placeholder="English translation">
                 </div>
                 <div class="form-group">
+                    <label>Description <span class="hint">(optional, appears below metadata)</span></label>
+                    <textarea id="text-description" placeholder="Brief description of the text..."></textarea>
+                </div>
+                <div class="form-group">
                     <label>Source(s) <span class="hint">(holding institutions, press Enter to add)</span></label>
                     <div class="tag-input-container" id="text-sources-container">
                         <input type="text" class="tag-input" id="text-sources-input" placeholder="british-museum">
@@ -979,6 +983,10 @@
                 <div class="form-group">
                     <label>Full Title</label>
                     <input type="text" id="work-full-title" placeholder="Complete formal title">
+                </div>
+                <div class="form-group">
+                    <label>Description <span class="hint">(optional, appears below metadata)</span></label>
+                    <textarea id="work-description" placeholder="Brief description of the work..."></textarea>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
@@ -2346,6 +2354,7 @@
                     document.getElementById('text-id').value = text.id || id;
                     document.getElementById('text-title').value = text.title || '';
                     document.getElementById('text-title-translation').value = text.titleTranslation || '';
+                    document.getElementById('text-description').value = text.description || '';
                     document.getElementById('text-date').value = text.date || '';
                     textEditorData.sources = [].concat(text.sources || (text.source ? [text.source] : []));
                     textEditorData.provenances = [].concat(text.provenances || (text.provenance ? [text.provenance] : []));
@@ -2398,6 +2407,7 @@
                 document.getElementById('text-id').value = '';
                 document.getElementById('text-title').value = '';
                 document.getElementById('text-title-translation').value = '';
+                document.getElementById('text-description').value = '';
                 document.getElementById('text-date').value = '';
                 document.getElementById('text-editor-title').textContent = 'New Text';
                 document.getElementById('text-id').disabled = false;
@@ -2449,6 +2459,7 @@
                 id,
                 title: document.getElementById('text-title').value.trim(),
                 titleTranslation: document.getElementById('text-title-translation').value.trim() || undefined,
+                description: document.getElementById('text-description').value.trim() || undefined,
                 author: textEditorData.authors.length === 1 ? textEditorData.authors[0] : (textEditorData.authors.length ? textEditorData.authors : undefined),
                 sources: textEditorData.sources.length ? textEditorData.sources : undefined,
                 provenances: textEditorData.provenances.length ? textEditorData.provenances : undefined,
@@ -2567,6 +2578,7 @@
                     document.getElementById('work-id').value = work.id || id;
                     document.getElementById('work-title').value = work.title || '';
                     document.getElementById('work-full-title').value = work.fullTitle || '';
+                    document.getElementById('work-description').value = work.description || '';
                     document.getElementById('work-date').value = work.date || '';
                     document.getElementById('work-genre').value = work.genre || '';
                     workEditorData.belongsTo = work.belongsTo || '';
@@ -2585,6 +2597,7 @@
                 document.getElementById('work-id').value = '';
                 document.getElementById('work-title').value = '';
                 document.getElementById('work-full-title').value = '';
+                document.getElementById('work-description').value = '';
                 document.getElementById('work-date').value = '';
                 document.getElementById('work-genre').value = '';
                 workEditorData.belongsTo = '';
@@ -2616,6 +2629,7 @@
                 id,
                 title: document.getElementById('work-title').value.trim() || undefined,
                 fullTitle: document.getElementById('work-full-title').value.trim() || undefined,
+                description: document.getElementById('work-description').value.trim() || undefined,
                 author: workEditorData.authors.length === 1 ? workEditorData.authors[0] : (workEditorData.authors.length ? workEditorData.authors : undefined),
                 date: document.getElementById('work-date').value.trim() || undefined,
                 original_language: workEditorData.languages.length === 1 ? workEditorData.languages[0] : (workEditorData.languages.length ? workEditorData.languages : undefined),

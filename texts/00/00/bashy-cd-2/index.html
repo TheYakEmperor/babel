@@ -403,6 +403,14 @@
             }
             document.getElementById('metadata').innerHTML = metaHtml;
             
+            // Add description if provided
+            if (data.description) {
+                const descSection = document.createElement('section');
+                descSection.className = 'description';
+                descSection.innerHTML = '<p>' + data.description + '</p>';
+                document.getElementById('metadata').after(descSection);
+            }
+            
             // Add click handlers for viewer page links
             document.querySelectorAll('.viewer-page-link').forEach(link => {
                 link.addEventListener('click', (e) => {

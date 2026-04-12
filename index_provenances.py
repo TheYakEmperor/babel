@@ -132,8 +132,15 @@ def parse_date_for_sort(date_str):
     return ''
 
 
-def generate_provenance_page(provenance_name, provenance_id, text_entries, base_dir):
+def generate_provenance_page(provenance_name, provenance_id, text_entries, base_dir, description=''):
     """Generate HTML for a provenance page."""
+    
+    # Build description HTML if provided
+    description_html = f'''
+        <section class="description">
+            <p>{escape_html(description)}</p>
+        </section>
+''' if description else ''
     
     # Build texts list HTML with data attributes for sorting
     texts_html = []
@@ -187,7 +194,7 @@ def generate_provenance_page(provenance_name, provenance_id, text_entries, base_
             <p><strong>Provenance ID:</strong> <code>{provenance_id}</code></p>
             <p><strong>Texts:</strong> {text_count}</p>
         </div>
-
+{description_html}
         <section class="children-section">
             <h2>Texts from this Location</h2>
             <div class="sort-controls" id="texts-sort-controls">
@@ -421,16 +428,18 @@ def main():
         for provenance_id_or_name, text_entries in all_provenances.items():
             provenance_id = sanitize_folder_name(provenance_id_or_name)
             
-            # Get display name from registry, or format from id/name
+            # Get display name and description from registry, or format from id/name
             if provenance_id in PROVENANCE_REGISTRY:
-                provenance_name = PROVENANCE_REGISTRY[provenance_id]['name']
+                provenance_name = PROVENANCE_REGISTRY[provenance_id].get('name', provenance_id)
+                provenance_description = PROVENANCE_REGISTRY[provenance_id].get('description', '')
             else:
                 provenance_name = ' '.join(word.capitalize() for word in provenance_id_or_name.replace('-', ' ').split())
+                provenance_description = ''
             
             provenance_dir = PROVENANCES_DIR / provenance_id
             provenance_dir.mkdir(exist_ok=True)
             
-            html = generate_provenance_page(provenance_name, provenance_id, text_entries, BASE_DIR)
+            html = generate_provenance_page(provenance_name, provenance_id, text_entries, BASE_DIR, provenance_description)
             
             with open(provenance_dir / 'index.html', 'w', encoding='utf-8') as f:
                 f.write(html)

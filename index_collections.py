@@ -132,8 +132,15 @@ def parse_date_for_sort(date_str):
     return ''
 
 
-def generate_collection_page(collection_name, collection_id, text_entries, base_dir):
+def generate_collection_page(collection_name, collection_id, text_entries, base_dir, description=''):
     """Generate HTML for a collection page."""
+    
+    # Build description HTML if provided
+    description_html = f'''
+        <section class="description">
+            <p>{escape_html(description)}</p>
+        </section>
+''' if description else ''
     
     # Build texts list HTML with data attributes for sorting
     texts_html = []
@@ -187,7 +194,7 @@ def generate_collection_page(collection_name, collection_id, text_entries, base_
             <p><strong>Collection ID:</strong> <code>{collection_id}</code></p>
             <p><strong>Texts:</strong> {text_count}</p>
         </div>
-
+{description_html}
         <section class="children-section">
             <h2>Texts in this Collection</h2>
             <div class="sort-controls" id="texts-sort-controls">
@@ -418,15 +425,17 @@ def main():
     # Generate individual collection pages
     print("\nGenerating collection pages...")
     for collection_id, text_entries in all_collections.items():
-        # Get name from registry or generate from code
+        # Get name and description from registry or generate from code
         if collection_id in COLLECTION_REGISTRY:
             collection_name = COLLECTION_REGISTRY[collection_id]['name']
+            collection_description = COLLECTION_REGISTRY[collection_id].get('description', '')
         else:
             collection_name = ' '.join(word.capitalize() for word in collection_id.split('-'))
+            collection_description = ''
         collection_dir = COLLECTIONS_DIR / collection_id
         collection_dir.mkdir(exist_ok=True)
         
-        html = generate_collection_page(collection_name, collection_id, text_entries, BASE_DIR)
+        html = generate_collection_page(collection_name, collection_id, text_entries, BASE_DIR, collection_description)
         
         with open(collection_dir / 'index.html', 'w', encoding='utf-8') as f:
             f.write(html)

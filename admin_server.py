@@ -602,6 +602,7 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
     <div class="page-wrapper">
         <div class="container">
             <h1 id="page-title">Loading...</h1>
+            <div id="metadata"></div>
             <div id="text-body"></div>
         </div>
     </div>
@@ -614,6 +615,14 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 .then(data => {
                     document.title = data.title + ' | Babel Archive';
                     document.getElementById('page-title').textContent = data.title;
+                    
+                    // Add description if provided
+                    if (data.description) {
+                        const descSection = document.createElement('section');
+                        descSection.className = 'description';
+                        descSection.innerHTML = '<p>' + data.description + '</p>';
+                        document.getElementById('metadata').after(descSection);
+                    }
                 });
         });
     </script>
