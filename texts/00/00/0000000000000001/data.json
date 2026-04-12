@@ -27,6 +27,20 @@
           ]
         }
       ]
+    },
+    {
+      "id": "3",
+      "label": "3",
+      "regions": [
+        {
+          "x": 0.20572325508549527,
+          "y": 0.09579247119379979,
+          "width": 0.5132075471698113,
+          "height": 0.15196078431372548,
+          "title": "poop",
+          "text": "<div align=\"center\">SANTEG, BRO LEON, LLYDAW</div><div><br></div><div>Lledrithiol ei phell draethau, – a thawel</div><div>&nbsp; &nbsp; &nbsp; &nbsp; Ei theios a’i llwybrau;</div><div>&nbsp; &nbsp; Chwery’r eigion â’i chreigiau</div><div>&nbsp; &nbsp; ’R hyd y dydd lle rhodia dau.</div>"
+        }
+      ]
     }
   ]
 }
