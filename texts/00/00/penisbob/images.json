@@ -1,0 +1,16 @@
+{
+  "images": [
+    {
+      "label": "1r",
+      "isBlank": true
+    },
+    {
+      "label": "1v",
+      "isBlank": true
+    },
+    {
+      "label": "2r",
+      "isBlank": true
+    }
+  ]
+}
