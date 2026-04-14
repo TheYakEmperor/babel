@@ -218,12 +218,43 @@
     {
       "id": "96v",
       "label": "96v",
-      "isBlank": true
+      "isBlank": true,
+      "regions": [
+        {
+          "x": 0.23166666666666666,
+          "y": 0.27912109375,
+          "width": 0.6366666666666667,
+          "height": 0.1575,
+          "title": "",
+          "text": "þæꞇ ƿæꞅ&nbsp;ſƿeꞇe ſꞇenc ƿlıꞇıᵹ&nbsp;⁊ƿynſum ᵹeonꝺ ƿoꞃulꝺ ealle&nbsp;·<div>Sıþþan ꞇo þam ſƿıcce ꞅoðꝼæꞅꞇe men onhealꝼa ᵹehƿone</div><div>heapum þꞃunᵹon · ᵹeonꝺ ealne&nbsp;ẏmbhƿyꞃꝼꞇ eoꞃþan ꞅcea</div><div>ꞇan ·&nbsp;Ꞅƿa ꞅe ꞅnoꞇꞇꞃa ᵹecƿæð Sc̄s paulus monıᵹ ꝼealꝺe</div><div>ꞅınꝺ ᵹeonꝺ mıꝺꝺan ᵹeaꞃꝺ ᵹoꝺ unᵹnyꝺe þe uꞅ ꞇo ᵹıeꝼe</div><div>ꝺæleð ⁊ꞇo ꝼeoꞃh neꞃe ꝼæꝺeꞃ ælmıhꞇıᵹ ⁊ꞅe anᵹa hyhꞇ·</div><div>ealꞃa ᵹeꞅceaꝼꞇa uppe ᵹenıþꞃe þæꞇ ıꞅ æþele ſꞇenc :- ⁊</div>",
+          "workId": "eb-panther"
+        },
+        {
+          "x": 0.22333333333333333,
+          "y": 0.48662109375,
+          "width": 0.6216666666666667,
+          "height": 0.23,
+          "title": "",
+          "text": "<div><b>Nu</b>&nbsp;ıc ꝼıꞇꞇe ᵹen ẏmb ꝼıꞅca cynn ƿılle&nbsp;ƿoð cꞃæꝼꞇe</div><div>ƿoꞃꝺum cyþan þuꞃh moꝺ ᵹemynꝺ bı þam mıclan hƿale</div><div>ꞅe bıð unƿıllū oꝼꞇ ᵹemeꞇeꝺ ꝼꞃecne ⁊ꝼeꞃð ᵹꞃım ꝼaꞃeð</div><div>lacenꝺū nıþþa ᵹehƿylcum&nbsp;ƿam ıꞅ noma cenneꝺ ꝼyꞃn</div><div>ſꞇꞃeama ᵹeꝼloꞇan ꝼaꞅꞇıꞇocalon · Iꞅ&nbsp;þæꞅ hıƿ ᵹelıc hꞃeo</div><div>ꝼum&nbsp;ſꞇane&nbsp;ꞅƿylce&nbsp;ƿoꞃıe bıƿæꝺeꞅ oꝼꞃe&nbsp;ꞅonꝺ beoꞃᵹum</div><div>ẏmb&nbsp;ꞅealꝺ&nbsp;ꞅæ ꞃyꞃıca mæꞅꞇ&nbsp;ꞅƿa&nbsp;þæꞇ&nbsp;ƿenaþ&nbsp;ƿæᵹ lıþenꝺe</div><div>þæꞇ hy on ealonꝺ&nbsp;ꞅum&nbsp;· eaᵹum&nbsp;ƿlıꞇen&nbsp;⁊þōn ᵹehyꝺað heah</div><div>ſꞇeꝼn&nbsp;ꞅcıpu ꞇo&nbsp;þam unlonꝺe oncyꞃꞃapum&nbsp;ꞅeꞇlaþ&nbsp;ꞅæ</div><div>meaꞃaꞅ&nbsp;ꞅunꝺeꞅ&nbsp;æꞇ enꝺe&nbsp;⁊þōn ın&nbsp;þæꞇ eᵹlonꝺ up ᵹeƿı</div><div>ꞇað collen ꝼeꞃþe ceolaꞅ&nbsp;ſꞇonꝺað bı&nbsp;ſꞇaþe ꝼæꞅꞇe&nbsp;ſꞇꞃea</div><div>me bıƿunꝺen&nbsp;· Ðōn ᵹeƿıcıað&nbsp;ƿeꞃıᵹ ꝼeꞃðe ꝼaꞃoð&nbsp;· lacen</div><div>ꝺe ꝼꞃecneꞅ ne&nbsp;ƿenað on&nbsp;þā ealonꝺe&nbsp;æleꝺ&nbsp;ƿeccað heah</div><div>ꝼyꞃ&nbsp;ælað hæleþ beoþ on&nbsp;ƿynnū ꞃeonıᵹ moꝺe ꞃæꞅꞇe</div>",
+          "workId": "eb-whale"
+        }
+      ]
     },
     {
       "id": "97r",
       "label": "97r",
-      "isBlank": true
+      "isBlank": true,
+      "regions": [
+        {
+          "x": 0.2758333333333333,
+          "y": 0.3276041603088379,
+          "width": 0.5416666666666666,
+          "height": 0.05375,
+          "title": "",
+          "text": "<div>ᵹelıꝼꞇe þōn ᵹeꝼeleð ꝼacneꞅ cꞃæꝼꞇıᵹ ꝥ hım&nbsp;þa ꝼeꞃenꝺ on ꝼæꞅ</div><div>ꞇe ƿunıaþ&nbsp;ƿıc&nbsp;ƿeaꞃꝺıað&nbsp;ƿeꝺꞃeꞅ on luꞅꞇe · Ðōn&nbsp;ꞅemnınᵹa</div><div>on&nbsp;ꞅealꞇne&nbsp;ƿæᵹ mıꝺ&nbsp;þa noþe nıþeꞃ ᵹeƿıꞇeþ ᵹaꞃ&nbsp;ꞅecᵹeꞅ ᵹæꞅꞇ</div><div>ᵹꞃunꝺ ᵹeꞅeceð&nbsp;⁊þōn ın ꝺeað&nbsp;ꞅele ꝺꞃence bıꝼæꞅꞇeð&nbsp;ꞅcı</div><div>pu mıꝺ&nbsp;ꞅcealcū&nbsp;· Ꞅƿa bıð&nbsp;ꞅcınna&nbsp;þeaƿ· ꝺeoꝼla&nbsp;ƿıꞅe&nbsp;þæꞇ hı</div><div>ꝺꞃohꞇenꝺe&nbsp;þuꞃh ꝺyꞃne meahꞇ ꝺuᵹuðe be<span class=\"pv-word\" data-idx=\"2\">ſ</span>ƿıcað&nbsp;⁊on ꞇeo</div><div>ꞅu ꞇyhꞇaþ ꞇılꞃa ꝺæꝺa&nbsp;ƿemað on&nbsp;ƿıllan&nbsp;ꝥ hy&nbsp;ƿꞃaþe&nbsp;ꞅe</div><div>cen ꝼꞃoꝼꞃe ꞇo ꝼeonꝺum oþþæꞇ hy ꝼæꞅꞇe&nbsp;ðæꞃ&nbsp;æꞇ&nbsp;þam&nbsp;ƿæꞃloᵹan&nbsp;ƿıc ᵹeceoꞅað&nbsp;· Þōn&nbsp;þæꞇ ᵹecnaƿeð oꝼ cƿıc ſuꞅ</div><div>le ꝼlah ꝼeonꝺ ᵹemah þæꞇꞇe ꝼıꞃa ᵹehƿylc hæle þa cyn</div><div>ne<span class=\"pv-word\" data-idx=\"2\"></span>ꞅ on hıꞅ hꞃınᵹe bıþ ꝼæꞅꞇe ᵹeꝼeᵹeꝺ he hım ꝼeoꞃᵹ bo</div><div>na&nbsp;þuꞃh&nbsp;ꞅlıþen&nbsp;ꞅeaꞃo&nbsp;ꞅıþþan&nbsp;ƿeoꞃþeð&nbsp;ƿloncum&nbsp;⁊heanū</div><div>þe hıꞅ&nbsp;ƿıllan heꞃ ꝼıꞃenum ꝼꞃemmað mıꝺ&nbsp;þam heꝼæꞃın</div><div>ᵹa heoloþ helme bıþeahꞇ helle&nbsp;ꞅeceð ᵹoꝺa ᵹeaꞅne ᵹꞃunꝺ</div><div>leaꞅne&nbsp;ƿylm unꝺeꞃ mıſꞇ ᵹlome&nbsp;ꞅƿa&nbsp;ꞅe mıcla hƿæl&nbsp;ꞅe</div><div>þe bıꞅenceð&nbsp;ꞅæ lıþenꝺe eoꞃlaꞅ&nbsp;⁊yð meaꞃaꞅ&nbsp;· he haꝼað oþ</div><div>ꞃe ᵹecynꝺ&nbsp;·&nbsp;ƿæꞇeꞃ&nbsp;þıꞅa&nbsp;ƿlonc&nbsp;ƿꞃæꞇlıcꞃan ᵹıen&nbsp;·&nbsp;þōn hı</div><div>ne on holme hunᵹoꞃ byꞅᵹað&nbsp;⁊þone aᵹlæcan&nbsp;æꞇeꞅ lyſ</div><div>ꞇeþ&nbsp;·&nbsp;Ðonne&nbsp;ꞅe meꞃe&nbsp;ƿeaꞃꝺ muð onꞇẏneð&nbsp;ƿıꝺe&nbsp;ƿeleꞃas</div><div>cymeð&nbsp;ƿynꞅum&nbsp;ſꞇenc oꝼ hıꞅ ınnoþe&nbsp;ꝥꞇe oþꞃe&nbsp;þuꞃh&nbsp;þo</div><div>ne&nbsp;ꞅæ ꝼıꞅca cynn beꞅƿıcen&nbsp;ƿeoꞃðaþ&nbsp;· ſƿımmað&nbsp;ꞅunꝺ</div><div>hƿaꞇe&nbsp;þæꞃ&nbsp;ꞅe&nbsp;ſƿeꞇa&nbsp;ſꞇenc uꞇ ᵹeƿıꞇað hı&nbsp;þæꞃ ın ꝼaꞃað&nbsp;·</div>",
+          "workId": "eb-whale"
+        }
+      ]
     },
     {
       "id": "97v",
