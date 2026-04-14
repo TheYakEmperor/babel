@@ -1661,6 +1661,42 @@ body.viewer-fullscreen .search-container {
     object-fit: contain;
 }
 
+/* PDF OCR Text Layer - invisible overlay for text selection */
+.pv-text-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    opacity: 0.2;
+    line-height: 1;
+    pointer-events: auto;
+    user-select: text;
+    -webkit-user-select: text;
+    z-index: 50;
+}
+
+.pv-text-layer:hover {
+    opacity: 0.4;
+}
+
+.pv-text-span {
+    position: absolute;
+    white-space: pre;
+    color: transparent;
+    transform-origin: 0% 0%;
+}
+
+/* When selecting, show text with highlight */
+.pv-text-layer ::selection {
+    background: rgba(0, 100, 200, 0.4);
+    color: transparent;
+}
+
+.pv-text-layer::-moz-selection {
+    background: rgba(0, 100, 200, 0.4);
+    color: transparent;
+}
+
 /* Zoom controls */
 .page-viewer-zoom-controls {
     position: absolute;
@@ -1957,6 +1993,56 @@ body.viewer-fullscreen .search-container {
 .pv-transcription-text poem {
     display: block;
     white-space: pre-wrap;
+}
+
+/* OCR Text Section in transcription panel */
+.pv-ocr-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+}
+
+.pv-ocr-label {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.pv-ocr-text {
+    font-family: 'Junicode', 'EB Garamond', Georgia, serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #374151;
+    white-space: pre-wrap;
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+.pv-annotations-divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    color: #9ca3af;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.pv-annotations-divider::before,
+.pv-annotations-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+}
+
+.pv-annotations-divider span {
+    padding: 0 15px;
 }
 
 .pv-popup-content hr {

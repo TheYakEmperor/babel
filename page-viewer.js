@@ -358,12 +358,57 @@ function initPageViewer(pagesData) {
         return spreads;
     }
     
-    // Clear any video/audio elements from a container
+    // Clear any video/audio elements and text layers from a container
     function clearMediaElements(container) {
         const video = container.querySelector('video');
         const audio = container.querySelector('audio');
+        const textLayer = container.querySelector('.pv-text-layer');
         if (video) video.remove();
         if (audio) audio.remove();
+        if (textLayer) textLayer.remove();
+    }
+    
+    // Create text layer overlay for PDF OCR text
+    function createTextLayer(container, imgElement, item) {
+        const textLayer = item.textLayer;
+        if (!textLayer || !Array.isArray(textLayer) || textLayer.length === 0) return;
+        
+        // Create text layer container - position absolute over the image
+        const layer = document.createElement('div');
+        layer.className = 'pv-text-layer';
+        
+        // Add each text span
+        textLayer.forEach(span => {
+            const el = document.createElement('span');
+            el.className = 'pv-text-span';
+            el.textContent = span.text;
+            el.style.left = span.x + '%';
+            el.style.top = span.y + '%';
+            el.style.width = span.w + '%';
+            el.style.height = span.h + '%';
+            // Scale font size based on span height (approximate)
+            el.style.fontSize = span.fontSize ? (span.fontSize * 0.8) + 'px' : '12px';
+            layer.appendChild(el);
+        });
+        
+        container.appendChild(layer);
+        
+        // Position the text layer to match the image after it loads
+        const positionLayer = () => {
+            const rect = imgElement.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            layer.style.width = rect.width + 'px';
+            layer.style.height = rect.height + 'px';
+            layer.style.left = (rect.left - containerRect.left) + 'px';
+            layer.style.top = (rect.top - containerRect.top) + 'px';
+        };
+        
+        if (imgElement.complete) {
+            positionLayer();
+        }
+        imgElement.addEventListener('load', positionLayer);
+        // Re-position on window resize
+        window.addEventListener('resize', positionLayer);
     }
     
     // Show media in container based on type
@@ -401,6 +446,11 @@ function initPageViewer(pagesData) {
             imgElement.style.display = '';
             imgElement.src = url;
             
+            // Add text layer if available
+            if (typeof item === 'object' && item.textLayer) {
+                createTextLayer(container, imgElement, item);
+            }
+            
             // Get audio URL from item
             const audioFile = typeof item === 'object' ? item.audioFile : null;
             if (audioFile) {
@@ -423,6 +473,11 @@ function initPageViewer(pagesData) {
             // Normal image
             imgElement.style.display = '';
             imgElement.src = url;
+            
+            // Add text layer if available (for PDF pages with OCR)
+            if (typeof item === 'object' && item.textLayer) {
+                createTextLayer(container, imgElement, item);
+            }
         }
     }
     
@@ -1344,6 +1399,35 @@ function initPageViewer(pagesData) {
             return panel;
         }
         
+        // Get OCR text from the current page(s) images
+        function getCurrentPageOcrText() {
+            const ocrTexts = [];
+            
+            // Get actual page indices based on mode
+            let pageIndices = [];
+            if (isDualMode) {
+                const spreads = getSpreads();
+                if (currentIndex >= 0 && currentIndex < spreads.length) {
+                    pageIndices = spreads[currentIndex];
+                }
+            } else {
+                pageIndices = [currentIndex];
+            }
+            
+            // For each visible page, check if the image has OCR text
+            for (const idx of pageIndices) {
+                if (idx < 0 || idx >= images.length) continue;
+                const img = images[idx];
+                if (typeof img === 'object' && img.ocrText) {
+                    ocrTexts.push({
+                        label: img.label || '',
+                        text: img.ocrText
+                    });
+                }
+            }
+            return ocrTexts;
+        }
+        
         // Get regions for the current page(s) only
         function getCurrentPageRegions() {
             if (!pagesData) return [];
@@ -1392,50 +1476,70 @@ function initPageViewer(pagesData) {
         async function populateTranscriptionPanel() {
             if (!transcriptionPanel) return;
             
+            const ocrTexts = getCurrentPageOcrText();
             const allRegions = getCurrentPageRegions();
             
-            if (allRegions.length === 0) {
+            if (ocrTexts.length === 0 && allRegions.length === 0) {
                 transcriptionPanel.innerHTML = `
                     <div class="pv-transcription-empty">
-                        <p>No transcription regions available for this text.</p>
+                        <p>No transcription available for this page.</p>
                     </div>
                 `;
                 return;
             }
             
-            // Collect all unique workIds and fetch their titles
-            const workIds = [...new Set(allRegions.map(r => r.workId).filter(Boolean))];
-            await Promise.all(workIds.map(id => fetchWorkTitle(id)));
-            
-            // Build content grouped by work
             let html = '<div class="pv-transcription-content">';
             
-            if (workIds.length > 0) {
-                // Group by work
-                let currentWorkId = null;
-                allRegions.forEach((region) => {
-                    const workId = region.workId || '';
-                    let workCaptionHtml = '';
-                    if (workId !== currentWorkId) {
-                        currentWorkId = workId;
-                        const workTitle = workId ? (workTitleCache[workId] || workId) : 'Unassigned';
-                        const workLinkUrl = workId ? `../../../../works/${workId}/` : '';
-                        const captionContent = workLinkUrl 
-                            ? `<a href="${workLinkUrl}" target="_blank">${escapeHtmlPV(workTitle)}</a>`
-                            : escapeHtmlPV(workTitle);
-                        workCaptionHtml = `<span class="pv-work-caption">${captionContent}</span>`;
-                    }
-                    const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
-                    const headerHtml = (workCaptionHtml || titleHtml) ? `<div class="pv-region-header">${workCaptionHtml}${titleHtml}</div>` : '';
-                    html += `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
-                });
-            } else {
-                // No works - just show regions with titles
-                allRegions.forEach((region) => {
-                    const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
-                    const headerHtml = titleHtml ? `<div class="pv-region-header">${titleHtml}</div>` : '';
-                    html += `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
-                });
+            // Show OCR text first (if available from PDF extraction)
+            if (ocrTexts.length > 0) {
+                for (const ocr of ocrTexts) {
+                    const labelHtml = ocr.label ? `<div class="pv-ocr-label">Page ${escapeHtmlPV(ocr.label)} - OCR Text</div>` : '';
+                    html += `
+                        <div class="pv-ocr-section">
+                            ${labelHtml}
+                            <div class="pv-ocr-text">${escapeHtmlPV(ocr.text)}</div>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Show annotation regions (if any)
+            if (allRegions.length > 0) {
+                if (ocrTexts.length > 0) {
+                    html += '<div class="pv-annotations-divider"><span>Annotations</span></div>';
+                }
+                
+                // Collect all unique workIds and fetch their titles
+                const workIds = [...new Set(allRegions.map(r => r.workId).filter(Boolean))];
+                await Promise.all(workIds.map(id => fetchWorkTitle(id)));
+                
+                if (workIds.length > 0) {
+                    // Group by work
+                    let currentWorkId = null;
+                    allRegions.forEach((region) => {
+                        const workId = region.workId || '';
+                        let workCaptionHtml = '';
+                        if (workId !== currentWorkId) {
+                            currentWorkId = workId;
+                            const workTitle = workId ? (workTitleCache[workId] || workId) : 'Unassigned';
+                            const workLinkUrl = workId ? `../../../../works/${workId}/` : '';
+                            const captionContent = workLinkUrl 
+                                ? `<a href="${workLinkUrl}" target="_blank">${escapeHtmlPV(workTitle)}</a>`
+                                : escapeHtmlPV(workTitle);
+                            workCaptionHtml = `<span class="pv-work-caption">${captionContent}</span>`;
+                        }
+                        const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
+                        const headerHtml = (workCaptionHtml || titleHtml) ? `<div class="pv-region-header">${workCaptionHtml}${titleHtml}</div>` : '';
+                        html += `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
+                    });
+                } else {
+                    // No works - just show regions with titles
+                    allRegions.forEach((region) => {
+                        const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
+                        const headerHtml = titleHtml ? `<div class="pv-region-header">${titleHtml}</div>` : '';
+                        html += `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
+                    });
+                }
             }
             
             html += '</div>';

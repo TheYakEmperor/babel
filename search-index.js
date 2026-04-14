@@ -150928,6 +150928,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Lenin Vol. 25",
+    "id": "lenin-25",
+    "level": "text",
+    "url": "texts/00/00/lenin-25/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Lenje",
     "id": "lenj1248",
     "level": "language",
@@ -280127,6 +280135,14 @@ const LANGUAGE_INDEX = [
       "South Belgium Sign Language",
       "VGT"
     ]
+  },
+  {
+    "name": "Vladimir Lenin",
+    "id": "vladimir-lenin",
+    "level": "author",
+    "url": "authors/vladimir-lenin/index.html",
+    "extinct": false,
+    "alt": []
   },
   {
     "name": "Vladimir-Volga",

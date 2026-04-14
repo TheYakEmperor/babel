@@ -92,6 +92,8 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 result = self.create_text(data)
             elif path == '/api/upload-images':
                 result = self.upload_images(data)
+            elif path == '/api/upload-pdf':
+                result = self.upload_pdf(data)
             elif path == '/api/work':
                 result = self.create_work(data)
             elif path == '/api/author':
@@ -544,6 +546,159 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         return {
             'success': True,
             'message': msg
+        }
+    
+    def upload_pdf(self, data):
+        """Upload a PDF file, extract pages as images with OCR text layer."""
+        text_id = data.get('id')
+        if not text_id:
+            raise ValueError('Text ID is required')
+        
+        pdf_data = data.get('pdfData')
+        if not pdf_data:
+            raise ValueError('PDF data is required')
+        
+        # Decode base64 PDF
+        if pdf_data.startswith('data:'):
+            header, b64data = pdf_data.split(',', 1)
+            pdf_bytes = base64.b64decode(b64data)
+        else:
+            pdf_bytes = base64.b64decode(pdf_data)
+        
+        # Find the text directory
+        safe_id = re.sub(r'[^a-zA-Z0-9_-]', '-', text_id.lower())
+        text_dir = None
+        texts_base = BASE_DIR / 'texts' / '00' / '00'
+        
+        potential_dir = texts_base / safe_id
+        if potential_dir.exists():
+            text_dir = potential_dir
+        else:
+            if texts_base.exists():
+                for d in texts_base.iterdir():
+                    if d.is_dir():
+                        data_file = d / 'data.json'
+                        if data_file.exists():
+                            try:
+                                with open(data_file, 'r', encoding='utf-8') as f:
+                                    existing_data = json.load(f)
+                                    if existing_data.get('id') == text_id:
+                                        text_dir = d
+                                        break
+                            except:
+                                pass
+        
+        if not text_dir:
+            raise ValueError(f'Text "{text_id}" not found')
+        
+        # Try importing PyMuPDF
+        try:
+            import fitz  # PyMuPDF
+        except ImportError:
+            raise ValueError('PyMuPDF (fitz) is required for PDF upload. Install with: pip3 install PyMuPDF')
+        
+        # Get relative path for B2 key construction
+        text_rel_path = text_dir.relative_to(BASE_DIR)
+        b2 = get_b2_client()
+        
+        # Open PDF
+        doc = fitz.open(stream=pdf_bytes, filetype='pdf')
+        saved_count = 0
+        b2_count = 0
+        new_images = []
+        
+        dpi = data.get('dpi', 150)  # Default 150 DPI for page rendering
+        mat = fitz.Matrix(dpi / 72, dpi / 72)
+        
+        for page_num in range(len(doc)):
+            page = doc[page_num]
+            
+            # Render page to image
+            pix = page.get_pixmap(matrix=mat)
+            img_bytes = pix.tobytes('png')
+            
+            # Extract text with positions (for text layer)
+            text_dict = page.get_text('dict', flags=fitz.TEXT_PRESERVE_WHITESPACE)
+            
+            # Build text layer data - positions relative to page dimensions
+            page_width = page.rect.width
+            page_height = page.rect.height
+            text_blocks = []
+            
+            for block in text_dict.get('blocks', []):
+                if block.get('type') == 0:  # Text block
+                    for line in block.get('lines', []):
+                        for span in line.get('spans', []):
+                            text = span.get('text', '').strip()
+                            if text:
+                                bbox = span.get('bbox', [0, 0, 0, 0])
+                                # Normalize to percentages
+                                text_blocks.append({
+                                    'text': text,
+                                    'x': round(bbox[0] / page_width * 100, 2),
+                                    'y': round(bbox[1] / page_height * 100, 2),
+                                    'w': round((bbox[2] - bbox[0]) / page_width * 100, 2),
+                                    'h': round((bbox[3] - bbox[1]) / page_height * 100, 2),
+                                    'fontSize': round(span.get('size', 12), 1)
+                                })
+            
+            # Get full page text for OCR display
+            full_text = page.get_text('text').strip()
+            
+            filename = f'{page_num + 1:03d}.png'
+            label = str(page_num + 1)
+            
+            # Upload to B2 if available
+            if b2:
+                try:
+                    b2_key = f'{text_rel_path}/images/{filename}'
+                    b2.put_object(
+                        Bucket=B2_BUCKET_NAME,
+                        Key=b2_key,
+                        Body=img_bytes,
+                        ContentType='image/png',
+                        CacheControl='public, max-age=31536000'
+                    )
+                    b2_count += 1
+                except Exception as e:
+                    print(f'B2 upload failed for {filename}: {e}')
+                    images_dir = text_dir / 'images'
+                    images_dir.mkdir(exist_ok=True)
+                    with open(images_dir / filename, 'wb') as f:
+                        f.write(img_bytes)
+            else:
+                images_dir = text_dir / 'images'
+                images_dir.mkdir(exist_ok=True)
+                with open(images_dir / filename, 'wb') as f:
+                    f.write(img_bytes)
+            
+            # Track for manifest with OCR data
+            img_entry = {
+                'url': f'images/{filename}',
+                'label': label
+            }
+            if full_text:
+                img_entry['ocrText'] = full_text
+            if text_blocks:
+                img_entry['textLayer'] = text_blocks
+            
+            new_images.append(img_entry)
+            saved_count += 1
+        
+        doc.close()
+        
+        # Update images.json manifest
+        if new_images:
+            self._update_image_manifest(text_dir, new_images)
+        
+        msg = f'Extracted {saved_count} pages from PDF'
+        if b2_count > 0:
+            msg += f' ({b2_count} uploaded to B2)'
+        
+        return {
+            'success': True,
+            'message': msg,
+            'pageCount': saved_count
         }
     
     def _update_image_manifest(self, text_dir, new_images):
