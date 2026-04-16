@@ -543,6 +543,9 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         if b2_count > 0:
             msg += f' ({b2_count} to B2)'
         
+        # Update content index for word search
+        self._auto_rebuild_indexes()
+        
         return {
             'success': True,
             'message': msg
@@ -719,6 +722,9 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         msg = f'Extracted {saved_count} pages from PDF'
         if b2_count > 0:
             msg += f' ({b2_count} uploaded to B2)'
+        
+        # Update content index for word search
+        self._auto_rebuild_indexes()
         
         return {
             'success': True,
@@ -1101,9 +1107,8 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         except Exception as e:
             print(f"Warning: Failed to track revision: {e}")
         
-        # Auto-commit to git
-        import threading
-        threading.Thread(target=self._auto_git_commit, daemon=True).start()
+        # Update content index for word search (includes git commit)
+        self._auto_rebuild_indexes()
         
         return {
             'success': True,
@@ -1250,9 +1255,8 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         with open(data_path, 'w', encoding='utf-8') as f:
             json.dump(text_data, f, indent=2, ensure_ascii=False)
         
-        # Auto-commit to git
-        import threading
-        threading.Thread(target=self._auto_git_commit, daemon=True).start()
+        # Update content index for word search (includes git commit)
+        self._auto_rebuild_indexes()
         
         return {
             'success': True,
@@ -2203,7 +2207,7 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         import threading
         
         def rebuild():
-            scripts = ['index_works.py', 'index_authors.py', 'index_texts.py', 'index_sources.py', 'index_provenances.py', 'index_collections.py', 'index_groups.py']
+            scripts = ['index_works.py', 'index_authors.py', 'index_texts.py', 'index_sources.py', 'index_provenances.py', 'index_collections.py', 'index_groups.py', 'index_content.py']
             for script in scripts:
                 if (BASE_DIR / script).exists():
                     try:
@@ -2211,7 +2215,7 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                             ['python3', script],
                             cwd=str(BASE_DIR),
                             capture_output=True,
-                            timeout=60
+                            timeout=120  # Content index can take longer
                         )
                         print(f"  [Auto-rebuild] {script} completed")
                     except Exception as e:

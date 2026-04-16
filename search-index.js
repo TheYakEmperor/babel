@@ -31434,6 +31434,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Angie Sullivan",
+    "id": "angie-sullivan",
+    "level": "author",
+    "url": "authors/angie-sullivan/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Angika",
     "id": "angi1238",
     "level": "language",
@@ -105085,6 +105093,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "Hanover Square Press",
+    "id": "hanover-square-press",
+    "level": "author",
+    "url": "authors/hanover-square-press/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Hanseman",
     "id": "hans1243",
     "level": "family",
@@ -110619,6 +110635,14 @@ const LANGUAGE_INDEX = [
       "Krisa jezik",
       "이사카어"
     ]
+  },
+  {
+    "name": "I've Had It",
+    "id": "i-ve-had-it",
+    "level": "author",
+    "url": "authors/i-ve-had-it/index.html",
+    "extinct": false,
+    "alt": []
   },
   {
     "name": "I-Wak",
@@ -118887,6 +118911,14 @@ const LANGUAGE_INDEX = [
     "id": "jennifer-hutchinson",
     "level": "author",
     "url": "authors/jennifer-hutchinson/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Jennifer Welch",
+    "id": "jennifer-welch",
+    "level": "author",
+    "url": "authors/jennifer-welch/index.html",
     "extinct": false,
     "alt": []
   },
@@ -152107,6 +152139,22 @@ const LANGUAGE_INDEX = [
     "id": "lien1234",
     "level": "dialect",
     "url": "atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/central-western-bantu/west-coastal-bantu/nzadic/lweric/dingic/loange-atlantic/kwilu-ngounie/kasai-ngounie/moyen-kasai-ngounie/interior-kasai-ngounie/west-kasai-ngounie/northwest-kasai-ngounie/mbere-b60/tsitsekeic/lekaningic/mbere-mbamba/liengi/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Life Is a Lazy Susan of Sh*t Sandwiches",
+    "id": "lazy-susan-shit-sandwiches",
+    "level": "work",
+    "url": "works/lazy-susan-shit-sandwiches/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Life Is a Lazy Susan of Sh*t Sandwiches",
+    "id": "lazy-susan-shit-sandwiches",
+    "level": "text",
+    "url": "texts/00/00/lazy-susan-shit-sandwiches/index.html",
     "extinct": false,
     "alt": []
   },

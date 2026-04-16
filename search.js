@@ -46,7 +46,7 @@ console.log('[search] search.js loaded');
             </div>
             <div class="rainbow-buttons">
                 <a href="#" class="rainbow-btn" style="background:#008001; color:#fff;">Link-4</a>
-                <a href="#" class="rainbow-btn" style="background:#0000ff; color:#fff;">Link-5</a>
+                <a href="${basePath}word-search.html" class="rainbow-btn" style="background:#0000ff; color:#fff;">Word Search</a>
                 <a href="#" class="rainbow-btn" style="background:#800080; color:#fff;">Link-7</a>
             </div>
         `;

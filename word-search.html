@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Search - Babel Archive</title>
+    <link rel="icon" type="image/webp" href="favicon.webp">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .word-search-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .word-search-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .word-search-header h1 {
+            font-family: 'EB Garamond', Georgia, serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .word-search-header p {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+        
+        .word-search-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .word-search-input {
+            flex: 1;
+            padding: 12px 16px;
+            font-size: 1.1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0;
+            font-family: 'Junicode', 'EB Garamond', Georgia, serif;
+        }
+        
+        .word-search-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .word-search-btn {
+            padding: 12px 24px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 0;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .word-search-btn:hover {
+            background: #2563eb;
+        }
+        
+        .word-search-options {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .word-search-options label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            color: #374151;
+        }
+        
+        .word-search-options input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .word-search-stats {
+            padding: 12px 16px;
+            background: #f3f4f6;
+            border-radius: 0;
+            margin-bottom: 1.5rem;
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+        
+        .word-search-results {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .word-search-result {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .word-search-result:hover {
+            border-color: #3b82f6;
+            background: #f8fafc;
+        }
+        
+        .result-text-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .result-text-title a {
+            color: #1e40af;
+            text-decoration: none;
+        }
+        
+        .result-text-title a:hover {
+            text-decoration: underline;
+        }
+        
+        .result-works {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 0.4rem;
+            font-style: italic;
+        }
+        
+        .result-works a {
+            color: #4b5563;
+            text-decoration: none;
+        }
+        
+        .result-works a:hover {
+            color: #1e40af;
+            text-decoration: underline;
+        }
+        
+        .result-meta {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+        
+        .result-type-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 0;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .result-type-badge.ocr {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .result-type-badge.transcription {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .result-excerpt {
+            font-family: 'Junicode', 'EB Garamond', Georgia, serif;
+            line-height: 1.6;
+            color: #374151;
+        }
+        
+        .result-excerpt mark {
+            background: #fef08a;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        .word-search-loading {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+        
+        .word-search-empty {
+            text-align: center;
+            padding: 3rem;
+            color: #9ca3af;
+            font-style: italic;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 2rem;
+        }
+        
+        .pagination button {
+            padding: 8px 16px;
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 0;
+        }
+        
+        .pagination button:hover:not(:disabled) {
+            background: #f3f4f6;
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination button.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .page-indicator {
+            padding: 8px 16px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container stepped">
+        <a href="./"><img src="Wikilogo.webp" alt="Babel Archive" class="search-logo"></a>
+        <div class="rainbow-buttons">
+            <a href="#" class="rainbow-btn" style="background:#ff0000; color:#fff;">Link-1</a>
+            <a href="#" class="rainbow-btn" style="background:#ffa500; color:#000;">Link-2</a>
+            <a href="#" class="rainbow-btn" style="background:#ffff00; color:#000;">Link-3</a>
+        </div>
+        <div class="search-bar-wrapper">
+            <input type="text" id="searchInput" class="search-bar" placeholder="Search...">
+            <div id="searchResults" class="search-results"></div>
+        </div>
+        <div class="rainbow-buttons">
+            <a href="#" class="rainbow-btn" style="background:#008001; color:#fff;">Link-4</a>
+            <a href="word-search.html" class="rainbow-btn" style="background:#0000ff; color:#fff;">Word Search</a>
+            <a href="#" class="rainbow-btn" style="background:#800080; color:#fff;">Link-7</a>
+        </div>
+    </div>
+    
+    <div class="page-wrapper">
+        <div class="container">
+            <aside class="right-sidebar">
+                <a href="./" class="sidebar-logo">
+                    <img src="background-image/1111babel.png" alt="Babel Archive">
+                </a>
+                <nav class="sidebar-links">
+                    <h3>Navigate</h3>
+                    <ul>
+                        <li><a href="./">Home</a></li>
+                        <li><a href="texts-index.html">All Texts</a></li>
+                        <li><a href="languages/">Languages</a></li>
+                        <li><a href="works/">Works Index</a></li>
+                        <li><a href="authors/">Authors</a></li>
+                        <li><a href="countries-index.html">Countries</a></li>
+                        <li><a href="word-search.html" style="font-weight: bold;">Word Search</a></li>
+                    </ul>
+                </nav>
+            </aside>
+            
+            <main class="main-content">
+                <div class="word-search-container">
+                    <div class="word-search-header">
+                        <h1>Word Search</h1>
+                        <p>Search for words and phrases across all texts, OCR, and transcriptions</p>
+                    </div>
+                    
+                    <div class="word-search-input-container">
+                        <input type="text" id="wordSearchInput" class="word-search-input" placeholder="Enter word or phrase to search...">
+                        <button id="wordSearchBtn" class="word-search-btn">Search</button>
+                    </div>
+                    
+                    <div class="word-search-options">
+                        <label>
+                            <input type="checkbox" id="searchOcr" checked>
+                            OCR Text
+                        </label>
+                        <label>
+                            <input type="checkbox" id="searchTranscription" checked>
+                            Transcriptions
+                        </label>
+                        <label>
+                            <input type="checkbox" id="caseSensitive">
+                            Case sensitive
+                        </label>
+                        <label>
+                            <input type="checkbox" id="wholeWord">
+                            Whole word only
+                        </label>
+                    </div>
+                    
+                    <div id="wordSearchStats" class="word-search-stats" style="display: none;"></div>
+                    
+                    <ul id="wordSearchResults" class="word-search-results"></ul>
+                    
+                    <div id="pagination" class="pagination" style="display: none;"></div>
+                </div>
+            </main>
+            
+            <aside class="left-sidebar">
+            </aside>
+        </div>
+    </div>
+    
+    <script src="search-index.js"></script>
+    <script src="search.js"></script>
+    <script src="content-index.js"></script>
+    <script src="word-search.js"></script>
+</body>
+</html>

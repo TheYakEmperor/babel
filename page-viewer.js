@@ -847,6 +847,25 @@ function initPageViewer(pagesData) {
         pendingLabelNavigations.forEach(label => navigateToLabel(label));
         pendingLabelNavigations = [];
         
+        // Handle URL hash navigation (e.g., #page=5)
+        function handleHashNavigation() {
+            const hash = window.location.hash;
+            if (!hash) return;
+            
+            const pageMatch = hash.match(/[#&]page=([^&]+)/);
+            if (pageMatch) {
+                const pageLabel = decodeURIComponent(pageMatch[1]);
+                console.log('Navigating to page from URL hash:', pageLabel);
+                navigateToLabel(pageLabel);
+            }
+        }
+        
+        // Process hash on load
+        handleHashNavigation();
+        
+        // Listen for hash changes
+        window.addEventListener('hashchange', handleHashNavigation);
+        
         // =============================================
         // TEXT REGION SELECTION FEATURE
         // =============================================
@@ -2304,7 +2323,9 @@ function initPageViewer(pagesData) {
         // Expose dictionary text processing
         window.pvProcessTextForDictionary = pvProcessTextForDictionary;
         
-        // Show first page
-        showImage(0);
+        // Show first page (unless hash navigation already set a page)
+        if (!window.location.hash || !window.location.hash.includes('page=')) {
+            showImage(0);
+        }
     });
 }
