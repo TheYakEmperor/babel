@@ -1667,23 +1667,25 @@ body.viewer-fullscreen .search-container {
     top: 0;
     left: 0;
     overflow: hidden;
-    opacity: 0.2;
-    line-height: 1;
+    opacity: 0;
     pointer-events: auto;
     user-select: text;
     -webkit-user-select: text;
+    cursor: text;
     z-index: 50;
 }
 
 .pv-text-layer:hover {
-    opacity: 0.4;
+    opacity: 0.3;
 }
 
 .pv-text-span {
     position: absolute;
-    white-space: pre;
+    white-space: nowrap;
     color: transparent;
-    transform-origin: 0% 0%;
+    cursor: text;
+    font-family: sans-serif;
+    line-height: 1;
 }
 
 /* When selecting, show text with highlight */
@@ -1998,10 +2000,7 @@ body.viewer-fullscreen .search-container {
 /* OCR Text Section in transcription panel */
 .pv-ocr-section {
     margin-bottom: 20px;
-    padding: 15px;
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
+    position: relative;
 }
 
 .pv-ocr-label {
@@ -2009,18 +2008,34 @@ body.viewer-fullscreen .search-container {
     color: #6b7280;
     margin-bottom: 10px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
 }
 
 .pv-ocr-text {
     font-family: 'Junicode', 'EB Garamond', Georgia, serif;
     font-size: 1rem;
     line-height: 1.6;
-    color: #374151;
-    white-space: pre-wrap;
+    color: #000;
     user-select: text;
     -webkit-user-select: text;
+}
+
+.pv-ocr-text ::selection {
+    background: rgba(59, 130, 246, 0.4);
+    color: inherit;
+}
+
+.pv-ocr-text p {
+    margin: 0 0 1em 0;
+    text-indent: 0;
+    display: block;
+}
+
+.pv-ocr-text p::selection {
+    background: rgba(59, 130, 246, 0.4);
+}
+
+.pv-ocr-text p:last-child {
+    margin-bottom: 0;
 }
 
 .pv-annotations-divider {
@@ -2181,6 +2196,11 @@ body.viewer-fullscreen .search-container {
     cursor: pointer;
     border-radius: 0;
     transition: box-shadow 0.1s ease;
+    display: inline;
+}
+
+.pv-word::selection {
+    background: rgba(59, 130, 246, 0.4);
 }
 
 .pv-word:hover {
@@ -2493,6 +2513,24 @@ body.viewer-fullscreen .search-container {
 
 .page-viewer.fullscreen .pv-transcription-panel .pv-region-title-corner {
     color: #6b7280;
+}
+
+/* Fullscreen OCR - wider content like a PDF reader */
+.page-viewer.fullscreen .pv-transcription-panel .pv-ocr-section {
+    max-width: none;
+}
+
+.page-viewer.fullscreen .pv-transcription-panel .pv-transcription-content:has(.pv-ocr-section) {
+    max-width: min(95%, 1200px);
+}
+
+.page-viewer.fullscreen .pv-ocr-text {
+    color: #e5e7eb;
+}
+
+.page-viewer.fullscreen .pv-ocr-text ::selection {
+    background: rgba(59, 130, 246, 0.5);
+    color: #fff;
 }
 
 .page-viewer.fullscreen .pv-transcription-empty {

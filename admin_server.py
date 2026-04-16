@@ -613,16 +613,23 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         for page_num in range(len(doc)):
             page = doc[page_num]
             
+            # Use CropBox for coordinate calculations (this is what actually renders)
+            # If no CropBox, falls back to MediaBox via page.rect
+            crop = page.cropbox if page.cropbox else page.rect
+            
             # Render page to image
-            pix = page.get_pixmap(matrix=mat)
+            pix = page.get_pixmap(matrix=mat, clip=crop)
             img_bytes = pix.tobytes('png')
             
             # Extract text with positions (for text layer)
             text_dict = page.get_text('dict', flags=fitz.TEXT_PRESERVE_WHITESPACE)
             
-            # Build text layer data - positions relative to page dimensions
-            page_width = page.rect.width
-            page_height = page.rect.height
+            # Build text layer data - positions relative to CropBox dimensions
+            # Coordinates from get_text() are in MediaBox space, need to offset by CropBox origin
+            crop_x0 = crop.x0
+            crop_y0 = crop.y0
+            page_width = crop.width
+            page_height = crop.height
             text_blocks = []
             
             for block in text_dict.get('blocks', []):
@@ -632,13 +639,22 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                             text = span.get('text', '').strip()
                             if text:
                                 bbox = span.get('bbox', [0, 0, 0, 0])
-                                # Normalize to percentages
+                                # Offset by CropBox origin and normalize to percentages
+                                x = (bbox[0] - crop_x0) / page_width * 100
+                                y = (bbox[1] - crop_y0) / page_height * 100
+                                w = (bbox[2] - bbox[0]) / page_width * 100
+                                h = (bbox[3] - bbox[1]) / page_height * 100
+                                
+                                # Skip spans outside the crop area
+                                if x < 0 or y < 0 or x > 100 or y > 100:
+                                    continue
+                                    
                                 text_blocks.append({
                                     'text': text,
-                                    'x': round(bbox[0] / page_width * 100, 2),
-                                    'y': round(bbox[1] / page_height * 100, 2),
-                                    'w': round((bbox[2] - bbox[0]) / page_width * 100, 2),
-                                    'h': round((bbox[3] - bbox[1]) / page_height * 100, 2),
+                                    'x': round(x, 2),
+                                    'y': round(y, 2),
+                                    'w': round(w, 2),
+                                    'h': round(h, 2),
                                     'fontSize': round(span.get('size', 12), 1)
                                 })
             
@@ -672,15 +688,24 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 with open(images_dir / filename, 'wb') as f:
                     f.write(img_bytes)
             
-            # Track for manifest with OCR data
+            # Track for manifest (lightweight - OCR stored separately)
             img_entry = {
                 'url': f'images/{filename}',
-                'label': label
+                'label': label,
+                'hasOcr': bool(full_text or text_blocks)
             }
-            if full_text:
-                img_entry['ocrText'] = full_text
-            if text_blocks:
-                img_entry['textLayer'] = text_blocks
+            
+            # Save OCR data to separate file for lazy loading
+            if full_text or text_blocks:
+                ocr_dir = text_dir / 'ocr'
+                ocr_dir.mkdir(exist_ok=True)
+                ocr_data = {}
+                if full_text:
+                    ocr_data['ocrText'] = full_text
+                if text_blocks:
+                    ocr_data['textLayer'] = text_blocks
+                with open(ocr_dir / f'{page_num + 1:03d}.json', 'w', encoding='utf-8') as f:
+                    json.dump(ocr_data, f)
             
             new_images.append(img_entry)
             saved_count += 1

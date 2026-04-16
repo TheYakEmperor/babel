@@ -368,16 +368,52 @@ function initPageViewer(pagesData) {
         if (textLayer) textLayer.remove();
     }
     
+    // Cache for lazy-loaded OCR data
+    const ocrCache = {};
+    
+    // Lazy load OCR data for a page
+    async function loadOcrData(item) {
+        if (!item || typeof item !== 'object') return null;
+        
+        // If already has inline data, use it
+        if (item.textLayer || item.ocrText) return item;
+        
+        // If no OCR flag, skip
+        if (!item.hasOcr) return null;
+        
+        // Get label for OCR file
+        const label = item.label || '';
+        const paddedLabel = label.padStart(3, '0');
+        const cacheKey = paddedLabel;
+        
+        // Check cache
+        if (ocrCache[cacheKey]) {
+            return { ...item, ...ocrCache[cacheKey] };
+        }
+        
+        // Fetch OCR data
+        try {
+            const resp = await fetch(`ocr/${paddedLabel}.json`);
+            if (resp.ok) {
+                const ocrData = await resp.json();
+                ocrCache[cacheKey] = ocrData;
+                return { ...item, ...ocrData };
+            }
+        } catch (e) {}
+        
+        return null;
+    }
+    
     // Create text layer overlay for PDF OCR text
     function createTextLayer(container, imgElement, item) {
         const textLayer = item.textLayer;
         if (!textLayer || !Array.isArray(textLayer) || textLayer.length === 0) return;
         
-        // Create text layer container - position absolute over the image
+        // Create text layer container
         const layer = document.createElement('div');
         layer.className = 'pv-text-layer';
         
-        // Add each text span
+        // Add each text span with data attributes for sizing
         textLayer.forEach(span => {
             const el = document.createElement('span');
             el.className = 'pv-text-span';
@@ -386,28 +422,35 @@ function initPageViewer(pagesData) {
             el.style.top = span.y + '%';
             el.style.width = span.w + '%';
             el.style.height = span.h + '%';
-            // Scale font size based on span height (approximate)
-            el.style.fontSize = span.fontSize ? (span.fontSize * 0.8) + 'px' : '12px';
+            el.dataset.h = span.h;
             layer.appendChild(el);
         });
         
         container.appendChild(layer);
         
-        // Position the text layer to match the image after it loads
+        // Position layer to match image and set font sizes
         const positionLayer = () => {
             const rect = imgElement.getBoundingClientRect();
             const containerRect = container.getBoundingClientRect();
+            if (rect.width === 0) return;
+            
+            const layerH = rect.height;
             layer.style.width = rect.width + 'px';
-            layer.style.height = rect.height + 'px';
+            layer.style.height = layerH + 'px';
             layer.style.left = (rect.left - containerRect.left) + 'px';
             layer.style.top = (rect.top - containerRect.top) + 'px';
+            
+            // Set font size to fill each span's height
+            layer.querySelectorAll('.pv-text-span').forEach(el => {
+                const hPct = parseFloat(el.dataset.h) || 2;
+                el.style.fontSize = (hPct / 100 * layerH) + 'px';
+            });
         };
         
-        if (imgElement.complete) {
+        if (imgElement.complete && imgElement.naturalWidth > 0) {
             positionLayer();
         }
         imgElement.addEventListener('load', positionLayer);
-        // Re-position on window resize
         window.addEventListener('resize', positionLayer);
     }
     
@@ -446,9 +489,13 @@ function initPageViewer(pagesData) {
             imgElement.style.display = '';
             imgElement.src = url;
             
-            // Add text layer if available
-            if (typeof item === 'object' && item.textLayer) {
-                createTextLayer(container, imgElement, item);
+            // Lazy load text layer if available
+            if (typeof item === 'object' && (item.textLayer || item.hasOcr)) {
+                loadOcrData(item).then(enrichedItem => {
+                    if (enrichedItem && enrichedItem.textLayer) {
+                        createTextLayer(container, imgElement, enrichedItem);
+                    }
+                });
             }
             
             // Get audio URL from item
@@ -474,9 +521,13 @@ function initPageViewer(pagesData) {
             imgElement.style.display = '';
             imgElement.src = url;
             
-            // Add text layer if available (for PDF pages with OCR)
-            if (typeof item === 'object' && item.textLayer) {
-                createTextLayer(container, imgElement, item);
+            // Lazy load text layer if flagged (for PDF pages with OCR)
+            if (typeof item === 'object' && (item.textLayer || item.hasOcr)) {
+                loadOcrData(item).then(enrichedItem => {
+                    if (enrichedItem && enrichedItem.textLayer) {
+                        createTextLayer(container, imgElement, enrichedItem);
+                    }
+                });
             }
         }
     }
@@ -615,17 +666,33 @@ function initPageViewer(pagesData) {
             pvTitle.textContent = window.textData.title;
         }
         
-        // Create thumbnails
+        // Create thumbnails with lazy loading - use document fragment for performance
+        const thumbObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const thumb = entry.target;
+                    if (thumb.dataset.src) {
+                        thumb.src = thumb.dataset.src;
+                        delete thumb.dataset.src;
+                        thumbObserver.unobserve(thumb);
+                    }
+                }
+            });
+        }, { rootMargin: '200px' });
+        
+        const fragment = document.createDocumentFragment();
         images.forEach((url, i) => {
             const wrapper = document.createElement('div');
             wrapper.className = 'page-viewer-thumb-wrapper';
             if (isPageBlank(url)) {
                 wrapper.classList.add('blank-page');
             }
+            wrapper.dataset.idx = i;
             
             const thumb = document.createElement('img');
             thumb.className = 'page-viewer-thumb';
-            thumb.src = getThumbnailUrl(url);
+            // Lazy load thumbnails - only load when scrolled into view
+            thumb.dataset.src = getThumbnailUrl(url);
             thumb.alt = getPageName(url);
             
             const label = document.createElement('span');
@@ -634,24 +701,39 @@ function initPageViewer(pagesData) {
             
             wrapper.appendChild(thumb);
             wrapper.appendChild(label);
-            wrapper.addEventListener('click', () => {
-                if (isDualMode) {
-                    const spreads = getSpreads();
-                    for (let s = 0; s < spreads.length; s++) {
-                        if (spreads[s].includes(i)) {
-                            showSpread(s);
-                            break;
-                        }
+            fragment.appendChild(wrapper);
+        });
+        
+        // Single DOM append for all thumbnails
+        thumbContainer.appendChild(fragment);
+        
+        // Set up click handler on container (event delegation)
+        thumbContainer.addEventListener('click', (e) => {
+            const wrapper = e.target.closest('.page-viewer-thumb-wrapper');
+            if (!wrapper) return;
+            const i = parseInt(wrapper.dataset.idx);
+            if (isNaN(i)) return;
+            
+            if (isDualMode) {
+                const spreads = getSpreads();
+                for (let s = 0; s < spreads.length; s++) {
+                    if (spreads[s].includes(i)) {
+                        showSpread(s);
+                        break;
                     }
-                } else {
-                    showSingle(i);
                 }
-                // Update transcription panel if in transcription mode
-                if (isTranscriptionMode && transcriptionPanel && refreshTranscriptionPanel) {
-                    refreshTranscriptionPanel();
-                }
-            });
-            thumbContainer.appendChild(wrapper);
+            } else {
+                showSingle(i);
+            }
+            // Update transcription panel if in transcription mode
+            if (isTranscriptionMode && transcriptionPanel && refreshTranscriptionPanel) {
+                refreshTranscriptionPanel();
+            }
+        });
+        
+        // Observe thumbnails for lazy loading after adding to DOM
+        thumbContainer.querySelectorAll('.page-viewer-thumb').forEach(thumb => {
+            thumbObserver.observe(thumb);
         });
         
         // Set up pan handlers
@@ -1399,8 +1481,8 @@ function initPageViewer(pagesData) {
             return panel;
         }
         
-        // Get OCR text from the current page(s) images
-        function getCurrentPageOcrText() {
+        // Get OCR text from the current page(s) images (async for lazy loading)
+        async function getCurrentPageOcrText() {
             const ocrTexts = [];
             
             // Get actual page indices based on mode
@@ -1414,15 +1496,19 @@ function initPageViewer(pagesData) {
                 pageIndices = [currentIndex];
             }
             
-            // For each visible page, check if the image has OCR text
+            // For each visible page, check if the image has OCR text (lazy load if needed)
             for (const idx of pageIndices) {
                 if (idx < 0 || idx >= images.length) continue;
                 const img = images[idx];
-                if (typeof img === 'object' && img.ocrText) {
-                    ocrTexts.push({
-                        label: img.label || '',
-                        text: img.ocrText
-                    });
+                if (typeof img === 'object') {
+                    // Try to get OCR data (lazy load if needed)
+                    const enrichedImg = await loadOcrData(img);
+                    if (enrichedImg && enrichedImg.ocrText) {
+                        ocrTexts.push({
+                            label: enrichedImg.label || '',
+                            text: enrichedImg.ocrText
+                        });
+                    }
                 }
             }
             return ocrTexts;
@@ -1476,7 +1562,7 @@ function initPageViewer(pagesData) {
         async function populateTranscriptionPanel() {
             if (!transcriptionPanel) return;
             
-            const ocrTexts = getCurrentPageOcrText();
+            const ocrTexts = await getCurrentPageOcrText();
             const allRegions = getCurrentPageRegions();
             
             if (ocrTexts.length === 0 && allRegions.length === 0) {
@@ -1490,6 +1576,21 @@ function initPageViewer(pagesData) {
             
             let html = '<div class="pv-transcription-content">';
             
+            // Process OCR text to flow naturally like a PDF reader
+            function processOcrText(text) {
+                if (!text) return '';
+                // Join hyphenated line breaks (word-\n -> word)
+                let processed = text.replace(/-\n/g, '');
+                // Convert double newlines to paragraph marker
+                processed = processed.replace(/\n\n+/g, '\n\n');
+                // Convert single newlines to spaces (within paragraphs)
+                processed = processed.replace(/(?<!\n)\n(?!\n)/g, ' ');
+                // Clean up multiple spaces
+                processed = processed.replace(/  +/g, ' ');
+                // Convert paragraph markers to HTML
+                return processed.split('\n\n').map(p => `<p>${escapeHtmlPV(p.trim())}</p>`).join('');
+            }
+            
             // Show OCR text first (if available from PDF extraction)
             if (ocrTexts.length > 0) {
                 for (const ocr of ocrTexts) {
@@ -1497,7 +1598,7 @@ function initPageViewer(pagesData) {
                     html += `
                         <div class="pv-ocr-section">
                             ${labelHtml}
-                            <div class="pv-ocr-text">${escapeHtmlPV(ocr.text)}</div>
+                            <div class="pv-ocr-text">${processOcrText(ocr.text)}</div>
                         </div>
                     `;
                 }
@@ -1691,7 +1792,8 @@ function initPageViewer(pagesData) {
         function pvProcessTextForDictionary(container) {
             if (!container) return;
             
-            const regions = container.querySelectorAll('.pv-popup-region');
+            // Process both popup regions and OCR text sections
+            const regions = container.querySelectorAll('.pv-popup-region, .pv-ocr-section');
             let wordIndex = 0;
             
             regions.forEach(region => {
@@ -1713,10 +1815,12 @@ function initPageViewer(pagesData) {
                     const text = node.textContent;
                     if (!text.trim()) return;
                     
-                    // Skip if inside title corner, work caption, or header row
+                    // Skip if inside title corner, work caption, header row, OCR label, or OCR text
                     if (node.parentElement.closest('.pv-region-header')) return;
                     if (node.parentElement.closest('.pv-region-title-corner')) return;
                     if (node.parentElement.closest('.pv-work-caption')) return;
+                    if (node.parentElement.closest('.pv-ocr-label')) return;
+                    if (node.parentElement.closest('.pv-ocr-text')) return;
                     
                     // Match words (letters with optional internal apostrophes) vs everything else
                     const fragment = document.createDocumentFragment();
@@ -2216,6 +2320,7 @@ function initPageViewer(pagesData) {
         // Expose dictionary text processing
         window.pvProcessTextForDictionary = pvProcessTextForDictionary;
         
+        // Show first page
         showImage(0);
     });
 }

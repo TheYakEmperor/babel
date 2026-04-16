@@ -28042,6 +28042,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "Alan Bissett",
+    "id": "alan-bissett",
+    "level": "author",
+    "url": "authors/alan-bissett/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Alangan",
     "id": "alan1249",
     "level": "language",
@@ -73417,6 +73425,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "Dale McMullen",
+    "id": "dale-mcmullen",
+    "level": "author",
+    "url": "authors/dale-mcmullen/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Dalecarlian",
     "id": "dale1238",
     "level": "language",
@@ -114995,6 +115011,16 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "ISBN 978-1-912917-27-3",
+    "id": "978-1-912917-27-3",
+    "level": "text",
+    "url": "texts/00/00/978-1-912917-27-3/index.html",
+    "extinct": false,
+    "alt": [
+      "work:Lazy Susan#lazy-susan-1"
+    ]
+  },
+  {
     "name": "Isbukun",
     "id": "sout2930",
     "level": "dialect",
@@ -118827,6 +118853,14 @@ const LANGUAGE_INDEX = [
     "id": "jeng1242",
     "level": "dialect",
     "url": "atlantic-congo/volta-congo/north-volta-congo/cameroun-ubangian/central-adamawa/mumuye-yandang/mumuyic/mumuye/north-east-mumuye/jeng-mumuye/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Jennifer Hutchinson",
+    "id": "jennifer-hutchinson",
+    "level": "author",
+    "url": "authors/jennifer-hutchinson/index.html",
     "extinct": false,
     "alt": []
   },
@@ -135099,6 +135133,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Kirstin Innes",
+    "id": "kirstin-innes",
+    "level": "author",
+    "url": "authors/kirstin-innes/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Kirya-Konzel",
     "id": "kiry1234",
     "level": "language",
@@ -149949,6 +149991,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Lazy Susan",
+    "id": "lazy-susan-1",
+    "level": "work",
+    "url": "works/lazy-susan-1/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Ldamtsai",
     "id": "ldam1238",
     "level": "dialect",
@@ -152705,6 +152755,14 @@ const LANGUAGE_INDEX = [
     "id": "lind1249",
     "level": "dialect",
     "url": "austronesian/malayo-polynesian/celebic/kaili-wolio/northern-kaili-wolio/greater-kaili/kulawi/tado-lindu/linduan/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Line Hoven",
+    "id": "line-hoven",
+    "level": "author",
+    "url": "authors/line-hoven/index.html",
     "extinct": false,
     "alt": []
   },
@@ -252087,6 +252145,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Speculative Books",
+    "id": "speculative-books",
+    "level": "author",
+    "url": "authors/speculative-books/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Speech Register",
     "id": "spee1234",
     "level": "family",
@@ -302530,6 +302596,14 @@ const LANGUAGE_INDEX = [
     "id": "london",
     "level": "provenance",
     "url": "provenances/london/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Glasgow",
+    "id": "glasgow",
+    "level": "provenance",
+    "url": "provenances/glasgow/index.html",
     "extinct": false,
     "alt": []
   },
