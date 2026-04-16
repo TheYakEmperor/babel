@@ -1576,21 +1576,6 @@ function initPageViewer(pagesData) {
             
             let html = '<div class="pv-transcription-content">';
             
-            // Process OCR text to flow naturally like a PDF reader
-            function processOcrText(text) {
-                if (!text) return '';
-                // Join hyphenated line breaks (word-\n -> word)
-                let processed = text.replace(/-\n/g, '');
-                // Convert double newlines to paragraph marker
-                processed = processed.replace(/\n\n+/g, '\n\n');
-                // Convert single newlines to spaces (within paragraphs)
-                processed = processed.replace(/(?<!\n)\n(?!\n)/g, ' ');
-                // Clean up multiple spaces
-                processed = processed.replace(/  +/g, ' ');
-                // Convert paragraph markers to HTML
-                return processed.split('\n\n').map(p => `<p>${escapeHtmlPV(p.trim())}</p>`).join('');
-            }
-            
             // Show OCR text first (if available from PDF extraction)
             if (ocrTexts.length > 0) {
                 for (const ocr of ocrTexts) {
@@ -1598,7 +1583,7 @@ function initPageViewer(pagesData) {
                     html += `
                         <div class="pv-ocr-section">
                             ${labelHtml}
-                            <div class="pv-ocr-text">${processOcrText(ocr.text)}</div>
+                            <div class="pv-ocr-text">${escapeHtmlPV(ocr.text)}</div>
                         </div>
                     `;
                 }
@@ -1815,12 +1800,11 @@ function initPageViewer(pagesData) {
                     const text = node.textContent;
                     if (!text.trim()) return;
                     
-                    // Skip if inside title corner, work caption, header row, OCR label, or OCR text
+                    // Skip if inside title corner, work caption, header row, or OCR label
                     if (node.parentElement.closest('.pv-region-header')) return;
                     if (node.parentElement.closest('.pv-region-title-corner')) return;
                     if (node.parentElement.closest('.pv-work-caption')) return;
                     if (node.parentElement.closest('.pv-ocr-label')) return;
-                    if (node.parentElement.closest('.pv-ocr-text')) return;
                     
                     // Match words (letters with optional internal apostrophes) vs everything else
                     const fragment = document.createDocumentFragment();

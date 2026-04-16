@@ -24771,6 +24771,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Actazia Publishing",
+    "id": "actazia-publishing",
+    "level": "author",
+    "url": "authors/actazia-publishing/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Ada",
     "id": "adaa1238",
     "level": "dialect",
@@ -115011,6 +115019,16 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "ISBN 978-1-60756-001-2",
+    "id": "978-1-60756-001-2",
+    "level": "text",
+    "url": "texts/00/00/978-1-60756-001-2/index.html",
+    "extinct": false,
+    "alt": [
+      "work:Meditations from the Lazy Susan#meditations-from-the-lazy-susan"
+    ]
+  },
+  {
     "name": "ISBN 978-1-912917-27-3",
     "id": "978-1-912917-27-3",
     "level": "text",
@@ -118853,6 +118871,14 @@ const LANGUAGE_INDEX = [
     "id": "jeng1242",
     "level": "dialect",
     "url": "atlantic-congo/volta-congo/north-volta-congo/cameroun-ubangian/central-adamawa/mumuye-yandang/mumuyic/mumuye/north-east-mumuye/jeng-mumuye/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Jennifer Deshaies",
+    "id": "jennifer-deshaies",
+    "level": "author",
+    "url": "authors/jennifer-deshaies/index.html",
     "extinct": false,
     "alt": []
   },
@@ -130201,6 +130227,14 @@ const LANGUAGE_INDEX = [
     "alt": [
       "Bemal"
     ]
+  },
+  {
+    "name": "Keith Deshaies",
+    "id": "keith-deshaies",
+    "level": "author",
+    "url": "authors/keith-deshaies/index.html",
+    "extinct": false,
+    "alt": []
   },
   {
     "name": "Keiyo",
@@ -170902,6 +170936,14 @@ const LANGUAGE_INDEX = [
     "id": "medi1250",
     "level": "dialect",
     "url": "indo-european/classical-indo-european/italic/latino-faliscan/latinic/imperial-latin/latin/medieval-latin/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Meditations from the Lazy Susan",
+    "id": "meditations-from-the-lazy-susan",
+    "level": "work",
+    "url": "works/meditations-from-the-lazy-susan/index.html",
     "extinct": false,
     "alt": []
   },
@@ -302456,6 +302498,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "King County Library System",
+    "id": "king-county-library-system",
+    "level": "source",
+    "url": "sources/king-county-library-system/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "John Hay Library: Sheet Music Collection",
     "id": "john-hay-library-sheet-music-collection",
     "level": "source",
@@ -302580,6 +302630,14 @@ const LANGUAGE_INDEX = [
     "id": "bsb11924293",
     "level": "source",
     "url": "sources/bsb11924293/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Bellevue, Washington",
+    "id": "bellevue-washington",
+    "level": "provenance",
+    "url": "provenances/bellevue-washington/index.html",
     "extinct": false,
     "alt": []
   },

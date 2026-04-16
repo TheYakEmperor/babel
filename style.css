@@ -2015,6 +2015,7 @@ body.viewer-fullscreen .search-container {
     font-size: 1rem;
     line-height: 1.6;
     color: #000;
+    white-space: pre-wrap;
     user-select: text;
     -webkit-user-select: text;
 }
@@ -2022,20 +2023,6 @@ body.viewer-fullscreen .search-container {
 .pv-ocr-text ::selection {
     background: rgba(59, 130, 246, 0.4);
     color: inherit;
-}
-
-.pv-ocr-text p {
-    margin: 0 0 1em 0;
-    text-indent: 0;
-    display: block;
-}
-
-.pv-ocr-text p::selection {
-    background: rgba(59, 130, 246, 0.4);
-}
-
-.pv-ocr-text p:last-child {
-    margin-bottom: 0;
 }
 
 .pv-annotations-divider {
