@@ -105321,6 +105321,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "HarperCollins Publishers",
+    "id": "harpercollins-publishers",
+    "level": "author",
+    "url": "authors/harpercollins-publishers/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Harso",
     "id": "hars1238",
     "level": "dialect",
@@ -115040,6 +115048,16 @@ const LANGUAGE_INDEX = [
     "alt": [
       "work:Cerddi'r Troad — Barddoniaeth Newydd i'r Mileniwm#cerddir-troad",
       "work:Meini Wrth Y Neraig#meini-wrth-y-neraig"
+    ]
+  },
+  {
+    "name": "ISBN 978-0-369-76086-9",
+    "id": "lazy-susan-shit-sandwiches",
+    "level": "text",
+    "url": "texts/00/00/lazy-susan-shit-sandwiches/index.html",
+    "extinct": false,
+    "alt": [
+      "work:Life Is a Lazy Susan of Sh*t Sandwiches#lazy-susan-shit-sandwiches"
     ]
   },
   {
@@ -152147,14 +152165,6 @@ const LANGUAGE_INDEX = [
     "id": "lazy-susan-shit-sandwiches",
     "level": "work",
     "url": "works/lazy-susan-shit-sandwiches/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Life Is a Lazy Susan of Sh*t Sandwiches",
-    "id": "lazy-susan-shit-sandwiches",
-    "level": "text",
-    "url": "texts/00/00/lazy-susan-shit-sandwiches/index.html",
     "extinct": false,
     "alt": []
   },
