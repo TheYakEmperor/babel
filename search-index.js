@@ -106353,6 +106353,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Heinz Salad Cream",
+    "id": "norton-outen-4",
+    "level": "text",
+    "url": "texts/00/00/norton-outen-4/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Hekexi Taino",
     "id": "heke1234",
     "level": "dialect",
@@ -302754,6 +302762,14 @@ const LANGUAGE_INDEX = [
     "id": "getty-images",
     "level": "source",
     "url": "sources/getty-images/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Daily Mirror",
+    "id": "daily-mirror",
+    "level": "source",
+    "url": "sources/daily-mirror/index.html",
     "extinct": false,
     "alt": []
   },
