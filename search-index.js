@@ -192807,6 +192807,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "no title",
+    "id": "norton-outen-5",
+    "level": "text",
+    "url": "texts/00/00/norton-outen-5/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "No-Penge",
     "id": "nope1238",
     "level": "dialect",
@@ -302750,6 +302758,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Daily Mirror",
+    "id": "daily-mirror",
+    "level": "source",
+    "url": "sources/daily-mirror/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Shutterstock",
     "id": "shutterstock",
     "level": "source",
@@ -302762,14 +302778,6 @@ const LANGUAGE_INDEX = [
     "id": "getty-images",
     "level": "source",
     "url": "sources/getty-images/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Daily Mirror",
-    "id": "daily-mirror",
-    "level": "source",
-    "url": "sources/daily-mirror/index.html",
     "extinct": false,
     "alt": []
   },
