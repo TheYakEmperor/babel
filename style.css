@@ -2138,6 +2138,19 @@ body.viewer-fullscreen .search-container {
     padding-bottom: 0;
 }
 
+/* Text cross-reference links */
+.text-ref {
+    color: #1976d2;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.text-ref:hover {
+    color: #0d47a1;
+    text-decoration: underline;
+}
+
 /* Header row for title and work caption - positioned alongside first line */
 .pv-region-header {
     position: absolute;

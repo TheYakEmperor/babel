@@ -100080,6 +100080,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Graham Norton rubs salad cream over Denise Van Outen's boobs in hilariously cringy throwback ad",
+    "id": "mirror-graham-norton-rubs-salad-cream-12656116",
+    "level": "text",
+    "url": "texts/00/00/mirror-graham-norton-rubs-salad-cream-12656116/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Graham Norton rubs salad cream over Denise Van Outen's boobs in hilariously cringy throwback ad (image 1)",
     "id": "norton-outen-8",
     "level": "text",
@@ -149866,6 +149874,14 @@ const LANGUAGE_INDEX = [
     "alt": [
       "Laora"
     ]
+  },
+  {
+    "name": "Laura Martin",
+    "id": "laura-martin",
+    "level": "author",
+    "url": "authors/laura-martin/index.html",
+    "extinct": false,
+    "alt": []
   },
   {
     "name": "Laurowan",
@@ -302752,6 +302768,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Daily Mirror",
+    "id": "daily-mirror",
+    "level": "source",
+    "url": "sources/daily-mirror/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Library Of Congress",
     "id": "library-of-congress",
     "level": "source",
@@ -302852,14 +302876,6 @@ const LANGUAGE_INDEX = [
     "id": "a-glass-bottle",
     "level": "source",
     "url": "sources/a-glass-bottle/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Daily Mirror",
-    "id": "daily-mirror",
-    "level": "source",
-    "url": "sources/daily-mirror/index.html",
     "extinct": false,
     "alt": []
   },

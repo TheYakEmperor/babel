@@ -1361,6 +1361,8 @@
                                 <button type="button" onclick="execRichCmd('insertOrderedList')" title="Numbered List">1.</button>
                                 <div class="separator"></div>
                                 <button type="button" onclick="execRichCmd('removeFormat')" title="Clear Formatting"></button>
+                                <div class="separator"></div>
+                                <button type="button" onclick="openTextRefModal()" title="Link to Another Text">🔗</button>
                             </div>
                             <div class="rich-text-editor" id="region-text" contenteditable="true" data-placeholder="Enter the transcribed text..."></div>
                         </div>
@@ -1482,6 +1484,40 @@
                     <h3 style="margin-bottom: 10px;">Recent Changes to Watched Items</h3>
                     <div id="watchlist-changes-list"></div>
                 </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Text Reference Modal (for cross-referencing between texts) -->
+    <div class="modal-overlay" id="text-ref-modal">
+        <div class="modal modal-small">
+            <div class="modal-header">
+                <h2>Link to Another Text</h2>
+                <button class="modal-close" onclick="closeTextRefModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 15px; font-size: 13px; color: #666;">
+                    Create a link to another text. Select text in the editor first, then choose the target text and page.
+                </p>
+                <div class="form-group">
+                    <label>Target Text</label>
+                    <input type="text" id="text-ref-search" placeholder="Search texts..." autocomplete="off">
+                    <div id="text-ref-results" class="autocomplete-dropdown" style="display: none; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; margin-top: 2px; border-radius: 4px;"></div>
+                    <input type="hidden" id="text-ref-id">
+                    <div id="text-ref-selected" style="margin-top: 5px; font-size: 13px; color: #333;"></div>
+                </div>
+                <div class="form-group">
+                    <label>Page (optional)</label>
+                    <input type="text" id="text-ref-page" placeholder="e.g. 5 or Folio 12r">
+                </div>
+                <div class="form-group">
+                    <label>Highlight Term (optional)</label>
+                    <input type="text" id="text-ref-highlight" placeholder="Text to highlight when opening">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeTextRefModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="insertTextReference()">Insert Link</button>
             </div>
         </div>
     </div>
@@ -5871,6 +5907,145 @@
                     font.replaceWith(span);
                 });
             }
+        }
+        
+        // =============================================================================
+        // TEXT CROSS-REFERENCE FUNCTIONS
+        // =============================================================================
+        let textRefSelection = null; // Store the selection range
+        let textRefTexts = []; // Cache of texts for searching
+        
+        async function openTextRefModal() {
+            const editor = document.getElementById('region-text');
+            const selection = window.getSelection();
+            
+            // Save the current selection
+            if (selection.rangeCount > 0 && editor.contains(selection.anchorNode)) {
+                textRefSelection = selection.getRangeAt(0).cloneRange();
+            } else {
+                textRefSelection = null;
+            }
+            
+            // Clear previous values
+            document.getElementById('text-ref-search').value = '';
+            document.getElementById('text-ref-id').value = '';
+            document.getElementById('text-ref-page').value = '';
+            document.getElementById('text-ref-highlight').value = '';
+            document.getElementById('text-ref-selected').textContent = '';
+            document.getElementById('text-ref-results').style.display = 'none';
+            
+            // Load texts if not cached
+            if (textRefTexts.length === 0) {
+                try {
+                    const result = await api('list-texts');
+                    textRefTexts = result.texts || [];
+                } catch (e) {
+                    console.error('Failed to load texts:', e);
+                }
+            }
+            
+            // Show modal
+            document.getElementById('text-ref-modal').classList.add('active');
+            document.getElementById('text-ref-search').focus();
+            
+            // Setup search handler
+            const searchInput = document.getElementById('text-ref-search');
+            searchInput.oninput = () => searchTextsForRef(searchInput.value);
+        }
+        
+        function closeTextRefModal() {
+            document.getElementById('text-ref-modal').classList.remove('active');
+            textRefSelection = null;
+        }
+        
+        function searchTextsForRef(query) {
+            const resultsDiv = document.getElementById('text-ref-results');
+            
+            if (!query || query.length < 2) {
+                resultsDiv.style.display = 'none';
+                return;
+            }
+            
+            const queryLower = query.toLowerCase();
+            const matches = textRefTexts.filter(t => 
+                t.title.toLowerCase().includes(queryLower) || 
+                t.id.toLowerCase().includes(queryLower)
+            ).slice(0, 10);
+            
+            if (matches.length === 0) {
+                resultsDiv.innerHTML = '<div style="padding: 8px; color: #666;">No matching texts found</div>';
+                resultsDiv.style.display = 'block';
+                return;
+            }
+            
+            resultsDiv.innerHTML = matches.map(t => `
+                <div class="autocomplete-item" onclick="selectTextRef('${t.id}', '${escapeHtml(t.title).replace(/'/g, "\\'")}', ${t.pages})" 
+                     style="padding: 8px; cursor: pointer; border-bottom: 1px solid #eee;">
+                    <strong>${escapeHtml(t.title)}</strong>
+                    <div style="font-size: 12px; color: #666;">${t.id} • ${t.pages} pages</div>
+                </div>
+            `).join('');
+            resultsDiv.style.display = 'block';
+        }
+        
+        function selectTextRef(id, title, pages) {
+            document.getElementById('text-ref-id').value = id;
+            document.getElementById('text-ref-search').value = title;
+            document.getElementById('text-ref-selected').innerHTML = `<strong>Selected:</strong> ${escapeHtml(title)} (${pages} pages)`;
+            document.getElementById('text-ref-results').style.display = 'none';
+        }
+        
+        function insertTextReference() {
+            const textId = document.getElementById('text-ref-id').value;
+            const page = document.getElementById('text-ref-page').value.trim();
+            const highlight = document.getElementById('text-ref-highlight').value.trim();
+            
+            if (!textId) {
+                alert('Please select a target text.');
+                return;
+            }
+            
+            // Restore selection and insert link
+            const editor = document.getElementById('region-text');
+            editor.focus();
+            
+            if (textRefSelection) {
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(textRefSelection);
+            }
+            
+            const selection = window.getSelection();
+            let linkText = selection.toString() || document.getElementById('text-ref-search').value;
+            
+            if (!linkText) {
+                linkText = textId;
+            }
+            
+            // Build the link
+            const link = document.createElement('a');
+            link.className = 'text-ref';
+            link.setAttribute('data-text', textId);
+            if (page) link.setAttribute('data-page', page);
+            if (highlight) link.setAttribute('data-highlight', highlight);
+            link.textContent = linkText;
+            link.style.cssText = 'color: #1976d2; text-decoration: underline; cursor: pointer;';
+            
+            // Insert the link
+            if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                range.deleteContents();
+                range.insertNode(link);
+                
+                // Move cursor after the link
+                range.setStartAfter(link);
+                range.setEndAfter(link);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+            
+            closeTextRefModal();
+            showStatus('Text reference inserted');
         }
         
         function deleteSelectedRegion() {

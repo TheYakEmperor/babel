@@ -1947,7 +1947,46 @@ function initPageViewer(pagesData) {
             if (!container.pvHandlersAttached) {
                 container.pvHandlersAttached = true;
                 pvSetupWordHandlers(container);
+                pvSetupTextRefHandlers(container);
             }
+        }
+        
+        // Setup click handlers for text cross-references
+        function pvSetupTextRefHandlers(container) {
+            container.addEventListener('click', e => {
+                const link = e.target.closest('.text-ref');
+                if (!link) return;
+                
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const textId = link.dataset.text;
+                const page = link.dataset.page;
+                const highlight = link.dataset.highlight;
+                
+                if (!textId) return;
+                
+                // Build the URL to the referenced text
+                // Navigate up from current text to texts folder
+                let basePath = window.location.pathname;
+                const textsMatch = basePath.match(/\/texts\//);
+                if (textsMatch) {
+                    basePath = basePath.substring(0, textsMatch.index) + '/texts/00/00/' + textId + '/';
+                } else {
+                    // Fallback - just construct absolute-ish path
+                    basePath = '/texts/00/00/' + textId + '/';
+                }
+                
+                // Build hash for page navigation and highlight
+                let url = basePath;
+                const hashParts = [];
+                if (page) hashParts.push('page=' + encodeURIComponent(page));
+                if (highlight) hashParts.push('highlight=' + encodeURIComponent(highlight));
+                if (hashParts.length) url += '#' + hashParts.join('&');
+                
+                // Open in new tab
+                window.open(url, '_blank');
+            });
         }
         
         // Setup word click/drag handlers that trigger the existing dictionary widget
