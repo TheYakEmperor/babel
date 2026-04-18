@@ -192832,6 +192832,14 @@ const LANGUAGE_INDEX = [
   },
   {
     "name": "no title",
+    "id": "norton-outen-7",
+    "level": "text",
+    "url": "texts/00/00/norton-outen-7/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "no title",
     "id": "norton-outen-5",
     "level": "text",
     "url": "texts/00/00/norton-outen-5/index.html",
@@ -221249,6 +221257,14 @@ const LANGUAGE_INDEX = [
     "id": "pres1239",
     "level": "dialect",
     "url": "uto-aztecan/southern-uto-aztecan/corachol-aztecan/corachol/coran/el-nayar-cora/presidio-de-los-reyes-cora/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Press Association",
+    "id": "press-association",
+    "level": "author",
+    "url": "authors/press-association/index.html",
     "extinct": false,
     "alt": []
   },
@@ -302746,6 +302762,14 @@ const LANGUAGE_INDEX = [
     "id": "british-museum",
     "level": "source",
     "url": "sources/british-museum/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Press Association",
+    "id": "press-association",
+    "level": "source",
+    "url": "sources/press-association/index.html",
     "extinct": false,
     "alt": []
   },
