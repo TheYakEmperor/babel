@@ -75825,6 +75825,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "Denise Van Outen Graham Norton Pr Editorial Stock Photo",
+    "id": "norton-outen-1",
+    "level": "text",
+    "url": "texts/00/00/norton-outen-1/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Denmark",
     "id": "dk",
     "level": "country",
@@ -302630,6 +302638,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Shutterstock",
+    "id": "shutterstock",
+    "level": "source",
+    "url": "sources/shutterstock/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "British Museum",
     "id": "british-museum",
     "level": "source",
@@ -302758,18 +302774,18 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
-    "name": "New York",
-    "id": "new-york",
-    "level": "provenance",
-    "url": "provenances/new-york/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
     "name": "London",
     "id": "london",
     "level": "provenance",
     "url": "provenances/london/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "New York",
+    "id": "new-york",
+    "level": "provenance",
+    "url": "provenances/new-york/index.html",
     "extinct": false,
     "alt": []
   },
