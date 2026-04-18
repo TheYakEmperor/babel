@@ -68520,6 +68520,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "Chris Grieve",
+    "id": "chris-grieve",
+    "level": "author",
+    "url": "authors/chris-grieve/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Christian Alqosh",
     "id": "alqo1238",
     "level": "dialect",
@@ -97439,6 +97447,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Getty Images",
+    "id": "getty-images",
+    "level": "author",
+    "url": "authors/getty-images/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Geunem",
     "id": "nucl1354",
     "level": "dialect",
@@ -106325,6 +106341,14 @@ const LANGUAGE_INDEX = [
     "id": "heim1234",
     "level": "family",
     "url": "sino-tibetan/brahmaputran/patkaian/north-patkaian/heimic/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Heinz Salad Cream",
+    "id": "norton-outen-3",
+    "level": "text",
+    "url": "texts/00/00/norton-outen-3/index.html",
     "extinct": false,
     "alt": []
   },
@@ -175116,6 +175140,14 @@ const LANGUAGE_INDEX = [
     "id": "mirr1241",
     "level": "dialect",
     "url": "timote-cuica/timote/mirripu/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Mirrorpix",
+    "id": "mirrorpix",
+    "level": "author",
+    "url": "authors/mirrorpix/index.html",
     "extinct": false,
     "alt": []
   },
@@ -302714,6 +302746,14 @@ const LANGUAGE_INDEX = [
     "id": "shutterstock",
     "level": "source",
     "url": "sources/shutterstock/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Getty Images",
+    "id": "getty-images",
+    "level": "source",
+    "url": "sources/getty-images/index.html",
     "extinct": false,
     "alt": []
   },
