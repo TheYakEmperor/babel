@@ -75833,6 +75833,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "Denise Van Outen And Graham Norton With A P.r. Girl Wipe Away The Salad Cream They Were Pictured As Heinz Salad Cream Made A Come Back After Year In The Doldrums They Were Pictured At Jongulars Club In Camden Where She Alowed The Camp Comedian To Sme",
+    "id": "norton-outen-6",
+    "level": "text",
+    "url": "texts/00/00/norton-outen-6/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Denise Van Outen Graham Norton Pr Editorial Stock Photo",
     "id": "norton-outen-1",
     "level": "text",
@@ -89831,6 +89839,14 @@ const LANGUAGE_INDEX = [
       "эвенский язык",
       "эвэды торэн"
     ]
+  },
+  {
+    "name": "Evening Standard",
+    "id": "evening-standard",
+    "level": "author",
+    "url": "authors/evening-standard/index.html",
+    "extinct": false,
+    "alt": []
   },
   {
     "name": "Evenki",
@@ -119058,6 +119074,14 @@ const LANGUAGE_INDEX = [
       "Jeere",
       "Jera"
     ]
+  },
+  {
+    "name": "Jeremy Selwyn",
+    "id": "jeremy-selwyn",
+    "level": "author",
+    "url": "authors/jeremy-selwyn/index.html",
+    "extinct": false,
+    "alt": []
   },
   {
     "name": "Jeri",
@@ -240203,6 +240227,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "Shutterstock",
+    "id": "shutterstock",
+    "level": "author",
+    "url": "authors/shutterstock/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Shutul",
     "id": "shut1241",
     "level": "dialect",
@@ -302702,6 +302734,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Shutterstock",
+    "id": "shutterstock",
+    "level": "source",
+    "url": "sources/shutterstock/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "British Museum",
     "id": "british-museum",
     "level": "source",
@@ -302762,14 +302802,6 @@ const LANGUAGE_INDEX = [
     "id": "daily-mirror",
     "level": "source",
     "url": "sources/daily-mirror/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Shutterstock",
-    "id": "shutterstock",
-    "level": "source",
-    "url": "sources/shutterstock/index.html",
     "extinct": false,
     "alt": []
   },
