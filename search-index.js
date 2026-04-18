@@ -93702,6 +93702,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Gaetano Mosca",
+    "id": "gaetano-mosca",
+    "level": "author",
+    "url": "authors/gaetano-mosca/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Gagatl",
     "id": "gaga1250",
     "level": "dialect",
@@ -105042,6 +105050,14 @@ const LANGUAGE_INDEX = [
     "id": "hanj1234",
     "level": "dialect",
     "url": "indo-european/classical-indo-european/indo-iranian/iranian/central-iranian-pbs/central-iranian-pb/northwestern-iranian/central-iran-kermanic/nuclear-central-iran-kermanic/kashanic/natanzic/hanjani/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Hannah D. Kahn",
+    "id": "hannah-d-kahn",
+    "level": "author",
+    "url": "authors/hannah-d-kahn/index.html",
     "extinct": false,
     "alt": []
   },
@@ -170816,6 +170832,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "McGraw-Hill Book Company",
+    "id": "mcgraw-hill-book-company",
+    "level": "author",
+    "url": "authors/mcgraw-hill-book-company/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Mdundulu",
     "id": "mdun1238",
     "level": "dialect",
@@ -211309,6 +211333,16 @@ const LANGUAGE_INDEX = [
     "alt": [
       "Dapera",
       "Oune"
+    ]
+  },
+  {
+    "name": "OUP—552—7-7-66—10,000",
+    "id": "552-7-7-66-10000",
+    "level": "text",
+    "url": "texts/00/00/552-7-7-66-10000/index.html",
+    "extinct": false,
+    "alt": [
+      "work:The Ruling Class#mosca-ruling-class"
     ]
   },
   {
@@ -264290,6 +264324,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "The Ruling Class",
+    "id": "mosca-ruling-class",
+    "level": "work",
+    "url": "works/mosca-ruling-class/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "The Taming of the Shrew",
     "id": "taming-of-the-shrew",
     "level": "work",
@@ -302612,6 +302654,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Osmania University Library",
+    "id": "osmania-university-library",
+    "level": "source",
+    "url": "sources/osmania-university-library/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "...",
     "id": "",
     "level": "source",
@@ -302704,6 +302754,14 @@ const LANGUAGE_INDEX = [
     "id": "ur",
     "level": "provenance",
     "url": "provenances/ur/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "New York",
+    "id": "new-york",
+    "level": "provenance",
+    "url": "provenances/new-york/index.html",
     "extinct": false,
     "alt": []
   },

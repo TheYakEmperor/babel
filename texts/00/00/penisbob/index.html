@@ -385,7 +385,38 @@
                     else metaDiv.appendChild(collP);
                 });
             }
-            if (data.date) metaHtml += `<p><strong>Date:</strong> ${data.date}</p>`;
+            
+            // Groups - look up from group.json for proper names
+            const groupList = data.groups || (data.group ? [data.group] : []);
+            if (groupList.length > 0) {
+                Promise.all(groupList.map(groupId => {
+                    const groupSlug = groupId.toLowerCase()
+                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-+|-+$/g, '')
+                        .substring(0, 50);
+                    return fetch(`../../../../groups/${groupSlug}/group.json`)
+                        .then(r => r.ok ? r.json() : null)
+                        .then(groupData => ({
+                            id: groupSlug,
+                            name: groupData ? groupData.name : groupId
+                        }))
+                        .catch(() => ({ id: groupSlug, name: groupId }));
+                })).then(groupInfos => {
+                    const groupLinks = groupInfos.map(g => 
+                        `<a href="../../../../groups/${g.id}/">${g.name}</a>`
+                    ).join(', ');
+                    const groupLabel = groupInfos.length > 1 ? 'Groups' : 'Group';
+                    const groupP = document.createElement('p');
+                    groupP.innerHTML = `<strong>${groupLabel}:</strong> ${groupLinks}`;
+                    groupP.id = 'meta-groups';
+                    const metaDiv = document.getElementById('metadata');
+                    const collP = document.getElementById('meta-collections') || document.getElementById('meta-provenances') || document.getElementById('meta-sources') || metaDiv.querySelector('p:has(.country-flag)') || metaDiv.querySelector('p:nth-child(2)');
+                    if (collP) collP.after(groupP);
+                    else metaDiv.appendChild(groupP);
+                });
+            }
+if (data.date) metaHtml += `<p><strong>Date:</strong> ${data.date}</p>`;
             metaHtml += `<p><strong>Text ID:</strong> <code>${data.id}</code></p>`;
             
             // Glottolog links for all languages
@@ -524,11 +555,15 @@
                 jumpToWorkPage(window.location.hash);
             });
             
-            // Scroll to hash anchor after content is rendered
-            if (window.location.hash) {
-                const target = document.querySelector(window.location.hash);
-                if (target) {
-                    target.scrollIntoView();
+            // Scroll to hash anchor after content is rendered (but not for page= hashes which are for page viewer)
+            if (window.location.hash && !window.location.hash.includes('page=')) {
+                try {
+                    const target = document.querySelector(window.location.hash);
+                    if (target) {
+                        target.scrollIntoView();
+                    }
+                } catch (e) {
+                    // Invalid selector - ignore
                 }
             }
             

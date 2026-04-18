@@ -1,0 +1,35 @@
+{
+  "id": "552-7-7-66-10000",
+  "title": "OUP—552—7-7-66—10,000",
+  "author": [
+    "McGraw-Hill Book Company",
+    "Hannah D. Kahn",
+    "Gaetano Mosca"
+  ],
+  "sources": [
+    "Osmania University Library"
+  ],
+  "provenances": [
+    "New York",
+    "london"
+  ],
+  "groups": [
+    "Elite theory"
+  ],
+  "date": "1939",
+  "country": [
+    "US",
+    "GB"
+  ],
+  "language": "stan1293",
+  "pages": [
+    {
+      "works": [
+        {
+          "id": "mosca-ruling-class",
+          "title": "The Ruling Class"
+        }
+      ]
+    }
+  ]
+}

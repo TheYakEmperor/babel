@@ -847,17 +847,96 @@ function initPageViewer(pagesData) {
         pendingLabelNavigations.forEach(label => navigateToLabel(label));
         pendingLabelNavigations = [];
         
-        // Handle URL hash navigation (e.g., #page=5)
+        // Handle URL hash navigation (e.g., #page=5&highlight=word)
         function handleHashNavigation() {
             const hash = window.location.hash;
             if (!hash) return;
             
             const pageMatch = hash.match(/[#&]page=([^&]+)/);
+            const highlightMatch = hash.match(/[#&]highlight=([^&]+)/);
+            
             if (pageMatch) {
                 const pageLabel = decodeURIComponent(pageMatch[1]);
                 console.log('Navigating to page from URL hash:', pageLabel);
                 navigateToLabel(pageLabel);
+                
+                // If highlight term is specified, highlight it after a short delay
+                if (highlightMatch) {
+                    const highlightTerm = decodeURIComponent(highlightMatch[1]);
+                    setTimeout(() => {
+                        highlightSearchTerm(highlightTerm);
+                    }, 500);
+                }
             }
+        }
+        
+        // Highlight search term in transcription mode
+        function highlightSearchTerm(term) {
+            if (!term) return;
+            console.log('Highlighting term:', term);
+            
+            // First, open transcription mode by clicking the toggle button
+            const transcriptionBtn = document.getElementById('pv-transcription-toggle');
+            if (transcriptionBtn && !transcriptionBtn.classList.contains('active')) {
+                console.log('Clicking transcription toggle');
+                transcriptionBtn.click();
+            }
+            
+            // Poll for .pv-word elements with retries
+            let attempts = 0;
+            const maxAttempts = 20; // 20 * 200ms = 4 seconds max
+            
+            function tryHighlight() {
+                attempts++;
+                console.log('Highlight attempt', attempts);
+                
+                // Find all .pv-word elements - check both transcription panel and popup regions
+                const panel = document.querySelector('.pv-transcription-panel');
+                const popups = document.querySelectorAll('.pv-popup-region');
+                console.log('Panel found:', !!panel, 'Popups found:', popups.length);
+                
+                let words = [];
+                if (panel) {
+                    words = Array.from(panel.querySelectorAll('.pv-word'));
+                }
+                if (popups.length > 0) {
+                    popups.forEach(p => {
+                        words = words.concat(Array.from(p.querySelectorAll('.pv-word')));
+                    });
+                }
+                
+                console.log('Found', words.length, 'words to check');
+                
+                // If no words found yet and we have attempts left, retry
+                if (words.length === 0 && attempts < maxAttempts) {
+                    setTimeout(tryHighlight, 200);
+                    return;
+                }
+                
+                const termLower = term.toLowerCase();
+                let found = false;
+                
+                words.forEach(word => {
+                    const wordText = word.textContent.trim().toLowerCase()
+                        .replace(/[.,!?;:""\"()[\]{}·•‧∙«»‹›„"‟'‚]/g, '');
+                    
+                    if (wordText === termLower || wordText.includes(termLower)) {
+                        console.log('Match found:', wordText);
+                        word.classList.add('search-highlight');
+                        if (!found) {
+                            word.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            found = true;
+                        }
+                    }
+                });
+                
+                if (!found) {
+                    console.log('No matches found for:', term);
+                }
+            }
+            
+            // Start polling after a short delay
+            setTimeout(tryHighlight, 300);
         }
         
         // Process hash on load
@@ -1777,19 +1856,29 @@ function initPageViewer(pagesData) {
         
         // Try to initialize the dictionary system
         function pvEnsureDictionary() {
-            if (pvDictInitialized) return typeof window.addDictLookup === 'function';
+            console.log('[pvEnsureDictionary] Called. pvDictInitialized:', pvDictInitialized, 'addDictLookup exists:', typeof window.addDictLookup === 'function');
+            if (pvDictInitialized) {
+                console.log('[pvEnsureDictionary] Already initialized, returning:', typeof window.addDictLookup === 'function');
+                return typeof window.addDictLookup === 'function';
+            }
             pvDictInitialized = true;
             
             // Try to initialize text-reader if not already done
             if (typeof window.addDictLookup !== 'function' && typeof window.initTextReader === 'function') {
+                console.log('[pvEnsureDictionary] addDictLookup not available, calling initTextReader...');
                 try {
                     window.initTextReader();
+                    console.log('[pvEnsureDictionary] After initTextReader, addDictLookup exists:', typeof window.addDictLookup === 'function');
                 } catch (e) {
                     console.warn('Failed to initialize text-reader:', e);
                 }
+            } else if (typeof window.initTextReader !== 'function') {
+                console.warn('[pvEnsureDictionary] initTextReader not available!');
             }
             
-            return typeof window.addDictLookup === 'function';
+            const result = typeof window.addDictLookup === 'function';
+            console.log('[pvEnsureDictionary] Returning:', result);
+            return result;
         }
         
         // Process popup text to wrap words in clickable spans
@@ -2064,13 +2153,14 @@ function initPageViewer(pagesData) {
                             transform: translateY(-50%);
                             width: 350px;
                             max-height: 70vh;
-                            background: white;
-                            border: 1px solid #ddd;
+                            background: #1a1a1a;
+                            border: 1px solid #444;
                             border-radius: 0;
-                            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
                             z-index: 100000;
                             overflow: hidden;
                             font-family: system-ui, sans-serif;
+                            color: #ddd;
                         }
                         .pv-dict-popup.visible { display: block; }
                         .pv-dict-popup-header {
@@ -2078,34 +2168,37 @@ function initPageViewer(pagesData) {
                             justify-content: space-between;
                             align-items: center;
                             padding: 10px 15px;
-                            background: #f5f5f5;
-                            border-bottom: 1px solid #ddd;
+                            background: #252525;
+                            border-bottom: 1px solid #444;
                         }
-                        .pv-dict-popup-title { font-weight: 600; }
+                        .pv-dict-popup-title { font-weight: 600; color: #daa520; }
                         .pv-dict-popup-close {
                             background: none;
                             border: none;
                             font-size: 20px;
                             cursor: pointer;
-                            color: #666;
+                            color: #888;
                         }
+                        .pv-dict-popup-close:hover { color: #fff; }
                         .pv-dict-popup-tabs {
                             display: flex;
                             flex-wrap: wrap;
                             gap: 5px;
                             padding: 8px;
-                            border-bottom: 1px solid #eee;
-                            background: #fafafa;
+                            border-bottom: 1px solid #333;
+                            background: #1f1f1f;
                         }
                         .pv-dict-popup-tab {
                             padding: 4px 10px;
-                            background: #e5e5e5;
+                            background: #333;
                             border: none;
                             border-radius: 0;
                             cursor: pointer;
                             font-size: 13px;
+                            color: #ccc;
                         }
-                        .pv-dict-popup-tab.active { background: #3b82f6; color: white; }
+                        .pv-dict-popup-tab:hover { background: #444; }
+                        .pv-dict-popup-tab.active { background: #daa520; color: #000; }
                         .pv-dict-popup-content {
                             padding: 15px;
                             overflow-y: auto;
@@ -2115,13 +2208,14 @@ function initPageViewer(pagesData) {
                         }
                         .pv-dict-popup-content .pv-dict-lang { 
                             font-weight: 600; 
+                            color: #daa520;
                             margin-top: 10px; 
                             padding-bottom: 5px;
-                            border-bottom: 1px solid #eee;
+                            border-bottom: 1px solid #444;
                         }
                         .pv-dict-popup-content .pv-dict-pos { 
                             font-style: italic; 
-                            color: #666; 
+                            color: #999; 
                             margin: 8px 0 4px;
                         }
                         .pv-dict-popup-content .pv-dict-def { margin: 4px 0 4px 15px; }

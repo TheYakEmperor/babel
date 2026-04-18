@@ -42,11 +42,14 @@ function countriesToFlags(countryData, basePath = '../../../../') {
 
 // Expose init function globally so it can be called after dynamic content loads
 window.initTextReader = function() {
+    console.log('[initTextReader] Called. Already initialized:', window._textReaderInitialized);
     // Prevent double initialization
     if (window._textReaderInitialized) return;
     window._textReaderInitialized = true;
     
+    console.log('[initTextReader] Running _initTextReaderInternal...');
     _initTextReaderInternal();
+    console.log('[initTextReader] Done. addDictLookup:', typeof window.addDictLookup);
 };
 
 function _initTextReaderInternal() {
@@ -379,6 +382,9 @@ function _initTextReaderInternal() {
         
         const targetId = hash.slice(1); // Remove the #
         
+        // Skip page-viewer navigation hashes (contain = or &)
+        if (targetId.includes('=') || targetId.includes('&')) return;
+        
         // First check if this is a superwork ID - if so, highlight all subworks
         const subworks = document.querySelectorAll(`.text-work[data-superwork-id="${targetId}"]`);
         if (subworks.length > 0) {
@@ -400,7 +406,13 @@ function _initTextReaderInternal() {
         }
         
         // Otherwise check for regular work target
-        const target = document.querySelector(hash);
+        let target;
+        try {
+            target = document.querySelector(hash);
+        } catch (e) {
+            // Invalid selector (shouldn't happen now but just in case)
+            return;
+        }
         if (!target || !target.classList.contains('text-work')) return;
         
         const workId = target.dataset.workId;
@@ -2370,6 +2382,7 @@ function _initTextReaderInternal() {
     }
     
     // Export functions for page-viewer.js
+    console.log('[text-reader] Exporting addDictLookup and clearAllDictLookups to window');
     window.addDictLookup = addDictLookup;
     window.clearAllDictLookups = clearAllDictLookups;
     
@@ -2814,17 +2827,32 @@ function _initTextReaderInternal() {
 // Auto-init if content is already present, otherwise wait for manual call
 (function() {
     const textBody = document.querySelector('.text-body');
+    console.log('[text-reader auto-init] textBody:', !!textBody, 'hasContent:', textBody && !!textBody.querySelector('.text-work, .text-page'));
     if (textBody && textBody.querySelector('.text-work, .text-page')) {
         // Content already present (static HTML pages)
+        console.log('[text-reader auto-init] Branch 1: content present, init now');
         window.initTextReader();
     } else if (textBody) {
         // Dynamic content - use MutationObserver to auto-init when content appears
+        console.log('[text-reader auto-init] Branch 2: textBody but no content, setting up observer + 100ms timer');
         const observer = new MutationObserver((mutations, obs) => {
             if (textBody.querySelector('.text-work, .text-page')) {
                 obs.disconnect();
+                console.log('[text-reader auto-init] MutationObserver: content appeared, init now');
                 window.initTextReader();
             }
         });
         observer.observe(textBody, { childList: true, subtree: true });
+        // Also init after a delay to ensure dictionary is available for page-viewer
+        setTimeout(() => {
+            console.log('[text-reader auto-init] 100ms timer fired, initialized:', window._textReaderInitialized);
+            if (!window._textReaderInitialized) {
+                window.initTextReader();
+            }
+        }, 100);
+    } else {
+        // No text-body at all - still init for dictionary (page-viewer only pages)
+        console.log('[text-reader auto-init] Branch 3: no textBody, init now for dictionary');
+        window.initTextReader();
     }
 })();

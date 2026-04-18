@@ -2768,6 +2768,9 @@
                 showStatus(result.message);
                 closeAuthorEditor();
                 loadAuthors();
+                // Refresh cachedAuthors for autocomplete
+                cachedAuthors = [];
+                loadAuthorsList();
             } catch (e) {
                 showStatus('Error: ' + e.message, true);
             } finally {
@@ -2783,6 +2786,9 @@
                 const result = await api('delete-author', { id });
                 showStatus(result.message);
                 loadAuthors();
+                // Refresh cachedAuthors for autocomplete
+                cachedAuthors = [];
+                loadAuthorsList();
             } catch (e) {
                 showStatus('Error: ' + e.message, true);
             }
@@ -2930,6 +2936,7 @@
                 closeGroupEditor();
                 loadGroups();
                 cachedGroups = []; // Clear cache to reload
+                getGroupsList(); // Pre-fetch updated list
             } catch (e) {
                 showStatus('Error: ' + e.message, true);
             } finally {
@@ -2947,6 +2954,7 @@
                 showStatus(result.message);
                 loadGroups();
                 cachedGroups = [];
+                getGroupsList(); // Pre-fetch updated list
             } catch (e) {
                 showStatus('Error: ' + e.message, true);
             }

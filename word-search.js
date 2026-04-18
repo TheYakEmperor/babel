@@ -25,6 +25,7 @@
         const searchInput = document.getElementById('wordSearchInput');
         const searchBtn = document.getElementById('wordSearchBtn');
         const resultsContainer = document.getElementById('wordSearchResults');
+        const sortSelect = document.getElementById('sortBy');
         
         if (!searchInput || !searchBtn || !resultsContainer) {
             console.error('[word-search] Required elements not found');
@@ -41,6 +42,18 @@
                 performSearch();
             }
         });
+        
+        // Handle sort change
+        if (sortSelect) {
+            sortSelect.addEventListener('change', function() {
+                if (currentResults.length > 0) {
+                    const query = searchInput.value.trim();
+                    sortResults(sortSelect.value);
+                    currentPage = 0;
+                    displayResults(currentResults, query);
+                }
+            });
+        }
         
         // Check for URL parameters
         const urlParams = new URLSearchParams(window.location.search);
@@ -147,6 +160,8 @@
                         textId: text.id,
                         textPath: text.path,
                         textTitle: text.title || text.id,
+                        textDate: text.date || null,
+                        textLanguage: text.language || null,
                         textWorks: matchingWorks,
                         contentType: content.type,
                         page: content.page,
@@ -159,10 +174,157 @@
             }
         }
         
-        // Sort by match count (most matches first)
-        results.sort((a, b) => b.matchCount - a.matchCount);
+        // Sort by current selection (default to relevance)
+        const sortSelect = document.getElementById('sortBy');
+        const sortBy = sortSelect ? sortSelect.value : 'relevance';
+        sortResultsArray(results, sortBy);
         
         return results;
+    }
+    
+    // Parse date string for sorting (handles various formats)
+    // Returns a numeric value where higher = more recent
+    function parseDateForSort(dateStr) {
+        if (!dateStr) return null;
+        
+        // Normalize the string
+        let str = dateStr.trim();
+        
+        // Check for BCE/BC marker (applies to whole string)
+        const isBCE = /\b(?:BCE|BC|B\.C\.E?\.|B\.C\.)\s*$/i.test(str);
+        str = str.replace(/\s*(?:BCE|BC|B\.C\.E?\.|B\.C\.)\s*$/i, '');
+        
+        // Remove CE/AD marker (doesn't change value)
+        str = str.replace(/\s*(?:CE|AD|A\.D\.)\s*$/i, '');
+        
+        // Remove "c." or "circa" prefix
+        str = str.replace(/^(?:c\.|circa)\s*/i, '');
+        
+        // Month name to number mapping
+        const months = {
+            'jan': 1, 'january': 1,
+            'feb': 2, 'february': 2,
+            'mar': 3, 'march': 3,
+            'apr': 4, 'april': 4,
+            'may': 5,
+            'jun': 6, 'june': 6,
+            'jul': 7, 'july': 7,
+            'aug': 8, 'august': 8,
+            'sep': 9, 'sept': 9, 'september': 9,
+            'oct': 10, 'october': 10,
+            'nov': 11, 'november': 11,
+            'dec': 12, 'december': 12
+        };
+        
+        // Try to parse full date: "23 Jan 2007" or "Jan 23, 2007" or "2007-01-23"
+        // Format: DD Mon YYYY or DD Month YYYY
+        let fullDateMatch = str.match(/^(\d{1,2})\s+([a-z]+)\s+(\d{3,4})$/i);
+        if (fullDateMatch) {
+            const day = parseInt(fullDateMatch[1]);
+            const month = months[fullDateMatch[2].toLowerCase()] || 1;
+            const year = parseInt(fullDateMatch[3]);
+            const value = year + (month - 1) / 12 + (day - 1) / 365;
+            return isBCE ? -value : value;
+        }
+        
+        // Format: Mon DD, YYYY or Month DD, YYYY
+        fullDateMatch = str.match(/^([a-z]+)\s+(\d{1,2}),?\s+(\d{3,4})$/i);
+        if (fullDateMatch) {
+            const month = months[fullDateMatch[1].toLowerCase()] || 1;
+            const day = parseInt(fullDateMatch[2]);
+            const year = parseInt(fullDateMatch[3]);
+            const value = year + (month - 1) / 12 + (day - 1) / 365;
+            return isBCE ? -value : value;
+        }
+        
+        // Format: YYYY-MM-DD (ISO)
+        fullDateMatch = str.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (fullDateMatch) {
+            const year = parseInt(fullDateMatch[1]);
+            const month = parseInt(fullDateMatch[2]);
+            const day = parseInt(fullDateMatch[3]);
+            const value = year + (month - 1) / 12 + (day - 1) / 365;
+            return isBCE ? -value : value;
+        }
+        
+        // Format: Mon YYYY or Month YYYY
+        const monthYearMatch = str.match(/^([a-z]+)\s+(\d{3,4})$/i);
+        if (monthYearMatch) {
+            const month = months[monthYearMatch[1].toLowerCase()] || 1;
+            const year = parseInt(monthYearMatch[2]);
+            const value = year + (month - 1) / 12;
+            return isBCE ? -value : value;
+        }
+        
+        // Handle ranges like "1000-1100" or "2100–2000" - use the earliest year
+        // Note: For BCE, "2100-2000 BC" means 2100 BC to 2000 BC, so earliest is 2100 BC
+        const rangeMatch = str.match(/^(\d+)\s*[-–]\s*(\d+)$/);
+        if (rangeMatch) {
+            const num1 = parseInt(rangeMatch[1]);
+            const num2 = parseInt(rangeMatch[2]);
+            // Use the smaller number (earlier year for CE, larger magnitude for BCE)
+            const earliest = Math.min(num1, num2);
+            return isBCE ? -Math.max(num1, num2) : earliest;
+        }
+        
+        // Handle century format like "10th century" or "10th century BCE"
+        const centuryMatch = str.match(/^(\d+)(?:st|nd|rd|th)\s+century/i);
+        if (centuryMatch) {
+            // 10th century = 901-1000, midpoint ~950
+            const century = parseInt(centuryMatch[1]);
+            const midpoint = (century - 1) * 100 + 50;
+            return isBCE ? -midpoint : midpoint;
+        }
+        
+        // Try to extract just a year (3-4 digits)
+        const yearMatch = str.match(/\b(\d{3,4})\b/);
+        if (yearMatch) {
+            const year = parseInt(yearMatch[1]);
+            return isBCE ? -year : year;
+        }
+        
+        return null;
+    }
+    
+    // Sort results array in place
+    function sortResultsArray(results, sortBy) {
+        switch (sortBy) {
+            case 'relevance':
+                results.sort((a, b) => b.matchCount - a.matchCount);
+                break;
+            case 'date-desc':
+                results.sort((a, b) => {
+                    const dateA = parseDateForSort(a.textDate);
+                    const dateB = parseDateForSort(b.textDate);
+                    if (dateA === null && dateB === null) return 0;
+                    if (dateA === null) return 1;  // null dates go to end
+                    if (dateB === null) return -1;
+                    return dateB - dateA;
+                });
+                break;
+            case 'date-asc':
+                results.sort((a, b) => {
+                    const dateA = parseDateForSort(a.textDate);
+                    const dateB = parseDateForSort(b.textDate);
+                    if (dateA === null && dateB === null) return 0;
+                    if (dateA === null) return 1;  // null dates go to end
+                    if (dateB === null) return -1;
+                    return dateA - dateB;
+                });
+                break;
+            case 'title':
+                results.sort((a, b) => {
+                    const titleA = (a.textTitle || '').toLowerCase();
+                    const titleB = (b.textTitle || '').toLowerCase();
+                    return titleA.localeCompare(titleB);
+                });
+                break;
+        }
+    }
+    
+    // Re-sort current results (called when sort dropdown changes)
+    function sortResults(sortBy) {
+        sortResultsArray(currentResults, sortBy);
     }
     
     function displayResults(results, query) {
@@ -195,8 +357,9 @@
             const excerpt = getExcerpt(result.fullText, result.matches[0].index, query);
             const highlightedExcerpt = highlightMatches(excerpt, query);
             
-            // Build URL to the text page
-            const textUrl = result.textPath + '/index.html#page=' + encodeURIComponent(result.page);
+            // Build URL to the text page with highlight query
+            const textUrl = result.textPath + '/index.html#page=' + encodeURIComponent(result.page) + 
+                '&highlight=' + encodeURIComponent(query);
             
             // Build works list (only shows works that contain the match)
             let worksHtml = '';
@@ -207,10 +370,18 @@
                 worksHtml = `<div class="result-works">Work: ${workLinks}</div>`;
             }
             
+            // Format date for display
+            const dateHtml = result.textDate 
+                ? `<span class="result-date">${escapeHtml(result.textDate)}</span>` 
+                : '';
+            
             html += `
                 <li class="word-search-result">
-                    <div class="result-text-title">
-                        <a href="${escapeHtml(textUrl)}">${escapeHtml(result.textTitle)}</a>
+                    <div class="result-header">
+                        <div class="result-text-title">
+                            <a href="${escapeHtml(textUrl)}">${escapeHtml(result.textTitle)}</a>
+                        </div>
+                        ${dateHtml}
                     </div>
                     ${worksHtml}
                     <div class="result-meta">

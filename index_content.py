@@ -31,10 +31,12 @@ def extract_text_info(text_dir):
         "id": text_dir.name,
         "path": str(text_dir.relative_to(TEXTS_DIR.parent)),
         "content": [],
-        "works": []
+        "works": [],
+        "date": None,
+        "language": None
     }
     
-    # Get text title, works, and transcriptions from data.json first (preferred)
+    # Get text title, works, date, and transcriptions from data.json first (preferred)
     data_json = text_dir / "data.json"
     if data_json.exists():
         try:
@@ -42,6 +44,10 @@ def extract_text_info(text_dir):
                 data = json.load(f)
                 if data.get("title"):
                     info["title"] = data["title"]
+                if data.get("date"):
+                    info["date"] = data["date"]
+                if data.get("language"):
+                    info["language"] = data["language"]
                 # Extract unique works from pages
                 works_seen = set()
                 for page in data.get("pages", []):
