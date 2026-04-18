@@ -73239,6 +73239,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Daily Mirror",
+    "id": "daily-mirror",
+    "level": "author",
+    "url": "authors/daily-mirror/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Dair",
     "id": "dair1239",
     "level": "language",
@@ -100062,6 +100070,24 @@ const LANGUAGE_INDEX = [
     "url": "indo-european/classical-indo-european/graeco-phrygian/",
     "extinct": false,
     "alt": []
+  },
+  {
+    "name": "Graham Norton rubs salad cream over Denise Van Outen's boobs in hilariously cringy throwback ad",
+    "id": "mirror-graham-norton-rubs-salad-cream-12656116",
+    "level": "work",
+    "url": "works/mirror-graham-norton-rubs-salad-cream-12656116/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Graham Norton rubs salad cream over Denise Van Outen's boobs in hilariously cringy throwback ad (image 1)",
+    "id": "norton-outen-8",
+    "level": "text",
+    "url": "texts/00/00/norton-outen-8/index.html",
+    "extinct": false,
+    "alt": [
+      "work:Graham Norton rubs salad cream over Denise Van Outen's boobs in hilariously cringy throwback ad#mirror-graham-norton-rubs-salad-cream-12656116"
+    ]
   },
   {
     "name": "Grand Valley Dani",
@@ -302738,6 +302764,14 @@ const LANGUAGE_INDEX = [
     "id": "british-museum",
     "level": "source",
     "url": "sources/british-museum/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Mirrorpix",
+    "id": "mirrorpix",
+    "level": "source",
+    "url": "sources/mirrorpix/index.html",
     "extinct": false,
     "alt": []
   },
