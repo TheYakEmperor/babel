@@ -1021,12 +1021,29 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         else:
             # Fallback to scanning local directory (for local dev without B2)
             images_dir = text_dir / 'images'
+            manifest_images = []
             if images_dir.exists():
                 import re
                 def natural_sort_key(s):
                     return [int(c) if c.isdigit() else c.lower() for c in re.split(r'(\d+)', s)]
-                text_data['_imageCount'] = len(list(images_dir.glob('*.*')))
-                text_data['_imageFiles'] = sorted([f.name for f in images_dir.glob('*.*')], key=natural_sort_key)
+                image_files = sorted([f.name for f in images_dir.glob('*.*')], key=natural_sort_key)
+                text_data['_imageCount'] = len(image_files)
+                text_data['_imageFiles'] = image_files
+                # Build manifest-style list from image files
+                manifest_images = [{'url': f'images/{f}', 'label': f.rsplit('.', 1)[0].replace('_', ' ')} for f in image_files]
+            else:
+                text_data['_imageCount'] = 0
+                text_data['_imageFiles'] = []
+            
+            # Also include blank pages from data.json pages array
+            for page in text_data.get('pages', []):
+                if page.get('isBlank'):
+                    manifest_images.append({
+                        'label': page.get('label', page.get('id', '')),
+                        'isBlank': True
+                    })
+            
+            text_data['_imagesManifest'] = manifest_images
         
         return text_data
     
