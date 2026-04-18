@@ -2138,17 +2138,36 @@ body.viewer-fullscreen .search-container {
     padding-bottom: 0;
 }
 
+/* Override pasted font-family that falls back to sans-serif/system fonts 
+   Force our loaded fonts so pasted content looks consistent */
+.pv-region-content * {
+    font-family: inherit !important;
+}
+
 /* Text cross-reference links */
 .text-ref {
-    color: #1976d2;
+    color: #d4a574;
     text-decoration: underline;
     cursor: pointer;
     transition: color 0.15s ease;
 }
 
 .text-ref:hover {
-    color: #0d47a1;
+    color: #c4956a;
     text-decoration: underline;
+}
+
+/* Image links - gold border on hover */
+.text-ref img,
+a.text-ref > img {
+    transition: outline 0.15s ease, box-shadow 0.15s ease;
+    outline: 2px solid transparent;
+}
+
+.text-ref:hover img,
+a.text-ref:hover > img {
+    outline: 3px solid #d4a574;
+    box-shadow: 0 0 8px rgba(212, 165, 116, 0.5);
 }
 
 /* Header row for title and work caption - positioned alongside first line */

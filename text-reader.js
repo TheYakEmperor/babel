@@ -2797,22 +2797,37 @@ function _initTextReaderInternal() {
         
         if (!pageViewer || !pvTitle || !pageTitle) return;
         
-        // Store the text title (not 'Page Viewer') to always show it
-        const textTitle = pageTitle.textContent;
-        // Set it immediately
-        pvTitle.textContent = textTitle;
+        // Function to get current title (avoiding "Loading..." placeholder)
+        function getCurrentTitle() {
+            const title = pageTitle.textContent;
+            return (title && title !== 'Loading...' && title !== 'Error loading text') ? title : null;
+        }
         
-        // Create a MutationObserver to watch for class changes - but always keep the text title
-        const observer = new MutationObserver(function(mutations) {
+        // Update pv-title if we have a real title
+        function updatePvTitle() {
+            const title = getCurrentTitle();
+            if (title) {
+                pvTitle.textContent = title;
+            }
+        }
+        
+        // Set initial title if available
+        updatePvTitle();
+        
+        // Watch for page-title changes (when data.json loads)
+        const titleObserver = new MutationObserver(updatePvTitle);
+        titleObserver.observe(pageTitle, { childList: true, characterData: true, subtree: true });
+        
+        // Watch for fullscreen class changes - always use current title
+        const classObserver = new MutationObserver(function(mutations) {
             mutations.forEach(function(mutation) {
                 if (mutation.attributeName === 'class') {
-                    // Always show the text title, not "Page Viewer"
-                    pvTitle.textContent = textTitle;
+                    updatePvTitle();
                 }
             });
         });
         
-        observer.observe(pageViewer, { attributes: true, attributeFilter: ['class'] });
+        classObserver.observe(pageViewer, { attributes: true, attributeFilter: ['class'] });
     }
     
     // Run after DOM is ready
