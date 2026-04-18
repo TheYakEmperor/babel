@@ -2936,7 +2936,7 @@
                 closeGroupEditor();
                 loadGroups();
                 cachedGroups = []; // Clear cache to reload
-                getGroupsList(); // Pre-fetch updated list
+                await getGroupsList(); // Pre-fetch updated list
             } catch (e) {
                 showStatus('Error: ' + e.message, true);
             } finally {
@@ -2954,7 +2954,7 @@
                 showStatus(result.message);
                 loadGroups();
                 cachedGroups = [];
-                getGroupsList(); // Pre-fetch updated list
+                await getGroupsList(); // Pre-fetch updated list
             } catch (e) {
                 showStatus('Error: ' + e.message, true);
             }
@@ -3696,13 +3696,13 @@
                 if (items[index]) items[index].scrollIntoView({ block: 'nearest' });
             }
             
-            input.oninput = () => {
+            input.oninput = async () => {
                 const query = input.value.toLowerCase().trim();
                 if (!query || query.length < 1) { hideDropdown(); return; }
                 
                 let matches = [];
                 if (field === 'languages') {
-                    getLanguagesList();
+                    await getLanguagesList();
                     matches = cachedLanguages.filter(l => 
                         l.name.toLowerCase().includes(query) || l.id.toLowerCase().includes(query)
                     ).sort((a, b) => {
@@ -3727,7 +3727,7 @@
                         return aStart - bStart || a.name.localeCompare(b.name);
                     });
                 } else if (field === 'collections') {
-                    getCollectionsList();
+                    await getCollectionsList();
                     matches = cachedCollections.filter(c => 
                         c.name.toLowerCase().includes(query) || c.id.toLowerCase().includes(query)
                     ).sort((a, b) => {
@@ -3736,7 +3736,7 @@
                         return aStart - bStart || a.name.localeCompare(b.name);
                     });
                 } else if (field === 'sources') {
-                    getSourcesList();
+                    await getSourcesList();
                     matches = cachedSources.filter(s => 
                         s.name.toLowerCase().includes(query) || s.id.toLowerCase().includes(query)
                     ).sort((a, b) => {
@@ -3745,7 +3745,7 @@
                         return aStart - bStart || a.name.localeCompare(b.name);
                     });
                 } else if (field === 'provenances') {
-                    getProvenancesList();
+                    await getProvenancesList();
                     matches = cachedProvenancesList.filter(p => 
                         p.name.toLowerCase().includes(query) || p.id.toLowerCase().includes(query)
                     ).sort((a, b) => {
@@ -3754,7 +3754,7 @@
                         return aStart - bStart || a.name.localeCompare(b.name);
                     });
                 } else if (field === 'groups') {
-                    getGroupsList();
+                    await getGroupsList();
                     matches = cachedGroups.filter(g => 
                         g.name.toLowerCase().includes(query) || g.id.toLowerCase().includes(query)
                     ).sort((a, b) => {

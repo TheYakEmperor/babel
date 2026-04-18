@@ -75833,6 +75833,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Denise Van Outen Graham Norton Pr Editorial Stock Photo",
+    "id": "norton-outen-2",
+    "level": "text",
+    "url": "texts/00/00/norton-outen-2/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Denmark",
     "id": "dk",
     "level": "country",
@@ -302698,6 +302706,14 @@ const LANGUAGE_INDEX = [
     "id": "a-glass-bottle",
     "level": "source",
     "url": "sources/a-glass-bottle/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Shutterstock",
+    "id": "shutterstock",
+    "level": "source",
+    "url": "sources/shutterstock/index.html",
     "extinct": false,
     "alt": []
   },
