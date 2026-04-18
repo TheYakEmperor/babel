@@ -44,16 +44,36 @@ def generate_manifests():
         except:
             image_files.sort()
         
-        # Create manifest - URL-encode filenames for special characters like #
-        manifest = {
-            'images': [
-                {
-                    'url': f'images/{quote(name, safe="")}',
-                    'label': Path(name).stem.replace('_', ' ')
-                }
-                for name in image_files
-            ]
-        }
+        # Check data.json for blank pages that should be included
+        blank_pages = []
+        data_json_path = text_dir / 'data.json'
+        if data_json_path.exists():
+            try:
+                with open(data_json_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                # Extract blank pages from data.json (pages with isBlank: true)
+                for page in data.get('pages', []):
+                    if page.get('isBlank'):
+                        blank_pages.append({
+                            'label': page.get('label', page.get('id', '')),
+                            'isBlank': True
+                        })
+            except:
+                pass
+        
+        # Create manifest from image files - URL-encode filenames for special characters like #
+        images_list = [
+            {
+                'url': f'images/{quote(name, safe="")}',
+                'label': Path(name).stem.replace('_', ' ')
+            }
+            for name in image_files
+        ]
+        
+        # Append blank pages at the end (they'll be reordered by user if needed)
+        images_list.extend(blank_pages)
+        
+        manifest = {'images': images_list}
         
         manifest_path = text_dir / 'images.json'
         with open(manifest_path, 'w', encoding='utf-8') as f:
@@ -92,8 +112,8 @@ def generate_manifests():
         # Generate manifest from data.json pages
         images = []
         for page in pages:
-            # Skip the first entry if it's just a works container (no id/label)
-            if not page.get('label') and not page.get('id') and page.get('works'):
+            # Skip entries that have works defined - they're work containers, not image pages
+            if page.get('works'):
                 continue
             
             if page.get('isBlank'):
