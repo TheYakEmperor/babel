@@ -187,7 +187,27 @@ def generate_collection_page(collection_name, collection_id, text_entries, base_
     </div>
     
     <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
     <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../">Home</a></li>
+                <li><a href="../../texts-index.html">All Texts</a></li>
+                <li><a href="../../languages/">Languages</a></li>
+                <li><a href="../../works/">Works Index</a></li>
+                <li><a href="../../authors/">Authors</a></li>
+                <li><a href="../../sources/">Sources</a></li>
+                <li><a href="../../provenances/">Provenances</a></li>
+                <li><a href="../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
         <h1>{escape_html(collection_name)}</h1>
 
         <div class="metadata">
@@ -207,28 +227,11 @@ def generate_collection_page(collection_name, collection_id, text_entries, base_
 {texts_list}
             </ul>
         </section>
+    </div>
+        <aside class="left-sidebar"></aside>
+    </div></div>
 
-    <aside class="right-sidebar">
-        <a href="../../" class="sidebar-logo">
-            <img src="../../Wikilogo.webp" alt="Babel Archive">
-        </a>
-        <nav class="sidebar-links">
-            <h3>Navigate</h3>
-            <ul>
-                <li><a href="../../">Home</a></li>
-                <li><a href="../../texts-index.html">All Texts</a></li>
-                <li><a href="../../languages/">Languages</a></li>
-                <li><a href="../../works/">Works Index</a></li>
-                <li><a href="../../authors/">Authors</a></li>
-                <li><a href="../../sources/">Sources</a></li>
-                <li><a href="../../provenances/">Provenances</a></li>
-                <li><a href="../">Collections</a></li>
-            </ul>
-        </nav>
-    </aside>
-</div>
-
-    <script src="../../search-index.js"></script>
+    <script src="../../search-index.js" defer></script>
     <script src="../../search.js"></script>
     <script>
     // Sort functionality
@@ -341,7 +344,27 @@ def generate_collections_index(all_collections):
     </div>
     
     <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../" class="header-logo"><img src="../Wikilogo.webp" alt="Babel Archive"></a></div>
     <div class="container">
+        <aside class="right-sidebar">
+            <a href="../" class="sidebar-logo">
+                <img src="../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../">Home</a></li>
+                <li><a href="../texts-index.html">All Texts</a></li>
+                <li><a href="../languages/">Languages</a></li>
+                <li><a href="../works/">Works Index</a></li>
+                <li><a href="../authors/">Authors</a></li>
+                <li><a href="../sources/">Sources</a></li>
+                <li><a href="../provenances/">Provenances</a></li>
+                <li><a href="../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
         <h1>Collections</h1>
 
         <div class="metadata">
@@ -355,28 +378,11 @@ def generate_collections_index(all_collections):
 {collections_list}
             </ul>
         </section>
+    </div>
+        <aside class="left-sidebar"></aside>
+    </div></div>
 
-    <aside class="right-sidebar">
-        <a href="../" class="sidebar-logo">
-            <img src="../Wikilogo.webp" alt="Babel Archive">
-        </a>
-        <nav class="sidebar-links">
-            <h3>Navigate</h3>
-            <ul>
-                <li><a href="../">Home</a></li>
-                <li><a href="../texts-index.html">All Texts</a></li>
-                <li><a href="../languages/">Languages</a></li>
-                <li><a href="../works/">Works Index</a></li>
-                <li><a href="../authors/">Authors</a></li>
-                <li><a href="../sources/">Sources</a></li>
-                <li><a href="../provenances/">Provenances</a></li>
-                <li><a href="./">Collections</a></li>
-            </ul>
-        </nav>
-    </aside>
-</div>
-
-    <script src="../search-index.js"></script>
+    <script src="../search-index.js" defer></script>
     <script src="../search.js"></script>
 </body>
 </html>

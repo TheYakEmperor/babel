@@ -32010,6 +32010,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "Ann Beattie",
+    "id": "ann-beattie",
+    "level": "author",
+    "url": "authors/ann-beattie/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Annobonese",
     "id": "fada1250",
     "level": "language",
@@ -114931,6 +114939,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "Irony & Pity",
+    "id": "irony-pity",
+    "level": "author",
+    "url": "authors/irony-pity/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Iroole",
     "id": "iroo1238",
     "level": "dialect",
@@ -115151,6 +115167,16 @@ const LANGUAGE_INDEX = [
       "Agta de Isarog",
       "Agta, Isarog",
       "Bikol"
+    ]
+  },
+  {
+    "name": "ISBN 0-394-53965-6",
+    "id": "0-394-53965-6",
+    "level": "text",
+    "url": "texts/00/00/0-394-53965-6/index.html",
+    "extinct": false,
+    "alt": [
+      "work:Love Always#beattie-love-always"
     ]
   },
   {
@@ -155936,6 +155962,14 @@ const LANGUAGE_INDEX = [
     "id": "lova1240",
     "level": "dialect",
     "url": "indo-european/classical-indo-european/indo-iranian/indo-aryan/middle-modern-indo-aryan/continental-indo-aryan/midlands-indo-aryan/shaurasenic/indo-aryan-central-zone/romani/vlax-romani/northern-vlax/lovari/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Love Always",
+    "id": "beattie-love-always",
+    "level": "work",
+    "url": "works/beattie-love-always/index.html",
     "extinct": false,
     "alt": []
   },
@@ -224660,6 +224694,14 @@ const LANGUAGE_INDEX = [
     "id": "rand1239",
     "level": "dialect",
     "url": "austronesian/malayo-polynesian/eastern-malayo-polynesian/south-halmahera-west-new-guinea/cenderawasih-bay/yapen/central-western-yapen/ansus-ambai/ambai/randawaya/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Random House",
+    "id": "random-house",
+    "level": "author",
+    "url": "authors/random-house/index.html",
     "extinct": false,
     "alt": []
   },

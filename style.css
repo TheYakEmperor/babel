@@ -2144,30 +2144,26 @@ body.viewer-fullscreen .search-container {
     font-family: inherit !important;
 }
 
-/* Text cross-reference links */
-.text-ref {
+/* Links in transcription content - gold color */
+.pv-region-content a {
     color: #d4a574;
     text-decoration: underline;
     cursor: pointer;
     transition: color 0.15s ease;
 }
 
-.text-ref:hover {
+.pv-region-content a:hover {
     color: #c4956a;
-    text-decoration: underline;
 }
 
 /* Image links - gold border on hover */
-.text-ref img,
-a.text-ref > img {
-    transition: outline 0.15s ease, box-shadow 0.15s ease;
-    outline: 2px solid transparent;
+.pv-region-content figure {
+    overflow: visible !important;
 }
 
-.text-ref:hover img,
-a.text-ref:hover > img {
-    outline: 3px solid #d4a574;
-    box-shadow: 0 0 8px rgba(212, 165, 116, 0.5);
+.pv-region-content a:hover img {
+    outline: 3px solid #d4a574 !important;
+    outline-offset: 2px;
 }
 
 /* Header row for title and work caption - positioned alongside first line */

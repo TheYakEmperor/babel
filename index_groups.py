@@ -188,7 +188,27 @@ def generate_group_page(group_id, texts, works, authors):
     </div>
     
     <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../../" class="header-logo"><img src="../../Wikilogo.webp" alt="Babel Archive"></a></div>
     <div class="container">
+        <aside class="right-sidebar">
+            <a href="../../" class="sidebar-logo">
+                <img src="../../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
+            <h3>Navigate</h3>
+            <ul>
+                <li><a href="../../">Home</a></li>
+                <li><a href="../../texts-index.html">All Texts</a></li>
+                <li><a href="../../languages/">Languages</a></li>
+                <li><a href="../../works/">Works Index</a></li>
+                <li><a href="../../authors/">Authors</a></li>
+                <li><a href="../../sources/">Sources</a></li>
+                <li><a href="../../provenances/">Provenances</a></li>
+                <li><a href="../../collections/">Collections</a></li>
+            </ul>
+        </nav>
+        </aside>
+        <div class="main-content">
         <h1>{escape_html(group_name)}</h1>
 
         <div class="metadata">
@@ -216,30 +236,11 @@ def generate_group_page(group_id, texts, works, authors):
 {authors_list}
             </ul>
         </section>
+    </div>
+        <aside class="left-sidebar"></aside>
+    </div></div>
 
-    <aside class="right-sidebar">
-        <a href="../../" class="sidebar-logo">
-            <img src="../../Wikilogo.webp" alt="Babel Archive">
-        </a>
-        <nav class="sidebar-links">
-            <h3>Navigate</h3>
-            <ul>
-                <li><a href="../../">Home</a></li>
-                <li><a href="../../texts-index.html">All Texts</a></li>
-                <li><a href="../../languages/">Languages</a></li>
-                <li><a href="../../works/">Works Index</a></li>
-                <li><a href="../../authors/">Authors</a></li>
-                <li><a href="../../sources/">Sources</a></li>
-                <li><a href="../../provenances/">Provenances</a></li>
-                <li><a href="../../collections/">Collections</a></li>
-                <li><a href="../">Groups</a></li>
-            </ul>
-        </nav>
-    </aside>
-</div>
-</div>
-
-    <script src="../../search-index.js"></script>
+    <script src="../../search-index.js" defer></script>
     <script src="../../search.js"></script>
 </body>
 </html>'''
@@ -286,22 +287,13 @@ def generate_groups_index(all_groups):
     </div>
     
     <div class="page-wrapper">
+    <div class="header-logo-container"><a href="../" class="header-logo"><img src="../Wikilogo.webp" alt="Babel Archive"></a></div>
     <div class="container">
-        <h1>Groups</h1>
-        
-        <p class="intro">Browse texts, works, and authors by category or topical grouping.</p>
-
-        <section class="children-section">
-            <ul class="children-list">
-{groups_list}
-            </ul>
-        </section>
-
-    <aside class="right-sidebar">
-        <a href="../" class="sidebar-logo">
-            <img src="../Wikilogo.webp" alt="Babel Archive">
-        </a>
-        <nav class="sidebar-links">
+        <aside class="right-sidebar">
+            <a href="../" class="sidebar-logo">
+                <img src="../background-image/1111babel.png" alt="Babel Archive">
+            </a>
+            <nav class="sidebar-links">
             <h3>Navigate</h3>
             <ul>
                 <li><a href="../">Home</a></li>
@@ -314,11 +306,22 @@ def generate_groups_index(all_groups):
                 <li><a href="../collections/">Collections</a></li>
             </ul>
         </nav>
-    </aside>
-</div>
-</div>
+        </aside>
+        <div class="main-content">
+        <h1>Groups</h1>
+        
+        <p class="intro">Browse texts, works, and authors by category or topical grouping.</p>
 
-    <script src="../search-index.js"></script>
+        <section class="children-section">
+            <ul class="children-list">
+{groups_list}
+            </ul>
+        </section>
+    </div>
+        <aside class="left-sidebar"></aside>
+    </div></div>
+
+    <script src="../search-index.js" defer></script>
     <script src="../search.js"></script>
 </body>
 </html>'''

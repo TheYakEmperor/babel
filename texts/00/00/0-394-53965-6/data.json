@@ -1,0 +1,22 @@
+{
+  "id": "0-394-53965-6",
+  "title": "ISBN 0-394-53965-6",
+  "author": [
+    "Irony & Pity",
+    "Random House",
+    "Ann Beattie"
+  ],
+  "date": "1985",
+  "country": "US",
+  "language": "stan1293",
+  "pages": [
+    {
+      "works": [
+        {
+          "id": "beattie-love-always",
+          "title": "Love Always"
+        }
+      ]
+    }
+  ]
+}
