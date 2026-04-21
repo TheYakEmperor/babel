@@ -46,6 +46,8 @@ function initPageViewer(pagesData) {
     let isTranscriptionMode = false;
     let transcriptionPanel = null;
     let refreshTranscriptionPanel = null;  // Function reference set later
+    let pageWorksPanel = null;
+    let refreshPageWorksPanel = null;
     
     // Zoom and pan state
     let zoomLevel = 1;
@@ -614,6 +616,10 @@ function initPageViewer(pagesData) {
         // Update transcription panel if in transcription mode
         if (isTranscriptionMode && transcriptionPanel && refreshTranscriptionPanel) {
             refreshTranscriptionPanel();
+        }
+
+        if (pageWorksPanel && refreshPageWorksPanel) {
+            refreshPageWorksPanel();
         }
     }
     
@@ -1578,6 +1584,15 @@ function initPageViewer(pagesData) {
             
             return panel;
         }
+
+        function createPageWorksPanel() {
+            const panel = document.createElement('aside');
+            panel.id = 'pv-page-works-panel';
+            panel.className = 'pv-page-works-panel';
+            panel.style.display = 'none';
+            mainContainer.appendChild(panel);
+            return panel;
+        }
         
         // Get OCR text from the current page(s) images (async for lazy loading)
         async function getCurrentPageOcrText() {
@@ -1654,6 +1669,93 @@ function initPageViewer(pagesData) {
                 }
             }
             return result;
+        }
+
+        function getCurrentPageWorks() {
+            if (!pagesData) return [];
+            const worksMap = new Map();
+
+            let pageIndices = [];
+            if (isDualMode) {
+                const spreads = getSpreads();
+                if (currentIndex >= 0 && currentIndex < spreads.length) {
+                    pageIndices = spreads[currentIndex];
+                }
+            } else {
+                pageIndices = [currentIndex];
+            }
+
+            for (const idx of pageIndices) {
+                if (idx < 0 || idx >= images.length) continue;
+                const currentImage = images[idx];
+                const currentLabel = typeof currentImage === 'object' ? currentImage.label : getPageName(currentImage);
+
+                const page = pagesData.find(p => {
+                    const pageLabel = p.label || p.id || '';
+                    return pageLabel === currentLabel;
+                });
+
+                if (!page || !Array.isArray(page.works)) continue;
+
+                for (const work of page.works) {
+                    if (work && (work.id || work.title)) {
+                        const key = work.id || `${currentLabel}::${work.title || ''}`;
+                        if (!worksMap.has(key)) {
+                            worksMap.set(key, {
+                                id: work.id || '',
+                                title: work.title || work.id || 'Untitled work',
+                                pageLabel: currentLabel
+                            });
+                        }
+                    }
+
+                    if (work && Array.isArray(work.subworks)) {
+                        for (const sub of work.subworks) {
+                            if (!sub || (!sub.id && !sub.title)) continue;
+                            const subKey = sub.id || `${currentLabel}::${sub.title || ''}`;
+                            if (!worksMap.has(subKey)) {
+                                worksMap.set(subKey, {
+                                    id: sub.id || '',
+                                    title: sub.title || sub.id || 'Untitled work',
+                                    pageLabel: currentLabel
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            return Array.from(worksMap.values()).sort((a, b) => {
+                if (a.pageLabel !== b.pageLabel) return a.pageLabel.localeCompare(b.pageLabel);
+                return a.title.localeCompare(b.title);
+            });
+        }
+
+        function populatePageWorksPanel() {
+            if (!pageWorksPanel) return;
+            const works = getCurrentPageWorks();
+
+            if (works.length === 0) {
+                pageWorksPanel.style.display = 'none';
+                mainContainer.classList.remove('with-works-panel');
+                return;
+            }
+
+            mainContainer.classList.add('with-works-panel');
+            pageWorksPanel.style.display = 'block';
+
+            const html = works.map(work => {
+                const pageBadge = work.pageLabel ? `<span class="pv-page-works-page">${escapeHtmlPV(work.pageLabel)}</span>` : '';
+                if (work.id) {
+                    return `<li><a href="../../../../works/${work.id}/" target="_blank">${escapeHtmlPV(work.title)}</a>${pageBadge}</li>`;
+                }
+                return `<li><span>${escapeHtmlPV(work.title)}</span>${pageBadge}</li>`;
+            }).join('');
+
+            pageWorksPanel.innerHTML = `
+                <h4>Works on This Page</h4>
+                <ul>${html}</ul>
+            `;
         }
         
         // Populate transcription panel with text from current page(s)
@@ -1735,6 +1837,7 @@ function initPageViewer(pagesData) {
         
         // Make populateTranscriptionPanel accessible for page navigation
         refreshTranscriptionPanel = populateTranscriptionPanel;
+        refreshPageWorksPanel = populatePageWorksPanel;
         
         // Toggle transcription mode
         function toggleTranscriptionMode() {
@@ -2459,6 +2562,10 @@ function initPageViewer(pagesData) {
         // Show first page (unless hash navigation already set a page)
         if (!window.location.hash || !window.location.hash.includes('page=')) {
             showImage(0);
+        }
+
+        if (pageWorksPanel && refreshPageWorksPanel) {
+            refreshPageWorksPanel();
         }
     });
 }

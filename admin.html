@@ -489,7 +489,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            pointer-events: none;
+            pointer-events: auto;
+            cursor: default;
         }
         
         #annotator-canvas.drawing {
@@ -1295,6 +1296,10 @@
                     <div class="annotator-toolbar">
                         <span id="annotator-page-label">Select a page</span>
                         <div class="annotator-tools">
+                            <button class="btn btn-secondary" onclick="changeAnnotatorZoom(-0.1)" title="Zoom out">−</button>
+                            <span id="annotator-zoom-level" style="min-width:52px;text-align:center;color:#e5e7eb;font-size:0.85em;">100%</span>
+                            <button class="btn btn-secondary" onclick="changeAnnotatorZoom(0.1)" title="Zoom in">+</button>
+                            <button class="btn btn-secondary" onclick="resetAnnotatorZoom()" title="Reset zoom">Reset</button>
                             <button class="btn btn-primary" id="annotator-draw-btn" onclick="toggleDrawMode()">Draw Region</button>
                             <button class="btn btn-secondary" onclick="deleteSelectedRegion()">Delete Selected</button>
                         </div>
@@ -4538,7 +4543,8 @@
             works: [],          // Array of { id, title } flattened from text's works/subworks
             currentPage: null,
             selectedRegion: null,
-            isDrawing: false
+            isDrawing: false,
+            zoom: 1
         };
         
         // Placeholder SVGs for media files
@@ -4598,10 +4604,12 @@
             annotatorData.currentPage = null;
             annotatorData.selectedRegion = null;
             annotatorData.isDrawing = false;
+            annotatorData.zoom = 1;
             annotatorData.pagesReordered = false;
             
             document.getElementById('annotator-title').textContent = `Region Annotator: ${textId}`;
             document.getElementById('annotator-modal').classList.add('active');
+            updateAnnotatorZoomDisplay();
             
             // Load text data
             try {
@@ -5497,6 +5505,35 @@
             canvas.style.top = (imgRect.top - wrapperRect.top + wrapper.scrollTop + offsetY) + 'px';
             setupDrawHandlers();  // Enable click/drag on canvas
         }
+
+        function updateAnnotatorZoomDisplay() {
+            const zoomLabel = document.getElementById('annotator-zoom-level');
+            if (zoomLabel) {
+                zoomLabel.textContent = `${Math.round(annotatorData.zoom * 100)}%`;
+            }
+        }
+
+        function applyAnnotatorZoom() {
+            const img = document.getElementById('annotator-image');
+            const zoomPercent = Math.round(annotatorData.zoom * 100);
+            img.style.maxWidth = `${zoomPercent}%`;
+            img.style.maxHeight = `${zoomPercent}%`;
+            updateAnnotatorZoomDisplay();
+            setupAnnotatorCanvas();
+            drawAnnotatorRegions();
+        }
+
+        function changeAnnotatorZoom(delta) {
+            const nextZoom = Math.max(0.3, Math.min(4, annotatorData.zoom + delta));
+            if (nextZoom === annotatorData.zoom) return;
+            annotatorData.zoom = nextZoom;
+            applyAnnotatorZoom();
+        }
+
+        function resetAnnotatorZoom() {
+            annotatorData.zoom = 1;
+            applyAnnotatorZoom();
+        }
         
         function drawAnnotatorRegions() {
             const canvas = document.getElementById('annotator-canvas');
@@ -5523,6 +5560,19 @@
                 ctx.fillStyle = isSelected ? '#ef4444' : '#3b82f6';
                 ctx.font = 'bold 14px sans-serif';
                 ctx.fillText(`${i + 1}${isSelected ? ' ✥' : ''}`, x + 5, y + 18);
+
+                if (isSelected) {
+                    const handles = [
+                        [x, y],
+                        [x + w, y],
+                        [x, y + h],
+                        [x + w, y + h]
+                    ];
+                    ctx.fillStyle = '#ef4444';
+                    handles.forEach(([hx, hy]) => {
+                        ctx.fillRect(hx - 4, hy - 4, 8, 8);
+                    });
+                }
             });
         }
         
@@ -5670,8 +5720,37 @@
         
         let drawStart = null;
         let currentRect = null;
-        let draggedRegion = null;  // For moving regions on canvas
+        let draggedRegion = null;  // For moving/resizing regions on canvas
         let dragOffset = null;     // Offset from region corner during drag
+        let dragMode = null;       // 'move' | 'resize'
+        let resizeHandle = null;   // 'nw' | 'ne' | 'sw' | 'se'
+
+        function getResizeHandleAtPoint(regionIndex, canvasX, canvasY) {
+            if (regionIndex < 0) return null;
+            const canvas = document.getElementById('annotator-canvas');
+            const region = (annotatorData.regions[annotatorData.currentPage] || [])[regionIndex];
+            if (!region) return null;
+
+            const x = region.x * canvas.width;
+            const y = region.y * canvas.height;
+            const w = region.width * canvas.width;
+            const h = region.height * canvas.height;
+            const threshold = 8;
+
+            const near = (px, py) => Math.abs(canvasX - px) <= threshold && Math.abs(canvasY - py) <= threshold;
+
+            if (near(x, y)) return 'nw';
+            if (near(x + w, y)) return 'ne';
+            if (near(x, y + h)) return 'sw';
+            if (near(x + w, y + h)) return 'se';
+            return null;
+        }
+
+        function getResizeCursor(handle) {
+            if (handle === 'nw' || handle === 'se') return 'nwse-resize';
+            if (handle === 'ne' || handle === 'sw') return 'nesw-resize';
+            return 'default';
+        }
         
         // Find which region (if any) contains a point
         function findRegionAtPoint(canvasX, canvasY) {
@@ -5714,23 +5793,32 @@
                     // Not drawing - check if clicking on existing region to move it
                     const regionIndex = findRegionAtPoint(canvasX, canvasY);
                     if (regionIndex >= 0) {
+                        const activeResizeHandle = getResizeHandleAtPoint(regionIndex, canvasX, canvasY);
                         // Start dragging this region
                         const region = annotatorData.regions[annotatorData.currentPage][regionIndex];
                         const regionX = region.x * canvas.width;
                         const regionY = region.y * canvas.height;
                         
                         draggedRegion = regionIndex;
-                        dragOffset = {
-                            x: canvasX - regionX,
-                            y: canvasY - regionY
-                        };
+                        if (activeResizeHandle) {
+                            dragMode = 'resize';
+                            resizeHandle = activeResizeHandle;
+                            dragOffset = null;
+                        } else {
+                            dragMode = 'move';
+                            resizeHandle = null;
+                            dragOffset = {
+                                x: canvasX - regionX,
+                                y: canvasY - regionY
+                            };
+                        }
                         
                         // Select the region
                         annotatorData.selectedRegion = regionIndex;
                         renderAnnotatorRegions();
                         drawAnnotatorRegions();
                         
-                        canvas.style.cursor = 'grabbing';
+                        canvas.style.cursor = activeResizeHandle ? getResizeCursor(activeResizeHandle) : 'grabbing';
                     }
                 }
             };
@@ -5759,7 +5847,7 @@
                     ctx.setLineDash([5, 3]);
                     ctx.strokeRect(currentRect.x, currentRect.y, currentRect.width, currentRect.height);
                     ctx.setLineDash([]);
-                } else if (draggedRegion !== null && dragOffset) {
+                } else if (draggedRegion !== null && dragMode === 'move' && dragOffset) {
                     // Moving existing region
                     const region = annotatorData.regions[annotatorData.currentPage][draggedRegion];
                     const newX = currentX - dragOffset.x;
@@ -5770,9 +5858,50 @@
                     region.y = Math.max(0, Math.min(1 - region.height, newY / canvas.height));
                     
                     drawAnnotatorRegions();
+                } else if (draggedRegion !== null && dragMode === 'resize' && resizeHandle) {
+                    const region = annotatorData.regions[annotatorData.currentPage][draggedRegion];
+                    const minSize = 20;
+
+                    let left = region.x * canvas.width;
+                    let top = region.y * canvas.height;
+                    let right = left + region.width * canvas.width;
+                    let bottom = top + region.height * canvas.height;
+
+                    if (resizeHandle === 'nw') {
+                        left = Math.min(currentX, right - minSize);
+                        top = Math.min(currentY, bottom - minSize);
+                    } else if (resizeHandle === 'ne') {
+                        right = Math.max(currentX, left + minSize);
+                        top = Math.min(currentY, bottom - minSize);
+                    } else if (resizeHandle === 'sw') {
+                        left = Math.min(currentX, right - minSize);
+                        bottom = Math.max(currentY, top + minSize);
+                    } else if (resizeHandle === 'se') {
+                        right = Math.max(currentX, left + minSize);
+                        bottom = Math.max(currentY, top + minSize);
+                    }
+
+                    left = Math.max(0, left);
+                    top = Math.max(0, top);
+                    right = Math.min(canvas.width, right);
+                    bottom = Math.min(canvas.height, bottom);
+
+                    region.x = left / canvas.width;
+                    region.y = top / canvas.height;
+                    region.width = (right - left) / canvas.width;
+                    region.height = (bottom - top) / canvas.height;
+
+                    drawAnnotatorRegions();
                 } else if (!annotatorData.isDrawing) {
                     // Update cursor based on hover
                     const regionIndex = findRegionAtPoint(currentX, currentY);
+                    if (regionIndex === annotatorData.selectedRegion) {
+                        const hoverHandle = getResizeHandleAtPoint(regionIndex, currentX, currentY);
+                        if (hoverHandle) {
+                            canvas.style.cursor = getResizeCursor(hoverHandle);
+                            return;
+                        }
+                    }
                     canvas.style.cursor = regionIndex >= 0 ? 'grab' : 'default';
                 }
             };
@@ -5809,6 +5938,8 @@
                     canvas.style.cursor = 'grab';
                     draggedRegion = null;
                     dragOffset = null;
+                    dragMode = null;
+                    resizeHandle = null;
                     renderAnnotatorPages(); // Update thumbnails if needed
                 }
             };
@@ -5827,6 +5958,8 @@
                     canvas.style.cursor = 'default';
                     draggedRegion = null;
                     dragOffset = null;
+                    dragMode = null;
+                    resizeHandle = null;
                 }
             };
         }

@@ -1606,6 +1606,66 @@ body.viewer-fullscreen .search-container {
     cursor: default;
 }
 
+.page-viewer-main.with-works-panel {
+    align-items: stretch;
+}
+
+.page-viewer-main.with-works-panel .page-viewer-spread {
+    flex: 1;
+}
+
+.pv-page-works-panel {
+    width: 260px;
+    flex: 0 0 260px;
+    overflow-y: auto;
+    background: #111;
+    border-left: 1px solid #2b2b2b;
+    padding: 12px;
+    color: #d1d5db;
+    font-family: 'Junicode', 'EB Garamond', Georgia, serif;
+}
+
+.pv-page-works-panel h4 {
+    margin: 0 0 10px;
+    font-size: 0.9rem;
+    color: #f3f4f6;
+}
+
+.pv-page-works-panel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pv-page-works-panel li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.pv-page-works-panel a,
+.pv-page-works-panel span {
+    color: #f9fafb;
+    text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.2;
+}
+
+.pv-page-works-panel a:hover {
+    text-decoration: underline;
+    color: #93c5fd;
+}
+
+.pv-page-works-page {
+    font-size: 0.7rem !important;
+    color: #9ca3af !important;
+    white-space: nowrap;
+}
+
 .page-viewer-main.zoomed {
     cursor: grab;
 }
