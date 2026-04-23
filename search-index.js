@@ -274260,7 +274260,7 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
-    "name": "UFO Magazine Issue #154",
+    "name": "UFO Magazine (US): Issue #154",
     "id": "ufo-magazine-us-154",
     "level": "text",
     "url": "texts/00/00/ufo-magazine-us-154/index.html",
