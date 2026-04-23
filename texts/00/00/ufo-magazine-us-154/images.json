@@ -1,0 +1,434 @@
+{
+  "images": [
+    {
+      "url": "images/001.png",
+      "label": "1",
+      "hasOcr": true
+    },
+    {
+      "url": "images/002.png",
+      "label": "2",
+      "hasOcr": true
+    },
+    {
+      "url": "images/003.png",
+      "label": "3",
+      "hasOcr": false
+    },
+    {
+      "url": "images/004.png",
+      "label": "4",
+      "hasOcr": true
+    },
+    {
+      "url": "images/005.png",
+      "label": "5",
+      "hasOcr": true
+    },
+    {
+      "url": "images/006.png",
+      "label": "6",
+      "hasOcr": true
+    },
+    {
+      "url": "images/007.png",
+      "label": "7",
+      "hasOcr": false
+    },
+    {
+      "url": "images/008.png",
+      "label": "8",
+      "hasOcr": true
+    },
+    {
+      "url": "images/009.png",
+      "label": "9",
+      "hasOcr": true
+    },
+    {
+      "url": "images/010.png",
+      "label": "10",
+      "hasOcr": true
+    },
+    {
+      "url": "images/011.png",
+      "label": "11",
+      "hasOcr": true
+    },
+    {
+      "url": "images/012.png",
+      "label": "12",
+      "hasOcr": true
+    },
+    {
+      "url": "images/013.png",
+      "label": "13",
+      "hasOcr": true
+    },
+    {
+      "url": "images/014.png",
+      "label": "14",
+      "hasOcr": true
+    },
+    {
+      "url": "images/015.png",
+      "label": "15",
+      "hasOcr": true
+    },
+    {
+      "url": "images/016.png",
+      "label": "16",
+      "hasOcr": true
+    },
+    {
+      "url": "images/017.png",
+      "label": "17",
+      "hasOcr": true
+    },
+    {
+      "url": "images/018.png",
+      "label": "18",
+      "hasOcr": true
+    },
+    {
+      "url": "images/019.png",
+      "label": "19",
+      "hasOcr": true
+    },
+    {
+      "url": "images/020.png",
+      "label": "20",
+      "hasOcr": true
+    },
+    {
+      "url": "images/021.png",
+      "label": "21",
+      "hasOcr": true
+    },
+    {
+      "url": "images/022.png",
+      "label": "22",
+      "hasOcr": true
+    },
+    {
+      "url": "images/023.png",
+      "label": "23",
+      "hasOcr": true
+    },
+    {
+      "url": "images/024.png",
+      "label": "24",
+      "hasOcr": true
+    },
+    {
+      "url": "images/025.png",
+      "label": "25",
+      "hasOcr": true
+    },
+    {
+      "url": "images/026.png",
+      "label": "26",
+      "hasOcr": true
+    },
+    {
+      "url": "images/027.png",
+      "label": "27",
+      "hasOcr": true
+    },
+    {
+      "url": "images/028.png",
+      "label": "28",
+      "hasOcr": true
+    },
+    {
+      "url": "images/029.png",
+      "label": "29",
+      "hasOcr": true
+    },
+    {
+      "url": "images/030.png",
+      "label": "30",
+      "hasOcr": true
+    },
+    {
+      "url": "images/031.png",
+      "label": "31",
+      "hasOcr": true
+    },
+    {
+      "url": "images/032.png",
+      "label": "32",
+      "hasOcr": true
+    },
+    {
+      "url": "images/033.png",
+      "label": "33",
+      "hasOcr": true
+    },
+    {
+      "url": "images/034.png",
+      "label": "34",
+      "hasOcr": true
+    },
+    {
+      "url": "images/035.png",
+      "label": "35",
+      "hasOcr": true
+    },
+    {
+      "url": "images/036.png",
+      "label": "36",
+      "hasOcr": true
+    },
+    {
+      "url": "images/037.png",
+      "label": "37",
+      "hasOcr": true
+    },
+    {
+      "url": "images/038.png",
+      "label": "38",
+      "hasOcr": true
+    },
+    {
+      "url": "images/039.png",
+      "label": "39",
+      "hasOcr": true
+    },
+    {
+      "url": "images/040.png",
+      "label": "40",
+      "hasOcr": true
+    },
+    {
+      "url": "images/041.png",
+      "label": "41",
+      "hasOcr": true
+    },
+    {
+      "url": "images/042.png",
+      "label": "42",
+      "hasOcr": true
+    },
+    {
+      "url": "images/043.png",
+      "label": "43",
+      "hasOcr": true
+    },
+    {
+      "url": "images/044.png",
+      "label": "44",
+      "hasOcr": true
+    },
+    {
+      "url": "images/045.png",
+      "label": "45",
+      "hasOcr": true
+    },
+    {
+      "url": "images/046.png",
+      "label": "46",
+      "hasOcr": true
+    },
+    {
+      "url": "images/047.png",
+      "label": "47",
+      "hasOcr": true
+    },
+    {
+      "url": "images/048.png",
+      "label": "48",
+      "hasOcr": true
+    },
+    {
+      "url": "images/049.png",
+      "label": "49",
+      "hasOcr": true
+    },
+    {
+      "url": "images/050.png",
+      "label": "50",
+      "hasOcr": true
+    },
+    {
+      "url": "images/051.png",
+      "label": "51",
+      "hasOcr": true
+    },
+    {
+      "url": "images/052.png",
+      "label": "52",
+      "hasOcr": true
+    },
+    {
+      "url": "images/053.png",
+      "label": "53",
+      "hasOcr": true
+    },
+    {
+      "url": "images/054.png",
+      "label": "54",
+      "hasOcr": true
+    },
+    {
+      "url": "images/055.png",
+      "label": "55",
+      "hasOcr": true
+    },
+    {
+      "url": "images/056.png",
+      "label": "56",
+      "hasOcr": true
+    },
+    {
+      "url": "images/057.png",
+      "label": "57",
+      "hasOcr": true
+    },
+    {
+      "url": "images/058.png",
+      "label": "58",
+      "hasOcr": true
+    },
+    {
+      "url": "images/059.png",
+      "label": "59",
+      "hasOcr": true
+    },
+    {
+      "url": "images/060.png",
+      "label": "60",
+      "hasOcr": true
+    },
+    {
+      "url": "images/061.png",
+      "label": "61",
+      "hasOcr": true
+    },
+    {
+      "url": "images/062.png",
+      "label": "62",
+      "hasOcr": true
+    },
+    {
+      "url": "images/063.png",
+      "label": "63",
+      "hasOcr": true
+    },
+    {
+      "url": "images/064.png",
+      "label": "64",
+      "hasOcr": true
+    },
+    {
+      "url": "images/065.png",
+      "label": "65",
+      "hasOcr": true
+    },
+    {
+      "url": "images/066.png",
+      "label": "66",
+      "hasOcr": true
+    },
+    {
+      "url": "images/067.png",
+      "label": "67",
+      "hasOcr": true
+    },
+    {
+      "url": "images/068.png",
+      "label": "68",
+      "hasOcr": true
+    },
+    {
+      "url": "images/069.png",
+      "label": "69",
+      "hasOcr": true
+    },
+    {
+      "url": "images/070.png",
+      "label": "70",
+      "hasOcr": true
+    },
+    {
+      "url": "images/071.png",
+      "label": "71",
+      "hasOcr": true
+    },
+    {
+      "url": "images/072.png",
+      "label": "72",
+      "hasOcr": true
+    },
+    {
+      "url": "images/073.png",
+      "label": "73",
+      "hasOcr": true
+    },
+    {
+      "url": "images/074.png",
+      "label": "74",
+      "hasOcr": true
+    },
+    {
+      "url": "images/075.png",
+      "label": "75",
+      "hasOcr": true
+    },
+    {
+      "url": "images/076.png",
+      "label": "76",
+      "hasOcr": true
+    },
+    {
+      "url": "images/077.png",
+      "label": "77",
+      "hasOcr": false
+    },
+    {
+      "url": "images/078.png",
+      "label": "78",
+      "hasOcr": true
+    },
+    {
+      "url": "images/079.png",
+      "label": "79",
+      "hasOcr": true
+    },
+    {
+      "url": "images/080.png",
+      "label": "80",
+      "hasOcr": true
+    },
+    {
+      "url": "images/081.png",
+      "label": "81",
+      "hasOcr": true
+    },
+    {
+      "url": "images/082.png",
+      "label": "82",
+      "hasOcr": true
+    },
+    {
+      "url": "images/083.png",
+      "label": "83",
+      "hasOcr": true
+    },
+    {
+      "url": "images/084.png",
+      "label": "84",
+      "hasOcr": true
+    },
+    {
+      "url": "images/085.png",
+      "label": "85",
+      "hasOcr": false
+    },
+    {
+      "url": "images/086.png",
+      "label": "86",
+      "hasOcr": false
+    }
+  ]
+}
