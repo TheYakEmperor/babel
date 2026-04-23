@@ -10,35 +10,6 @@
         .admin-container {
             max-width: 1200px;
             margin: 80px auto 40px;
-            padding: 0 20px;
-        }
-        
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #e5e7eb;
-        }
-        
-        .admin-header h1 {
-            margin: 0;
-            font-family: 'EB Garamond', Georgia, serif;
-        }
-        
-        .admin-nav {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .admin-nav button {
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            background: white;
-            border-radius: 0;
-            cursor: pointer;
-            font-size: 0.95em;
             transition: all 0.2s;
         }
         
@@ -149,6 +120,7 @@
         
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 2000; }
         .modal-overlay.active { display: flex; }
+        #boost-pages-modal { z-index: 2100; }
         .modal { background: white; border-radius: 0; max-width: 900px; width: 90%; max-height: 90vh; overflow-y: auto; padding: 30px; }
         .modal.modal-small { max-width: 400px; }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #e5e7eb; }
@@ -1284,6 +1256,7 @@
                         <button onclick="insertVideoPage()" title="Insert page from video file">+ Video</button>
                         <button onclick="insertAudioPage()" title="Insert page from audio file">+ Audio</button>
                         <button onclick="insertImageAudioPage()" title="Insert image with audio">+ Img+Audio</button>
+                        <button onclick="boostPageNumbers()" title="Shift numeric page labels by an offset (all or range)">Boost ±</button>
                         <button onclick="renamePage()" title="Rename current page">Rename</button>
                         <button onclick="deleteCurrentPage()" title="Delete current page">Delete</button>
                         <button onclick="savePageOrder()" title="Save page order">Save Order</button>
@@ -1383,6 +1356,43 @@
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeAnnotator()">Cancel</button>
                 <button class="btn btn-success" onclick="saveAllRegions()">Save All Regions</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boost Page Numbers Modal -->
+    <div class="modal-overlay" id="boost-pages-modal">
+        <div class="modal modal-small">
+            <div class="modal-header">
+                <h2>Boost Page Numbers</h2>
+                <button class="modal-close" onclick="closeBoostPagesModal()">&times;</button>
+            </div>
+
+            <div class="form-group">
+                <label>Shift Amount (use negative to decrease)</label>
+                <input type="number" id="boost-pages-offset" step="1" value="1" placeholder="e.g., 2 or -2">
+            </div>
+
+            <div class="form-group" style="margin-top: 8px;">
+                <label style="display:flex; align-items:center; gap:8px; font-weight: normal;">
+                    <input type="checkbox" id="boost-pages-all" checked onchange="toggleBoostPagesRangeInputs()">
+                    Apply to all numeric page labels
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>From Page Number</label>
+                <input type="number" id="boost-pages-start" step="1" placeholder="e.g., 7" disabled>
+            </div>
+
+            <div class="form-group">
+                <label>To Page Number</label>
+                <input type="number" id="boost-pages-end" step="1" placeholder="e.g., 12" disabled>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeBoostPagesModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="applyBoostPagesFromModal()">Apply</button>
             </div>
         </div>
     </div>
@@ -4939,6 +4949,191 @@
                 selectAnnotatorPage(newLabel);
             }
             showStatus(`Page renamed to "${newLabel}". Don't forget to save.`);
+        }
+
+        // Open modal for boosting numeric page labels by offset/range.
+        function boostPageNumbers() {
+            if (!annotatorData.pages || annotatorData.pages.length === 0) {
+                showStatus('No pages loaded', true);
+                return;
+            }
+
+            document.getElementById('boost-pages-offset').value = '1';
+            document.getElementById('boost-pages-all').checked = true;
+            document.getElementById('boost-pages-start').value = '';
+            document.getElementById('boost-pages-end').value = '';
+            toggleBoostPagesRangeInputs();
+
+            const current = String(annotatorData.currentPage || '').trim();
+            if (/^-?\d+$/.test(current)) {
+                document.getElementById('boost-pages-start').value = current;
+                document.getElementById('boost-pages-end').value = current;
+            }
+
+            document.getElementById('boost-pages-modal').classList.add('active');
+        }
+
+        function closeBoostPagesModal() {
+            document.getElementById('boost-pages-modal').classList.remove('active');
+        }
+
+        function toggleBoostPagesRangeInputs() {
+            const applyAll = document.getElementById('boost-pages-all').checked;
+            document.getElementById('boost-pages-start').disabled = applyAll;
+            document.getElementById('boost-pages-end').disabled = applyAll;
+        }
+
+        function applyBoostPagesFromModal() {
+            const offset = parseInt(document.getElementById('boost-pages-offset').value, 10);
+            if (!Number.isInteger(offset) || offset === 0) {
+                showStatus('Please enter a non-zero integer shift amount', true);
+                return;
+            }
+
+            let minRange = null;
+            let maxRange = null;
+            const applyAll = document.getElementById('boost-pages-all').checked;
+
+            if (!applyAll) {
+                const start = parseInt(document.getElementById('boost-pages-start').value.trim(), 10);
+                const end = parseInt(document.getElementById('boost-pages-end').value.trim(), 10);
+                if (!Number.isInteger(start) || !Number.isInteger(end)) {
+                    showStatus('Please enter valid start and end page numbers', true);
+                    return;
+                }
+                minRange = Math.min(start, end);
+                maxRange = Math.max(start, end);
+            }
+
+            if (performBoostPageNumberShift(offset, minRange, maxRange)) {
+                closeBoostPagesModal();
+            }
+        }
+
+        function extractBoostablePageNumber(label) {
+            const labelStr = String(label || '');
+            const match = labelStr.match(/^(.*?)(-?\d+)([^\d]*)$/);
+            if (!match) return null;
+
+            return {
+                prefix: match[1],
+                rawNumber: match[2],
+                suffix: match[3],
+                value: parseInt(match[2], 10)
+            };
+        }
+
+        function formatBoostedPageLabel(parsed, nextValue) {
+            const unsignedRaw = parsed.rawNumber.replace(/^-/, '');
+            const shouldPad = /^0\d+$/.test(unsignedRaw);
+            let formatted = String(Math.abs(nextValue));
+
+            if (shouldPad) {
+                formatted = formatted.padStart(unsignedRaw.length, '0');
+            }
+
+            if (nextValue < 0) {
+                formatted = '-' + formatted;
+            }
+
+            return `${parsed.prefix}${formatted}${parsed.suffix}`;
+        }
+
+        // Shift numeric page labels by an offset, optionally limited to a numeric range.
+        function performBoostPageNumberShift(offset, minRange = null, maxRange = null) {
+            const parsedPages = annotatorData.pages
+                .map(page => ({ page, parsed: extractBoostablePageNumber(page.label) }))
+                .filter(item => item.parsed);
+
+            const parsedByLabel = new Map(parsedPages.map(item => [item.page.label, item]));
+            const selectedLabels = new Set();
+
+            for (const item of parsedPages) {
+                const pageNum = item.parsed.value;
+                if (minRange !== null && (pageNum < minRange || pageNum > maxRange)) {
+                    continue;
+                }
+                selectedLabels.add(item.page.label);
+            }
+
+            let expanded = true;
+            while (expanded) {
+                expanded = false;
+                const currentTargets = new Set();
+
+                for (const label of selectedLabels) {
+                    const item = parsedByLabel.get(label);
+                    if (!item) continue;
+                    currentTargets.add(formatBoostedPageLabel(item.parsed, item.parsed.value + offset));
+                }
+
+                for (const item of parsedPages) {
+                    if (selectedLabels.has(item.page.label)) continue;
+                    if (currentTargets.has(item.page.label)) {
+                        selectedLabels.add(item.page.label);
+                        expanded = true;
+                    }
+                }
+            }
+
+            const renameMap = [];
+            for (const label of selectedLabels) {
+                const item = parsedByLabel.get(label);
+                if (!item) continue;
+                const newLabel = formatBoostedPageLabel(item.parsed, item.parsed.value + offset);
+                if (newLabel !== item.page.label) {
+                    renameMap.push({ oldLabel: item.page.label, newLabel });
+                }
+            }
+
+            if (renameMap.length === 0) {
+                showStatus('No numeric pages matched the selected range', true);
+                return false;
+            }
+
+            // Validate target uniqueness.
+            const targetSet = new Set();
+            for (const item of renameMap) {
+                if (targetSet.has(item.newLabel)) {
+                    showStatus(`Rename collision: multiple pages would become "${item.newLabel}"`, true);
+                    return false;
+                }
+                targetSet.add(item.newLabel);
+            }
+
+            // Apply renames to page entries.
+            const oldToNew = new Map(renameMap.map(i => [i.oldLabel, i.newLabel]));
+            for (const page of annotatorData.pages) {
+                if (oldToNew.has(page.label)) {
+                    const updated = oldToNew.get(page.label);
+                    page.label = updated;
+                    if (page.isBlank) {
+                        page.filename = `blank_${updated.replace(/\s+/g, '_')}`;
+                    }
+                }
+            }
+
+            // Move regions keys to renamed labels.
+            const newRegions = {};
+            for (const [label, regions] of Object.entries(annotatorData.regions)) {
+                const mapped = oldToNew.get(label) || label;
+                newRegions[mapped] = regions;
+            }
+            annotatorData.regions = newRegions;
+
+            if (oldToNew.has(annotatorData.currentPage)) {
+                annotatorData.currentPage = oldToNew.get(annotatorData.currentPage);
+            }
+
+            annotatorData.pagesReordered = true;
+            renderAnnotatorPages();
+            if (annotatorData.currentPage) {
+                selectAnnotatorPage(annotatorData.currentPage);
+            }
+
+            const rangeMsg = minRange !== null ? ` in range ${minRange}-${maxRange}` : '';
+            showStatus(`Boosted ${renameMap.length} page labels by ${offset}${rangeMsg}. Don't forget to save.`);
+            return true;
         }
         
         // Track file input mode for image upload
