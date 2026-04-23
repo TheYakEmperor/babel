@@ -1111,6 +1111,20 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         with open(data_path, 'w', encoding='utf-8') as f:
             json.dump(text_data, f, indent=2, ensure_ascii=False)
         
+        # Write OCR text back to images.json if provided
+        ocr_updates = data.get('ocrUpdates', {})
+        if ocr_updates:
+            images_path = text_dir / 'images.json'
+            if images_path.exists():
+                with open(images_path, 'r', encoding='utf-8') as f:
+                    images_data = json.load(f)
+                for img in images_data:
+                    label = img.get('label', '')
+                    if label in ocr_updates:
+                        img['ocrText'] = ocr_updates[label]
+                with open(images_path, 'w', encoding='utf-8') as f:
+                    json.dump(images_data, f, indent=2, ensure_ascii=False)
+        
         # Track revision
         try:
             self._track_revision(

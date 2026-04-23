@@ -1586,12 +1586,34 @@ function initPageViewer(pagesData) {
         }
 
         function createPageWorksPanel() {
-            const panel = document.createElement('aside');
+            const panel = document.createElement('div');
             panel.id = 'pv-page-works-panel';
             panel.className = 'pv-page-works-panel';
             panel.style.display = 'none';
             mainContainer.appendChild(panel);
             return panel;
+        }
+
+        function getCurrentVisiblePageIndices() {
+            if (isDualMode) {
+                const spreads = getSpreads();
+                if (currentIndex >= 0 && currentIndex < spreads.length) {
+                    return spreads[currentIndex];
+                }
+                return [];
+            }
+            return [currentIndex];
+        }
+
+        function getCurrentVisiblePageLabels() {
+            const labels = [];
+            for (const idx of getCurrentVisiblePageIndices()) {
+                if (idx < 0 || idx >= images.length) continue;
+                const currentImage = images[idx];
+                const currentLabel = typeof currentImage === 'object' ? currentImage.label : getPageName(currentImage);
+                if (currentLabel) labels.push(currentLabel);
+            }
+            return labels;
         }
         
         // Get OCR text from the current page(s) images (async for lazy loading)
@@ -1632,18 +1654,7 @@ function initPageViewer(pagesData) {
             if (!pagesData) return [];
             const result = [];
             
-            // Get actual page indices based on mode
-            let pageIndices = [];
-            if (isDualMode) {
-                // In dual mode, currentIndex is the spread index, not the page index
-                const spreads = getSpreads();
-                if (currentIndex >= 0 && currentIndex < spreads.length) {
-                    pageIndices = spreads[currentIndex];  // Array of 1 or 2 page indices
-                }
-            } else {
-                // In single mode, currentIndex is the actual page index
-                pageIndices = [currentIndex];
-            }
+            const pageIndices = getCurrentVisiblePageIndices();
             
             // For each visible page index, find the matching pagesData entry by label
             for (const idx of pageIndices) {
@@ -1674,52 +1685,42 @@ function initPageViewer(pagesData) {
         function getCurrentPageWorks() {
             if (!pagesData) return [];
             const worksMap = new Map();
+            const currentLabels = new Set(getCurrentVisiblePageLabels());
 
-            let pageIndices = [];
-            if (isDualMode) {
-                const spreads = getSpreads();
-                if (currentIndex >= 0 && currentIndex < spreads.length) {
-                    pageIndices = spreads[currentIndex];
+            function addWorkEntry(id, title, pageLabel) {
+                const resolvedTitle = title || id || 'Untitled work';
+                const key = id || `${pageLabel || ''}::${resolvedTitle}`;
+                if (!worksMap.has(key)) {
+                    worksMap.set(key, {
+                        id: id || '',
+                        title: resolvedTitle,
+                        pageLabel: pageLabel || ''
+                    });
                 }
-            } else {
-                pageIndices = [currentIndex];
             }
 
-            for (const idx of pageIndices) {
-                if (idx < 0 || idx >= images.length) continue;
-                const currentImage = images[idx];
-                const currentLabel = typeof currentImage === 'object' ? currentImage.label : getPageName(currentImage);
-
-                const page = pagesData.find(p => {
-                    const pageLabel = p.label || p.id || '';
-                    return pageLabel === currentLabel;
-                });
-
-                if (!page || !Array.isArray(page.works)) continue;
-
-                for (const work of page.works) {
-                    if (work && (work.id || work.title)) {
-                        const key = work.id || `${currentLabel}::${work.title || ''}`;
-                        if (!worksMap.has(key)) {
-                            worksMap.set(key, {
-                                id: work.id || '',
-                                title: work.title || work.id || 'Untitled work',
-                                pageLabel: currentLabel
-                            });
-                        }
+            function collectWorksFromTree(items, fallbackPageLabel) {
+                if (!Array.isArray(items)) return;
+                for (const item of items) {
+                    if (!item) continue;
+                    const itemPageLabel = item.viewerPage || fallbackPageLabel || '';
+                    if ((item.viewerPage && currentLabels.has(item.viewerPage)) || (!item.viewerPage && fallbackPageLabel && currentLabels.has(fallbackPageLabel))) {
+                        addWorkEntry(item.id || '', item.title || '', itemPageLabel);
                     }
+                    collectWorksFromTree(item.children || item.subworks || [], itemPageLabel);
+                }
+            }
 
-                    if (work && Array.isArray(work.subworks)) {
-                        for (const sub of work.subworks) {
-                            if (!sub || (!sub.id && !sub.title)) continue;
-                            const subKey = sub.id || `${currentLabel}::${sub.title || ''}`;
-                            if (!worksMap.has(subKey)) {
-                                worksMap.set(subKey, {
-                                    id: sub.id || '',
-                                    title: sub.title || sub.id || 'Untitled work',
-                                    pageLabel: currentLabel
-                                });
-                            }
+            for (const page of pagesData) {
+                if (!page) continue;
+                const pageLabel = page.label || page.id || '';
+                if (Array.isArray(page.works)) {
+                    collectWorksFromTree(page.works, pageLabel);
+                }
+                if (currentLabels.has(pageLabel) && Array.isArray(page.regions)) {
+                    for (const region of page.regions) {
+                        if (region.workId || region.title) {
+                            addWorkEntry(region.workId || '', findWorkTitle(region.workId) || region.title || region.workId || '', pageLabel);
                         }
                     }
                 }
@@ -1731,29 +1732,36 @@ function initPageViewer(pagesData) {
             });
         }
 
-        function populatePageWorksPanel() {
+        async function populatePageWorksPanel() {
             if (!pageWorksPanel) return;
             const works = getCurrentPageWorks();
+            const workIds = [...new Set(works.map(work => work.id).filter(Boolean))];
+            if (workIds.length > 0) {
+                await Promise.all(workIds.map(id => fetchWorkTitle(id)));
+            }
 
-            if (works.length === 0) {
+            const hydratedWorks = works.map(work => ({
+                ...work,
+                title: work.id ? (findWorkTitle(work.id) || workTitleCache[work.id] || work.title || work.id) : work.title
+            }));
+
+            if (hydratedWorks.length === 0) {
                 pageWorksPanel.style.display = 'none';
-                mainContainer.classList.remove('with-works-panel');
                 return;
             }
 
-            mainContainer.classList.add('with-works-panel');
             pageWorksPanel.style.display = 'block';
 
-            const html = works.map(work => {
+            const html = hydratedWorks.map(work => {
                 const pageBadge = work.pageLabel ? `<span class="pv-page-works-page">${escapeHtmlPV(work.pageLabel)}</span>` : '';
                 if (work.id) {
-                    return `<li><a href="../../../../works/${work.id}/" target="_blank">${escapeHtmlPV(work.title)}</a>${pageBadge}</li>`;
+                    return `<li><a href="../../../../works/${work.id}/" target="_blank">${escapeHtmlPV(work.title)}${pageBadge}</a></li>`;
                 }
-                return `<li><span>${escapeHtmlPV(work.title)}</span>${pageBadge}</li>`;
+                return `<li><span>${escapeHtmlPV(work.title)}${pageBadge}</span></li>`;
             }).join('');
 
             pageWorksPanel.innerHTML = `
-                <h4>Works on This Page</h4>
+                <div class="pv-page-works-label">Works</div>
                 <ul>${html}</ul>
             `;
         }
@@ -2559,6 +2567,9 @@ function initPageViewer(pagesData) {
         // Expose dictionary text processing
         window.pvProcessTextForDictionary = pvProcessTextForDictionary;
         
+        // Create page works panel
+        pageWorksPanel = createPageWorksPanel();
+
         // Show first page (unless hash navigation already set a page)
         if (!window.location.hash || !window.location.hash.includes('page=')) {
             showImage(0);

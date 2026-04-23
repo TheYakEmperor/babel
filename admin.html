@@ -861,6 +861,10 @@
                     <textarea id="text-description" placeholder="Brief description of the text..."></textarea>
                 </div>
                 <div class="form-group">
+                    <label>Parent Text <span class="hint">(optional — ID of the text this belongs to)</span></label>
+                    <input type="text" id="text-belongsto" placeholder="e.g. exeter-book">
+                </div>
+                <div class="form-group">
                     <label>Source(s) <span class="hint">(holding institutions, press Enter to add)</span></label>
                     <div class="tag-input-container" id="text-sources-container">
                         <input type="text" class="tag-input" id="text-sources-input" placeholder="british-museum">
@@ -2386,6 +2390,7 @@
                     document.getElementById('text-title-translation').value = text.titleTranslation || '';
                     document.getElementById('text-description').value = text.description || '';
                     document.getElementById('text-date').value = text.date || '';
+                    document.getElementById('text-belongsto').value = text.belongsTo || '';
                     textEditorData.sources = [].concat(text.sources || (text.source ? [text.source] : []));
                     textEditorData.provenances = [].concat(text.provenances || (text.provenance ? [text.provenance] : []));
                     textEditorData.collections = [].concat(text.collections || []);
@@ -2439,6 +2444,7 @@
                 document.getElementById('text-title-translation').value = '';
                 document.getElementById('text-description').value = '';
                 document.getElementById('text-date').value = '';
+                document.getElementById('text-belongsto').value = '';
                 document.getElementById('text-editor-title').textContent = 'New Text';
                 document.getElementById('text-id').disabled = false;
             }
@@ -2490,6 +2496,7 @@
                 title: document.getElementById('text-title').value.trim(),
                 titleTranslation: document.getElementById('text-title-translation').value.trim() || undefined,
                 description: document.getElementById('text-description').value.trim() || undefined,
+                belongsTo: document.getElementById('text-belongsto').value.trim() || undefined,
                 author: textEditorData.authors.length === 1 ? textEditorData.authors[0] : (textEditorData.authors.length ? textEditorData.authors : undefined),
                 sources: textEditorData.sources.length ? textEditorData.sources : undefined,
                 provenances: textEditorData.provenances.length ? textEditorData.provenances : undefined,
@@ -4630,7 +4637,8 @@
                                 label: img.label || '',
                                 filename: `blank_${(img.label || '').replace(/\s+/g, '_')}`,
                                 imageUrl: '',
-                                isBlank: true
+                                isBlank: true,
+                                ocrText: img.ocrText || ''
                             };
                         } else {
                             const filename = img.url ? img.url.split('/').pop() : '';
@@ -4638,7 +4646,8 @@
                                 label: img.label || filename.replace(/\.[^.]+$/, '').replace(/_/g, ' '),
                                 filename: filename,
                                 imageUrl: img.url ? `${B2_BASE_URL}/texts/00/00/${folderName}/${img.url}` : '',
-                                isBlank: false
+                                isBlank: false,
+                                ocrText: img.ocrText || ''
                             };
                         }
                     });
@@ -4677,6 +4686,23 @@
                     });
                 }
                 
+                // Inject OCR regions for pages that have ocrText but no OCR region yet
+                annotatorData.pages.forEach(page => {
+                    if (!page.ocrText) return;
+                    if (!annotatorData.regions[page.label]) {
+                        annotatorData.regions[page.label] = [];
+                    }
+                    const hasOcr = annotatorData.regions[page.label].some(r => r.isOcr);
+                    if (!hasOcr) {
+                        annotatorData.regions[page.label].unshift({
+                            x: 0, y: 0, width: 1, height: 1,
+                            title: 'OCR Text',
+                            text: page.ocrText,
+                            isOcr: true
+                        });
+                    }
+                });
+
                 renderAnnotatorPages();
                 
                 // Select first page
@@ -5592,6 +5618,7 @@
             html += regions.map((region, i) => {
                 // Strip HTML for preview
                 const plainText = (region.text || '').replace(/<[^>]*>/g, '').trim() || '(no text)';
+                const ocrBadge = region.isOcr ? '<span style="background:#3b82f6;color:#fff;font-size:0.7em;padding:1px 5px;border-radius:3px;margin-left:4px;vertical-align:middle;">OCR</span>' : '';
                 const workName = region.workId ? (annotatorData.works.find(w => w.id === region.workId)?.title || '').replace(/^\s*└\s*/, '') : '';
                 return `
                 <div class="annotator-region-item ${annotatorData.selectedRegion === i ? 'selected' : ''}" 
@@ -5604,7 +5631,7 @@
                      ondragleave="handleRegionDragLeave(event)"
                      ondrop="handleRegionDrop(event, ${i})">
                     <span class="region-drag-handle" title="Drag to reorder">⋮⋮</span>
-                    <div class="region-title">${region.title || `Region ${i + 1}`}${workName ? ` <span style="color:#6b7280;font-size:0.85em;">[${workName.substring(0, 20)}${workName.length > 20 ? '...' : ''}]</span>` : ''}</div>
+                    <div class="region-title">${region.title || `Region ${i + 1}`}${ocrBadge}${workName ? ` <span style="color:#6b7280;font-size:0.85em;">[${workName.substring(0, 20)}${workName.length > 20 ? '...' : ''}]</span>` : ''}</div>
                     <div class="region-preview">${plainText.substring(0, 50)}${plainText.length > 50 ? '...' : ''}</div>
                 </div>
             `}).join('');
@@ -6170,9 +6197,23 @@
                     annotatorData.pagesReordered = false;
                 }
                 
+                // Extract OCR text updates and strip isOcr regions from data.json payload
+                const ocrUpdates = {};
+                const regionsForSave = {};
+                for (const [label, regs] of Object.entries(annotatorData.regions)) {
+                    const ocrReg = regs.find(r => r.isOcr);
+                    if (ocrReg) {
+                        // Plain text for images.json (strip HTML tags)
+                        ocrUpdates[label] = (ocrReg.text || '').replace(/<[^>]*>/g, '');
+                    }
+                    regionsForSave[label] = regs.filter(r => !r.isOcr);
+                    if (regionsForSave[label].length === 0) delete regionsForSave[label];
+                }
+                
                 await api('save-regions', {
                     textId: annotatorData.textId,
-                    regions: annotatorData.regions
+                    regions: regionsForSave,
+                    ocrUpdates
                 });
                 showStatus('All regions saved successfully!');
                 closeAnnotator();

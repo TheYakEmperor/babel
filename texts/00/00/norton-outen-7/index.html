@@ -414,6 +414,21 @@
                     else metaDiv.appendChild(groupP);
                 });
             }
+            // Parent text (belongsTo)
+            if (data.belongsTo) {
+                fetch(`../../../../texts/00/00/${data.belongsTo}/data.json`)
+                    .then(r => r.ok ? r.json() : null)
+                    .then(parentData => {
+                        const parentTitle = parentData ? parentData.title : data.belongsTo;
+                        const parentP = document.createElement('p');
+                        parentP.innerHTML = `<strong>Parent:</strong> <a href="../../../../texts/00/00/${data.belongsTo}/">${parentTitle}</a>`;
+                        parentP.id = 'meta-parent';
+                        const metaDiv = document.getElementById('metadata');
+                        const groupP = document.getElementById('meta-groups') || document.getElementById('meta-collections') || document.getElementById('meta-provenances') || document.getElementById('meta-sources') || metaDiv.querySelector('p');
+                        if (groupP) groupP.after(parentP);
+                        else metaDiv.appendChild(parentP);
+                    }).catch(() => {});
+            }
 if (data.date) metaHtml += `<p><strong>Date:</strong> ${data.date}</p>`;
             metaHtml += `<p><strong>Text ID:</strong> <code>${data.id}</code></p>`;
             

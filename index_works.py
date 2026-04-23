@@ -551,7 +551,7 @@ def generate_work_page(work_id, work_info, texts, base_dir, metadata, all_works,
 
         <div class="metadata">{f'''
             <p><strong>Also known as:</strong> {alias_html}</p>''' if alias_html else ''}{f'''
-            <p><strong>Belongs to:</strong> {belongs_to_html}</p>''' if belongs_to_html else ''}{f'''
+            <p><strong>Parent:</strong> {belongs_to_html}</p>''' if belongs_to_html else ''}{f'''
             <p><strong>Author:</strong> {author_html}</p>''' if author_html else ''}{f'''
             <p><strong>Country:</strong> {country_flags}</p>''' if country_flags else ''}{f'''
             <p><strong>Date:</strong> {work_date}</p>''' if work_date else ''}{f'''
