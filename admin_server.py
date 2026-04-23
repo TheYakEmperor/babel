@@ -2236,19 +2236,41 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         """Silently rebuild indexes in the background after saves."""
         import subprocess
         import threading
+
+        # Rebuild groups index synchronously so new groups appear immediately.
+        group_script = BASE_DIR / 'index_groups.py'
+        if group_script.exists():
+            try:
+                result = subprocess.run(
+                    ['python3', 'index_groups.py'],
+                    cwd=str(BASE_DIR),
+                    capture_output=True,
+                    text=True,
+                    timeout=120
+                )
+                if result.returncode == 0:
+                    print("  [Auto-rebuild] index_groups.py completed")
+                else:
+                    print(f"  [Auto-rebuild] index_groups.py failed: {result.stderr}")
+            except Exception as e:
+                print(f"  [Auto-rebuild] index_groups.py failed: {e}")
         
         def rebuild():
-            scripts = ['index_works.py', 'index_authors.py', 'index_texts.py', 'index_sources.py', 'index_provenances.py', 'index_collections.py', 'index_groups.py', 'index_content.py']
+            scripts = ['index_works.py', 'index_authors.py', 'index_texts.py', 'index_sources.py', 'index_provenances.py', 'index_collections.py', 'index_content.py']
             for script in scripts:
                 if (BASE_DIR / script).exists():
                     try:
-                        subprocess.run(
+                        result = subprocess.run(
                             ['python3', script],
                             cwd=str(BASE_DIR),
                             capture_output=True,
+                            text=True,
                             timeout=120  # Content index can take longer
                         )
-                        print(f"  [Auto-rebuild] {script} completed")
+                        if result.returncode == 0:
+                            print(f"  [Auto-rebuild] {script} completed")
+                        else:
+                            print(f"  [Auto-rebuild] {script} failed: {result.stderr}")
                     except Exception as e:
                         print(f"  [Auto-rebuild] {script} failed: {e}")
             

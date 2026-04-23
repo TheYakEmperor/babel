@@ -21,6 +21,13 @@ AUTHORS_DIR = BASE_DIR / 'authors'
 GROUPS_DIR = BASE_DIR / 'groups'
 
 
+def get_default_group_name(group_id):
+    """Derive a readable fallback name while preserving literal non-slug IDs."""
+    if ' ' in group_id or '(' in group_id or ')' in group_id or "'" in group_id:
+        return group_id
+    return group_id.replace('-', ' ').title()
+
+
 def load_group_registry():
     """Load group metadata from group.json files."""
     registry = {}
@@ -100,7 +107,7 @@ def escape_html(text):
 def generate_group_page(group_id, texts, works, authors):
     """Generate a group page showing all items in that group."""
     group_info = GROUP_REGISTRY.get(group_id, {
-        'name': group_id.replace('-', ' ').title(),
+        'name': get_default_group_name(group_id),
         'description': ''
     })
     group_name = group_info['name']
@@ -254,7 +261,7 @@ def generate_groups_index(all_groups):
     
     for group_id in sorted(all_groups.keys(), key=lambda x: GROUP_REGISTRY.get(x, {}).get('name', x).lower()):
         group_info = GROUP_REGISTRY.get(group_id, {
-            'name': group_id.replace('-', ' ').title(),
+            'name': get_default_group_name(group_id),
             'description': ''
         })
         group_name = group_info['name']
@@ -420,6 +427,12 @@ def main():
     for group_id in GROUP_REGISTRY:
         if group_id not in all_groups:
             all_groups[group_id] = {'texts': [], 'works': [], 'authors': []}
+
+    # Include any existing group directories even if they have no group.json yet
+    if GROUPS_DIR.exists():
+        for item in GROUPS_DIR.iterdir():
+            if item.is_dir() and item.name not in all_groups:
+                all_groups[item.name] = {'texts': [], 'works': [], 'authors': []}
     
     # Generate group pages
     for group_id, items in all_groups.items():

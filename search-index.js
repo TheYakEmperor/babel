@@ -274252,7 +274252,7 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
-    "name": "UFO Magazine",
+    "name": "UFO Magazine (UK): February 2004",
     "id": "ufo-magazine-uk-feb-2004",
     "level": "text",
     "url": "texts/00/00/ufo-magazine-uk-feb-2004/index.html",

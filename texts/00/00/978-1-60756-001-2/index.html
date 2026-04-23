@@ -384,25 +384,33 @@
                 });
             }
             
-            // Groups - look up from group.json for proper names
+            // Groups - resolve using both literal ID and slug fallback
             const groupList = data.groups || (data.group ? [data.group] : []);
             if (groupList.length > 0) {
-                Promise.all(groupList.map(groupId => {
+                Promise.all(groupList.map(async groupId => {
                     const groupSlug = groupId.toLowerCase()
                         .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
                         .replace(/[^a-z0-9]+/g, '-')
                         .replace(/^-+|-+$/g, '')
                         .substring(0, 50);
-                    return fetch(`../../../../groups/${groupSlug}/group.json`)
-                        .then(r => r.ok ? r.json() : null)
-                        .then(groupData => ({
-                            id: groupSlug,
-                            name: groupData ? groupData.name : groupId
-                        }))
-                        .catch(() => ({ id: groupSlug, name: groupId }));
+                    const candidates = Array.from(new Set([groupId, groupSlug])).filter(Boolean);
+
+                    for (const candidate of candidates) {
+                        try {
+                            const resp = await fetch(`../../../../groups/${encodeURIComponent(candidate)}/group.json`);
+                            if (!resp.ok) continue;
+                            const groupData = await resp.json();
+                            return {
+                                id: candidate,
+                                name: groupData ? (groupData.name || groupId) : groupId
+                            };
+                        } catch (_) {}
+                    }
+
+                    return { id: candidates[0] || groupId, name: groupId };
                 })).then(groupInfos => {
-                    const groupLinks = groupInfos.map(g => 
-                        `<a href="../../../../groups/${g.id}/">${g.name}</a>`
+                    const groupLinks = groupInfos.map(g =>
+                        `<a href="../../../../groups/${encodeURIComponent(g.id)}/" target="_blank" rel="noopener noreferrer">${g.name}</a>`
                     ).join(', ');
                     const groupLabel = groupInfos.length > 1 ? 'Groups' : 'Group';
                     const groupP = document.createElement('p');
@@ -414,6 +422,7 @@
                     else metaDiv.appendChild(groupP);
                 });
             }
+
             // Parent text (belongsTo)
             if (data.belongsTo) {
                 fetch(`../../../../texts/00/00/${data.belongsTo}/data.json`)
