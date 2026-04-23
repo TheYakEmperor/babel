@@ -274252,6 +274252,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "UFO Magazine",
+    "id": "ufo-magazine-uk-feb-2004",
+    "level": "text",
+    "url": "texts/00/00/ufo-magazine-uk-feb-2004/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "UFO Magazine Issue #154",
     "id": "ufo-magazine-us-154",
     "level": "text",
