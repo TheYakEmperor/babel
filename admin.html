@@ -6402,10 +6402,11 @@
                     annotatorData.pagesReordered = false;
                 }
                 
-                // Keep OCR data read-only here; only save manual annotation regions.
+                // Persist all current regions, including OCR-tagged ones, so editor
+                // formatting (line breaks/alignment/font-size) is not lost.
                 const regionsForSave = {};
                 for (const [label, regs] of Object.entries(annotatorData.regions)) {
-                    regionsForSave[label] = regs.filter(r => !r.isOcr);
+                    regionsForSave[label] = regs;
                     if (regionsForSave[label].length === 0) delete regionsForSave[label];
                 }
                 
