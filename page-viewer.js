@@ -96,9 +96,6 @@ function initPageViewer(pagesData) {
             if (zoomLevel <= 1) return;
             if (e.target.closest('.page-viewer-zoom-controls')) return;
 
-            // If the drag starts on OCR text, allow native text selection instead of panning.
-            if (e.target.closest('.pv-text-layer') || e.target.closest('.pv-text-span')) return;
-
             e.preventDefault();
             
             isDragging = true;

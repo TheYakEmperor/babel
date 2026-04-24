@@ -2609,6 +2609,7 @@ body.viewer-fullscreen .search-container {
     max-height: calc(100vh - 100px);
     background: #1a1a2e;
     color: #e5e7eb;
+    margin-left: 100px;
 }
 
 .page-viewer.fullscreen .pv-transcription-panel .pv-popup-region {

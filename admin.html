@@ -4657,7 +4657,8 @@
                                 filename: filename,
                                 imageUrl: img.url ? `${B2_BASE_URL}/texts/00/00/${folderName}/${img.url}` : '',
                                 isBlank: false,
-                                ocrText: img.ocrText || ''
+                                ocrText: img.ocrText || '',
+                                textLayer: img.textLayer || []
                             };
                         }
                     });

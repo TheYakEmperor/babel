@@ -1012,8 +1012,26 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 text_data['_imageCount'] = len(real_images)
                 # Extract filenames from URLs like "images/001.jpg" (skip blank pages)
                 text_data['_imageFiles'] = [img['url'].split('/')[-1] for img in real_images if img.get('url')]
+                # Enrich manifest images with OCR text from ocr/ folder
+                ocr_dir = text_dir / 'ocr'
+                enriched = []
+                for img in images_list:
+                    img = dict(img)  # copy so we don't mutate manifest
+                    if ocr_dir.exists() and img.get('url') and not img.get('ocrText'):
+                        # derive ocr filename from image filename stem e.g. images/050.jpg -> ocr/050.json
+                        stem = img['url'].split('/')[-1].rsplit('.', 1)[0]
+                        ocr_file = ocr_dir / f'{stem}.json'
+                        if ocr_file.exists():
+                            try:
+                                with open(ocr_file, 'r', encoding='utf-8') as of:
+                                    ocr_data = json.load(of)
+                                img['ocrText'] = ocr_data.get('ocrText', '')
+                                img['textLayer'] = ocr_data.get('textLayer', [])
+                            except:
+                                pass
+                    enriched.append(img)
                 # Also include the full images list for the annotator
-                text_data['_imagesManifest'] = images_list
+                text_data['_imagesManifest'] = enriched
             except:
                 text_data['_imageCount'] = 0
                 text_data['_imageFiles'] = []
@@ -1090,22 +1108,25 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         if 'pages' not in text_data:
             text_data['pages'] = []
         
-        # Update or create page entries with regions
+        # Replace regions for all known pages so deletions persist too.
+        matched_labels = set()
+        for p in text_data['pages']:
+            page_label = p.get('label') or p.get('id')
+            if page_label in regions_data:
+                p['regions'] = regions_data[page_label]
+                matched_labels.add(page_label)
+            else:
+                p.pop('regions', None)
+
+        # Create new page entries for any labels not already present.
         for page_label, page_regions in regions_data.items():
-            # Find existing page entry
-            page_entry = None
-            for p in text_data['pages']:
-                if p.get('label') == page_label or p.get('id') == page_label:
-                    page_entry = p
-                    break
-            
-            # Create new page entry if not found
-            if not page_entry:
-                page_entry = {'id': page_label, 'label': page_label}
-                text_data['pages'].append(page_entry)
-            
-            # Set regions (replace existing)
-            page_entry['regions'] = page_regions
+            if page_label in matched_labels:
+                continue
+            text_data['pages'].append({
+                'id': page_label,
+                'label': page_label,
+                'regions': page_regions
+            })
         
         # Save updated data
         with open(data_path, 'w', encoding='utf-8') as f:
@@ -1118,7 +1139,17 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             if images_path.exists():
                 with open(images_path, 'r', encoding='utf-8') as f:
                     images_data = json.load(f)
-                for img in images_data:
+
+                if isinstance(images_data, dict):
+                    images_list = images_data.get('images', [])
+                elif isinstance(images_data, list):
+                    images_list = images_data
+                else:
+                    images_list = []
+
+                for img in images_list:
+                    if not isinstance(img, dict):
+                        continue
                     label = img.get('label', '')
                     if label in ocr_updates:
                         img['ocrText'] = ocr_updates[label]
