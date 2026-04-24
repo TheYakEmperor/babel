@@ -5860,9 +5860,28 @@
         }
         
         function selectRegion(index) {
+            // Preserve in-progress edits when switching between regions.
+            persistSelectedRegionEdits();
             annotatorData.selectedRegion = index;
             renderAnnotatorRegions();
             drawAnnotatorRegions();
+        }
+
+        function persistSelectedRegionEdits() {
+            if (annotatorData.selectedRegion === null) return;
+
+            const regions = annotatorData.regions[annotatorData.currentPage];
+            if (!regions || !regions[annotatorData.selectedRegion]) return;
+
+            regions[annotatorData.selectedRegion].title = document.getElementById('region-title').value;
+            regions[annotatorData.selectedRegion].text = document.getElementById('region-text').innerHTML;
+
+            const workId = document.getElementById('region-work').value;
+            if (workId) {
+                regions[annotatorData.selectedRegion].workId = workId;
+            } else {
+                delete regions[annotatorData.selectedRegion].workId;
+            }
         }
         
         // Region drag-and-drop reordering
@@ -6189,20 +6208,7 @@
         
         function saveRegionText() {
             if (annotatorData.selectedRegion === null) return;
-            
-            const regions = annotatorData.regions[annotatorData.currentPage];
-            if (!regions || !regions[annotatorData.selectedRegion]) return;
-            
-            regions[annotatorData.selectedRegion].title = document.getElementById('region-title').value;
-            regions[annotatorData.selectedRegion].text = document.getElementById('region-text').innerHTML;
-            
-            // Save work association
-            const workId = document.getElementById('region-work').value;
-            if (workId) {
-                regions[annotatorData.selectedRegion].workId = workId;
-            } else {
-                delete regions[annotatorData.selectedRegion].workId;
-            }
+            persistSelectedRegionEdits();
             
             // Deselect after saving
             annotatorData.selectedRegion = null;
@@ -6380,6 +6386,9 @@
         async function saveAllRegions() {
             if (!requireAuth()) return;
             try {
+                // Persist current rich-text editor state even if "Update Region" was not clicked.
+                persistSelectedRegionEdits();
+
                 // Save page order first if pages were reordered or blank pages added
                 if (annotatorData.pagesReordered) {
                     await api('save-page-order', {
@@ -6393,23 +6402,16 @@
                     annotatorData.pagesReordered = false;
                 }
                 
-                // Extract OCR text updates and strip isOcr regions from data.json payload
-                const ocrUpdates = {};
+                // Keep OCR data read-only here; only save manual annotation regions.
                 const regionsForSave = {};
                 for (const [label, regs] of Object.entries(annotatorData.regions)) {
-                    const ocrReg = regs.find(r => r.isOcr);
-                    if (ocrReg) {
-                        // Plain text for images.json (strip HTML tags)
-                        ocrUpdates[label] = (ocrReg.text || '').replace(/<[^>]*>/g, '');
-                    }
                     regionsForSave[label] = regs.filter(r => !r.isOcr);
                     if (regionsForSave[label].length === 0) delete regionsForSave[label];
                 }
                 
                 await api('save-regions', {
                     textId: annotatorData.textId,
-                    regions: regionsForSave,
-                    ocrUpdates
+                    regions: regionsForSave
                 });
                 showStatus('All regions saved successfully!');
                 closeAnnotator();

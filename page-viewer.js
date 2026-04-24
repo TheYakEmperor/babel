@@ -96,6 +96,9 @@ function initPageViewer(pagesData) {
             if (zoomLevel <= 1) return;
             if (e.target.closest('.page-viewer-zoom-controls')) return;
 
+            // If starting on actual OCR text glyphs, allow native text selection.
+            if (e.target.closest('.pv-text-span')) return;
+
             e.preventDefault();
             
             isDragging = true;
@@ -1511,7 +1514,7 @@ function initPageViewer(pagesData) {
             
             canvas.addEventListener('mouseleave', () => {
                 // Don't clear if popup is open
-                if (selectedRegion) return;
+                if (selectedRegions.length > 0) return;
                 
                 hoveredRegion = null;
                 const ctx = canvas.getContext('2d');
@@ -1785,25 +1788,8 @@ function initPageViewer(pagesData) {
             
             let html = '<div class="pv-transcription-content">';
             
-            // Show OCR text first (if available from PDF extraction)
-            if (ocrTexts.length > 0) {
-                for (const ocr of ocrTexts) {
-                    const labelHtml = ocr.label ? `<div class="pv-ocr-label">Page ${escapeHtmlPV(ocr.label)} - OCR Text</div>` : '';
-                    html += `
-                        <div class="pv-ocr-section">
-                            ${labelHtml}
-                            <div class="pv-ocr-text">${escapeHtmlPV(ocr.text)}</div>
-                        </div>
-                    `;
-                }
-            }
-            
-            // Show annotation regions (if any)
+            // Show annotation regions first (primary transcription source).
             if (allRegions.length > 0) {
-                if (ocrTexts.length > 0) {
-                    html += '<div class="pv-annotations-divider"><span>Annotations</span></div>';
-                }
-                
                 // Collect all unique workIds and fetch their titles
                 const workIds = [...new Set(allRegions.map(r => r.workId).filter(Boolean))];
                 await Promise.all(workIds.map(id => fetchWorkTitle(id)));
@@ -1834,6 +1820,22 @@ function initPageViewer(pagesData) {
                         const headerHtml = titleHtml ? `<div class="pv-region-header">${titleHtml}</div>` : '';
                         html += `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
                     });
+                }
+            }
+
+            // Show OCR text after annotations as a secondary reference.
+            if (ocrTexts.length > 0) {
+                if (allRegions.length > 0) {
+                    html += '<div class="pv-annotations-divider"><span>Raw OCR</span></div>';
+                }
+                for (const ocr of ocrTexts) {
+                    const labelHtml = ocr.label ? `<div class="pv-ocr-label">Page ${escapeHtmlPV(ocr.label)} - OCR Text</div>` : '';
+                    html += `
+                        <div class="pv-ocr-section">
+                            ${labelHtml}
+                            <div class="pv-ocr-text">${escapeHtmlPV(ocr.text)}</div>
+                        </div>
+                    `;
                 }
             }
             
