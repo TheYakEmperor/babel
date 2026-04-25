@@ -2246,11 +2246,11 @@ function initPageViewer(pagesData) {
                 } else if (isDragging && dragPhraseId !== null) {
                     // Phrase drag complete - commit this phrase and trigger lookup
                     container.pvActivePhrases.add(dragPhraseId);
-                    
-                    const phraseWords = Array.from(container.querySelectorAll(`.pv-word[data-phrase="${dragPhraseId}"]`))
-                        .map(w => w.textContent.trim());
-                    if (phraseWords.length > 0) {
-                        pvTriggerDictLookup(phraseWords.join(' '));
+
+                    const phraseWordEls = Array.from(container.querySelectorAll(`.pv-word[data-phrase="${dragPhraseId}"]`));
+                    if (phraseWordEls.length > 0) {
+                        const phraseText = pvExtractPhraseText(phraseWordEls);
+                        pvTriggerDictLookup(phraseText, { isPhrase: true });
                     }
                 }
                 
@@ -2288,6 +2288,31 @@ function initPageViewer(pagesData) {
                 }
             });
         }
+
+        // Extract exact text between first/last selected words so multiline phrases keep full content.
+        function pvExtractPhraseText(phraseWordEls) {
+            if (!phraseWordEls || phraseWordEls.length === 0) return '';
+
+            const sorted = phraseWordEls.slice().sort((a, b) => {
+                return (Number(a.dataset.idx) || 0) - (Number(b.dataset.idx) || 0);
+            });
+
+            try {
+                const range = document.createRange();
+                range.setStartBefore(sorted[0]);
+                range.setEndAfter(sorted[sorted.length - 1]);
+                return range.toString()
+                    .replace(/\u00a0/g, ' ')
+                    .replace(/\r\n?/g, '\n')
+                    .replace(/[ \t]+\n/g, '\n')
+                    .replace(/\n[ \t]+/g, '\n')
+                    .replace(/[ \t]{2,}/g, ' ')
+                    .trim();
+            } catch (err) {
+                // Fallback to token join if Range extraction fails.
+                return sorted.map(w => w.textContent || '').join(' ').replace(/[ \t]{2,}/g, ' ').trim();
+            }
+        }
         
         // Clean word for dictionary lookup
         function pvCleanWord(word) {
@@ -2313,8 +2338,11 @@ function initPageViewer(pagesData) {
         }
         
         // Trigger dictionary lookup using the existing text-reader.js dictionary widget
-        function pvTriggerDictLookup(text) {
-            const cleanText = pvCleanWord(text);
+        function pvTriggerDictLookup(text, options = {}) {
+            const isPhrase = !!options.isPhrase;
+            const cleanText = isPhrase
+                ? String(text || '').replace(/\u00a0/g, ' ').replace(/\r\n?/g, '\n').trim()
+                : pvCleanWord(text);
             if (!cleanText || !/[\p{L}]/u.test(cleanText)) return;
             
             // Ensure dictionary is available
@@ -2322,7 +2350,8 @@ function initPageViewer(pagesData) {
             
             if (dictAvailable) {
                 // Use text-reader's dictionary
-                const id = 'pv-' + cleanText.toLowerCase().replace(/\s+/g, '-');
+                const idBase = cleanText.toLowerCase().replace(/\s+/g, '-').replace(/[^\p{L}\p{N}-]/gu, '').slice(0, 80);
+                const id = 'pv-' + idBase + '-' + Date.now();
                 window.addDictLookup([cleanText], id, null);
             } else {
                 // Dictionary not available - show inline definition popup as fallback
