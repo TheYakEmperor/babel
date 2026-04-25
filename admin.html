@@ -477,6 +477,14 @@
         .annotator-canvas-wrapper.blank-active {
             align-items: flex-start;
         }
+
+        .annotator-canvas-wrapper.blank-active #annotator-canvas {
+            z-index: 3;
+        }
+
+        .annotator-canvas-wrapper.blank-active .blank-page-placeholder {
+            z-index: 1;
+        }
         
         #annotator-canvas.drawing {
             pointer-events: auto;
@@ -4696,18 +4704,28 @@
                     });
                 }
                 
-                // Extract works (flatten works and subworks)
+                // Extract only works belonging to this text (including nested children).
                 annotatorData.works = [];
+                const seenWorkIds = new Set();
+                const addTextWork = (work, depth = 0) => {
+                    if (!work || !work.id || seenWorkIds.has(work.id)) return;
+                    seenWorkIds.add(work.id);
+                    const title = work.title || work.id;
+                    const prefix = depth > 0 ? `${'  '.repeat(depth)}└ ` : '';
+                    annotatorData.works.push({ id: work.id, title: `${prefix}${title}` });
+
+                    const nested = [];
+                    if (Array.isArray(work.children)) nested.push(...work.children);
+                    if (Array.isArray(work.subworks)) nested.push(...work.subworks);
+                    if (Array.isArray(work.chapters)) nested.push(...work.chapters);
+                    nested.forEach(child => addTextWork(child, depth + 1));
+                };
+
                 if (textData.pages) {
                     textData.pages.forEach(page => {
                         if (page.works) {
                             page.works.forEach(work => {
-                                annotatorData.works.push({ id: work.id, title: work.title });
-                                if (work.subworks) {
-                                    work.subworks.forEach(subwork => {
-                                        annotatorData.works.push({ id: subwork.id, title: `  └ ${subwork.title}` });
-                                    });
-                                }
+                                addTextWork(work, 0);
                             });
                         }
                         // Also load existing regions
@@ -4716,22 +4734,6 @@
                             annotatorData.regions[label] = page.regions;
                         }
                     });
-                }
-
-                // Fallback: if this text has no embedded works, offer global works list
-                // so regions can still be associated in the annotator.
-                if (annotatorData.works.length === 0) {
-                    try {
-                        const worksResult = await api('list-works');
-                        if (worksResult && Array.isArray(worksResult.works)) {
-                            annotatorData.works = worksResult.works.map(w => ({
-                                id: w.id,
-                                title: w.title || w.id
-                            }));
-                        }
-                    } catch (e) {
-                        // Keep empty works list on failure; editor still renders with "None".
-                    }
                 }
                 
                 // Inject OCR regions for pages that have ocrText but no OCR region yet
@@ -5890,11 +5892,16 @@
                 // Populate works dropdown
                 const workSelect = document.getElementById('region-work');
                 const workGroup = document.getElementById('region-work-group');
-                workSelect.innerHTML = '<option value="">(None)</option>' + 
-                    annotatorData.works.map(w => 
-                        `<option value="${escapeHtml(w.id)}" ${region.workId === w.id ? 'selected' : ''}>${escapeHtml(w.title)}</option>`
-                    ).join('');
-                workGroup.style.display = 'block';
+                if (annotatorData.works.length > 0) {
+                    workSelect.innerHTML = '<option value="">(None)</option>' + 
+                        annotatorData.works.map(w => 
+                            `<option value="${escapeHtml(w.id)}" ${region.workId === w.id ? 'selected' : ''}>${escapeHtml(w.title)}</option>`
+                        ).join('');
+                    workGroup.style.display = 'block';
+                } else {
+                    workSelect.innerHTML = '<option value="">(No works in this text)</option>';
+                    workGroup.style.display = 'none';
+                }
                 
                 document.getElementById('annotator-region-editor').style.display = 'block';
             } else {

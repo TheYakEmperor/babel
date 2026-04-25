@@ -53,6 +53,20 @@ window.initTextReader = function() {
 };
 
 function _initTextReaderInternal() {
+    // Ensure infobox/meta links open in a new tab, including links added later.
+    const enforceMetaLinksNewTab = () => {
+        document.querySelectorAll('.text-meta a, .metadata a').forEach(a => {
+            a.setAttribute('target', '_blank');
+            a.setAttribute('rel', 'noopener noreferrer');
+        });
+    };
+
+    enforceMetaLinksNewTab();
+    document.querySelectorAll('.text-meta, .metadata').forEach(meta => {
+        const observer = new MutationObserver(() => enforceMetaLinksNewTab());
+        observer.observe(meta, { childList: true, subtree: true });
+    });
+
     // === MOVE SEARCH INTO SIDEBAR & SCROLL BEHAVIOR ===
     const sidebar = document.querySelector('.right-sidebar');
     const initialTop = 200;
