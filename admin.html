@@ -402,6 +402,9 @@
         
         /* Blank page canvas placeholder */
         .blank-page-placeholder {
+            position: relative;
+            z-index: 2;
+            pointer-events: none;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -412,6 +415,11 @@
             background-size: 30px 30px;
             border: 2px dashed #9ca3af;
             color: #6b7280;
+        }
+
+        .blank-page-placeholder button,
+        .blank-page-placeholder .btn {
+            pointer-events: auto;
         }
         
         .blank-page-placeholder .icon {
@@ -461,8 +469,13 @@
             position: absolute;
             top: 0;
             left: 0;
+            z-index: 1;
             pointer-events: auto;
             cursor: default;
+        }
+
+        .annotator-canvas-wrapper.blank-active {
+            align-items: flex-start;
         }
         
         #annotator-canvas.drawing {
@@ -2485,6 +2498,13 @@
             
             // Convert flat works list back to pages structure for data.json
             const pages = buildPagesFromWorks(textEditorData.works);
+
+            // Normalize blank pages from orderedPages when present.
+            if (textEditorData.orderedPages && textEditorData.orderedPages.length > 0) {
+                textEditorData.blankPages = textEditorData.orderedPages
+                    .filter(p => p.isBlank)
+                    .map(p => ({ label: p.label, filename: p.filename, isBlank: true }));
+            }
             
             // Add blank pages to pages array if any
             if (textEditorData.blankPages && textEditorData.blankPages.length > 0) {
@@ -4329,19 +4349,15 @@
             
             // Store blank pages in textEditorData
             textEditorData.blankPages = blankPages;
-            
-            // Show confirmation
-            const preview = document.getElementById('text-images-preview');
-            let html = `<div style="width:100%;margin-bottom:10px;"><strong style="color:#92400e;font-size:0.85em;">Blank Pages (${blankPages.length}):</strong></div>`;
-            html += blankPages.map((page, i) => `
-                <div class="image-preview" style="border-color:#fbbf24; background:linear-gradient(135deg, #fef3c7 25%, #fde68a 25%, #fde68a 50%, #fef3c7 50%, #fef3c7 75%, #fde68a 75%); background-size:20px 20px;">
-                    <div style="display:flex;align-items:center;justify-content:center;height:100px;font-size:0.9em;color:#92400e;">
-                        📄 ${escapeHtml(page.label)}
-                    </div>
-                    <span class="image-number" style="background:#f59e0b;">${i + 1}</span>
-                </div>
-            `).join('');
-            preview.innerHTML = html;
+
+            // Keep orderedPages as canonical UI order, even for blank-only texts.
+            textEditorData.orderedPages = blankPages.map(bp => ({
+                label: bp.label,
+                filename: bp.filename,
+                isBlank: true
+            }));
+
+            renderTextImages();
             
             showStatus(`Created ${count} blank page placeholders. Save to apply.`);
         }
@@ -4626,6 +4642,11 @@
             
             document.getElementById('annotator-title').textContent = `Region Annotator: ${textId}`;
             document.getElementById('annotator-modal').classList.add('active');
+            document.getElementById('annotator-page-label').textContent = 'Loading pages...';
+            document.getElementById('annotator-pages').innerHTML = '<div style="padding:10px;color:#9ca3af;font-size:0.9em;">Loading...</div>';
+            document.getElementById('annotator-image').src = '';
+            document.getElementById('annotator-regions').innerHTML = '';
+            document.getElementById('annotator-region-editor').style.display = 'none';
             updateAnnotatorZoomDisplay();
             
             // Load text data
@@ -4696,6 +4717,22 @@
                         }
                     });
                 }
+
+                // Fallback: if this text has no embedded works, offer global works list
+                // so regions can still be associated in the annotator.
+                if (annotatorData.works.length === 0) {
+                    try {
+                        const worksResult = await api('list-works');
+                        if (worksResult && Array.isArray(worksResult.works)) {
+                            annotatorData.works = worksResult.works.map(w => ({
+                                id: w.id,
+                                title: w.title || w.id
+                            }));
+                        }
+                    } catch (e) {
+                        // Keep empty works list on failure; editor still renders with "None".
+                    }
+                }
                 
                 // Inject OCR regions for pages that have ocrText but no OCR region yet
                 annotatorData.pages.forEach(page => {
@@ -4724,6 +4761,9 @@
                 // Select first page
                 if (annotatorData.pages.length > 0) {
                     selectAnnotatorPage(annotatorData.pages[0].label);
+                } else {
+                    document.getElementById('annotator-page-label').textContent = 'No pages available';
+                    document.getElementById('annotator-regions').innerHTML = '<p style="color:#6b7280;text-align:center;font-size:0.9em;">No pages found for this text yet.</p>';
                 }
             } catch (e) {
                 showStatus('Error loading text: ' + e.message, true);
@@ -5635,6 +5675,7 @@
             
             // Handle blank pages
             if (page.isBlank) {
+                wrapper.classList.add('blank-active');
                 img.style.display = 'none';
                 // Add or update blank placeholder
                 let placeholder = wrapper.querySelector('.blank-page-placeholder');
@@ -5648,6 +5689,7 @@
                 setupAnnotatorCanvas();
                 drawAnnotatorRegions();
             } else {
+                wrapper.classList.remove('blank-active');
                 img.style.display = '';
                 const placeholder = wrapper.querySelector('.blank-page-placeholder');
                 if (placeholder) placeholder.style.display = 'none';
@@ -5848,15 +5890,11 @@
                 // Populate works dropdown
                 const workSelect = document.getElementById('region-work');
                 const workGroup = document.getElementById('region-work-group');
-                if (annotatorData.works.length > 0) {
-                    workSelect.innerHTML = '<option value="">(None)</option>' + 
-                        annotatorData.works.map(w => 
-                            `<option value="${escapeHtml(w.id)}" ${region.workId === w.id ? 'selected' : ''}>${escapeHtml(w.title)}</option>`
-                        ).join('');
-                    workGroup.style.display = 'block';
-                } else {
-                    workGroup.style.display = 'none';
-                }
+                workSelect.innerHTML = '<option value="">(None)</option>' + 
+                    annotatorData.works.map(w => 
+                        `<option value="${escapeHtml(w.id)}" ${region.workId === w.id ? 'selected' : ''}>${escapeHtml(w.title)}</option>`
+                    ).join('');
+                workGroup.style.display = 'block';
                 
                 document.getElementById('annotator-region-editor').style.display = 'block';
             } else {
