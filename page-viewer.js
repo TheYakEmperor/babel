@@ -1353,6 +1353,15 @@ function initPageViewer(pagesData) {
             
             // Build regions content - group by work if multiple works
             let regionsHtml = '';
+
+            function renderRegionBody(region) {
+                const bodyHtml = region.text || region.content || '<em>No transcription</em>';
+                if (region.isOcr) {
+                    const label = region.pageLabel ? `<div class="pv-ocr-label">Page ${escapeHtmlPV(region.pageLabel)} - OCR Text</div>` : '';
+                    return `<div class="pv-ocr-section">${label}<div class="pv-ocr-text">${bodyHtml}</div></div>`;
+                }
+                return `<div class="pv-region-content">${bodyHtml}</div>`;
+            }
             
             if (selectedRegions.length > 1) {
                 // Check if there are multiple different works
@@ -1379,14 +1388,14 @@ function initPageViewer(pagesData) {
                         }
                         const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
                         const headerHtml = (workCaptionHtml || titleHtml) ? `<div class="pv-region-header">${workCaptionHtml}${titleHtml}</div>` : '';
-                        regionsHtml += `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
+                        regionsHtml += `<div class="pv-popup-region">${headerHtml}${renderRegionBody(region)}</div>`;
                     });
                 } else {
                     // No works - just show regions with titles
                     regionsHtml = selectedRegions.map(({ region }) => {
                         const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
                         const headerHtml = titleHtml ? `<div class="pv-region-header">${titleHtml}</div>` : '';
-                        return `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
+                        return `<div class="pv-popup-region">${headerHtml}${renderRegionBody(region)}</div>`;
                     }).join('');
                 }
             } else {
@@ -1394,7 +1403,7 @@ function initPageViewer(pagesData) {
                 const { region } = selectedRegions[0];
                 const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
                 const headerHtml = titleHtml ? `<div class="pv-region-header">${titleHtml}</div>` : '';
-                regionsHtml = `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
+                regionsHtml = `<div class="pv-popup-region">${headerHtml}${renderRegionBody(region)}</div>`;
             }
             
             // Build work link if single region with work
@@ -1676,6 +1685,7 @@ function initPageViewer(pagesData) {
                 
                 if (page && page.regions && page.regions.length > 0) {
                     for (const region of page.regions) {
+                        if (region.isOcr) continue;
                         result.push({
                             ...region,
                             pageLabel: page.label || page.id
@@ -1683,6 +1693,38 @@ function initPageViewer(pagesData) {
                     }
                 }
             }
+            return result;
+        }
+
+        // Get OCR regions (isOcr) for the current page(s).
+        function getCurrentPageOcrRegions() {
+            if (!pagesData) return [];
+            const result = [];
+
+            const pageIndices = getCurrentVisiblePageIndices();
+
+            for (const idx of pageIndices) {
+                if (idx < 0 || idx >= images.length) continue;
+
+                const currentImage = images[idx];
+                const currentLabel = typeof currentImage === 'object' ? currentImage.label : getPageName(currentImage);
+
+                const page = pagesData.find(p => {
+                    const pageLabel = p.label || p.id || '';
+                    return pageLabel === currentLabel;
+                });
+
+                if (page && page.regions && page.regions.length > 0) {
+                    for (const region of page.regions) {
+                        if (!region.isOcr) continue;
+                        result.push({
+                            ...region,
+                            pageLabel: page.label || page.id
+                        });
+                    }
+                }
+            }
+
             return result;
         }
 
@@ -1723,6 +1765,7 @@ function initPageViewer(pagesData) {
                 }
                 if (currentLabels.has(pageLabel) && Array.isArray(page.regions)) {
                     for (const region of page.regions) {
+                        if (region.isOcr) continue;
                         if (region.workId || region.title) {
                             addWorkEntry(region.workId || '', findWorkTitle(region.workId) || region.title || region.workId || '', pageLabel);
                         }
@@ -1774,8 +1817,20 @@ function initPageViewer(pagesData) {
         async function populateTranscriptionPanel() {
             if (!transcriptionPanel) return;
             
-            const ocrTexts = await getCurrentPageOcrText();
+            const rawOcrTexts = await getCurrentPageOcrText();
+            const ocrRegions = getCurrentPageOcrRegions();
             const allRegions = getCurrentPageRegions();
+
+            // Prefer user-edited OCR region HTML; only fallback to raw OCR text if none exists.
+            const ocrTexts = ocrRegions.length > 0
+                ? ocrRegions.map(region => ({
+                    label: region.pageLabel || '',
+                    html: region.text || region.content || ''
+                }))
+                : rawOcrTexts.map(ocr => ({
+                    label: ocr.label || '',
+                    text: ocr.text || ''
+                }));
             
             if (ocrTexts.length === 0 && allRegions.length === 0) {
                 transcriptionPanel.innerHTML = `
@@ -1830,10 +1885,13 @@ function initPageViewer(pagesData) {
                 }
                 for (const ocr of ocrTexts) {
                     const labelHtml = ocr.label ? `<div class="pv-ocr-label">Page ${escapeHtmlPV(ocr.label)} - OCR Text</div>` : '';
+                    const bodyHtml = ocr.html !== undefined
+                        ? ocr.html
+                        : escapeHtmlPV(ocr.text || '');
                     html += `
                         <div class="pv-ocr-section">
                             ${labelHtml}
-                            <div class="pv-ocr-text">${escapeHtmlPV(ocr.text)}</div>
+                            <div class="pv-ocr-text">${bodyHtml}</div>
                         </div>
                     `;
                 }
@@ -1999,8 +2057,8 @@ function initPageViewer(pagesData) {
         function pvProcessTextForDictionary(container) {
             if (!container) return;
             
-            // Process both popup regions and OCR text sections
-            const regions = container.querySelectorAll('.pv-popup-region, .pv-ocr-section');
+            // Process popup regions and OCR text blocks for dictionary hover/click.
+            const regions = container.querySelectorAll('.pv-popup-region, .pv-ocr-text');
             let wordIndex = 0;
             
             regions.forEach(region => {
@@ -2508,28 +2566,23 @@ function initPageViewer(pagesData) {
             pvPhraseOverlays[phraseId] = [];
             
             const firstWord = words[0];
-            const region = firstWord.closest('.pv-popup-region');
+            const region = firstWord.closest('.pv-popup-region, .pv-ocr-section');
             if (!region) return;
-            
-            // Helper to get offset relative to region
-            function getOffsetToRegion(el) {
-                let top = 0, left = 0;
-                let current = el;
-                while (current && current !== region) {
-                    top += current.offsetTop;
-                    left += current.offsetLeft;
-                    current = current.offsetParent;
-                }
-                return { top, left };
-            }
+            const regionRect = region.getBoundingClientRect();
             
             // Group words by line (same offsetTop relative to region)
             const lines = {};
             words.forEach(w => {
-                const offset = getOffsetToRegion(w);
+                const wordRect = w.getBoundingClientRect();
+                const offset = {
+                    top: wordRect.top - regionRect.top,
+                    left: wordRect.left - regionRect.left,
+                    width: wordRect.width,
+                    height: wordRect.height
+                };
                 const lineKey = Math.round(offset.top);
                 if (!lines[lineKey]) lines[lineKey] = [];
-                lines[lineKey].push({ el: w, offset, width: w.offsetWidth, height: w.offsetHeight });
+                lines[lineKey].push({ el: w, offset, width: offset.width, height: offset.height });
             });
             
             Object.values(lines).forEach(lineWords => {

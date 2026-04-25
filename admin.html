@@ -4705,10 +4705,15 @@
                     }
                     const hasOcr = annotatorData.regions[page.label].some(r => r.isOcr);
                     if (!hasOcr) {
+                        const ocrHtml = String(page.ocrText)
+                            .replace(/&/g, '&amp;')
+                            .replace(/</g, '&lt;')
+                            .replace(/>/g, '&gt;')
+                            .replace(/\r?\n/g, '<br>');
                         annotatorData.regions[page.label].unshift({
                             x: 0, y: 0, width: 1, height: 1,
                             title: 'OCR Text',
-                            text: page.ocrText,
+                            text: ocrHtml,
                             isOcr: true
                         });
                     }

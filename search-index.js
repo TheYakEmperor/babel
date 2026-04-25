@@ -87006,6 +87006,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Ein Feste Burg ist Unser Gott",
+    "id": "unser-gott-poop",
+    "level": "text",
+    "url": "texts/00/00/unser-gott-poop/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Ein Mahal Sign Language",
     "id": "einm1234",
     "level": "language",

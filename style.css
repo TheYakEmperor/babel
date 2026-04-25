@@ -1929,7 +1929,8 @@ body.viewer-fullscreen .search-container {
     border-radius: 0;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     z-index: 10010;
-    width: fit-content;
+    width: clamp(760px, 78vw, 1400px);
+    max-width: 94vw;
     max-height: 80vh;
     overflow: hidden;
     display: flex;
@@ -1994,6 +1995,7 @@ body.viewer-fullscreen .search-container {
     padding: 20px;
     overflow-y: auto;
     max-height: calc(80vh - 60px);
+    width: 100%;
 }
 
 .pv-transcription-region {
@@ -2183,9 +2185,9 @@ body.viewer-fullscreen .search-container {
 
 /* Region content wrapper - maintains its own intrinsic width */
 .pv-region-content {
-    width: fit-content;
-    max-width: calc(100% - 160px); /* Leave space for side titles */
-    margin: 0 80px; /* Center with side margins for titles */
+    width: 100%;
+    max-width: none;
+    margin: 0;
 }
 
 /* Centered content keeps intrinsic width but centers the block */
@@ -3108,7 +3110,7 @@ body.viewer-fullscreen .search-container {
     visibility: hidden;
     transform: translateX(20px);
     transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
-    z-index: 1000;
+    z-index: 10050;
     font-size: 0.9rem;
 }
 
