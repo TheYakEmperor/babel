@@ -2086,11 +2086,12 @@ function initPageViewer(pagesData) {
                     if (node.parentElement.closest('.pv-work-caption')) return;
                     if (node.parentElement.closest('.pv-ocr-label')) return;
                     
-                    // Match words (letters with optional internal apostrophes) vs everything else
+                    // Match words, punctuation, and other non-space tokens as selectable units.
+                    // Whitespace remains plain text so layout is preserved.
                     const fragment = document.createDocumentFragment();
                     let lastIndex = 0;
                     
-                    const wordRegex = /[\p{L}]+(?:[''][\p{L}]+)*/gu;
+                    const wordRegex = /[\p{L}]+(?:['’][\p{L}]+)*|\d+|[^\s\p{L}\d]/gu;
                     let match;
                     
                     while ((match = wordRegex.exec(text)) !== null) {

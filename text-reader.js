@@ -2256,6 +2256,8 @@ function _initTextReaderInternal() {
             }
             processedWords.push(word);
         }
+
+        const translateText = processedWords.join(' ');
         
         // Check if this is a phrase (multiple words)
         const isPhrase = processedWords.length > 1 || (processedWords.length === 1 && /\s/.test(processedWords[0]));
@@ -2377,7 +2379,6 @@ function _initTextReaderInternal() {
         }
         
         // Append translation section (always show it)
-        const translateText = processedWords.join(' ');
         resultsHtml += buildTranslateSection(translateText);
 
         // If no dictionary results (only translate section), still show for phrases but drop single words
@@ -2577,24 +2578,37 @@ function _initTextReaderInternal() {
             btn.disabled = true;
             btn.textContent = 'Looking up\u2026';
             const wordList = phrase.split(/\s+/).filter(w => /\p{L}/u.test(w));
-            let extra = '';
-            for (const word of wordList) {
-                const cleanWord = word
-                    .replace(/[.,!?;:""\"()[\]{}\u00b7\u2022\u2027\u2219]/g, '')
-                    .replace(/[\u2018\u2019]/g, "'")
-                    .replace(/\u017f/g, 's').replace(/\u01bf/g, 'w').replace(/\u01be/g, 'W')
-                    .replace(/^'+|'+$/g, '').trim();
-                if (!cleanWord) continue;
-                const caseResults = await lookupWordWithCases(cleanWord);
-                for (const result of caseResults) {
-                    const defHtml = formatDefinition(result.data, result.word, null);
-                    if (defHtml.includes('dict-error')) continue;
-                    extra += `<div class="dict-word-entry"><h3>${result.word}</h3>${defHtml}</div>`;
-                    break;
-                }
+
+            try {
+                const entries = await Promise.all(wordList.map(async (word) => {
+                    const cleanWord = word
+                        .replace(/[.,!?;:""\"()[\]{}\u00b7\u2022\u2027\u2219]/g, '')
+                        .replace(/[\u2018\u2019]/g, "'")
+                        .replace(/\u017f/g, 's').replace(/\u01bf/g, 'w').replace(/\u01be/g, 'W')
+                        .replace(/^'+|'+$/g, '').trim();
+                    if (!cleanWord) return '';
+
+                    try {
+                        const caseResults = await lookupWordWithCases(cleanWord);
+                        for (const result of caseResults) {
+                            const defHtml = formatDefinition(result.data, result.word, null);
+                            if (defHtml.includes('dict-error')) continue;
+                            return `<div class="dict-word-entry"><h3>${result.word}</h3>${defHtml}</div>`;
+                        }
+                    } catch (err) {
+                        console.error('Phrase lookup failed for word:', cleanWord, err);
+                    }
+
+                    return '';
+                }));
+
+                const extra = entries.filter(Boolean).join('') || '<div class="dict-phrase-note">No individual word entries found.</div>';
+                btn.closest('.dict-phrase-lookup-bar').outerHTML = extra;
+            } catch (err) {
+                console.error('Phrase lookup failed:', err);
+                btn.disabled = false;
+                btn.textContent = 'Look up words in dictionary';
             }
-            if (!extra) extra = '<div class="dict-phrase-note">No individual word entries found.</div>';
-            btn.closest('.dict-phrase-lookup-bar').outerHTML = extra;
             return;
         }
     });
