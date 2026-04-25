@@ -91,10 +91,17 @@ function initPageViewer(pagesData) {
     }
     
     function setupPanHandlers() {
+        function isInteractiveOverlayTarget(target) {
+            return !!target.closest(
+                '.pv-transcription-popup, .pv-dict-popup, .dictionary-widget, .pv-popup-region, .pv-ocr-text, .pv-word, .dict-translate-section, .dict-translate-btn, .dict-translate-lang'
+            );
+        }
+
         // Pan handler - transform the spread as a single unit
         mainContainer.addEventListener('mousedown', (e) => {
             if (zoomLevel <= 1) return;
             if (e.target.closest('.page-viewer-zoom-controls')) return;
+            if (isInteractiveOverlayTarget(e.target)) return;
 
             // If starting on actual OCR text glyphs, allow native text selection.
             if (e.target.closest('.pv-text-span')) return;
@@ -146,6 +153,7 @@ function initPageViewer(pagesData) {
         
         // Mouse wheel zoom
         mainContainer.addEventListener('wheel', (e) => {
+            if (isInteractiveOverlayTarget(e.target)) return;
             e.preventDefault();
             if (e.deltaY < 0) {
                 zoomIn();
