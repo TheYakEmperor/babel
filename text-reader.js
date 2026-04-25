@@ -2257,46 +2257,37 @@ function _initTextReaderInternal() {
             processedWords.push(word);
         }
         
-        // Check if this is a phrase (multiple words) - try phrase lookup first
+        // Check if this is a phrase (multiple words)
         const isPhrase = processedWords.length > 1 || (processedWords.length === 1 && /\s/.test(processedWords[0]));
         let resultsHtml = '';
-        
+
         if (isPhrase) {
-            // Build phrase variants to try
-            const phraseVariants = [];
+            // For phrases: skip Wiktionary lookup (too slow), show translate section immediately.
+            // Individual word lookup is available via a secondary button.
             const basePhrase = processedWords.join(' ')
                 .replace(/[.,!?;:"()\[\]{}]/g, '')
                 .replace(/ſ/g, 's')
                 .trim();
-            
-            // Try various forms of the phrase
-            phraseVariants.push(basePhrase);                           // "per signum crucis"
-            phraseVariants.push(basePhrase.replace(/\s+/g, '-'));      // "per-signum-crucis"
-            phraseVariants.push(basePhrase.replace(/\s+/g, ''));       // "persignumcrucis"
-            phraseVariants.push(basePhrase.replace(/\s+/g, '_'));      // "per_signum_crucis"
-            
-            // Try each variant
-            for (const phrase of phraseVariants) {
-                if (!phrase) continue;
-                
-                const caseResults = await lookupWordWithCases(phrase);
-                
-                for (const result of caseResults) {
-                    const defHtml = formatDefinition(result.data, result.word, languages);
-                    if (defHtml.includes('dict-error')) continue;
-                    resultsHtml += `<div class="dict-word-entry"><h3>${result.word}</h3>`;
-                    resultsHtml += defHtml;
-                    resultsHtml += '</div>';
-                }
-                
-                // If we found results for this variant, don't try others
-                if (resultsHtml) break;
-            }
-            
-            // If phrase lookup found nothing, add a note and fall through to individual words
-            if (!resultsHtml) {
-                resultsHtml += `<div class="dict-phrase-note">No entry for "${basePhrase}" — showing individual words:</div>`;
-            }
+            resultsHtml += buildTranslateSection(translateText);
+            resultsHtml += `<div class="dict-phrase-lookup-bar">
+                <button class="dict-phrase-lookup-btn" data-phrase="${basePhrase.replace(/"/g, '&quot;')}">Look up words in dictionary</button>
+            </div>`;
+            // Cache and show immediately — skip the individual word loop too
+            if (dictLookups[id]) dictLookups[id].cachedHtml = resultsHtml;
+            if (activeLookupId === id) dictContent.innerHTML = resultsHtml;
+            tab.addEventListener('click', (e) => {
+                if (e.target.classList.contains('dict-tab-close')) return;
+                dictTabs.querySelectorAll('.dict-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                activeLookupId = id;
+                if (dictLookups[id] && dictLookups[id].cachedHtml) dictContent.innerHTML = dictLookups[id].cachedHtml;
+            });
+            tab.querySelector('.dict-tab-close').addEventListener('click', (e) => {
+                e.stopPropagation();
+                deselectById(id);
+                removeDictLookup(id);
+            });
+            return;
         }
         
         // Lookup each word individually (always for single words, or as fallback for phrases)
@@ -2551,7 +2542,7 @@ function _initTextReaderInternal() {
         if (!resp.ok) throw new Error('Translation request failed');
         const data = await resp.json();
         // data[0] is array of [translated_chunk, original_chunk, ...]
-        return data[0].map(chunk => chunk[0]).join('');
+        return data[0].map(chunk => (chunk && chunk[0]) ? chunk[0] : '').join('');
     }
 
     dictContent.addEventListener('change', (e) => {
@@ -2570,13 +2561,40 @@ function _initTextReaderInternal() {
             lastTranslateLang = lang;
             localStorage.setItem('dict-translate-lang', lang);
             const resultEl = section.querySelector('.dict-translate-result');
-            resultEl.textContent = 'Translating…';
+            resultEl.textContent = 'Translating\u2026';
             try {
                 const translated = await doTranslate(text, lang);
                 resultEl.textContent = translated;
             } catch (err) {
                 resultEl.textContent = 'Translation failed.';
             }
+            return;
+        }
+
+        if (e.target.classList.contains('dict-phrase-lookup-btn')) {
+            const btn = e.target;
+            const phrase = btn.dataset.phrase;
+            btn.disabled = true;
+            btn.textContent = 'Looking up\u2026';
+            const wordList = phrase.split(/\s+/).filter(w => /\p{L}/u.test(w));
+            let extra = '';
+            for (const word of wordList) {
+                const cleanWord = word
+                    .replace(/[.,!?;:""\"()[\]{}\u00b7\u2022\u2027\u2219]/g, '')
+                    .replace(/[\u2018\u2019]/g, "'")
+                    .replace(/\u017f/g, 's').replace(/\u01bf/g, 'w').replace(/\u01be/g, 'W')
+                    .replace(/^'+|'+$/g, '').trim();
+                if (!cleanWord) continue;
+                const caseResults = await lookupWordWithCases(cleanWord);
+                for (const result of caseResults) {
+                    const defHtml = formatDefinition(result.data, result.word, null);
+                    if (defHtml.includes('dict-error')) continue;
+                    extra += `<div class="dict-word-entry"><h3>${result.word}</h3>${defHtml}</div>`;
+                    break;
+                }
+            }
+            if (!extra) extra = '<div class="dict-phrase-note">No individual word entries found.</div>';
+            btn.closest('.dict-phrase-lookup-bar').outerHTML = extra;
             return;
         }
     });

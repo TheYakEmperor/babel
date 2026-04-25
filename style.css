@@ -3291,6 +3291,30 @@ body.viewer-fullscreen .search-container {
     font-size: 0.95rem;
     line-height: 1.5;
     min-height: 1.2em;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.dict-phrase-lookup-bar {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #2a2a2a;
+}
+
+.dict-phrase-lookup-btn {
+    background: none;
+    border: 1px solid #555;
+    color: #aaa;
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.dict-phrase-lookup-btn:hover {
+    border-color: #888;
+    color: #ddd;
 }
 
 .dict-word-entry h3 {
