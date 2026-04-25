@@ -2237,7 +2237,7 @@ function _initTextReaderInternal() {
         dictTabs.appendChild(tab);
         
         // Store lookup with placeholder for cached content
-        dictLookups[id] = { words, tab, cachedHtml: null };
+        dictLookups[id] = { words, tab, cachedHtml: null, translateText: '' };
         activeLookupId = id;
         
         // Show loading
@@ -2258,6 +2258,7 @@ function _initTextReaderInternal() {
         }
 
         const translateText = processedWords.join(' ');
+        dictLookups[id].translateText = translateText;
         
         // Check if this is a phrase (multiple words)
         const isPhrase = processedWords.length > 1 || (processedWords.length === 1 && /\s/.test(processedWords[0]));
@@ -2270,7 +2271,7 @@ function _initTextReaderInternal() {
                 .replace(/[.,!?;:"()\[\]{}]/g, '')
                 .replace(/ſ/g, 's')
                 .trim();
-            resultsHtml += buildTranslateSection(translateText);
+            resultsHtml += buildTranslateSection(id);
             resultsHtml += `<div class="dict-phrase-lookup-bar">
                 <button class="dict-phrase-lookup-btn" data-phrase="${basePhrase.replace(/"/g, '&quot;')}">Look up words in dictionary</button>
             </div>`;
@@ -2379,7 +2380,7 @@ function _initTextReaderInternal() {
         }
         
         // Append translation section (always show it)
-        resultsHtml += buildTranslateSection(translateText);
+        resultsHtml += buildTranslateSection(id);
 
         // If no dictionary results (only translate section), still show for phrases but drop single words
         if (!resultsHtml.includes('dict-word-entry')) {
@@ -2522,16 +2523,15 @@ function _initTextReaderInternal() {
 
     let lastTranslateLang = localStorage.getItem('dict-translate-lang') || 'en';
 
-    function buildTranslateSection(text) {
+    function buildTranslateSection(lookupId) {
         const opts = TRANSLATE_LANGS.map(([code, name]) =>
             `<option value="${code}"${code === lastTranslateLang ? ' selected' : ''}>${name}</option>`
         ).join('');
-        const escapedText = text.replace(/"/g, '&quot;');
         return `<div class="dict-translate-section">
             <div class="dict-translate-header">Translate</div>
             <div class="dict-translate-controls">
                 <select class="dict-translate-lang">${opts}</select>
-                <button class="dict-translate-btn" data-text="${escapedText}">Go</button>
+                <button class="dict-translate-btn" data-lookup-id="${lookupId}">Go</button>
             </div>
             <div class="dict-translate-result"></div>
         </div>`;
@@ -2556,7 +2556,14 @@ function _initTextReaderInternal() {
     dictContent.addEventListener('click', async (e) => {
         if (e.target.classList.contains('dict-translate-btn')) {
             const btn = e.target;
-            const text = btn.dataset.text;
+            const lookupId = btn.dataset.lookupId;
+            const text = dictLookups[lookupId] ? dictLookups[lookupId].translateText : '';
+            if (!text) {
+                const section = btn.closest('.dict-translate-section');
+                const resultEl = section.querySelector('.dict-translate-result');
+                resultEl.textContent = 'Translation failed.';
+                return;
+            }
             const section = btn.closest('.dict-translate-section');
             const lang = section.querySelector('.dict-translate-lang').value;
             lastTranslateLang = lang;
