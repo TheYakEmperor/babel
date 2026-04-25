@@ -2173,6 +2173,7 @@ function initPageViewer(pagesData) {
         // Setup word click/drag handlers that trigger the existing dictionary widget
         function pvSetupWordHandlers(container) {
             let startWord = null;
+            let dragScope = null;
             let isDragging = false;
             let dragPhraseId = null; // Phrase being created during current drag
             let wordInteractionActive = false; // Flag to prevent click-outside from firing during drag
@@ -2185,6 +2186,7 @@ function initPageViewer(pagesData) {
                 if (e.target.classList.contains('pv-word')) {
                     wordInteractionActive = true;
                     startWord = e.target;
+                    dragScope = startWord.closest('.pv-popup-region, .pv-ocr-text') || container;
                     isDragging = false;
                     dragPhraseId = null;
                     e.stopPropagation();
@@ -2196,9 +2198,13 @@ function initPageViewer(pagesData) {
                 
                 const endWord = e.target.classList.contains('pv-word') ? e.target : null;
                 if (!endWord) return;
+                if (dragScope && !dragScope.contains(endWord)) return;
                 
-                const startIdx = parseInt(startWord.dataset.idx);
-                const endIdx = parseInt(endWord.dataset.idx);
+                const activeScope = dragScope || container;
+                const words = Array.from(activeScope.querySelectorAll('.pv-word'));
+                const startIdx = words.indexOf(startWord);
+                const endIdx = words.indexOf(endWord);
+                if (startIdx === -1 || endIdx === -1) return;
                 
                 if (startIdx !== endIdx) isDragging = true;
                 if (!isDragging) return;
@@ -2208,7 +2214,7 @@ function initPageViewer(pagesData) {
                 
                 // Remove temporary drag phrase if exists (but not committed phrases)
                 if (dragPhraseId !== null) {
-                    pvRemovePhraseById(dragPhraseId, container);
+                    pvRemovePhraseById(dragPhraseId, activeScope);
                     container.pvActivePhrases.delete(dragPhraseId);
                 }
                 
@@ -2219,8 +2225,7 @@ function initPageViewer(pagesData) {
                 
                 // Create new temporary phrase for drag preview
                 dragPhraseId = ++pvPhraseCounter;
-                
-                const words = container.querySelectorAll('.pv-word');
+
                 for (let i = minIdx; i <= maxIdx; i++) {
                     if (words[i]) {
                         words[i].classList.add('phrase-word');
@@ -2228,7 +2233,7 @@ function initPageViewer(pagesData) {
                     }
                 }
                 
-                pvCreatePhraseOverlay(dragPhraseId, container);
+                pvCreatePhraseOverlay(dragPhraseId, activeScope);
             });
             
             container.addEventListener('mouseup', e => {
@@ -2255,7 +2260,8 @@ function initPageViewer(pagesData) {
                     // Phrase drag complete - commit this phrase and trigger lookup
                     container.pvActivePhrases.add(dragPhraseId);
 
-                    const phraseWordEls = Array.from(container.querySelectorAll(`.pv-word[data-phrase="${dragPhraseId}"]`));
+                    const activeScope = dragScope || container;
+                    const phraseWordEls = Array.from(activeScope.querySelectorAll(`.pv-word[data-phrase="${dragPhraseId}"]`));
                     if (phraseWordEls.length > 0) {
                         const phraseText = pvExtractPhraseText(phraseWordEls);
                         pvTriggerDictLookup(phraseText, { isPhrase: true });
@@ -2263,6 +2269,7 @@ function initPageViewer(pagesData) {
                 }
                 
                 startWord = null;
+                dragScope = null;
                 isDragging = false;
                 dragPhraseId = null;
                 // Reset word interaction flag after a short delay to prevent click handler from clearing
@@ -2302,7 +2309,8 @@ function initPageViewer(pagesData) {
             if (!phraseWordEls || phraseWordEls.length === 0) return '';
 
             const sorted = phraseWordEls.slice().sort((a, b) => {
-                return (Number(a.dataset.idx) || 0) - (Number(b.dataset.idx) || 0);
+                if (a === b) return 0;
+                return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
             });
 
             try {
