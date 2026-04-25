@@ -2537,6 +2537,17 @@ function _initTextReaderInternal() {
         </div>`;
     }
 
+    function normalizeTextForTranslation(text) {
+        return String(text || '')
+            .replace(/\r\n?/g, '\n')
+            // Keep paragraph breaks, but merge single line breaks so translation treats it as one passage.
+            .replace(/\n{2,}/g, '\uE000')
+            .replace(/\n+/g, ' ')
+            .replace(/\uE000/g, '\n\n')
+            .replace(/[ \t]{2,}/g, ' ')
+            .trim();
+    }
+
     async function doTranslate(text, targetLang) {
         const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(text)}`;
         const resp = await fetch(url);
@@ -2571,7 +2582,8 @@ function _initTextReaderInternal() {
             const resultEl = section.querySelector('.dict-translate-result');
             resultEl.textContent = 'Translating\u2026';
             try {
-                const translated = await doTranslate(text, lang);
+                const normalizedText = normalizeTextForTranslation(text);
+                const translated = await doTranslate(normalizedText, lang);
                 resultEl.textContent = translated;
             } catch (err) {
                 resultEl.textContent = 'Translation failed.';
