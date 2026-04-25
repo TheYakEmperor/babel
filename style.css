@@ -2337,6 +2337,7 @@ body.viewer-fullscreen .search-container {
 .pv-word.phrase-word {
     position: relative;
     z-index: 2;
+    box-shadow: 0 0 0 2px #3b82f6;
 }
 
 .pv-phrase-overlay {
@@ -3238,6 +3239,58 @@ body.viewer-fullscreen .search-container {
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 0;
+}
+
+.dict-translate-section {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid #333;
+}
+
+.dict-translate-header {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.dict-translate-controls {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.dict-translate-lang {
+    flex: 1;
+    background: #222;
+    color: #ddd;
+    border: 1px solid #444;
+    padding: 4px 6px;
+    font-size: 0.85rem;
+}
+
+.dict-translate-btn {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+
+.dict-translate-btn:hover {
+    background: #1d4ed8;
+}
+
+.dict-translate-result {
+    margin-top: 10px;
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    min-height: 1.2em;
 }
 
 .dict-word-entry h3 {

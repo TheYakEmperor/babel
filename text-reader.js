@@ -1518,6 +1518,31 @@ function _initTextReaderInternal() {
             'first', 'second', 'third', 'person',
             'edit', 'note', 'literally', 'figuratively', 'by extension'
         ]);
+
+        // Convert plain-text lemma references (e.g., "plural of Gabe") into clickable links.
+        function linkifyLemmaReferences(html, targetLangs) {
+            const escapeAttr = (s) => String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            const lemmaTargetLang = Array.isArray(targetLangs) && targetLangs.length === 1 ? targetLangs[0] : '';
+            const lemmaForms = '(plural|singular|feminine|masculine|neuter|comparative|superlative|equative|past|present|participle|gerund|infinitive|alternative form|alternative spelling|misspelling|diminutive|augmentative|genitive|dative|accusative|vocative|ablative|instrumental|locative)';
+            const lemmaRegex = new RegExp(`\\b${lemmaForms}\\s+of\\s+([\\p{L}\\p{M}][\\p{L}\\p{M}'’-]*(?:[ -][\\p{L}\\p{M}][\\p{L}\\p{M}'’-]*)*)`, 'giu');
+
+            // Avoid touching existing clickable spans by only processing non-span chunks.
+            const chunks = String(html).split(/(<span\b[^>]*>.*?<\/span>)/gis);
+            return chunks.map(chunk => {
+                if (/^<span\b/i.test(chunk)) return chunk;
+                return chunk.replace(lemmaRegex, (full, form, lemma) => {
+                    const safeLemma = escapeAttr(lemma);
+                    const langAttr = lemmaTargetLang ? ` data-lang="${escapeAttr(lemmaTargetLang)}"` : '';
+                    return `${form} of <span class="dict-word-link" data-word="${safeLemma}"${langAttr}>${lemma}</span>`;
+                });
+            }).join('');
+        }
         
         // Helper to make target-language links clickable (not English definitions or grammatical terms)
         function makeLinksClickable(element, targetLangs) {
@@ -1527,6 +1552,8 @@ function _initTextReaderInternal() {
                 const href = link.getAttribute('href') || '';
                 const wordText = link.textContent.trim();
                 const wordLower = wordText.toLowerCase();
+                const pageMatch = href.match(/\/wiki\/([^#]+)/);
+                const pageName = pageMatch ? decodeURIComponent(pageMatch[1]).replace(/_/g, ' ') : wordText;
                 
                 // Check if this is a redlink (page doesn't exist)
                 const isRedlink = link.classList.contains('new') || href.includes('redlink=1');
@@ -1569,6 +1596,7 @@ function _initTextReaderInternal() {
                 });
                 const isInLangSpan = link.closest('[lang]');
                 const langAttr = isInLangSpan?.getAttribute('lang')?.toLowerCase() || '';
+                const isInEnglishSpan = langAttr === 'en' || langAttr.startsWith('en-');
                 // Check if it's a target language by ISO code (cy for Welsh, ca for Catalan, ang for Old English, etc.)
                 const isTargetLangByCode = targetLangs.some(tl => {
                     const tlLower = tl.toLowerCase();
@@ -1599,15 +1627,15 @@ function _initTextReaderInternal() {
                     link.replaceWith(document.createTextNode(wordText));
                     return;
                 }
-                // Skip if no hash AND not in a target-language span (these are English words in definitions)
-                // Unless English is our target language
-                if (!href.includes('#') && !isTargetLangByCode && !targetEnglish) {
+                // For links without a language hash, keep lemma links for non-English targets.
+                // Only suppress when the link is explicitly inside an English span.
+                if (!href.includes('#') && !isTargetLangByCode && !targetEnglish && isInEnglishSpan) {
                     link.replaceWith(document.createTextNode(wordText));
                     return;
                 }
                 
                 // If we get here, it's a valid clickable link
-                const escapedWord = wordText.replace(/'/g, "\\'");
+                const escapedWord = pageName.replace(/'/g, "\\'");
                 const span = document.createElement('span');
                 span.className = 'dict-word-link';
                 span.dataset.word = escapedWord;
@@ -1616,6 +1644,9 @@ function _initTextReaderInternal() {
                 // Extract language from hash if present (e.g., #Japanese) - reuse hashMatch from above
                 if (hashMatch) {
                     span.dataset.lang = hashMatch[1].replace(/_/g, ' ');
+                } else if (!targetEnglish && targetLangs.length === 1) {
+                    // No hash usually means same-language lemma reference in the current section.
+                    span.dataset.lang = targetLangs[0];
                 }
                 
                 link.replaceWith(span);
@@ -1751,6 +1782,8 @@ function _initTextReaderInternal() {
             // Remove remaining tags except our span links
             text = text.replace(/<(?!\/?span)[^>]+>/g, '').trim();
             if (!text || text === '↑') return null;
+
+            text = linkifyLemmaReferences(text, targetLangs);
             
             const labelHtml = labels.length ? `<span class="dict-label">(${labels.join(', ')})</span> ` : '';
             return labelHtml + text + synonymsHtml + subdefs;
@@ -2150,9 +2183,13 @@ function _initTextReaderInternal() {
                         const regex = new RegExp('\\b(' + term + ')(?=\\s|:|$)', 'gi');
                         html = html.replace(regex, '<b>$1</b>');
                     }
+
+                    // Headword lines are where many "plural of X" forms appear.
+                    html = linkifyLemmaReferences(html, expandedLanguages);
                     
                     resultHtml += `<p class="dict-headword">${html}</p>`;
                 } else {
+                    html = linkifyLemmaReferences(html, expandedLanguages);
                     resultHtml += `<p class="dict-paragraph">${html}</p>`;
                 }
                 continue;
@@ -2221,7 +2258,7 @@ function _initTextReaderInternal() {
         }
         
         // Check if this is a phrase (multiple words) - try phrase lookup first
-        const isPhrase = processedWords.length > 1;
+        const isPhrase = processedWords.length > 1 || (processedWords.length === 1 && /\s/.test(processedWords[0]));
         let resultsHtml = '';
         
         if (isPhrase) {
@@ -2348,11 +2385,17 @@ function _initTextReaderInternal() {
             }
         }
         
-        // If no results at all, remove the tab and deselect
-        if (!resultsHtml) {
-            deselectById(id);
-            removeDictLookup(id);
-            return;
+        // Append translation section (always show it)
+        const translateText = processedWords.join(' ');
+        resultsHtml += buildTranslateSection(translateText);
+
+        // If no dictionary results (only translate section), still show for phrases but drop single words
+        if (!resultsHtml.includes('dict-word-entry')) {
+            if (!isPhrase) {
+                deselectById(id);
+                removeDictLookup(id);
+                return;
+            }
         }
         
         // Cache the results
@@ -2466,6 +2509,78 @@ function _initTextReaderInternal() {
         dictWidget.classList.remove('visible');
     });
     
+    // === TRANSLATION ===
+    const TRANSLATE_LANGS = [
+        ['af','Afrikaans'],['sq','Albanian'],['ar','Arabic'],['hy','Armenian'],['az','Azerbaijani'],
+        ['eu','Basque'],['be','Belarusian'],['bn','Bengali'],['bs','Bosnian'],['bg','Bulgarian'],
+        ['ca','Catalan'],['zh-CN','Chinese (Simplified)'],['zh-TW','Chinese (Traditional)'],
+        ['hr','Croatian'],['cs','Czech'],['da','Danish'],['nl','Dutch'],
+        ['en','English'],['eo','Esperanto'],['et','Estonian'],['fi','Finnish'],
+        ['fr','French'],['gl','Galician'],['ka','Georgian'],['de','German'],['el','Greek'],
+        ['gu','Gujarati'],['ht','Haitian Creole'],['he','Hebrew'],['hi','Hindi'],['hu','Hungarian'],
+        ['is','Icelandic'],['id','Indonesian'],['ga','Irish'],['it','Italian'],['ja','Japanese'],
+        ['kn','Kannada'],['kk','Kazakh'],['ko','Korean'],['lv','Latvian'],['lt','Lithuanian'],
+        ['mk','Macedonian'],['ms','Malay'],['mt','Maltese'],['mn','Mongolian'],
+        ['ne','Nepali'],['no','Norwegian'],['fa','Persian'],['pl','Polish'],['pt','Portuguese'],
+        ['ro','Romanian'],['ru','Russian'],['sr','Serbian'],['sk','Slovak'],['sl','Slovenian'],
+        ['es','Spanish'],['sw','Swahili'],['sv','Swedish'],['tl','Filipino'],['ta','Tamil'],
+        ['te','Telugu'],['th','Thai'],['tr','Turkish'],['uk','Ukrainian'],['ur','Urdu'],
+        ['vi','Vietnamese'],['cy','Welsh'],['yi','Yiddish']
+    ];
+
+    let lastTranslateLang = localStorage.getItem('dict-translate-lang') || 'en';
+
+    function buildTranslateSection(text) {
+        const opts = TRANSLATE_LANGS.map(([code, name]) =>
+            `<option value="${code}"${code === lastTranslateLang ? ' selected' : ''}>${name}</option>`
+        ).join('');
+        const escapedText = text.replace(/"/g, '&quot;');
+        return `<div class="dict-translate-section">
+            <div class="dict-translate-header">Translate</div>
+            <div class="dict-translate-controls">
+                <select class="dict-translate-lang">${opts}</select>
+                <button class="dict-translate-btn" data-text="${escapedText}">Go</button>
+            </div>
+            <div class="dict-translate-result"></div>
+        </div>`;
+    }
+
+    async function doTranslate(text, targetLang) {
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(text)}`;
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error('Translation request failed');
+        const data = await resp.json();
+        // data[0] is array of [translated_chunk, original_chunk, ...]
+        return data[0].map(chunk => chunk[0]).join('');
+    }
+
+    dictContent.addEventListener('change', (e) => {
+        if (e.target.classList.contains('dict-translate-lang')) {
+            lastTranslateLang = e.target.value;
+            localStorage.setItem('dict-translate-lang', lastTranslateLang);
+        }
+    });
+
+    dictContent.addEventListener('click', async (e) => {
+        if (e.target.classList.contains('dict-translate-btn')) {
+            const btn = e.target;
+            const text = btn.dataset.text;
+            const section = btn.closest('.dict-translate-section');
+            const lang = section.querySelector('.dict-translate-lang').value;
+            lastTranslateLang = lang;
+            localStorage.setItem('dict-translate-lang', lang);
+            const resultEl = section.querySelector('.dict-translate-result');
+            resultEl.textContent = 'Translating…';
+            try {
+                const translated = await doTranslate(text, lang);
+                resultEl.textContent = translated;
+            } catch (err) {
+                resultEl.textContent = 'Translation failed.';
+            }
+            return;
+        }
+    });
+
     // Handle clicks on dictionary word links (derived terms, alternate forms, etc.)
     dictContent.addEventListener('click', async (e) => {
         const wordLink = e.target.closest('.dict-word-link');

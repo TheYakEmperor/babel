@@ -2560,52 +2560,12 @@ function initPageViewer(pagesData) {
         
         // Create phrase overlay box
         function pvCreatePhraseOverlay(phraseId, container) {
-            const words = container.querySelectorAll(`.pv-word[data-phrase="${phraseId}"]`);
-            if (words.length === 0) return;
-            
+            // Phrase highlighting is rendered directly on .pv-word.phrase-word using CSS box-shadow.
+            // This keeps blue selection perfectly aligned to glyph boxes like red single-word highlights.
+            if (pvPhraseOverlays[phraseId]) {
+                pvPhraseOverlays[phraseId].forEach(el => el.remove());
+            }
             pvPhraseOverlays[phraseId] = [];
-            
-            const firstWord = words[0];
-            const region = firstWord.closest('.pv-popup-region, .pv-ocr-section');
-            if (!region) return;
-            const regionRect = region.getBoundingClientRect();
-            
-            // Group words by line (same offsetTop relative to region)
-            const lines = {};
-            words.forEach(w => {
-                const wordRect = w.getBoundingClientRect();
-                const offset = {
-                    top: wordRect.top - regionRect.top,
-                    left: wordRect.left - regionRect.left,
-                    width: wordRect.width,
-                    height: wordRect.height
-                };
-                const lineKey = Math.round(offset.top);
-                if (!lines[lineKey]) lines[lineKey] = [];
-                lines[lineKey].push({ el: w, offset, width: offset.width, height: offset.height });
-            });
-            
-            Object.values(lines).forEach(lineWords => {
-                // Sort by left position
-                lineWords.sort((a, b) => a.offset.left - b.offset.left);
-                
-                const first = lineWords[0];
-                const last = lineWords[lineWords.length - 1];
-                
-                const overlay = document.createElement('div');
-                overlay.className = 'pv-phrase-overlay';
-                overlay.dataset.phrase = phraseId;
-                
-                const left = first.offset.left - 2;
-                const top = first.offset.top - 2;
-                const width = (last.offset.left + last.width) - first.offset.left + 4;
-                const height = first.height + 4;
-                
-                overlay.style.cssText = `left:${left}px; top:${top}px; width:${width}px; height:${height}px;`;
-                
-                region.appendChild(overlay);
-                pvPhraseOverlays[phraseId].push(overlay);
-            });
         }
         
         // Remove phrase by ID
