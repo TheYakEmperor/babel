@@ -2643,6 +2643,27 @@ function _initTextReaderInternal() {
         return doTranslateFallback(text, targetLang);
     }
 
+    function formatTranslatedTypography(text) {
+        let out = String(text || '');
+
+        // Normalize to straight quotes first so behavior is deterministic.
+        out = out
+            .replace(/[\u201C\u201D]/g, '"')
+            .replace(/[\u2018\u2019]/g, "'");
+
+        // Apostrophes inside words should always be right single quotes.
+        out = out.replace(/(\p{L})'(\p{L})/gu, '$1\u2019$2');
+
+        // Opening double/single quotes after whitespace or opening punctuation.
+        out = out.replace(/(^|[\s([\{<\u00AB\u2018\u201C])"/g, '$1\u201C');
+        out = out.replace(/(^|[\s([\{<\u00AB\u2018\u201C])'/g, '$1\u2018');
+
+        // Any remaining straight quotes are treated as closing quotes.
+        out = out.replace(/"/g, '\u201D').replace(/'/g, '\u2019');
+
+        return out;
+    }
+
     // Probe backend once so available official languages can populate dynamically.
     initTranslateBackend();
 
@@ -2674,9 +2695,7 @@ function _initTextReaderInternal() {
                 await initTranslateBackend();
                 const normalizedText = normalizeTextForTranslation(text);
                 const translated = await doTranslate(normalizedText, lang);
-                resultEl.textContent = translated
-                    .replace(/'/g, '\u2019')
-                    .replace(/"/g, '\u201D');
+                resultEl.textContent = formatTranslatedTypography(translated);
             } catch (err) {
                 resultEl.textContent = 'Translation failed.';
             }
