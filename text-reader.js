@@ -2674,7 +2674,9 @@ function _initTextReaderInternal() {
                 await initTranslateBackend();
                 const normalizedText = normalizeTextForTranslation(text);
                 const translated = await doTranslate(normalizedText, lang);
-                resultEl.textContent = translated.replace(/'/g, '\u2019');
+                resultEl.textContent = translated
+                    .replace(/'/g, '\u2019')
+                    .replace(/"/g, '\u201D');
             } catch (err) {
                 resultEl.textContent = 'Translation failed.';
             }
