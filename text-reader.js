@@ -769,12 +769,13 @@ function _initTextReaderInternal() {
                 if (hyphenLink) {
                     // Toggle all linked parts together
                     const linkedWords = document.querySelectorAll(`.word[data-hyphen-link="${hyphenLink}"]`);
-                    const shouldSelect = !startWord.classList.contains('selected');
+                    // Check if ANY linked word is selected - if so, deselect all; otherwise select all
+                    const anySelected = Array.from(linkedWords).some(w => w.classList.contains('selected'));
                     linkedWords.forEach(w => {
-                        if (shouldSelect) {
-                            w.classList.add('selected');
-                        } else {
+                        if (anySelected) {
                             w.classList.remove('selected');
+                        } else {
+                            w.classList.add('selected');
                         }
                     });
                 } else {
