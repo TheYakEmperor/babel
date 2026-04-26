@@ -29,6 +29,35 @@ from urllib.parse import parse_qs, urlparse
 from urllib.request import Request, urlopen
 import wiki_db
 
+
+def _load_dotenv_file(dotenv_path: Path):
+    """Load KEY=VALUE pairs from a .env file into process environment if missing."""
+    if not dotenv_path.exists() or not dotenv_path.is_file():
+        return
+
+    for raw_line in dotenv_path.read_text(encoding='utf-8').splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith('#') or '=' not in line:
+            continue
+
+        key, value = line.split('=', 1)
+        key = key.strip()
+        value = value.strip()
+        if not key:
+            continue
+
+        # Strip optional surrounding quotes.
+        if len(value) >= 2 and ((value[0] == '"' and value[-1] == '"') or (value[0] == "'" and value[-1] == "'")):
+            value = value[1:-1]
+
+        # Do not override explicitly exported environment variables.
+        if key not in os.environ:
+            os.environ[key] = value
+
+
+_SCRIPT_DIR = Path(__file__).parent.resolve()
+_load_dotenv_file(_SCRIPT_DIR / '.env')
+
 # Server Configuration (from environment or defaults)
 HOST = os.environ.get('BABEL_HOST', 'localhost')  # Use '0.0.0.0' for production
 PORT = int(os.environ.get('BABEL_PORT', '8000'))
@@ -59,7 +88,7 @@ def get_b2_client():
             print('Warning: boto3 not installed, B2 uploads disabled')
     return _b2_client
 
-BASE_DIR = Path(__file__).parent.resolve()
+BASE_DIR = _SCRIPT_DIR
 
 class AdminHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
