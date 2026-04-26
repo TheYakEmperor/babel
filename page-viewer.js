@@ -653,6 +653,11 @@ function initPageViewer(pagesData) {
     
     function navigate(delta) {
         showImage(currentIndex + delta);
+
+        // In transcription mode, page turns should start at the top of the panel.
+        if (isTranscriptionMode && transcriptionPanel) {
+            transcriptionPanel.scrollTop = 0;
+        }
     }
     
     function toggleDualMode() {
