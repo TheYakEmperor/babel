@@ -2654,17 +2654,85 @@ function _initTextReaderInternal() {
 
         // Apostrophes inside words should always be right single quotes.
         out = out.replace(/(\p{L})'(\p{L})/gu, '$1\u2019$2');
-        // Opening single quotes: only treat as opening if there's a matching closing apostrophe.
-        // Match: (space/start) + ' + letters + ' + (space/punct) - these are paired quotes
-        out = out.replace(/(^|[\s([\{<\u00AB\u201C])(')\p{L}[^']*'\s/gu, (match, prefix, quote) => {
-            return prefix + '\u2018' + match.slice(prefix.length + 1, -1) + '\u2019 ';
-        });
-        
-        // Opening double quotes after whitespace or opening punctuation.
-        out = out.replace(/(^|[\s([\{<\u00AB\u2018\u201C])"/g, '$1\u201C');
-        
-        // Any remaining straight quotes are closing quotes.
-        out = out.replace(/"/g, '\u201D').replace(/'/g, '\u2019');
+
+        const OPEN_CTX = /[\s([\{<\u00AB]/;
+        const CLOSE_CTX = /[\s)\]\}>\u00BB.,;:!?]/;
+
+        function hasFollowupSingleQuoteInWord(src, startIdx) {
+            // Look ahead until whitespace; if we find another straight apostrophe, treat as paired quote.
+            for (let i = startIdx + 1; i < src.length; i++) {
+                const ch = src[i];
+                if (/\s/.test(ch)) break;
+                if (ch === "'") return true;
+            }
+            return false;
+        }
+
+        let result = '';
+        let expectOpenDouble = true;
+        let expectOpenSingle = true;
+
+        for (let i = 0; i < out.length; i++) {
+            const ch = out[i];
+            const prev = result.length ? result[result.length - 1] : '';
+            const next = i + 1 < out.length ? out[i + 1] : '';
+
+            if (ch === '"') {
+                const looksOpening = !prev || OPEN_CTX.test(prev);
+                const looksClosing = !next || CLOSE_CTX.test(next);
+
+                if (!next) {
+                    result += '\u201D';
+                    expectOpenDouble = true;
+                    continue;
+                }
+
+                if (looksClosing && !looksOpening) {
+                    result += '\u201D';
+                    expectOpenDouble = true;
+                } else if (looksOpening && !looksClosing) {
+                    result += '\u201C';
+                    expectOpenDouble = false;
+                } else {
+                    result += expectOpenDouble ? '\u201C' : '\u201D';
+                    expectOpenDouble = !expectOpenDouble;
+                }
+                continue;
+            }
+
+            if (ch === "'") {
+                const looksOpening = !prev || OPEN_CTX.test(prev);
+                const looksClosing = !next || CLOSE_CTX.test(next);
+
+                if (!next) {
+                    result += '\u2019';
+                    expectOpenSingle = true;
+                    continue;
+                }
+
+                // Leading apostrophe before a word without a same-word followup is elision, not opening quote.
+                if (looksOpening && /\p{L}/u.test(next) && !hasFollowupSingleQuoteInWord(out, i)) {
+                    result += '\u2019';
+                    continue;
+                }
+
+                if (looksClosing && !looksOpening) {
+                    result += '\u2019';
+                    expectOpenSingle = true;
+                } else if (looksOpening && !looksClosing) {
+                    result += '\u2018';
+                    expectOpenSingle = false;
+                } else {
+                    result += expectOpenSingle ? '\u2018' : '\u2019';
+                    expectOpenSingle = !expectOpenSingle;
+                }
+                continue;
+            }
+
+            result += ch;
+        }
+
+        out = result;
         
         return out;
     }
