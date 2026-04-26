@@ -10,6 +10,7 @@ For production deployment, set environment variables:
   BABEL_HOST=0.0.0.0          # Listen on all interfaces
   BABEL_PORT=8000             # Port to listen on
   BABEL_CORS_ORIGIN=https://babel-archive.netlify.app  # Allowed origin for CORS
+    GOOGLE_TRANSLATE_API_KEY=xxx  # Optional: use official Google Cloud Translation API
   B2_KEY_ID=xxx               # Backblaze B2 key ID
   B2_APP_KEY=xxx              # Backblaze B2 app key
   BABEL_SECRET_KEY=xxx        # Secret for session tokens (auto-generated if not set)
@@ -22,14 +23,17 @@ import os
 import shutil
 import base64
 import re
+import html
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
+from urllib.request import Request, urlopen
 import wiki_db
 
 # Server Configuration (from environment or defaults)
 HOST = os.environ.get('BABEL_HOST', 'localhost')  # Use '0.0.0.0' for production
 PORT = int(os.environ.get('BABEL_PORT', '8000'))
 CORS_ORIGIN = os.environ.get('BABEL_CORS_ORIGIN', '*')  # Restrict in production!
+GOOGLE_TRANSLATE_API_KEY = os.environ.get('GOOGLE_TRANSLATE_API_KEY', '').strip()
 
 # B2 Configuration for image hosting
 B2_ENABLED = True  # Set to False to use local storage only
@@ -154,6 +158,8 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 result = self.save_regions(data)
             elif path == '/api/save-page-order':
                 result = self.save_page_order(data)
+            elif path == '/api/translate':
+                result = self.translate_text(data)
             elif path == '/api/rebuild-indexes':
                 result = self.rebuild_indexes()
             # Authentication endpoints
@@ -228,6 +234,14 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         """Handle GET requests with no-cache headers for JSON files."""
         path = urlparse(self.path).path
+
+        if path == '/api/translate-languages':
+            try:
+                result = self.translate_languages()
+                self.send_json_response(200, result)
+            except Exception as e:
+                self.send_error_response(500, str(e))
+            return
         
         # Serve texts-index.html for root path
         if path == '/' or path == '':
@@ -275,6 +289,68 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         self.send_cors_headers()
         self.end_headers()
         self.wfile.write(json.dumps({'error': message}).encode('utf-8'))
+
+    # =========================================
+    # TRANSLATION OPERATIONS
+    # =========================================
+    def translate_languages(self):
+        """Return supported translation languages from Google Cloud API if configured."""
+        if not GOOGLE_TRANSLATE_API_KEY:
+            return {'success': True, 'mode': 'fallback', 'languages': []}
+
+        url = (
+            'https://translation.googleapis.com/language/translate/v2/languages'
+            f'?key={GOOGLE_TRANSLATE_API_KEY}&target=en'
+        )
+        req = Request(url, method='GET')
+        with urlopen(req, timeout=20) as response:
+            payload = json.loads(response.read().decode('utf-8'))
+
+        langs = payload.get('data', {}).get('languages', [])
+        normalized = []
+        for item in langs:
+            code = item.get('language')
+            name = item.get('name') or code
+            if code:
+                normalized.append([code, name])
+
+        return {'success': True, 'mode': 'google-cloud', 'languages': normalized}
+
+    def translate_text(self, data):
+        """Translate text using official Google Cloud Translation API v2 if configured."""
+        if not GOOGLE_TRANSLATE_API_KEY:
+            return {'success': False, 'mode': 'fallback', 'error': 'Google Cloud Translation is not configured'}
+
+        text = (data.get('text') or '').strip()
+        target_lang = (data.get('targetLang') or '').strip()
+
+        if not text:
+            raise ValueError('text is required')
+        if not target_lang:
+            raise ValueError('targetLang is required')
+
+        url = f'https://translation.googleapis.com/language/translate/v2?key={GOOGLE_TRANSLATE_API_KEY}'
+        body = json.dumps({
+            'q': text,
+            'target': target_lang,
+            'format': 'text'
+        }).encode('utf-8')
+        req = Request(url, data=body, method='POST')
+        req.add_header('Content-Type', 'application/json')
+
+        with urlopen(req, timeout=30) as response:
+            payload = json.loads(response.read().decode('utf-8'))
+
+        translations = payload.get('data', {}).get('translations', [])
+        translated_text = ''
+        if translations:
+            translated_text = html.unescape(translations[0].get('translatedText', ''))
+
+        return {
+            'success': True,
+            'mode': 'google-cloud',
+            'translatedText': translated_text
+        }
     
     # =========================================
     # TEXT OPERATIONS

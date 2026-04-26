@@ -2503,7 +2503,7 @@ function _initTextReaderInternal() {
     });
     
     // === TRANSLATION ===
-    const TRANSLATE_LANGS = [
+    const DEFAULT_TRANSLATE_LANGS = [
         ['af','Afrikaans'],['ak','Akan'],['sq','Albanian'],['am','Amharic'],['ar','Arabic'],['hy','Armenian'],['as','Assamese'],['ay','Aymara'],
         ['az','Azerbaijani'],['bm','Bambara'],['eu','Basque'],['be','Belarusian'],['bn','Bengali'],['bho','Bhojpuri'],['bs','Bosnian'],['bg','Bulgarian'],
         ['ca','Catalan'],['ceb','Cebuano'],['zh-CN','Chinese (Simplified)'],['zh-TW','Chinese (Traditional)'],['co','Corsican'],['hr','Croatian'],['cs','Czech'],
@@ -2522,10 +2522,67 @@ function _initTextReaderInternal() {
         ['cy','Welsh'],['xh','Xhosa'],['yi','Yiddish'],['yo','Yoruba'],['zu','Zulu']
     ];
 
+    let translateLangs = DEFAULT_TRANSLATE_LANGS.slice();
+    let translateBackendMode = 'fallback';
+    let translateBackendInitPromise = null;
+
     let lastTranslateLang = localStorage.getItem('dict-translate-lang') || 'en';
 
+    function hasTranslateLanguage(code) {
+        return translateLangs.some(([langCode]) => langCode === code);
+    }
+
+    function refreshTranslateLanguageSelectors() {
+        const selects = document.querySelectorAll('.dict-translate-lang');
+        selects.forEach((select) => {
+            const current = select.value || lastTranslateLang;
+            select.innerHTML = translateLangs
+                .map(([code, name]) => `<option value="${code}">${name}</option>`)
+                .join('');
+            if (hasTranslateLanguage(current)) {
+                select.value = current;
+            } else if (hasTranslateLanguage(lastTranslateLang)) {
+                select.value = lastTranslateLang;
+            } else {
+                select.value = hasTranslateLanguage('en') ? 'en' : translateLangs[0]?.[0] || 'en';
+                lastTranslateLang = select.value;
+                localStorage.setItem('dict-translate-lang', lastTranslateLang);
+            }
+        });
+    }
+
+    async function initTranslateBackend() {
+        if (translateBackendInitPromise) return translateBackendInitPromise;
+
+        translateBackendInitPromise = (async () => {
+            try {
+                const resp = await fetch('/api/translate-languages', { cache: 'no-store' });
+                if (!resp.ok) {
+                    translateBackendMode = 'fallback';
+                    return;
+                }
+
+                const payload = await resp.json();
+                const serverLangs = Array.isArray(payload.languages) ? payload.languages : [];
+                if (payload.success && serverLangs.length > 0) {
+                    translateLangs = serverLangs
+                        .filter(item => Array.isArray(item) && item.length >= 2 && item[0])
+                        .map(item => [String(item[0]), String(item[1] || item[0])]);
+                    translateBackendMode = payload.mode || 'google-cloud';
+                    refreshTranslateLanguageSelectors();
+                } else {
+                    translateBackendMode = 'fallback';
+                }
+            } catch (err) {
+                translateBackendMode = 'fallback';
+            }
+        })();
+
+        return translateBackendInitPromise;
+    }
+
     function buildTranslateSection(lookupId) {
-        const opts = TRANSLATE_LANGS.map(([code, name]) =>
+        const opts = translateLangs.map(([code, name]) =>
             `<option value="${code}"${code === lastTranslateLang ? ' selected' : ''}>${name}</option>`
         ).join('');
         return `<div class="dict-translate-section">
@@ -2549,7 +2606,7 @@ function _initTextReaderInternal() {
             .trim();
     }
 
-    async function doTranslate(text, targetLang) {
+    async function doTranslateFallback(text, targetLang) {
         const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${encodeURIComponent(targetLang)}&dt=t&q=${encodeURIComponent(text)}`;
         const resp = await fetch(url);
         if (!resp.ok) throw new Error('Translation request failed');
@@ -2557,6 +2614,32 @@ function _initTextReaderInternal() {
         // data[0] is array of [translated_chunk, original_chunk, ...]
         return data[0].map(chunk => (chunk && chunk[0]) ? chunk[0] : '').join('');
     }
+
+    async function doTranslate(text, targetLang) {
+        if (translateBackendMode === 'google-cloud') {
+            try {
+                const resp = await fetch('/api/translate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text, targetLang })
+                });
+
+                if (resp.ok) {
+                    const payload = await resp.json();
+                    if (payload && payload.success && typeof payload.translatedText === 'string') {
+                        return payload.translatedText;
+                    }
+                }
+            } catch (err) {
+                // Fall through to public endpoint.
+            }
+        }
+
+        return doTranslateFallback(text, targetLang);
+    }
+
+    // Probe backend once so available official languages can populate dynamically.
+    initTranslateBackend();
 
     dictContent.addEventListener('change', (e) => {
         if (e.target.classList.contains('dict-translate-lang')) {
@@ -2583,6 +2666,7 @@ function _initTextReaderInternal() {
             const resultEl = section.querySelector('.dict-translate-result');
             resultEl.textContent = 'Translating\u2026';
             try {
+                await initTranslateBackend();
                 const normalizedText = normalizeTextForTranslation(text);
                 const translated = await doTranslate(normalizedText, lang);
                 resultEl.textContent = translated;
