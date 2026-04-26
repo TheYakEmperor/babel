@@ -2655,14 +2655,20 @@ function _initTextReaderInternal() {
         // Apostrophes inside words should always be right single quotes.
         out = out.replace(/(\p{L})'(\p{L})/gu, '$1\u2019$2');
 
-        // Opening double/single quotes after whitespace or opening punctuation.
-        out = out.replace(/(^|[\s([\{<\u00AB\u2018\u201C])"/g, '$1\u201C');
-        out = out.replace(/(^|[\s([\{<\u00AB\u2018\u201C])'/g, '$1\u2018');
 
         // Any remaining straight quotes are treated as closing quotes.
         out = out.replace(/"/g, '\u201D').replace(/'/g, '\u2019');
 
         return out;
+            // Opening single quotes: only if there's a matching closing apostrophe (paired quotes).
+            // Match: whitespace/start + ' + word + ' + space/punct
+            // This converts 'quoted text' to 'quoted text' but leaves 'Twas as right quote
+            out = out.replace(/(^|[\s([\{<\u00AB\u201C])(')\p{L}[^']*'\s/gu, (match, prefix, quote) => {
+                return prefix + '\u2018' + match.slice(prefix.length + 1, -1) + '\u2019 ';
+            });
+        
+            // Opening double quotes after whitespace or opening punctuation.
+            out = out.replace(/(^|[\s([\{<\u00AB\u2018\u201C])"/g, '$1\u201C');
     }
 
     // Probe backend once so available official languages can populate dynamically.
