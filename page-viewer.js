@@ -89,6 +89,22 @@ function initPageViewer(pagesData) {
         panY = 0;
         applyZoom();
     }
+
+    // Keep the active thumbnail visible without scrolling the full page viewport.
+    function scrollThumbHorizontallyIntoView(wrapper) {
+        if (!wrapper || !thumbContainer) return;
+
+        const itemLeft = wrapper.offsetLeft;
+        const itemRight = itemLeft + wrapper.offsetWidth;
+        const viewLeft = thumbContainer.scrollLeft;
+        const viewRight = viewLeft + thumbContainer.clientWidth;
+
+        if (itemLeft < viewLeft) {
+            thumbContainer.scrollTo({ left: itemLeft, behavior: 'smooth' });
+        } else if (itemRight > viewRight) {
+            thumbContainer.scrollTo({ left: itemRight - thumbContainer.clientWidth, behavior: 'smooth' });
+        }
+    }
     
     function setupPanHandlers() {
         function isInteractiveOverlayTarget(target) {
@@ -567,7 +583,7 @@ function initPageViewer(pagesData) {
         thumbContainer.querySelectorAll('.page-viewer-thumb-wrapper').forEach((wrapper, i) => {
             wrapper.classList.toggle('active', i === index);
             if (i === index) {
-                wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                scrollThumbHorizontallyIntoView(wrapper);
             }
         });
     }
@@ -614,7 +630,7 @@ function initPageViewer(pagesData) {
         // Scroll to show both spread thumbnails - use the second one if dual, first if single
         const scrollToIdx = spread.length === 2 ? spread[1] : spread[0];
         if (thumbs[scrollToIdx]) {
-            thumbs[scrollToIdx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            scrollThumbHorizontallyIntoView(thumbs[scrollToIdx]);
         }
     }
     
