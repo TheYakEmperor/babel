@@ -2253,7 +2253,9 @@ function initPageViewer(pagesData) {
                         } else {
                             startWord.classList.add('selected');
                             container.pvSelectedWords.add(startWord);
-                            pvTriggerDictLookup(startWord.textContent.trim());
+                            // Get text with hyphen joining for hyphenated words
+                            const wordText = pvGetHyphenatedWord(startWord);
+                            pvTriggerDictLookup(wordText);
                         }
                     }
                 } else if (isDragging && dragPhraseId !== null) {
@@ -2323,11 +2325,35 @@ function initPageViewer(pagesData) {
                     .replace(/[ \t]+\n/g, '\n')
                     .replace(/\n[ \t]+/g, '\n')
                     .replace(/[ \t]{2,}/g, ' ')
+                    // Join hyphenated words: if line ends with hyphen, join to next line (letter-\nletter → letterletter)
+                    .replace(/(\p{L})-\n(\p{L})/gu, '$1$2')
                     .trim();
             } catch (err) {
                 // Fallback to token join if Range extraction fails.
                 return sorted.map(w => w.textContent || '').join(' ').replace(/[ \t]{2,}/g, ' ').trim();
             }
+        }
+        
+        // Join hyphenated words (line-break hyphenation): if word ends with hyphen, find and join next word
+        function pvGetHyphenatedWord(wordEl) {
+            if (!wordEl) return wordEl ? wordEl.textContent.trim() : '';
+            const text = wordEl.textContent.trim();
+            if (!text.endsWith('-')) return text;
+            
+            // Word ends with hyphen - find next pv-word element and join
+            const parentScope = wordEl.closest('.pv-popup-region, .pv-ocr-text', '.pv-dict-popup');
+            if (!parentScope) return text;
+            
+            const allWords = Array.from(parentScope.querySelectorAll('.pv-word'));
+            const currentIdx = allWords.indexOf(wordEl);
+            if (currentIdx >= 0 && currentIdx < allWords.length - 1) {
+                const nextWord = allWords[currentIdx + 1];
+                if (nextWord && nextWord.textContent.trim()) {
+                    // Remove trailing hyphen from first word and join with next
+                    return text.slice(0, -1) + nextWord.textContent.trim();
+                }
+            }
+            return text;
         }
         
         // Clean word for dictionary lookup
