@@ -2598,6 +2598,7 @@ function _initTextReaderInternal() {
     function normalizeTextForTranslation(text) {
         return String(text || '')
             .replace(/\r\n?/g, '\n')
+            .replace(/[\u00A0\u202F]/g, ' ')
             // Keep paragraph breaks, but merge single line breaks so translation treats it as one passage.
             .replace(/\n{2,}/g, '\uE000')
             .replace(/\n+/g, ' ')
