@@ -2602,6 +2602,10 @@ function _initTextReaderInternal() {
             .replace(/\n{2,}/g, '\uE000')
             .replace(/\n+/g, ' ')
             .replace(/\uE000/g, '\n\n')
+            // Punctuation should stay attached to the neighboring word.
+            .replace(/[ \t]+([,.;:!?%\)\]\}»])/g, '$1')
+            .replace(/([\(\[\{«])[ \t]+/g, '$1')
+            .replace(/(\p{L})[ \t]+([’'])[ \t]*(\p{L})/gu, '$1$2$3')
             .replace(/[ \t]{2,}/g, ' ')
             .trim();
     }
