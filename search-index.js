@@ -225850,6 +225850,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Revolutionary Communist Party - Congress Amendments 2026 - British Perspectives",
+    "id": "rcp-amendments-2026",
+    "level": "text",
+    "url": "texts/00/00/rcp-amendments-2026/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Rewandiz",
     "id": "rewa1238",
     "level": "dialect",
