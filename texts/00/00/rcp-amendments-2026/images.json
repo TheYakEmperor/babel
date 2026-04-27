@@ -1,0 +1,69 @@
+{
+  "images": [
+    {
+      "url": "images/001.png",
+      "label": "1",
+      "hasOcr": true
+    },
+    {
+      "url": "images/002.png",
+      "label": "2",
+      "hasOcr": true
+    },
+    {
+      "url": "images/003.png",
+      "label": "3",
+      "hasOcr": true
+    },
+    {
+      "url": "images/004.png",
+      "label": "4",
+      "hasOcr": true
+    },
+    {
+      "url": "images/005.png",
+      "label": "5",
+      "hasOcr": true
+    },
+    {
+      "url": "images/006.png",
+      "label": "6",
+      "hasOcr": true
+    },
+    {
+      "url": "images/007.png",
+      "label": "7",
+      "hasOcr": true
+    },
+    {
+      "url": "images/008.png",
+      "label": "8",
+      "hasOcr": true
+    },
+    {
+      "url": "images/009.png",
+      "label": "9",
+      "hasOcr": true
+    },
+    {
+      "url": "images/010.png",
+      "label": "10",
+      "hasOcr": true
+    },
+    {
+      "url": "images/011.png",
+      "label": "11",
+      "hasOcr": true
+    },
+    {
+      "url": "images/012.png",
+      "label": "12",
+      "hasOcr": true
+    },
+    {
+      "url": "images/013.png",
+      "label": "13",
+      "hasOcr": true
+    }
+  ]
+}
