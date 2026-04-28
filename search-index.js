@@ -23443,6 +23443,22 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "4706th Floor",
+    "id": "carrington-4706-floor",
+    "level": "work",
+    "url": "works/carrington-4706-floor/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "4706th Floor",
+    "id": "carrington-4706-floor",
+    "level": "text",
+    "url": "texts/00/00/carrington-4706-floor/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "[The Panther]",
     "id": "eb-panther",
     "level": "work",
@@ -46661,6 +46677,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Beinecke Manuscript Collection",
+    "id": "beinecke-ms",
+    "level": "collection",
+    "url": "collections/beinecke-ms/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Beinecke MS 404",
     "id": "beinecke-ms-404",
     "level": "text",
@@ -47216,6 +47240,14 @@ const LANGUAGE_INDEX = [
     "alt": [
       "Belarí"
     ]
+  },
+  {
+    "name": "Bellevue, Washington",
+    "id": "bellevue-washington",
+    "level": "provenance",
+    "url": "provenances/bellevue-washington/index.html",
+    "extinct": false,
+    "alt": []
   },
   {
     "name": "Belneng",
@@ -71369,6 +71401,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Cotton Library",
+    "id": "cotton-library",
+    "level": "collection",
+    "url": "collections/cotton-library/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Cotton MS Caligula A.ix",
     "id": "ms-cotton-caligula-a-ix",
     "level": "text",
@@ -91937,6 +91977,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Flanders",
+    "id": "flanders",
+    "level": "provenance",
+    "url": "provenances/flanders/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Flecheiros",
     "id": "flec1235",
     "level": "language",
@@ -98721,6 +98769,14 @@ const LANGUAGE_INDEX = [
     "alt": [
       "Liberia, Côte d'Ivoire"
     ]
+  },
+  {
+    "name": "Glasgow",
+    "id": "glasgow",
+    "level": "provenance",
+    "url": "provenances/glasgow/index.html",
+    "extinct": false,
+    "alt": []
   },
   {
     "name": "Glavda",
@@ -151336,6 +151392,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Leonora Carrington",
+    "id": "leonora-carrington",
+    "level": "author",
+    "url": "authors/leonora-carrington/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Lepcha",
     "id": "lepc1244",
     "level": "language",
@@ -153806,6 +153870,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Llandysul, Ceredigion",
+    "id": "llandysul-ceredigion",
+    "level": "provenance",
+    "url": "provenances/llandysul-ceredigion/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Lo-Toga",
     "id": "loto1240",
     "level": "language",
@@ -154971,6 +155043,22 @@ const LANGUAGE_INDEX = [
     "id": "lond1243",
     "level": "dialect",
     "url": "atlantic-congo/volta-congo/benue-congo/bantoid/southern-bantoid/narrow-bantu/bantu-a-b10-b20-b30/lundu-balong-a10/greater-manenguba/bafaw-balong-manenguba/bafawic-bakweric/bafawic/oroko/londo/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "London",
+    "id": "london",
+    "level": "provenance",
+    "url": "provenances/london/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "London",
+    "id": "london",
+    "level": "provenance",
+    "url": "provenances/london/index.html",
     "extinct": false,
     "alt": []
   },
@@ -188050,6 +188138,14 @@ const LANGUAGE_INDEX = [
     "id": "news1235",
     "level": "family",
     "url": "pama-nyungan/southeastern-pama-nyungan/new-south-wales-pama-nyungan/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "New York",
+    "id": "new-york",
+    "level": "provenance",
+    "url": "provenances/new-york/index.html",
     "extinct": false,
     "alt": []
   },
@@ -223121,6 +223217,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Qasr Ibrim",
+    "id": "qasr-ibrim",
+    "level": "provenance",
+    "url": "provenances/qasr-ibrim/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Qatar",
     "id": "qa",
     "level": "country",
@@ -225910,6 +226014,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "Rhineland",
+    "id": "rhineland",
+    "level": "provenance",
+    "url": "provenances/rhineland/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Rhinyihinyi",
     "id": "rhin1241",
     "level": "dialect",
@@ -226276,6 +226388,14 @@ const LANGUAGE_INDEX = [
     "id": "rima1237",
     "level": "dialect",
     "url": "austronesian/malayo-polynesian/eastern-malayo-polynesian/oceanic/central-pacific-linkage/tokalau-fijian/polynesian/nuclear-polynesian/northern-outlier-polynesian-east-polynesian/solomons-northern-outlier-polynesian-east-polynesian/central-northern-outlier-polynesian-east-polynesian/east-polynesian/east-polynesian-proximal/southern-east-polynesian-proximal/tahitian-austral/austral/rimatara/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "RIME",
+    "id": "rime",
+    "level": "collection",
+    "url": "collections/rime/index.html",
     "extinct": false,
     "alt": []
   },
@@ -277422,6 +277542,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Ur",
+    "id": "ur",
+    "level": "provenance",
+    "url": "provenances/ur/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Ura",
     "id": "uraa1244",
     "level": "dialect",
@@ -291973,6 +292101,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "Wittenberg",
+    "id": "wittenberg",
+    "level": "provenance",
+    "url": "provenances/wittenberg/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Wittichenau",
     "id": "witt1234",
     "level": "dialect",
@@ -303014,118 +303150,6 @@ const LANGUAGE_INDEX = [
     "id": "bsb11924293",
     "level": "source",
     "url": "sources/bsb11924293/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Bellevue, Washington",
-    "id": "bellevue-washington",
-    "level": "provenance",
-    "url": "provenances/bellevue-washington/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Ur",
-    "id": "ur",
-    "level": "provenance",
-    "url": "provenances/ur/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "London",
-    "id": "london",
-    "level": "provenance",
-    "url": "provenances/london/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "New York",
-    "id": "new-york",
-    "level": "provenance",
-    "url": "provenances/new-york/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Glasgow",
-    "id": "glasgow",
-    "level": "provenance",
-    "url": "provenances/glasgow/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Qasr Ibrim",
-    "id": "qasr-ibrim",
-    "level": "provenance",
-    "url": "provenances/qasr-ibrim/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Flanders",
-    "id": "flanders",
-    "level": "provenance",
-    "url": "provenances/flanders/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Rhineland",
-    "id": "rhineland",
-    "level": "provenance",
-    "url": "provenances/rhineland/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Llandysul, Ceredigion",
-    "id": "llandysul-ceredigion",
-    "level": "provenance",
-    "url": "provenances/llandysul-ceredigion/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "London",
-    "id": "london",
-    "level": "provenance",
-    "url": "provenances/london/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Wittenberg",
-    "id": "wittenberg",
-    "level": "provenance",
-    "url": "provenances/wittenberg/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "RIME",
-    "id": "rime",
-    "level": "collection",
-    "url": "collections/rime/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Cotton Library",
-    "id": "cotton-library",
-    "level": "collection",
-    "url": "collections/cotton-library/index.html",
-    "extinct": false,
-    "alt": []
-  },
-  {
-    "name": "Beinecke Manuscript Collection",
-    "id": "beinecke-ms",
-    "level": "collection",
-    "url": "collections/beinecke-ms/index.html",
     "extinct": false,
     "alt": []
   }
