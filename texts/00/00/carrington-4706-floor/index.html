@@ -99,14 +99,24 @@
     
     // Format language(s) for display - supports single string, array of strings, or object/array of objects
     function formatLanguages(langData) {
+        if (langData == null || (Array.isArray(langData) && langData.length === 0)) {
+            return { html: '<strong>Unknown</strong>', ids: [], names: ['Unknown'] };
+        }
+
         // Normalize to array
-        const langs = Array.isArray(langData) ? langData : [langData];
+        const langs = (Array.isArray(langData) ? langData : [langData]).filter(Boolean);
+        if (langs.length === 0) {
+            return { html: '<strong>Unknown</strong>', ids: [], names: ['Unknown'] };
+        }
         
         const langInfos = langs.map(lang => {
             if (typeof lang === 'string') {
                 return lookupLanguage(lang);
             } else {
                 // Object format - fill in missing info from lookup
+                if (!lang || !lang.id) {
+                    return { id: '', name: 'Unknown', path: null };
+                }
                 const lookup = lookupLanguage(lang.id);
                 return {
                     id: lang.id,
