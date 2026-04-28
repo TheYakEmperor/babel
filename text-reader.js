@@ -56,6 +56,12 @@ function _initTextReaderInternal() {
     // Ensure infobox/meta links open in a new tab, including links added later.
     const enforceMetaLinksNewTab = () => {
         document.querySelectorAll('.text-meta a, .metadata a').forEach(a => {
+            // Keep Contents/TOC links in the same tab.
+            if (a.closest('.works-toc')) {
+                a.removeAttribute('target');
+                a.removeAttribute('rel');
+                return;
+            }
             a.setAttribute('target', '_blank');
             a.setAttribute('rel', 'noopener noreferrer');
         });

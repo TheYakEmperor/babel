@@ -2,15 +2,16 @@
   "id": "carrington-4706-floor",
   "title": "4706th Floor",
   "author": "Leonora Carrington",
-  "language": "stan1293",
   "date": "1958",
   "country": "MX",
+  "language": "stan1293",
   "pages": [
     {
       "works": [
         {
           "id": "carrington-4706-floor",
-          "title": "4706th Floor"
+          "title": "4706th Floor",
+          "viewerPage": "bustard"
         }
       ]
     }
