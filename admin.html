@@ -300,6 +300,11 @@
             border-color: #3b82f6;
             box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
         }
+
+        .annotator-page-thumb.selected:not(.active) {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.25);
+        }
         
         .annotator-page-thumb img {
             width: 100%;
@@ -4583,6 +4588,8 @@
             regions: {},        // { pageLabel: [{ x, y, width, height, title, text, workId }] }
             works: [],          // Array of { id, title } flattened from text's works/subworks
             currentPage: null,
+            selectedPages: new Set(),
+            selectionAnchor: null,
             selectedRegion: null,
             isDrawing: false,
             zoom: 1
@@ -4780,23 +4787,29 @@
                 regions: {},
                 works: [],
                 currentPage: null,
+                selectedPages: new Set(),
+                selectionAnchor: null,
                 selectedRegion: null,
-                isDrawing: false
+                isDrawing: false,
+                zoom: 1
             };
         }
         
         function renderAnnotatorPages() {
             const container = document.getElementById('annotator-pages');
+            const selectedPages = annotatorData.selectedPages || new Set();
             container.innerHTML = annotatorData.pages.map((page, index) => {
                 const hasRegions = annotatorData.regions[page.label]?.length > 0;
                 const isActive = page.label === annotatorData.currentPage;
+                const isSelected = selectedPages.has(page.label);
                 const isBlank = page.isBlank;
+                const labelJs = JSON.stringify(page.label);
                 return `
-                    <div class="annotator-page-thumb ${isActive ? 'active' : ''} ${hasRegions ? 'has-regions' : ''} ${isBlank ? 'blank-page' : ''}" 
+                    <div class="annotator-page-thumb ${isActive ? 'active' : ''} ${isSelected ? 'selected' : ''} ${hasRegions ? 'has-regions' : ''} ${isBlank ? 'blank-page' : ''}" 
                          draggable="true"
                          data-index="${index}"
                          data-label="${escapeHtml(page.label)}"
-                         onclick="selectAnnotatorPage('${escapeHtml(page.label)}')"
+                         onclick="handleAnnotatorPageClick(event, ${labelJs}, ${index})"
                          ondragstart="handlePageDragStart(event)"
                          ondragover="handlePageDragOver(event)"
                          ondragleave="handlePageDragLeave(event)"
@@ -4811,21 +4824,81 @@
                 `;
             }).join('');
         }
+
+        function handleAnnotatorPageClick(event, pageLabel, pageIndex) {
+            if (!annotatorData.selectedPages) {
+                annotatorData.selectedPages = new Set();
+            }
+
+            if (event.shiftKey && annotatorData.selectionAnchor) {
+                const anchorIndex = annotatorData.pages.findIndex(p => p.label === annotatorData.selectionAnchor);
+                if (anchorIndex >= 0) {
+                    const start = Math.min(anchorIndex, pageIndex);
+                    const end = Math.max(anchorIndex, pageIndex);
+                    annotatorData.selectedPages = new Set(
+                        annotatorData.pages.slice(start, end + 1).map(p => p.label)
+                    );
+                } else {
+                    annotatorData.selectedPages = new Set([pageLabel]);
+                    annotatorData.selectionAnchor = pageLabel;
+                }
+            } else if (event.metaKey || event.ctrlKey) {
+                if (annotatorData.selectedPages.has(pageLabel)) {
+                    annotatorData.selectedPages.delete(pageLabel);
+                } else {
+                    annotatorData.selectedPages.add(pageLabel);
+                }
+                if (annotatorData.selectedPages.size === 0) {
+                    annotatorData.selectedPages.add(pageLabel);
+                }
+                annotatorData.selectionAnchor = pageLabel;
+            } else {
+                annotatorData.selectedPages = new Set([pageLabel]);
+                annotatorData.selectionAnchor = pageLabel;
+            }
+
+            selectAnnotatorPage(pageLabel, { preserveSelection: true });
+        }
         
         // Drag-drop handlers for page reordering
         let draggedPageIndex = null;
+        let draggedPageIndices = [];
         
         function handlePageDragStart(e) {
-            draggedPageIndex = parseInt(e.target.dataset.index);
-            e.target.classList.add('dragging');
+            const thumb = e.target.closest('.annotator-page-thumb');
+            if (!thumb) return;
+
+            draggedPageIndex = parseInt(thumb.dataset.index, 10);
+            const sourceLabel = thumb.dataset.label;
+
+            if (!annotatorData.selectedPages || !annotatorData.selectedPages.has(sourceLabel)) {
+                annotatorData.selectedPages = new Set([sourceLabel]);
+                annotatorData.selectionAnchor = sourceLabel;
+                selectAnnotatorPage(sourceLabel, { preserveSelection: true });
+            }
+
+            draggedPageIndices = annotatorData.pages
+                .map((page, index) => annotatorData.selectedPages.has(page.label) ? index : -1)
+                .filter(index => index >= 0);
+
+            document.querySelectorAll('.annotator-page-thumb').forEach(el => {
+                if (annotatorData.selectedPages.has(el.dataset.label)) {
+                    el.classList.add('dragging');
+                }
+            });
+
             e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', sourceLabel || '');
         }
         
         function handlePageDragOver(e) {
             e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
             const target = e.target.closest('.annotator-page-thumb');
-            if (target && parseInt(target.dataset.index) !== draggedPageIndex) {
+            if (!target) return;
+
+            const targetIndex = parseInt(target.dataset.index, 10);
+            if (!draggedPageIndices.includes(targetIndex)) {
                 target.classList.add('drag-over');
             }
         }
@@ -4845,22 +4918,43 @@
             const targetIndex = parseInt(target.dataset.index);
             target.classList.remove('drag-over');
             
-            if (draggedPageIndex !== null && draggedPageIndex !== targetIndex) {
-                // Reorder pages array
-                const [movedPage] = annotatorData.pages.splice(draggedPageIndex, 1);
-                annotatorData.pages.splice(targetIndex, 0, movedPage);
-                annotatorData.pagesReordered = true;
-                renderAnnotatorPages();
-                showStatus('Pages reordered. Click "Save Order" to save changes.');
+            if (draggedPageIndices.length === 0 || draggedPageIndices.includes(targetIndex)) {
+                return;
             }
+
+            const movingIndexSet = new Set(draggedPageIndices);
+            const movedPages = [];
+            const remainingPages = [];
+
+            annotatorData.pages.forEach((page, index) => {
+                if (movingIndexSet.has(index)) {
+                    movedPages.push(page);
+                } else {
+                    remainingPages.push(page);
+                }
+            });
+
+            let insertIndex = 0;
+            for (let i = 0; i < targetIndex; i++) {
+                if (!movingIndexSet.has(i)) insertIndex++;
+            }
+
+            remainingPages.splice(insertIndex, 0, ...movedPages);
+            annotatorData.pages = remainingPages;
+            annotatorData.pagesReordered = true;
+            renderAnnotatorPages();
+
+            const movedCount = movedPages.length;
+            showStatus(`${movedCount} page${movedCount === 1 ? '' : 's'} moved. Click "Save Order" to save changes.`);
         }
         
         function handlePageDragEnd(e) {
-            e.target.classList.remove('dragging');
             document.querySelectorAll('.annotator-page-thumb').forEach(el => {
+                el.classList.remove('dragging');
                 el.classList.remove('drag-over');
             });
             draggedPageIndex = null;
+            draggedPageIndices = [];
         }
         
         // Delete current page
@@ -4884,6 +4978,13 @@
             
             // Remove page from pages array
             annotatorData.pages.splice(currentIndex, 1);
+
+            if (annotatorData.selectedPages) {
+                annotatorData.selectedPages.delete(page.label);
+            }
+            if (annotatorData.selectionAnchor === page.label) {
+                annotatorData.selectionAnchor = null;
+            }
             
             // Remove regions for this page
             delete annotatorData.regions[annotatorData.currentPage];
@@ -4989,6 +5090,14 @@
             // Update current page if it was the renamed one
             if (annotatorData.currentPage === oldLabel) {
                 annotatorData.currentPage = newLabel;
+            }
+
+            if (annotatorData.selectedPages && annotatorData.selectedPages.has(oldLabel)) {
+                annotatorData.selectedPages.delete(oldLabel);
+                annotatorData.selectedPages.add(newLabel);
+            }
+            if (annotatorData.selectionAnchor === oldLabel) {
+                annotatorData.selectionAnchor = newLabel;
             }
             annotatorData.pagesReordered = true;
             
@@ -5663,9 +5772,18 @@
             }
         }
         
-        function selectAnnotatorPage(pageLabel) {
+        function selectAnnotatorPage(pageLabel, options = {}) {
+            const preserveSelection = !!options.preserveSelection;
             annotatorData.currentPage = pageLabel;
             annotatorData.selectedRegion = null;
+
+            if (!annotatorData.selectedPages) {
+                annotatorData.selectedPages = new Set();
+            }
+            if (!preserveSelection) {
+                annotatorData.selectedPages = new Set([pageLabel]);
+                annotatorData.selectionAnchor = pageLabel;
+            }
             
             const page = annotatorData.pages.find(p => p.label === pageLabel);
             if (!page) return;
