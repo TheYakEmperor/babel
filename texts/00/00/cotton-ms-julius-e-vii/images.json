@@ -1919,6 +1919,46 @@
     {
       "url": "images/f.239v.jpg",
       "label": "f.239v"
+    },
+    {
+      "url": "images/f.240r.jpg",
+      "label": "f.240r"
+    },
+    {
+      "url": "images/f.240v.jpg",
+      "label": "f.240v"
+    },
+    {
+      "url": "images/f.241r.jpg",
+      "label": "f.241r"
+    },
+    {
+      "url": "images/f.241v.jpg",
+      "label": "f.241v"
+    },
+    {
+      "url": "images/front.jpg",
+      "label": "front"
+    },
+    {
+      "url": "images/front-i.jpg",
+      "label": "front-i"
+    },
+    {
+      "url": "images/fs.iar.jpg",
+      "label": "fs.iar"
+    },
+    {
+      "url": "images/fs.iav.jpg",
+      "label": "fs.iav"
+    },
+    {
+      "url": "images/fs.ibr.jpg",
+      "label": "fs.ibr"
+    },
+    {
+      "url": "images/fs.ibv.jpg",
+      "label": "fs.ibv"
     }
   ]
 }
