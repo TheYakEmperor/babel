@@ -1,0 +1,44 @@
+{
+  "images": [
+    {
+      "url": "images/back.jpg",
+      "label": "back"
+    },
+    {
+      "url": "images/back-i.jpg",
+      "label": "back-i"
+    },
+    {
+      "url": "images/f.1r.jpg",
+      "label": "f.1r"
+    },
+    {
+      "url": "images/f.1v.jpg",
+      "label": "f.1v"
+    },
+    {
+      "url": "images/f.2r.jpg",
+      "label": "f.2r"
+    },
+    {
+      "url": "images/f.2v.jpg",
+      "label": "f.2v"
+    },
+    {
+      "url": "images/f.3r.jpg",
+      "label": "f.3r"
+    },
+    {
+      "url": "images/f.3v.jpg",
+      "label": "f.3v"
+    },
+    {
+      "url": "images/f.4r.jpg",
+      "label": "f.4r"
+    },
+    {
+      "url": "images/f.4v.jpg",
+      "label": "f.4v"
+    }
+  ]
+}
