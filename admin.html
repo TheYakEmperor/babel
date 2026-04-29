@@ -4803,13 +4803,12 @@
                 const isActive = page.label === annotatorData.currentPage;
                 const isSelected = selectedPages.has(page.label);
                 const isBlank = page.isBlank;
-                const labelJs = JSON.stringify(page.label);
                 return `
                     <div class="annotator-page-thumb ${isActive ? 'active' : ''} ${isSelected ? 'selected' : ''} ${hasRegions ? 'has-regions' : ''} ${isBlank ? 'blank-page' : ''}" 
                          draggable="true"
                          data-index="${index}"
                          data-label="${escapeHtml(page.label)}"
-                         onclick="handleAnnotatorPageClick(event, ${labelJs}, ${index})"
+                         onclick="handleAnnotatorPageClick(event, this.dataset.label, ${index})"
                          ondragstart="handlePageDragStart(event)"
                          ondragover="handlePageDragOver(event)"
                          ondragleave="handlePageDragLeave(event)"
