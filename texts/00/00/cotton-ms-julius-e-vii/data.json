@@ -18,15 +18,18 @@
       "works": [
         {
           "id": "aelfric-lives-saints",
-          "title": "Lives of Saints"
+          "title": "Lives of Saints",
+          "viewerPage": "f.3r"
         },
         {
           "id": "aelfric-interrogationes-sigewulfi",
-          "title": "Interrogationes Sigewulfi in Genesin"
+          "title": "Interrogationes Sigewulfi in Genesin",
+          "viewerPage": "f.230r"
         },
         {
           "id": "aelfric-de-falsis-diis",
-          "title": "De falsis diis"
+          "title": "De falsis diis",
+          "viewerPage": "f.238r"
         }
       ]
     }
