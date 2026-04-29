@@ -1,14 +1,6 @@
 {
   "images": [
     {
-      "url": "images/back.jpg",
-      "label": "back"
-    },
-    {
-      "url": "images/back-i.jpg",
-      "label": "back-i"
-    },
-    {
       "url": "images/f.1r.jpg",
       "label": "f.1r"
     },
@@ -1991,6 +1983,14 @@
     {
       "url": "images/fse.ivv.jpg",
       "label": "fse.ivv"
+    },
+    {
+      "url": "images/back-i.jpg",
+      "label": "back-i"
+    },
+    {
+      "url": "images/back.jpg",
+      "label": "back"
     },
     {
       "url": "images/spine.jpg",
