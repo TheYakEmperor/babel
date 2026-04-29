@@ -519,6 +519,46 @@
     {
       "url": "images/f.64v.jpg",
       "label": "f.64v"
+    },
+    {
+      "url": "images/f.65r.jpg",
+      "label": "f.65r"
+    },
+    {
+      "url": "images/f.65v.jpg",
+      "label": "f.65v"
+    },
+    {
+      "url": "images/f.66r.jpg",
+      "label": "f.66r"
+    },
+    {
+      "url": "images/f.66v.jpg",
+      "label": "f.66v"
+    },
+    {
+      "url": "images/f.67r.jpg",
+      "label": "f.67r"
+    },
+    {
+      "url": "images/f.67v.jpg",
+      "label": "f.67v"
+    },
+    {
+      "url": "images/f.68r.jpg",
+      "label": "f.68r"
+    },
+    {
+      "url": "images/f.68v.jpg",
+      "label": "f.68v"
+    },
+    {
+      "url": "images/f.69r.jpg",
+      "label": "f.69r"
+    },
+    {
+      "url": "images/f.69v.jpg",
+      "label": "f.69v"
     }
   ]
 }
