@@ -1,0 +1,34 @@
+{
+  "id": "cotton-ms-julius-e-vii",
+  "title": "Cotton MS Julius E VII",
+  "sources": [
+    "British Library"
+  ],
+  "collections": [
+    "cotton-library"
+  ],
+  "date": "1000–1033",
+  "country": "GB",
+  "language": [
+    "lati1261",
+    "olde1238"
+  ],
+  "pages": [
+    {
+      "works": [
+        {
+          "id": "aelfric-lives-saints",
+          "title": "Lives of Saints"
+        },
+        {
+          "id": "aelfric-interrogationes-sigewulfi",
+          "title": "Interrogationes Sigewulfi in Genesin"
+        },
+        {
+          "id": "aelfric-de-falsis-diis",
+          "title": "De falsis diis"
+        }
+      ]
+    }
+  ]
+}

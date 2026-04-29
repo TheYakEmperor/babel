@@ -71393,6 +71393,18 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Cotton MS Julius E VII",
+    "id": "cotton-ms-julius-e-vii",
+    "level": "text",
+    "url": "texts/00/00/cotton-ms-julius-e-vii/index.html",
+    "extinct": false,
+    "alt": [
+      "work:Lives of Saints#aelfric-lives-saints",
+      "work:Interrogationes Sigewulfi in Genesin#aelfric-interrogationes-sigewulfi",
+      "work:De falsis diis#aelfric-de-falsis-diis"
+    ]
+  },
+  {
     "name": "Cotzocón Mixe",
     "id": "cotz1238",
     "level": "dialect",
@@ -75138,6 +75150,14 @@ const LANGUAGE_INDEX = [
     "id": "deee1239",
     "level": "dialect",
     "url": "atlantic-congo/gola/de/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "De falsis diis",
+    "id": "aelfric-de-falsis-diis",
+    "level": "work",
+    "url": "works/aelfric-de-falsis-diis/index.html",
     "extinct": false,
     "alt": []
   },
@@ -114280,6 +114300,14 @@ const LANGUAGE_INDEX = [
     "id": "inte1256",
     "level": "dialect",
     "url": "sino-tibetan/himalayish/mahakiranti/kiranti/eastern-kiranti/southern-kiranti/bantawic/bantawa/intermediate-bantawa/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Interrogationes Sigewulfi in Genesin",
+    "id": "aelfric-interrogationes-sigewulfi",
+    "level": "work",
+    "url": "works/aelfric-interrogationes-sigewulfi/index.html",
     "extinct": false,
     "alt": []
   },
@@ -153691,6 +153719,14 @@ const LANGUAGE_INDEX = [
     "id": "live1239",
     "level": "dialect",
     "url": "sino-tibetan/kuki-chin-naga/angami-ao/central-naga/lotha-naga/live/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Lives of Saints",
+    "id": "aelfric-lives-saints",
+    "level": "work",
+    "url": "works/aelfric-lives-saints/index.html",
     "extinct": false,
     "alt": []
   },
@@ -302990,6 +303026,14 @@ const LANGUAGE_INDEX = [
     "id": "charles-h-templeton-sr-sheet-music-collection-spec",
     "level": "source",
     "url": "sources/charles-h-templeton-sr-sheet-music-collection-spec/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "British Library",
+    "id": "british-library",
+    "level": "source",
+    "url": "sources/british-library/index.html",
     "extinct": false,
     "alt": []
   },
