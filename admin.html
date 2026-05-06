@@ -5903,9 +5903,18 @@
 
         function applyAnnotatorZoom() {
             const img = document.getElementById('annotator-image');
+            const wrapper = document.getElementById('annotator-canvas-wrapper');
             const zoomPercent = Math.round(annotatorData.zoom * 100);
             img.style.maxWidth = `${zoomPercent}%`;
             img.style.maxHeight = `${zoomPercent}%`;
+            // When zoomed in, anchor to top-left so the top isn't clipped by centering
+            if (annotatorData.zoom > 1) {
+                wrapper.style.alignItems = 'flex-start';
+                wrapper.style.justifyContent = 'flex-start';
+            } else {
+                wrapper.style.alignItems = '';
+                wrapper.style.justifyContent = '';
+            }
             updateAnnotatorZoomDisplay();
             setupAnnotatorCanvas();
             drawAnnotatorRegions();
