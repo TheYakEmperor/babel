@@ -25,7 +25,7 @@ import base64
 import re
 import html
 from pathlib import Path
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, urlparse, urlencode
 from urllib.request import Request, urlopen
 import wiki_db
 
@@ -346,9 +346,7 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         return {'success': True, 'mode': 'google-cloud', 'languages': normalized}
 
     def translate_text(self, data):
-        """Translate text using official Google Cloud Translation API v2 if configured."""
-        if not GOOGLE_TRANSLATE_API_KEY:
-            return {'success': False, 'mode': 'fallback', 'error': 'Google Cloud Translation is not configured'}
+        """Translate text via Google Cloud API when configured, else proxy public fallback endpoint."""
 
         text = (data.get('text') or '').strip()
         target_lang = (data.get('targetLang') or '').strip()
@@ -357,6 +355,35 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             raise ValueError('text is required')
         if not target_lang:
             raise ValueError('targetLang is required')
+
+        if not GOOGLE_TRANSLATE_API_KEY:
+            params = urlencode({
+                'client': 'gtx',
+                'sl': 'auto',
+                'tl': target_lang,
+                'dt': 't',
+                'q': text
+            })
+            url = f'https://translate.googleapis.com/translate_a/single?{params}'
+            req = Request(url, method='GET')
+
+            with urlopen(req, timeout=30) as response:
+                payload = json.loads(response.read().decode('utf-8'))
+
+            chunks = payload[0] if isinstance(payload, list) and payload else []
+            translated_text = ''.join(
+                chunk[0] for chunk in chunks
+                if isinstance(chunk, list) and chunk and isinstance(chunk[0], str)
+            )
+
+            if not translated_text:
+                raise ValueError('Fallback translation returned empty result')
+
+            return {
+                'success': True,
+                'mode': 'fallback-proxy',
+                'translatedText': translated_text
+            }
 
         url = f'https://translation.googleapis.com/language/translate/v2?key={GOOGLE_TRANSLATE_API_KEY}'
         body = json.dumps({

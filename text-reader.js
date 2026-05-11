@@ -2628,26 +2628,37 @@ function _initTextReaderInternal() {
     }
 
     async function doTranslate(text, targetLang) {
-        if (translateBackendMode === 'google-cloud') {
-            try {
-                const resp = await fetch('/api/translate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text, targetLang })
-                });
+        let backendError = null;
 
-                if (resp.ok) {
-                    const payload = await resp.json();
-                    if (payload && payload.success && typeof payload.translatedText === 'string') {
-                        return payload.translatedText;
-                    }
-                }
-            } catch (err) {
-                // Fall through to public endpoint.
+        try {
+            const resp = await fetch('/api/translate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text, targetLang })
+            });
+
+            let payload = null;
+            try {
+                payload = await resp.json();
+            } catch (e) {
+                payload = null;
             }
+
+            if (resp.ok && payload && payload.success && typeof payload.translatedText === 'string') {
+                return payload.translatedText;
+            }
+
+            backendError = (payload && payload.error) || `Server translation failed (${resp.status})`;
+        } catch (err) {
+            backendError = err && err.message ? err.message : 'Server translation request failed';
         }
 
-        return doTranslateFallback(text, targetLang);
+        try {
+            return await doTranslateFallback(text, targetLang);
+        } catch (fallbackErr) {
+            const fallbackMessage = fallbackErr && fallbackErr.message ? fallbackErr.message : 'Fallback translation failed';
+            throw new Error(`${backendError || 'Translation failed'}; ${fallbackMessage}`);
+        }
     }
 
     function formatTranslatedTypography(text) {
@@ -2776,7 +2787,8 @@ function _initTextReaderInternal() {
                 const translated = await doTranslate(normalizedText, lang);
                 resultEl.textContent = formatTranslatedTypography(translated);
             } catch (err) {
-                resultEl.textContent = 'Translation failed.';
+                const detail = err && err.message ? err.message : 'unknown error';
+                resultEl.textContent = `Translation failed: ${detail}`;
             }
             return;
         }
