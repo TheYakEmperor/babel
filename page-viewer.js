@@ -414,7 +414,8 @@ function initPageViewer(pagesData) {
         // Get label for OCR file
         const label = item.label || '';
         const paddedLabel = label.padStart(3, '0');
-        const cacheKey = paddedLabel;
+        // Namespace cache by text path to avoid collisions between different texts
+        const cacheKey = `${textPath || ''}:${paddedLabel}`;
         
         // Check cache
         if (ocrCache[cacheKey]) {
