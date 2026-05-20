@@ -458,6 +458,7 @@ function initPageViewer(pagesData) {
         });
         
         container.appendChild(layer);
+        layer.dataset.pageLabel = item.label || getPageName(item);
         
         // Position layer to match image and set font sizes
         const positionLayer = () => {
@@ -483,6 +484,11 @@ function initPageViewer(pagesData) {
         }
         imgElement.addEventListener('load', positionLayer);
         window.addEventListener('resize', positionLayer);
+
+        // Keep OCR layer behavior in sync with Text Select mode.
+        if (typeof updateOcrLayerSelectionMode === 'function') {
+            updateOcrLayerSelectionMode();
+        }
     }
     
     // Show media in container based on type
@@ -1031,6 +1037,21 @@ function initPageViewer(pagesData) {
             };
             updateCanvas(selectionCanvas1);
             updateCanvas(selectionCanvas2);
+        }
+
+        function updateOcrLayerSelectionMode() {
+            const layers = document.querySelectorAll('.pv-text-layer');
+            layers.forEach(layer => {
+                const pageLabel = layer.dataset.pageLabel || '';
+                const hasRegions = pageLabel && pageHasSelectableRegions(pageLabel);
+
+                // OCR-only pages: expose OCR glyph layer in Text Select mode for normal drag selection.
+                if (isTextSelectMode && !hasRegions) {
+                    layer.style.opacity = '0.28';
+                } else {
+                    layer.style.opacity = '';
+                }
+            });
         }
         
         // Create selection canvas overlay for an image container
@@ -1597,6 +1618,7 @@ function initPageViewer(pagesData) {
                 btn.textContent = isTextSelectMode ? 'Text Select (On)' : 'Text Select';
             }
             updateSelectionCanvasInteractivity();
+            updateOcrLayerSelectionMode();
             
             // Close any open popup when disabling
             if (!isTextSelectMode) {
@@ -2030,6 +2052,7 @@ function initPageViewer(pagesData) {
                 selectionCanvas1.dataset.pageLabel = getPageName(images[index]);
             }
             updateSelectionCanvasInteractivity();
+            updateOcrLayerSelectionMode();
             resizeAllCanvases();
             // Redraw any selected regions on this page
             setTimeout(drawAllSelectedRegions, 50);
@@ -2047,6 +2070,7 @@ function initPageViewer(pagesData) {
                 selectionCanvas2.dataset.pageLabel = getPageName(images[spread[1]]);
             }
             updateSelectionCanvasInteractivity();
+            updateOcrLayerSelectionMode();
             resizeAllCanvases();
             // Redraw any selected regions on these pages
             setTimeout(drawAllSelectedRegions, 50);
