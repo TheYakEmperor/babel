@@ -1002,6 +1002,53 @@ function initPageViewer(pagesData) {
             const page = pagesData.find(p => p.label === pageLabel || p.id === pageLabel);
             return page?.regions || [];
         }
+
+        function getImageItemByPageLabel(pageLabel) {
+            return images.find(img => {
+                if (typeof img !== 'object') return false;
+                const label = img.label || getPageName(img);
+                return label === pageLabel;
+            }) || null;
+        }
+
+        async function showRawOcrPopupForPage(pageLabel) {
+            const imageItem = getImageItemByPageLabel(pageLabel);
+            if (!imageItem || !imageItem.hasOcr) return;
+
+            const enrichedItem = await loadOcrData(imageItem);
+            if (!enrichedItem || !enrichedItem.ocrText) return;
+
+            // OCR-only fallback should not keep region highlight state.
+            closeTranscriptionPopup();
+
+            let popup = document.getElementById('pv-transcription-popup');
+            if (!popup) {
+                popup = document.createElement('div');
+                popup.id = 'pv-transcription-popup';
+                popup.className = 'pv-transcription-popup';
+                document.body.appendChild(popup);
+            }
+
+            const labelHtml = pageLabel
+                ? `<div class="pv-ocr-label">Page ${escapeHtmlPV(pageLabel)} - OCR Text</div>`
+                : '';
+
+            popup.innerHTML = `
+                <div class="pv-popup-header">
+                    <h4>OCR Text</h4>
+                    <button class="pv-popup-close" onclick="window.pvClosePopup && window.pvClosePopup()">&times;</button>
+                </div>
+                <div class="pv-popup-content">
+                    <div class="pv-ocr-section">
+                        ${labelHtml}
+                        <div class="pv-ocr-text">${escapeHtmlPV(enrichedItem.ocrText)}</div>
+                    </div>
+                </div>
+            `;
+
+            makePopupDraggable(popup);
+            pvProcessTextForDictionary(popup);
+        }
         
         // Canvas resize functions (stored for external calls)
         let resizeCanvas1 = null;
@@ -1507,6 +1554,9 @@ function initPageViewer(pagesData) {
                 
                 const pageLabel = canvas.dataset.pageLabel;
                 const region = findRegionAtPoint(pageLabel, normX, normY);
+                const hasPageRegions = getRegionsForPage(pageLabel).length > 0;
+                const imageItem = getImageItemByPageLabel(pageLabel);
+                const hasRawOcrFallback = !hasPageRegions && !!(imageItem && imageItem.hasOcr);
                 
                 // If we have selected regions, keep them highlighted but still show hover
                 if (selectedRegions.length > 0) {
@@ -1522,7 +1572,7 @@ function initPageViewer(pagesData) {
                             drawAllSelectedRegions();
                         }
                     }
-                    canvas.style.cursor = region ? 'pointer' : 'default';
+                    canvas.style.cursor = (region || hasRawOcrFallback) ? 'pointer' : 'default';
                     return;
                 }
                 
@@ -1531,7 +1581,7 @@ function initPageViewer(pagesData) {
                     drawHoveredRegion(canvas, region);
                 }
                 
-                canvas.style.cursor = region ? 'pointer' : 'default';
+                canvas.style.cursor = (region || hasRawOcrFallback) ? 'pointer' : 'default';
             });
             
             canvas.addEventListener('click', (e) => {
@@ -1548,6 +1598,13 @@ function initPageViewer(pagesData) {
                 
                 if (region) {
                     showTranscriptionPopup(region, canvas, pageLabel);
+                    return;
+                }
+
+                // Fallback: if no predefined regions exist for this page but OCR exists,
+                // show raw OCR as selectable popup content.
+                if (getRegionsForPage(pageLabel).length === 0) {
+                    showRawOcrPopupForPage(pageLabel);
                 }
             });
             
