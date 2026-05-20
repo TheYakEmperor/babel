@@ -400,6 +400,8 @@ function initPageViewer(pagesData) {
     
     // Cache for lazy-loaded OCR data
     const ocrCache = {};
+    let refreshSelectionInteractivity = null;
+    let refreshOcrLayerMode = null;
     
     // Lazy load OCR data for a page
     async function loadOcrData(item) {
@@ -596,6 +598,12 @@ function initPageViewer(pagesData) {
                     if (enrichedItem && enrichedItem.ocrText) {
                         const pageLabel = enrichedItem.label || getPageName(enrichedItem);
                         if (synthesizeFullPageOcrRegion(pageLabel, enrichedItem.ocrText)) {
+                            if (typeof refreshOcrLayerMode === 'function') {
+                                refreshOcrLayerMode();
+                            }
+                            if (typeof refreshSelectionInteractivity === 'function') {
+                                refreshSelectionInteractivity();
+                            }
                             if (isTranscriptionMode && refreshTranscriptionPanel) {
                                 refreshTranscriptionPanel();
                             }
@@ -636,6 +644,12 @@ function initPageViewer(pagesData) {
                     if (enrichedItem && enrichedItem.ocrText) {
                         const pageLabel = enrichedItem.label || getPageName(enrichedItem);
                         if (synthesizeFullPageOcrRegion(pageLabel, enrichedItem.ocrText)) {
+                            if (typeof refreshOcrLayerMode === 'function') {
+                                refreshOcrLayerMode();
+                            }
+                            if (typeof refreshSelectionInteractivity === 'function') {
+                                refreshSelectionInteractivity();
+                            }
                             if (isTranscriptionMode && refreshTranscriptionPanel) {
                                 refreshTranscriptionPanel();
                             }
@@ -1087,8 +1101,8 @@ function initPageViewer(pagesData) {
         }
 
         function pageHasSelectableRegions(pageLabel) {
-            // OCR regions are full-page metadata/transcription blocks, not click-target regions.
-            return getRegionsForPage(pageLabel).some(region => !region.isOcr);
+            // Match US behavior: any region, including full-page OCR regions, is selectable.
+            return getRegionsForPage(pageLabel).length > 0;
         }
 
         function getImageItemByPageLabel(pageLabel) {
@@ -1116,6 +1130,7 @@ function initPageViewer(pagesData) {
             updateCanvas(selectionCanvas1);
             updateCanvas(selectionCanvas2);
         }
+        refreshSelectionInteractivity = updateSelectionCanvasInteractivity;
 
         function updateOcrLayerSelectionMode() {
             const layers = document.querySelectorAll('.pv-text-layer');
@@ -1123,14 +1138,24 @@ function initPageViewer(pagesData) {
                 const pageLabel = layer.dataset.pageLabel || '';
                 const hasRegions = pageLabel && pageHasSelectableRegions(pageLabel);
 
-                // OCR-only pages: expose OCR glyph layer in Text Select mode for normal drag selection.
+                // Match US behavior when regions exist: selection happens via canvas regions.
+                if (isTextSelectMode && hasRegions) {
+                    layer.style.opacity = '';
+                    layer.style.pointerEvents = 'none';
+                    return;
+                }
+
+                // OCR-only pages without regions: keep native OCR drag selection available.
                 if (isTextSelectMode && !hasRegions) {
                     layer.style.opacity = '0.28';
+                    layer.style.pointerEvents = 'auto';
                 } else {
                     layer.style.opacity = '';
+                    layer.style.pointerEvents = '';
                 }
             });
         }
+        refreshOcrLayerMode = updateOcrLayerSelectionMode;
         
         // Create selection canvas overlay for an image container
         function createSelectionCanvas(container, imageElement, canvasId, resizeFnSetter) {
