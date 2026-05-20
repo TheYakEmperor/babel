@@ -596,7 +596,6 @@ function initPageViewer(pagesData) {
                     if (enrichedItem && enrichedItem.ocrText) {
                         const pageLabel = enrichedItem.label || getPageName(enrichedItem);
                         if (synthesizeFullPageOcrRegion(pageLabel, enrichedItem.ocrText)) {
-                            updateSelectionCanvasInteractivity();
                             if (isTranscriptionMode && refreshTranscriptionPanel) {
                                 refreshTranscriptionPanel();
                             }
@@ -637,7 +636,6 @@ function initPageViewer(pagesData) {
                     if (enrichedItem && enrichedItem.ocrText) {
                         const pageLabel = enrichedItem.label || getPageName(enrichedItem);
                         if (synthesizeFullPageOcrRegion(pageLabel, enrichedItem.ocrText)) {
-                            updateSelectionCanvasInteractivity();
                             if (isTranscriptionMode && refreshTranscriptionPanel) {
                                 refreshTranscriptionPanel();
                             }
