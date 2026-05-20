@@ -532,6 +532,15 @@ function initPageViewer(pagesData) {
                     if (enrichedItem && enrichedItem.textLayer) {
                         createTextLayer(container, imgElement, enrichedItem);
                     }
+                    if (enrichedItem && enrichedItem.ocrText) {
+                        const pageLabel = enrichedItem.label || getPageName(enrichedItem);
+                        if (synthesizeFullPageOcrRegion(pageLabel, enrichedItem.ocrText)) {
+                            updateSelectionCanvasInteractivity();
+                            if (isTranscriptionMode && refreshTranscriptionPanel) {
+                                refreshTranscriptionPanel();
+                            }
+                        }
+                    }
                 });
             }
             
@@ -563,6 +572,15 @@ function initPageViewer(pagesData) {
                 loadOcrData(item).then(enrichedItem => {
                     if (enrichedItem && enrichedItem.textLayer) {
                         createTextLayer(container, imgElement, enrichedItem);
+                    }
+                    if (enrichedItem && enrichedItem.ocrText) {
+                        const pageLabel = enrichedItem.label || getPageName(enrichedItem);
+                        if (synthesizeFullPageOcrRegion(pageLabel, enrichedItem.ocrText)) {
+                            updateSelectionCanvasInteractivity();
+                            if (isTranscriptionMode && refreshTranscriptionPanel) {
+                                refreshTranscriptionPanel();
+                            }
+                        }
                     }
                 });
             }
@@ -1010,7 +1028,67 @@ function initPageViewer(pagesData) {
         }
 
         function pageHasSelectableRegions(pageLabel) {
-            return getRegionsForPage(pageLabel).length > 0;
+            // OCR regions are full-page metadata/transcription blocks, not click-target regions.
+            return getRegionsForPage(pageLabel).some(region => !region.isOcr);
+        }
+
+        function ensurePageEntry(pageLabel) {
+            if (!pagesData || !pageLabel) return null;
+            let page = pagesData.find(p => (p.label || p.id) === pageLabel);
+            if (!page) {
+                page = {
+                    id: pageLabel,
+                    label: pageLabel,
+                    regions: []
+                };
+                pagesData.push(page);
+            }
+            if (!Array.isArray(page.regions)) {
+                page.regions = [];
+            }
+            return page;
+        }
+
+        function formatOcrTextForRegion(ocrText) {
+            return escapeHtmlPV(String(ocrText || ''))
+                .replace(/\r\n/g, '\n')
+                .replace(/\r/g, '\n')
+                .replace(/\n/g, '<br>');
+        }
+
+        function synthesizeFullPageOcrRegion(pageLabel, ocrText) {
+            if (!pageLabel || !ocrText || !pagesData) return false;
+
+            const page = ensurePageEntry(pageLabel);
+            if (!page) return false;
+
+            const regionText = formatOcrTextForRegion(ocrText);
+            const existingOcr = page.regions.find(region => region && region.isOcr);
+
+            if (existingOcr) {
+                if (!existingOcr.text && !existingOcr.content) {
+                    existingOcr.text = regionText;
+                    existingOcr.title = existingOcr.title || 'OCR Text';
+                    existingOcr.x = Number.isFinite(existingOcr.x) ? existingOcr.x : 0;
+                    existingOcr.y = Number.isFinite(existingOcr.y) ? existingOcr.y : 0;
+                    existingOcr.width = Number.isFinite(existingOcr.width) ? existingOcr.width : 1;
+                    existingOcr.height = Number.isFinite(existingOcr.height) ? existingOcr.height : 1;
+                    return true;
+                }
+                return false;
+            }
+
+            page.regions.push({
+                x: 0,
+                y: 0,
+                width: 1,
+                height: 1,
+                title: 'OCR Text',
+                text: regionText,
+                isOcr: true
+            });
+
+            return true;
         }
 
         function getImageItemByPageLabel(pageLabel) {
