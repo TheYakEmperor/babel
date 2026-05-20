@@ -458,32 +458,6 @@ function initPageViewer(pagesData) {
         });
         
         container.appendChild(layer);
-
-        // When a page has OCR but no predefined annotation regions, Text Select clicks
-        // should still surface selectable OCR content via popup.
-        const pageLabel = item.label || getPageName(item);
-        layer.dataset.pageLabel = pageLabel;
-        layer.addEventListener('click', (e) => {
-            const textSelectToggle = document.getElementById('pv-text-select-toggle');
-            if (!textSelectToggle || !textSelectToggle.classList.contains('active')) return;
-            const label = layer.dataset.pageLabel || '';
-            if (!label) return;
-
-            // If user is actively selecting native OCR text, don't replace it with popup.
-            const selectedText = (window.getSelection && window.getSelection().toString()) || '';
-            if (selectedText.trim().length > 0) return;
-
-            const page = Array.isArray(pagesData)
-                ? pagesData.find(p => p.label === label || p.id === label)
-                : null;
-            const hasRegions = !!(page && Array.isArray(page.regions) && page.regions.length > 0);
-
-            if (!hasRegions && typeof window.pvShowRawOcrPopupForPage === 'function') {
-                e.preventDefault();
-                e.stopPropagation();
-                window.pvShowRawOcrPopupForPage(label);
-            }
-        });
         
         // Position layer to match image and set font sizes
         const positionLayer = () => {
@@ -1029,6 +1003,10 @@ function initPageViewer(pagesData) {
             return page?.regions || [];
         }
 
+        function pageHasSelectableRegions(pageLabel) {
+            return getRegionsForPage(pageLabel).length > 0;
+        }
+
         function getImageItemByPageLabel(pageLabel) {
             return images.find(img => {
                 if (typeof img !== 'object') return false;
@@ -1037,50 +1015,23 @@ function initPageViewer(pagesData) {
             }) || null;
         }
 
-        async function showRawOcrPopupForPage(pageLabel) {
-            const imageItem = getImageItemByPageLabel(pageLabel);
-            if (!imageItem || !imageItem.hasOcr) return;
-
-            const enrichedItem = await loadOcrData(imageItem);
-            if (!enrichedItem || !enrichedItem.ocrText) return;
-
-            // OCR-only fallback should not keep region highlight state.
-            closeTranscriptionPopup();
-
-            let popup = document.getElementById('pv-transcription-popup');
-            if (!popup) {
-                popup = document.createElement('div');
-                popup.id = 'pv-transcription-popup';
-                popup.className = 'pv-transcription-popup';
-                document.body.appendChild(popup);
-            }
-
-            const labelHtml = pageLabel
-                ? `<div class="pv-ocr-label">Page ${escapeHtmlPV(pageLabel)} - OCR Text</div>`
-                : '';
-
-            popup.innerHTML = `
-                <div class="pv-popup-header">
-                    <h4>OCR Text</h4>
-                    <button class="pv-popup-close" onclick="window.pvClosePopup && window.pvClosePopup()">&times;</button>
-                </div>
-                <div class="pv-popup-content">
-                    <div class="pv-ocr-section">
-                        ${labelHtml}
-                        <div class="pv-ocr-text">${escapeHtmlPV(enrichedItem.ocrText)}</div>
-                    </div>
-                </div>
-            `;
-
-            makePopupDraggable(popup);
-            pvProcessTextForDictionary(popup);
-        }
-
-        window.pvShowRawOcrPopupForPage = showRawOcrPopupForPage;
-        
         // Canvas resize functions (stored for external calls)
         let resizeCanvas1 = null;
         let resizeCanvas2 = null;
+
+        function updateSelectionCanvasInteractivity() {
+            const updateCanvas = (canvas) => {
+                if (!canvas) return;
+                const pageLabel = canvas.dataset.pageLabel || '';
+                const canUseRegions = isTextSelectMode && pageLabel && pageHasSelectableRegions(pageLabel);
+                canvas.style.display = canUseRegions ? 'block' : 'none';
+                canvas.style.pointerEvents = canUseRegions ? 'auto' : 'none';
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            };
+            updateCanvas(selectionCanvas1);
+            updateCanvas(selectionCanvas2);
+        }
         
         // Create selection canvas overlay for an image container
         function createSelectionCanvas(container, imageElement, canvasId, resizeFnSetter) {
@@ -1582,9 +1533,6 @@ function initPageViewer(pagesData) {
                 
                 const pageLabel = canvas.dataset.pageLabel;
                 const region = findRegionAtPoint(pageLabel, normX, normY);
-                const hasPageRegions = getRegionsForPage(pageLabel).length > 0;
-                const imageItem = getImageItemByPageLabel(pageLabel);
-                const hasRawOcrFallback = !hasPageRegions && !!(imageItem && imageItem.hasOcr);
                 
                 // If we have selected regions, keep them highlighted but still show hover
                 if (selectedRegions.length > 0) {
@@ -1600,7 +1548,7 @@ function initPageViewer(pagesData) {
                             drawAllSelectedRegions();
                         }
                     }
-                    canvas.style.cursor = (region || hasRawOcrFallback) ? 'pointer' : 'default';
+                    canvas.style.cursor = region ? 'pointer' : 'default';
                     return;
                 }
                 
@@ -1609,7 +1557,7 @@ function initPageViewer(pagesData) {
                     drawHoveredRegion(canvas, region);
                 }
                 
-                canvas.style.cursor = (region || hasRawOcrFallback) ? 'pointer' : 'default';
+                canvas.style.cursor = region ? 'pointer' : 'default';
             });
             
             canvas.addEventListener('click', (e) => {
@@ -1626,13 +1574,6 @@ function initPageViewer(pagesData) {
                 
                 if (region) {
                     showTranscriptionPopup(region, canvas, pageLabel);
-                    return;
-                }
-
-                // Fallback: if no predefined regions exist for this page but OCR exists,
-                // show raw OCR as selectable popup content.
-                if (getRegionsForPage(pageLabel).length === 0) {
-                    showRawOcrPopupForPage(pageLabel);
                 }
             });
             
@@ -1655,20 +1596,7 @@ function initPageViewer(pagesData) {
                 btn.classList.toggle('active', isTextSelectMode);
                 btn.textContent = isTextSelectMode ? 'Text Select (On)' : 'Text Select';
             }
-            
-            // Update canvas visibility
-            if (selectionCanvas1) {
-                selectionCanvas1.style.display = isTextSelectMode ? 'block' : 'none';
-                selectionCanvas1.style.pointerEvents = isTextSelectMode ? 'auto' : 'none';
-                const ctx = selectionCanvas1.getContext('2d');
-                ctx.clearRect(0, 0, selectionCanvas1.width, selectionCanvas1.height);
-            }
-            if (selectionCanvas2) {
-                selectionCanvas2.style.display = isTextSelectMode ? 'block' : 'none';
-                selectionCanvas2.style.pointerEvents = isTextSelectMode ? 'auto' : 'none';
-                const ctx = selectionCanvas2.getContext('2d');
-                ctx.clearRect(0, 0, selectionCanvas2.width, selectionCanvas2.height);
-            }
+            updateSelectionCanvasInteractivity();
             
             // Close any open popup when disabling
             if (!isTextSelectMode) {
@@ -2101,6 +2029,7 @@ function initPageViewer(pagesData) {
             if (selectionCanvas1) {
                 selectionCanvas1.dataset.pageLabel = getPageName(images[index]);
             }
+            updateSelectionCanvasInteractivity();
             resizeAllCanvases();
             // Redraw any selected regions on this page
             setTimeout(drawAllSelectedRegions, 50);
@@ -2117,6 +2046,7 @@ function initPageViewer(pagesData) {
             if (selectionCanvas2 && spread[1] !== undefined) {
                 selectionCanvas2.dataset.pageLabel = getPageName(images[spread[1]]);
             }
+            updateSelectionCanvasInteractivity();
             resizeAllCanvases();
             // Redraw any selected regions on these pages
             setTimeout(drawAllSelectedRegions, 50);
