@@ -458,6 +458,32 @@ function initPageViewer(pagesData) {
         });
         
         container.appendChild(layer);
+
+        // When a page has OCR but no predefined annotation regions, Text Select clicks
+        // should still surface selectable OCR content via popup.
+        const pageLabel = item.label || getPageName(item);
+        layer.dataset.pageLabel = pageLabel;
+        layer.addEventListener('click', (e) => {
+            const textSelectToggle = document.getElementById('pv-text-select-toggle');
+            if (!textSelectToggle || !textSelectToggle.classList.contains('active')) return;
+            const label = layer.dataset.pageLabel || '';
+            if (!label) return;
+
+            // If user is actively selecting native OCR text, don't replace it with popup.
+            const selectedText = (window.getSelection && window.getSelection().toString()) || '';
+            if (selectedText.trim().length > 0) return;
+
+            const page = Array.isArray(pagesData)
+                ? pagesData.find(p => p.label === label || p.id === label)
+                : null;
+            const hasRegions = !!(page && Array.isArray(page.regions) && page.regions.length > 0);
+
+            if (!hasRegions && typeof window.pvShowRawOcrPopupForPage === 'function') {
+                e.preventDefault();
+                e.stopPropagation();
+                window.pvShowRawOcrPopupForPage(label);
+            }
+        });
         
         // Position layer to match image and set font sizes
         const positionLayer = () => {
@@ -1049,6 +1075,8 @@ function initPageViewer(pagesData) {
             makePopupDraggable(popup);
             pvProcessTextForDictionary(popup);
         }
+
+        window.pvShowRawOcrPopupForPage = showRawOcrPopupForPage;
         
         // Canvas resize functions (stored for external calls)
         let resizeCanvas1 = null;
