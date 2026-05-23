@@ -55105,6 +55105,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "British UFO Research Association",
+    "id": "british-ufo-research-association",
+    "level": "author",
+    "url": "authors/british-ufo-research-association/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "British Virgin Islands",
     "id": "vg",
     "level": "country",
@@ -55825,6 +55833,14 @@ const LANGUAGE_INDEX = [
     "id": "buen1246",
     "level": "dialect",
     "url": "austronesian/malayo-polynesian/malayo-chamic/aceh-chamic/acehnese/bueng/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "BUFORA Journal Vol. 6 No. 5",
+    "id": "bufora-vol6-5",
+    "level": "text",
+    "url": "texts/00/00/bufora-vol6-5/index.html",
     "extinct": false,
     "alt": []
   },
@@ -303102,6 +303118,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "United Kingdom",
+    "id": "united-kingdom",
+    "level": "provenance",
+    "url": "provenances/united-kingdom/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "London",
     "id": "london",
     "level": "provenance",
@@ -303178,6 +303202,14 @@ const LANGUAGE_INDEX = [
     "id": "rime",
     "level": "collection",
     "url": "collections/rime/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Bufora Journal",
+    "id": "bufora-journal",
+    "level": "collection",
+    "url": "collections/bufora-journal/index.html",
     "extinct": false,
     "alt": []
   },

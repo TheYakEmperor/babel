@@ -94,15 +94,24 @@ function initPageViewer(pagesData) {
     function scrollThumbHorizontallyIntoView(wrapper) {
         if (!wrapper || !thumbContainer) return;
 
-        const itemLeft = wrapper.offsetLeft;
-        const itemRight = itemLeft + wrapper.offsetWidth;
-        const viewLeft = thumbContainer.scrollLeft;
-        const viewRight = viewLeft + thumbContainer.clientWidth;
+        if (isFullscreen) {
+            // Fullscreen: sidebar is vertical — center the active thumb
+            const itemTop = wrapper.offsetTop;
+            const itemHeight = wrapper.offsetHeight;
+            const containerHeight = thumbContainer.clientHeight;
+            const targetScroll = itemTop - (containerHeight / 2) + (itemHeight / 2);
+            thumbContainer.scrollTo({ top: targetScroll, behavior: 'smooth' });
+        } else {
+            const itemLeft = wrapper.offsetLeft;
+            const itemRight = itemLeft + wrapper.offsetWidth;
+            const viewLeft = thumbContainer.scrollLeft;
+            const viewRight = viewLeft + thumbContainer.clientWidth;
 
-        if (itemLeft < viewLeft) {
-            thumbContainer.scrollTo({ left: itemLeft, behavior: 'smooth' });
-        } else if (itemRight > viewRight) {
-            thumbContainer.scrollTo({ left: itemRight - thumbContainer.clientWidth, behavior: 'smooth' });
+            if (itemLeft < viewLeft) {
+                thumbContainer.scrollTo({ left: itemLeft, behavior: 'smooth' });
+            } else if (itemRight > viewRight) {
+                thumbContainer.scrollTo({ left: itemRight - thumbContainer.clientWidth, behavior: 'smooth' });
+            }
         }
     }
     

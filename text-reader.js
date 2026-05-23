@@ -634,17 +634,23 @@ function _initTextReaderInternal() {
         
         const bodyRect = textBody.getBoundingClientRect();
         
-        // Group words by their line (based on top position)
-        const lines = {};
+        // Group words by their line (based on top position, with tolerance for sub-pixel differences)
+        const lines = [];
         words.forEach(w => {
             const rect = w.getBoundingClientRect();
-            const top = Math.round(rect.top - bodyRect.top);
-            if (!lines[top]) lines[top] = [];
-            lines[top].push({ el: w, rect });
+            const top = rect.top - bodyRect.top;
+            // Find an existing line within 4px tolerance
+            let lineGroup = lines.find(g => Math.abs(g.top - top) < 4);
+            if (!lineGroup) {
+                lineGroup = { top, words: [] };
+                lines.push(lineGroup);
+            }
+            lineGroup.words.push({ el: w, rect });
         });
         
         // Create an overlay for each line
-        Object.values(lines).forEach(lineWords => {
+        lines.forEach(lineGroup => {
+            const lineWords = lineGroup.words;
             const firstRect = lineWords[0].rect;
             const lastRect = lineWords[lineWords.length - 1].rect;
             
