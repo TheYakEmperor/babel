@@ -2185,9 +2185,9 @@ body.viewer-fullscreen .search-container {
 
 /* Region content wrapper - maintains its own intrinsic width */
 .pv-region-content {
-    width: 100%;
-    max-width: none;
-    margin: 0;
+    width: fit-content;
+    max-width: calc(100% - 160px);
+    margin: 0 80px;
 }
 
 /* Centered content keeps intrinsic width but centers the block */
@@ -2204,8 +2204,25 @@ body.viewer-fullscreen .search-container {
 .pv-popup-region div[style*="justify"],
 .pv-popup-region p[style*="justify"] {
     text-align: justify;
-    text-align-last: justify;
     text-justify: inter-word;
+}
+
+/* Justified lines in popup regions: width follows longest line, not popup max width */
+.pv-popup-region .justify-lines {
+    text-align: center;
+}
+
+.pv-popup-region .justify-lines .jline-container {
+    display: inline-block;
+    text-align: left;
+    max-width: 100%;
+}
+
+.pv-popup-region .justify-lines .jline {
+    display: block;
+    width: 100%;
+    text-align: justify;
+    text-align-last: justify;
 }
 
 .pv-popup-region:first-child {
@@ -2335,7 +2352,33 @@ body.viewer-fullscreen .search-container {
 }
 
 .pv-word.phrase-word {
-    box-shadow: 0 0 0 2px #3b82f6;
+    background: transparent;
+    box-shadow: none;
+}
+
+.pv-word.phrase-word.phrase-start {
+    box-shadow: none;
+}
+
+.pv-word.phrase-word.phrase-end {
+    box-shadow: none;
+}
+
+.pv-word.phrase-word.phrase-start.phrase-end {
+    box-shadow: none;
+}
+
+.pv-word.phrase-word:hover {
+    background: transparent;
+}
+
+.pv-phrase-overlay {
+    position: absolute;
+    background: rgba(59, 130, 246, 0.15);
+    border: 2px solid #3b82f6;
+    border-radius: 0;
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* Dictionary panel within popup */

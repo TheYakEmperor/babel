@@ -2237,6 +2237,47 @@ function initPageViewer(pagesData) {
         // Process popup text to wrap words in clickable spans
         function pvProcessTextForDictionary(container) {
             if (!container) return;
+
+            function pvApplyJustifyLines(scope) {
+                const justifySelectors = [
+                    '[style*="text-align: justify"]',
+                    '[align="justify"]',
+                    'div[style*="justify"]',
+                    'p[style*="justify"]'
+                ];
+
+                scope.querySelectorAll(justifySelectors.join(', ')).forEach(el => {
+                    if (el.dataset.justifyProcessed === 'true') return;
+                    if (el.querySelector('.jline-container')) {
+                        el.classList.add('justify-lines');
+                        el.dataset.justifyProcessed = 'true';
+                        return;
+                    }
+
+                    const html = el.innerHTML;
+                    if (!/(<br\s*\/?\s*>|\n)/i.test(html)) {
+                        el.dataset.justifyProcessed = 'true';
+                        return;
+                    }
+
+                    const normalized = html.replace(/<br\s*\/?\s*>/gi, '\n');
+                    const lines = normalized
+                        .split('\n')
+                        .map(line => line.trim())
+                        .filter(line => line.replace(/<[^>]*>/g, '').trim());
+
+                    if (lines.length < 2) {
+                        el.dataset.justifyProcessed = 'true';
+                        return;
+                    }
+
+                    el.classList.add('justify-lines');
+                    el.innerHTML = `<span class="jline-container">${
+                        lines.map(line => `<span class="jline">${line}</span>`).join('')
+                    }</span>`;
+                    el.dataset.justifyProcessed = 'true';
+                });
+            }
             
             // Process popup regions and OCR text blocks for dictionary hover/click.
             const regions = container.querySelectorAll('.pv-popup-region, .pv-ocr-text');
@@ -2246,6 +2287,9 @@ function initPageViewer(pagesData) {
                 // Don't process if already processed
                 if (region.dataset.dictProcessed) return;
                 region.dataset.dictProcessed = 'true';
+
+                // Normalize justified line blocks in popup content before wrapping words.
+                pvApplyJustifyLines(region);
                 
                 // Set position relative for phrase overlays
                 region.style.position = 'relative';
@@ -2405,6 +2449,8 @@ function initPageViewer(pagesData) {
                         words[i].dataset.phrase = dragPhraseId;
                     }
                 }
+
+                pvUpdatePhraseWordBoundaries(dragPhraseId, activeScope);
                 
                 pvCreatePhraseOverlay(dragPhraseId, activeScope);
             });
@@ -2805,18 +2851,110 @@ function initPageViewer(pagesData) {
         
         // Create phrase overlay box
         function pvCreatePhraseOverlay(phraseId, container) {
-            // Phrase highlighting is rendered directly on .pv-word.phrase-word using CSS box-shadow.
-            // This keeps blue selection perfectly aligned to glyph boxes like red single-word highlights.
             if (pvPhraseOverlays[phraseId]) {
                 pvPhraseOverlays[phraseId].forEach(el => el.remove());
             }
             pvPhraseOverlays[phraseId] = [];
+
+            const phraseWordEls = Array.from(container.querySelectorAll(`.pv-word[data-phrase="${phraseId}"]`));
+            if (phraseWordEls.length === 0) return;
+
+            const sortedWords = phraseWordEls.slice().sort((a, b) => {
+                if (a === b) return 0;
+                return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+            });
+
+            const containerRect = container.getBoundingClientRect();
+            const lineTolerancePx = 3;
+            let currentLine = [];
+            let currentTop = null;
+
+            function flushLine(lineWords) {
+                if (!lineWords.length) return;
+
+                let left = Infinity;
+                let right = -Infinity;
+                let top = Infinity;
+                let bottom = -Infinity;
+
+                lineWords.forEach(word => {
+                    const rect = word.getBoundingClientRect();
+                    left = Math.min(left, rect.left);
+                    right = Math.max(right, rect.right);
+                    top = Math.min(top, rect.top);
+                    bottom = Math.max(bottom, rect.bottom);
+                });
+
+                const overlay = document.createElement('div');
+                overlay.className = 'pv-phrase-overlay';
+                overlay.dataset.phrase = String(phraseId);
+                overlay.style.left = `${left - containerRect.left}px`;
+                overlay.style.top = `${top - containerRect.top}px`;
+                overlay.style.width = `${Math.max(0, right - left)}px`;
+                overlay.style.height = `${Math.max(0, bottom - top)}px`;
+                container.appendChild(overlay);
+                pvPhraseOverlays[phraseId].push(overlay);
+            }
+
+            sortedWords.forEach(word => {
+                const rectTop = word.getBoundingClientRect().top;
+                if (currentTop === null || Math.abs(rectTop - currentTop) <= lineTolerancePx) {
+                    currentLine.push(word);
+                    currentTop = currentTop === null ? rectTop : (currentTop + rectTop) / 2;
+                    return;
+                }
+
+                flushLine(currentLine);
+                currentLine = [word];
+                currentTop = rectTop;
+            });
+
+            flushLine(currentLine);
+        }
+
+        function pvUpdatePhraseWordBoundaries(phraseId, container) {
+            const phraseWordEls = Array.from(container.querySelectorAll(`.pv-word[data-phrase="${phraseId}"]`));
+            phraseWordEls.forEach(word => {
+                word.classList.remove('phrase-start', 'phrase-end');
+            });
+
+            if (phraseWordEls.length === 0) return;
+
+            const sortedWords = phraseWordEls.slice().sort((a, b) => {
+                if (a === b) return 0;
+                return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+            });
+
+            const lineTolerancePx = 3;
+            let currentLine = [];
+            let currentTop = null;
+
+            function markLineBoundaries(lineWords) {
+                if (lineWords.length === 0) return;
+                lineWords[0].classList.add('phrase-start');
+                lineWords[lineWords.length - 1].classList.add('phrase-end');
+            }
+
+            sortedWords.forEach(word => {
+                const top = word.getBoundingClientRect().top;
+                if (currentTop === null || Math.abs(top - currentTop) <= lineTolerancePx) {
+                    currentLine.push(word);
+                    currentTop = currentTop === null ? top : (currentTop + top) / 2;
+                    return;
+                }
+
+                markLineBoundaries(currentLine);
+                currentLine = [word];
+                currentTop = top;
+            });
+
+            markLineBoundaries(currentLine);
         }
         
         // Remove phrase by ID
         function pvRemovePhraseById(phraseId, container) {
             container.querySelectorAll(`.pv-word[data-phrase="${phraseId}"]`).forEach(w => {
-                w.classList.remove('phrase-word');
+                w.classList.remove('phrase-word', 'phrase-start', 'phrase-end');
                 delete w.dataset.phrase;
             });
             if (pvPhraseOverlays[phraseId]) {
