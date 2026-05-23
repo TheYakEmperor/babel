@@ -200,13 +200,29 @@
       "label": "13",
       "regions": [
         {
-          "x": 0,
-          "y": 0,
-          "width": 1,
-          "height": 1,
+          "x": 0.7836217121269463,
+          "y": 0.786968941782035,
+          "width": 0.21637828787305363,
+          "height": 0.21303105821796492,
           "title": "OCR Text",
           "text": "Seven feet tall . . . . no neck<br>He was nearly seven feet tall and had no<br>neck-for his head appeared to be<br>wedged straight onto his shoulders.<br>He wore a yellow, pointed hat, which<br>interlocked with the red collar of a<br>green tunic. A round, black knob<br>was affixed to the top of his hat and<br>' wooden' antennae were attached<br>either side. The face had triangular<br>markings for eyes, a brown square of a<br>nose and motionless yellow lips.<br>Other round markings were on his<br>paper-white cheeks and a fringe of red<br>hair fell onto his forehead. ''W'ooden<br>slats' protruded from his sleeves and<br>from below his white trousers. His<br>first communication was in writing . . .<br>Hello....<br>He wrote in a note-book in a large<br>hand, ' Hello and I am all colours, Sam.'<br>The boy was hesitant, but Fay read<br>each word as it was pointed to: this<br>was necessary as the words were not<br>laid out in conventional sequence.<br>The children ventured closer and dis-<br>covered that the creature could talk<br>without the aid of a microphone, though<br>his lips did not move and speech was<br>unclear-rather like that of a person<br>who does not open his mouth propedy.<br>He asked the children about themselves<br>so they ventured to ask questions too.<br>They asked about his clothes, which<br>were all ripped, and he told them he<br>only had one set so he could only wear<br>those. Because of his strange white<br>features they asked if he was really a<br>man. The answer was a chuckled<br>'No.' They also asked if he was a<br>ghost. The vague reply was ' . . .WelI,<br>not really, but I am in an odd sort of<br>wa!.' ' lYhat are you then ?' they<br>continued, but only obtained the<br>answer ' You Know' with no further<br>explanation. He also said he had no<br>name. There were others like him-<br>continued overleaf",
           "isOcr": true
+        },
+        {
+          "x": 0.05697811351102941,
+          "y": 0.03696894178203508,
+          "width": 0.3494809688581315,
+          "height": 0.3602941176470588,
+          "title": "",
+          "text": "<div><b>Seven feet tall . . . . no neck</b></div><div><b><br></b></div><div align=\"justify\">He was nearly seven feet tall and had no</div><div align=\"justify\">neck—for his head appeared to be</div><div align=\"justify\">wedged straight onto his shoulders.</div><div align=\"justify\">He wore a yellow, pointed hat, which</div><div align=\"justify\">interlocked with the red collar of a</div><div align=\"justify\">green tunic. A round, black knob</div><div align=\"justify\">was affixed to the top of his hat and</div><div align=\"justify\">‘ wooden ’ antennae were attached</div><div align=\"justify\">either side. The face had triangular</div><div align=\"justify\">markings for eyes, a brown square of a</div><div align=\"justify\">nose and motionless yellow lips.</div><div align=\"justify\">Other round markings were on his</div><div align=\"justify\">paper-white cheeks and a fringe of red</div><div align=\"justify\">hair fell onto his forehead. ‘ Wooden</div><div align=\"justify\">slats ’ protruded from his sleeves and</div><div align=\"justify\">from below his white trousers. His</div><div align=\"justify\">first communication was in writing . . .</div><div><br></div><div><b>Hello . . . .</b></div><div><b><br></b></div><div align=\"justify\">He wrote in a note-book in a large</div><div align=\"justify\">hand, ‘&nbsp;<i>Hello and I am all colours, Sam.</i>’</div><div align=\"justify\">The boy was hesitant, but Fay read</div><div align=\"justify\">each word as it was pointed to: this</div>"
+        },
+        {
+          "x": 0.4124236252545825,
+          "y": 0.03974542975082178,
+          "width": 0.3340122199592668,
+          "height": 0.35878962536023057,
+          "title": "",
+          "text": "<div align=\"justify\">was necessary as the words were not</div><div align=\"justify\">laid out in conventional sequence.</div><div align=\"justify\">The children ventured closer and dis-</div><div align=\"justify\">covered that the creature could talk</div><div align=\"justify\">without the aid of a microphone, though</div><div align=\"justify\">his lips did not move and speech was</div><div align=\"justify\">unclear—rather like that of a person</div><div align=\"justify\">who does not open his mouth properly.</div><div align=\"justify\">He asked the children about themselves</div><div align=\"justify\">so they ventured to ask questions too.</div><div align=\"justify\">They asked about his clothes, which</div><div align=\"justify\">were all ripped, and he told them he</div><div align=\"justify\">only had one set so he could only wear</div><div align=\"justify\">those. Because of his strange white</div><div align=\"justify\">features they asked if he was really a</div><div align=\"justify\">man. The answer was a chuckled</div><div align=\"justify\">‘&nbsp;<i>No.</i>’ They also asked if he was a</div><div align=\"justify\">ghost. The vague reply was ‘ . . .<i>Well</i>,</div><div align=\"justify\"><i>not really</i>,<i>&nbsp;but I am in an odd sort of</i></div><div align=\"justify\"><i>way</i>.’ ‘&nbsp;<i>What are you then?</i>&nbsp;’ they</div><div align=\"justify\">continued, but only obtained the</div><div align=\"justify\">answer ‘&nbsp;<i>You Know</i>&nbsp;’ with no further</div><div align=\"justify\">explanation. He also said he had no</div><div align=\"justify\">name. There were others like him-</div><div align=\"right\"><i>continued overleaf</i></div>"
         }
       ]
     },

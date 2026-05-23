@@ -2204,6 +2204,7 @@ body.viewer-fullscreen .search-container {
 .pv-popup-region div[style*="justify"],
 .pv-popup-region p[style*="justify"] {
     text-align: justify;
+    text-align-last: justify;
     text-justify: inter-word;
 }
 
@@ -2356,20 +2357,16 @@ body.viewer-fullscreen .search-container {
     box-shadow: none;
 }
 
-.pv-word.phrase-word.phrase-start {
-    box-shadow: none;
-}
-
-.pv-word.phrase-word.phrase-end {
-    box-shadow: none;
-}
-
-.pv-word.phrase-word.phrase-start.phrase-end {
-    box-shadow: none;
-}
-
 .pv-word.phrase-word:hover {
     background: transparent;
+}
+
+.pv-phrase-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 2;
 }
 
 .pv-phrase-overlay {
@@ -2378,7 +2375,7 @@ body.viewer-fullscreen .search-container {
     border: 2px solid #3b82f6;
     border-radius: 0;
     pointer-events: none;
-    z-index: 1;
+    z-index: 3;
 }
 
 /* Dictionary panel within popup */
