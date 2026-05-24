@@ -2535,23 +2535,24 @@ function initPageViewer(pagesData) {
                 return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
             });
 
-            try {
-                const range = document.createRange();
-                range.setStartBefore(sorted[0]);
-                range.setEndAfter(sorted[sorted.length - 1]);
-                return range.toString()
-                    .replace(/\u00a0/g, ' ')
-                    .replace(/\r\n?/g, '\n')
-                    .replace(/[ \t]+\n/g, '\n')
-                    .replace(/\n[ \t]+/g, '\n')
-                    .replace(/[ \t]{2,}/g, ' ')
-                    // Join hyphenated words: if line ends with hyphen, join to next line (letter-\nletter → letterletter)
-                    .replace(/(\p{L})-\n(\p{L})/gu, '$1$2')
-                    .trim();
-            } catch (err) {
-                // Fallback to token join if Range extraction fails.
-                return sorted.map(w => w.textContent || '').join(' ').replace(/[ \t]{2,}/g, ' ').trim();
-            }
+            // Build from selected tokens directly so visual line wraps/block boundaries
+            // never collapse adjacent words (e.g., "a" + "nose" -> "anose").
+            return sorted
+                .map(w => (w.textContent || '').replace(/[\u200B-\u200D\uFEFF]/g, ''))
+                .filter(token => token.length > 0)
+                .join(' ')
+                .replace(/\u00a0/g, ' ')
+                .replace(/[\u2028\u2029]/g, ' ')
+                .replace(/\r\n?/g, ' ')
+                // Join apostrophes in contractions/possessives.
+                .replace(/(\p{L})[ \t]+([’'])[ \t]*(\p{L})/gu, '$1$2$3')
+                // Keep punctuation tight.
+                .replace(/[ \t]+([,.;:!?%\)\]\}»])/g, '$1')
+                .replace(/([\(\[\{«])[ \t]+/g, '$1')
+                // Reconstruct plain hyphenated compounds split into tokens.
+                .replace(/(\p{L})[ \t]*-[ \t]*(\p{L})/gu, '$1-$2')
+                .replace(/[ \t]{2,}/g, ' ')
+                .trim();
         }
         
         // Join hyphenated words (line-break hyphenation): if word ends with hyphen, find and join next word

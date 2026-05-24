@@ -2610,12 +2610,13 @@ function _initTextReaderInternal() {
 
     function normalizeTextForTranslation(text) {
         return String(text || '')
+            .replace(/[\u200B-\u200D\uFEFF]/g, '')
             .replace(/\r\n?/g, '\n')
+            .replace(/[\u2028\u2029]/g, '\n')
             .replace(/[\u00A0\u202F]/g, ' ')
-            // Keep paragraph breaks, but merge single line breaks so translation treats it as one passage.
-            .replace(/\n{2,}/g, '\uE000')
-            .replace(/\n+/g, ' ')
-            .replace(/\uE000/g, '\n\n')
+            // Ensure continuity across formatted line wraps: every line break becomes a space.
+            .replace(/([^\s])\n(?=[^\s])/g, '$1 ')
+            .replace(/\s*\n\s*/g, ' ')
             // Punctuation should stay attached to the neighboring word.
             .replace(/[ \t]+([,.;:!?%\)\]\}»])/g, '$1')
             .replace(/([\(\[\{«])[ \t]+/g, '$1')
