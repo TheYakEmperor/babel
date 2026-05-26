@@ -53,6 +53,19 @@ window.initTextReader = function() {
 };
 
 function _initTextReaderInternal() {
+    function moveTitleBelowPageViewer() {
+        const pageTitle = document.getElementById('page-title');
+        const pageViewer = document.getElementById('page-viewer');
+
+        if (!pageTitle || !pageViewer || !pageViewer.parentElement) return;
+
+        if (pageViewer.nextElementSibling !== pageTitle) {
+            pageViewer.insertAdjacentElement('afterend', pageTitle);
+        }
+    }
+
+    moveTitleBelowPageViewer();
+
     // Ensure infobox/meta links open in a new tab, including links added later.
     const enforceMetaLinksNewTab = () => {
         document.querySelectorAll('.text-meta a, .metadata a').forEach(a => {
