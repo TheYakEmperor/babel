@@ -2558,6 +2558,40 @@ function _initTextReaderInternal() {
         return translateLangs.some(([langCode]) => langCode === code);
     }
 
+    function normalizeTranslateLanguages(entries) {
+        const seen = new Set();
+        return (Array.isArray(entries) ? entries : [])
+            .filter(item => Array.isArray(item) && item.length >= 2 && item[0])
+            .map(item => [String(item[0]), String(item[1] || item[0])])
+            .filter(([code]) => {
+                if (!code || code === 'auto') return false;
+                if (seen.has(code)) return false;
+                seen.add(code);
+                return true;
+            })
+            .sort((a, b) => a[1].localeCompare(b[1]));
+    }
+
+    async function fetchPublicTranslateLanguages() {
+        const resp = await fetch('https://translate.googleapis.com/translate_a/l?client=gtx&hl=en', {
+            cache: 'no-store'
+        });
+        if (!resp.ok) {
+            throw new Error(`Public language list request failed (${resp.status})`);
+        }
+
+        const payload = await resp.json();
+        const map = {};
+        if (payload && typeof payload === 'object') {
+            if (payload.sl && typeof payload.sl === 'object') Object.assign(map, payload.sl);
+            if (payload.tl && typeof payload.tl === 'object') Object.assign(map, payload.tl);
+        }
+
+        return Object.entries(map)
+            .filter(([code]) => code && code !== 'auto')
+            .map(([code, name]) => [String(code), String(name || code)]);
+    }
+
     function refreshTranslateLanguageSelectors() {
         const selects = document.querySelectorAll('.dict-translate-lang');
         selects.forEach((select) => {
@@ -2584,24 +2618,32 @@ function _initTextReaderInternal() {
             try {
                 const resp = await fetch('/api/translate-languages', { cache: 'no-store' });
                 if (!resp.ok) {
-                    translateBackendMode = 'fallback';
-                    return;
+                    throw new Error(`Server language list request failed (${resp.status})`);
                 }
 
                 const payload = await resp.json();
-                const serverLangs = Array.isArray(payload.languages) ? payload.languages : [];
+                const serverLangs = normalizeTranslateLanguages(payload.languages);
                 if (payload.success && serverLangs.length > 0) {
-                    translateLangs = serverLangs
-                        .filter(item => Array.isArray(item) && item.length >= 2 && item[0])
-                        .map(item => [String(item[0]), String(item[1] || item[0])]);
+                    translateLangs = serverLangs;
                     translateBackendMode = payload.mode || 'google-cloud';
                     refreshTranslateLanguageSelectors();
-                } else {
-                    translateBackendMode = 'fallback';
+                    return;
+                }
+            }
+
+            try {
+                const publicLangs = normalizeTranslateLanguages(await fetchPublicTranslateLanguages());
+                if (publicLangs.length > 0) {
+                    translateLangs = publicLangs;
+                    translateBackendMode = 'google-public';
+                    refreshTranslateLanguageSelectors();
+                    return;
                 }
             } catch (err) {
-                translateBackendMode = 'fallback';
+                // Keep default bundled languages as final fallback.
             }
+
+            translateBackendMode = 'fallback';
         })();
 
         return translateBackendInitPromise;

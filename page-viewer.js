@@ -1504,6 +1504,78 @@ function initPageViewer(pagesData) {
                 ctx.fillRect(x, y, w, h);
             });
         }
+
+        function getExplicitAlignment(element) {
+            if (!element) return null;
+
+            const alignAttr = (element.getAttribute('align') || '').trim().toLowerCase();
+            if (alignAttr === 'center' || alignAttr === 'right' || alignAttr === 'left') {
+                return alignAttr;
+            }
+
+            const style = (element.getAttribute('style') || '').toLowerCase();
+            if (!style.includes('text-align')) return null;
+
+            const styleMatch = style.match(/text-align\s*:\s*([^;]+)/);
+            if (!styleMatch) return null;
+
+            const value = styleMatch[1].trim();
+            if (value === 'center') return 'center';
+            if (value === 'right' || value === 'end') return 'right';
+            if (value === 'left' || value === 'start') return 'left';
+
+            return null;
+        }
+
+        function detectWholeAnnotationAlignment(regionHtml) {
+            if (!regionHtml || typeof regionHtml !== 'string') return null;
+
+            const probe = document.createElement('div');
+            probe.innerHTML = regionHtml;
+
+            const textNodes = [];
+            const walker = document.createTreeWalker(probe, NodeFilter.SHOW_TEXT, null, false);
+            while (walker.nextNode()) {
+                const node = walker.currentNode;
+                if (!node.textContent || !node.textContent.trim()) continue;
+                textNodes.push(node);
+            }
+
+            if (textNodes.length === 0) return null;
+
+            const effectiveAlignments = textNodes.map(node => {
+                let el = node.parentElement;
+                while (el && el !== probe) {
+                    const explicit = getExplicitAlignment(el);
+                    if (explicit) return explicit;
+                    el = el.parentElement;
+                }
+                return 'none';
+            });
+
+            const allCenter = effectiveAlignments.every(a => a === 'center');
+            if (allCenter) return 'center';
+
+            const allRight = effectiveAlignments.every(a => a === 'right');
+            if (allRight) return 'right';
+
+            return null;
+        }
+
+        function getRegionAlignmentClass(region) {
+            if (!region || region.isOcr) return '';
+            const bodyHtml = region.text || region.content || '';
+            const alignment = detectWholeAnnotationAlignment(bodyHtml);
+            if (alignment === 'center') return ' pv-region-align-center';
+            if (alignment === 'right') return ' pv-region-align-right';
+            return '';
+        }
+
+        function renderRegionContent(region) {
+            const bodyHtml = region.text || region.content || '<em>No transcription</em>';
+            const alignmentClass = getRegionAlignmentClass(region);
+            return `<div class="pv-region-content${alignmentClass}">${bodyHtml}</div>`;
+        }
         
         // Update or create popup with all selected regions
         async function updateTranscriptionPopup() {
@@ -1549,7 +1621,7 @@ function initPageViewer(pagesData) {
                     const label = region.pageLabel ? `<div class="pv-ocr-label">Page ${escapeHtmlPV(region.pageLabel)} - OCR Text</div>` : '';
                     return `<div class="pv-ocr-section">${label}<div class="pv-ocr-text">${bodyHtml}</div></div>`;
                 }
-                return `<div class="pv-region-content">${bodyHtml}</div>`;
+                return renderRegionContent(region);
             }
             
             if (selectedRegions.length > 1) {
@@ -2043,14 +2115,14 @@ function initPageViewer(pagesData) {
                         }
                         const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
                         const headerHtml = (workCaptionHtml || titleHtml) ? `<div class="pv-region-header">${workCaptionHtml}${titleHtml}</div>` : '';
-                        html += `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
+                        html += `<div class="pv-popup-region">${headerHtml}${renderRegionContent(region)}</div>`;
                     });
                 } else {
                     // No works - just show regions with titles
                     allRegions.forEach((region) => {
                         const titleHtml = region.title ? `<span class="pv-region-title-corner">${escapeHtmlPV(region.title)}</span>` : '';
                         const headerHtml = titleHtml ? `<div class="pv-region-header">${titleHtml}</div>` : '';
-                        html += `<div class="pv-popup-region">${headerHtml}<div class="pv-region-content">${region.text || region.content || '<em>No transcription</em>'}</div></div>`;
+                        html += `<div class="pv-popup-region">${headerHtml}${renderRegionContent(region)}</div>`;
                     });
                 }
             }

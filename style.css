@@ -2190,12 +2190,16 @@ body.viewer-fullscreen .search-container {
     margin: 0 80px;
 }
 
-/* Centered content keeps intrinsic width but centers the block */
-.pv-region-content:has([style*="text-align: center"]),
-.pv-region-content:has([align="center"]),
-.pv-region-content:has(center) {
+/* Whole-annotation alignment classes set by page-viewer.js */
+.pv-region-content.pv-region-align-center {
     margin-left: auto;
     margin-right: auto;
+}
+
+.pv-region-content.pv-region-align-right {
+    margin-left: auto;
+    margin-right: 80px;
+    text-align: right;
 }
 
 /* Support text-align: justify in region content - all lines meet longest */
@@ -2587,6 +2591,17 @@ body.viewer-fullscreen .search-container {
     width: fit-content;
     max-width: calc(100% - 160px);
     margin: 0 80px;
+}
+
+.pv-transcription-panel .pv-region-content.pv-region-align-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pv-transcription-panel .pv-region-content.pv-region-align-right {
+    margin-left: auto;
+    margin-right: 80px;
+    text-align: right;
 }
 
 .pv-transcription-panel .pv-region-header {

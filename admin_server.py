@@ -322,31 +322,68 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
     # =========================================
     # TRANSLATION OPERATIONS
     # =========================================
-    def translate_languages(self):
-        """Return supported translation languages from Google Cloud API if configured."""
-        if not GOOGLE_TRANSLATE_API_KEY:
-            return {'success': True, 'mode': 'fallback', 'languages': []}
-
-        url = (
-            'https://translation.googleapis.com/language/translate/v2/languages'
-            f'?key={GOOGLE_TRANSLATE_API_KEY}&target=en'
-        )
+    def _translate_via_public_api(self, text, target_lang):
+        """Translate text via Google's public translate endpoint."""
+        params = urlencode({
+            'client': 'gtx',
+            'sl': 'auto',
+            'tl': target_lang,
+            'dt': 't',
+            'q': text
+        })
+        url = f'https://translate.googleapis.com/translate_a/single?{params}'
         req = Request(url, method='GET')
-        with urlopen(req, timeout=20) as response:
+
+        with urlopen(req, timeout=30) as response:
             payload = json.loads(response.read().decode('utf-8'))
 
-        langs = payload.get('data', {}).get('languages', [])
-        normalized = []
-        for item in langs:
-            code = item.get('language')
-            name = item.get('name') or code
-            if code:
-                normalized.append([code, name])
+        chunks = payload[0] if isinstance(payload, list) and payload else []
+        translated_text = ''.join(
+            chunk[0] for chunk in chunks
+            if isinstance(chunk, list) and chunk and isinstance(chunk[0], str)
+        )
 
-        return {'success': True, 'mode': 'google-cloud', 'languages': normalized}
+        if not translated_text:
+            raise ValueError('Public translation endpoint returned empty result')
+
+        return translated_text
+
+    def translate_languages(self):
+        """Return supported translation languages using Google's public language list."""
+        try:
+            url = 'https://translate.googleapis.com/translate_a/l?client=gtx&hl=en'
+            req = Request(url, method='GET')
+            with urlopen(req, timeout=20) as response:
+                payload = json.loads(response.read().decode('utf-8'))
+
+            # Google returns language maps under "sl" (source list) and/or "tl".
+            lang_map = {}
+            if isinstance(payload, dict):
+                sl_map = payload.get('sl')
+                tl_map = payload.get('tl')
+                if isinstance(sl_map, dict):
+                    lang_map.update(sl_map)
+                if isinstance(tl_map, dict):
+                    lang_map.update(tl_map)
+
+            normalized = []
+            for code, name in lang_map.items():
+                if not code or code == 'auto':
+                    continue
+                normalized.append([str(code), str(name or code)])
+
+            normalized.sort(key=lambda item: item[1].lower())
+
+            if normalized:
+                return {'success': True, 'mode': 'google-public', 'languages': normalized}
+        except Exception:
+            pass
+
+        # Last-resort fallback keeps the UI working with static client defaults.
+        return {'success': True, 'mode': 'fallback', 'languages': []}
 
     def translate_text(self, data):
-        """Translate text via Google Cloud API when configured, else proxy public fallback endpoint."""
+        """Translate text via Google Cloud API when configured; fall back to public API."""
 
         text = (data.get('text') or '').strip()
         target_lang = (data.get('targetLang') or '').strip()
@@ -357,31 +394,10 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
             raise ValueError('targetLang is required')
 
         if not GOOGLE_TRANSLATE_API_KEY:
-            params = urlencode({
-                'client': 'gtx',
-                'sl': 'auto',
-                'tl': target_lang,
-                'dt': 't',
-                'q': text
-            })
-            url = f'https://translate.googleapis.com/translate_a/single?{params}'
-            req = Request(url, method='GET')
-
-            with urlopen(req, timeout=30) as response:
-                payload = json.loads(response.read().decode('utf-8'))
-
-            chunks = payload[0] if isinstance(payload, list) and payload else []
-            translated_text = ''.join(
-                chunk[0] for chunk in chunks
-                if isinstance(chunk, list) and chunk and isinstance(chunk[0], str)
-            )
-
-            if not translated_text:
-                raise ValueError('Fallback translation returned empty result')
-
+            translated_text = self._translate_via_public_api(text, target_lang)
             return {
                 'success': True,
-                'mode': 'fallback-proxy',
+                'mode': 'google-public',
                 'translatedText': translated_text
             }
 
@@ -394,19 +410,31 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         req = Request(url, data=body, method='POST')
         req.add_header('Content-Type', 'application/json')
 
-        with urlopen(req, timeout=30) as response:
-            payload = json.loads(response.read().decode('utf-8'))
+        try:
+            with urlopen(req, timeout=30) as response:
+                payload = json.loads(response.read().decode('utf-8'))
 
-        translations = payload.get('data', {}).get('translations', [])
-        translated_text = ''
-        if translations:
-            translated_text = html.unescape(translations[0].get('translatedText', ''))
+            translations = payload.get('data', {}).get('translations', [])
+            translated_text = ''
+            if translations:
+                translated_text = html.unescape(translations[0].get('translatedText', ''))
 
-        return {
-            'success': True,
-            'mode': 'google-cloud',
-            'translatedText': translated_text
-        }
+            if not translated_text:
+                raise ValueError('Google Cloud translation returned empty result')
+
+            return {
+                'success': True,
+                'mode': 'google-cloud',
+                'translatedText': translated_text
+            }
+        except Exception:
+            # Some newly added Google Translate languages are not always available in Cloud v2.
+            translated_text = self._translate_via_public_api(text, target_lang)
+            return {
+                'success': True,
+                'mode': 'google-public',
+                'translatedText': translated_text
+            }
     
     # =========================================
     # TEXT OPERATIONS
