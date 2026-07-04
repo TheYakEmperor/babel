@@ -47,7 +47,7 @@ body::before {
     min-height: 100%;
     height: 100%;
     background: url('background-image/background-image.jpg') repeat;
-    filter: invert(1) sepia(100%) saturate(300%) brightness(0.85) contrast(1.4) hue-rotate(-75deg);
+    filter: invert(1) sepia(100%) saturate(300%) brightness(0.85) contrast(1.4) hue-rotate(-95deg);
     z-index: -1;
 }
 
@@ -638,7 +638,7 @@ a {
 }
 
 a:hover {
-    color: #b54b4b;
+    color: #8f2f2f;
     text-decoration: underline;
     text-shadow: none;
 }
@@ -765,7 +765,7 @@ a:has-text(†) {
 }
 
 .breadcrumb-tree a:hover {
-    color: #b54b4b;
+    color: #8f2f2f;
     text-shadow: none;
 }
 
@@ -884,7 +884,7 @@ a:has-text(†) {
 
 .dialects-list a:hover,
 .dialect-group a:hover {
-    color: #b54b4b;
+    color: #8f2f2f;
     text-shadow: none;
 }
 
@@ -1593,7 +1593,7 @@ body.viewer-fullscreen .search-container {
 }
 
 .page-viewer.fullscreen .page-viewer-thumb-wrapper.active .page-viewer-thumb {
-    border-color: #b54b4b;
+    border-color: #8f2f2f;
 }
 
 .page-viewer.fullscreen .page-viewer-count,
@@ -2101,7 +2101,7 @@ body.viewer-fullscreen .search-container {
 /* Search highlight for word search results */
 .search-highlight,
 .pv-word.search-highlight {
-    background-color: #d96a6a;
+    background-color: #a63a3a;
     color: #000;
     padding: 1px 3px;
     border-radius: 3px;
@@ -2119,7 +2119,7 @@ body.viewer-fullscreen .search-container {
         transform: scale(1.1);
     }
     100% { 
-        background-color: #d96a6a;
+        background-color: #a63a3a;
         transform: scale(1);
     }
 }
@@ -2246,7 +2246,7 @@ body.viewer-fullscreen .search-container {
 
 /* Links in transcription content - gold color */
 .pv-region-content a {
-    color: #b54b4b;
+    color: #8f2f2f;
     text-decoration: underline;
     cursor: pointer;
     transition: color 0.15s ease;
@@ -2262,7 +2262,7 @@ body.viewer-fullscreen .search-container {
 }
 
 .pv-region-content a:hover img {
-    outline: 3px solid #b54b4b !important;
+    outline: 3px solid #8f2f2f !important;
     outline-offset: 2px;
 }
 
@@ -2398,7 +2398,7 @@ body.viewer-fullscreen .search-container {
 
 .pv-dict-title {
     font-weight: 600;
-    color: #9b1c1c;
+    color: #6d1212;
     font-size: 0.95rem;
 }
 
@@ -2961,7 +2961,7 @@ body.viewer-fullscreen .search-container {
     right: calc(100% + 8px);
     font-size: 0.7rem;
     font-weight: 600;
-    color: #9b1c1c;
+    color: #6d1212;
     opacity: 0;
     transition: opacity 0.15s ease;
     font-style: italic;
@@ -2997,7 +2997,7 @@ body.viewer-fullscreen .search-container {
 
 .text-work:hover,
 .text-work.work-hover {
-    border-color: #9b1c1c;
+    border-color: #6d1212;
 }
 
 .text-work.selected {
@@ -3006,7 +3006,7 @@ body.viewer-fullscreen .search-container {
 
 .text-work.selected:hover,
 .text-work.selected.work-hover {
-    border-color: #9b1c1c;
+    border-color: #6d1212;
 }
 
 .text-work.selected .work-title-link {
@@ -3016,7 +3016,7 @@ body.viewer-fullscreen .search-container {
 
 .text-work.selected:hover .work-title-link,
 .text-work.selected.work-hover .work-title-link {
-    color: #9b1c1c;
+    color: #6d1212;
 }
 
 /* Superwork indicators - positioned at corners inside the container */
@@ -3025,7 +3025,7 @@ body.viewer-fullscreen .search-container {
     font-size: 0.7rem;
     font-weight: 600;
     font-style: italic;
-    color: #9b1c1c;
+    color: #6d1212;
     opacity: 0;
     transition: opacity 0.15s ease;
     pointer-events: auto;
@@ -3081,7 +3081,7 @@ body.viewer-fullscreen .search-container {
 
 @keyframes target-fade {
     0%, 70% {
-        border-color: #9b1c1c;
+        border-color: #6d1212;
         background: #fffdf5;
     }
     100% {
@@ -3178,7 +3178,7 @@ body.viewer-fullscreen .search-container {
 
 .dict-title {
     font-weight: 600;
-    color: #9b1c1c;
+    color: #6d1212;
 }
 
 .dict-close {
@@ -3228,7 +3228,7 @@ body.viewer-fullscreen .search-container {
 }
 
 .dict-tab.active {
-    background: #9b1c1c;
+    background: #6d1212;
     color: #000;
 }
 
@@ -3364,7 +3364,7 @@ body.viewer-fullscreen .search-container {
 
 .dict-word-entry h3 {
     margin: 0 0 8px 0;
-    color: #9b1c1c;
+    color: #6d1212;
     font-size: 1.1rem;
 }
 
@@ -3480,7 +3480,7 @@ body.viewer-fullscreen .search-container {
 
 /* Clickable word links in lists */
 .dict-word-link {
-    color: #9b1c1c;
+    color: #6d1212;
     cursor: pointer;
     text-decoration: underline;
     text-decoration-style: dotted;
@@ -3574,7 +3574,7 @@ body.viewer-fullscreen .search-container {
     padding: 12px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 0;
-    border-left: 3px solid #9b1c1c;
+    border-left: 3px solid #6d1212;
 }
 
 .dict-tuvan-fallback .dict-label,
@@ -3594,7 +3594,7 @@ body.viewer-fullscreen .search-container {
 .dict-tuvan-link a,
 .dict-oe-link a,
 .dict-ag-link a {
-    color: #9b1c1c;
+    color: #6d1212;
     text-decoration: none;
     font-weight: 500;
 }
@@ -3631,7 +3631,7 @@ body.viewer-fullscreen .search-container {
 }
 
 .dict-external-link:hover {
-    color: #9b1c1c;
+    color: #6d1212;
 }
 
 /* Phrase lookup note */
@@ -3943,7 +3943,7 @@ body.viewer-fullscreen .search-container {
 }
 
 .work-music .music-controls button {
-    background: #9b1c1c;
+    background: #6d1212;
     color: white;
     border: none;
     border-radius: 0;
@@ -3953,7 +3953,7 @@ body.viewer-fullscreen .search-container {
 }
 
 .work-music .music-controls button:hover {
-    background: #7f1616;
+    background: #531010;
 }
 
 .work-music .music-controls button:disabled {
