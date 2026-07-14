@@ -2629,6 +2629,8 @@ function _initTextReaderInternal() {
                     refreshTranslateLanguageSelectors();
                     return;
                 }
+            } catch (err) {
+                // Server translate language fetch failed; fall back to public list.
             }
 
             try {
