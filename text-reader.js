@@ -40,6 +40,14 @@ function countriesToFlags(countryData, basePath = '../../../../') {
     return countries.filter(c => c).map(c => countryToFlag(c, basePath)).join(' ');
 }
 
+if (typeof window !== 'undefined') {
+    window.countryCodeToSlug = countryCodeToSlug;
+    window.countryToFlag = countryToFlag;
+    window.countriesToFlags = countriesToFlags;
+}
+
+console.log('[text-reader.js] loaded', {countryToFlag: typeof countryToFlag, countriesToFlags: typeof countriesToFlags, initTextReader: typeof window.initTextReader});
+
 // Expose init function globally so it can be called after dynamic content loads
 window.initTextReader = function() {
     console.log('[initTextReader] Called. Already initialized:', window._textReaderInitialized);
