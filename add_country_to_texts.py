@@ -13,7 +13,7 @@ old_pattern = r'''(\s*\.catch\(\(\) => \{\}\);
 
 new_replacement = r'''\1
             if (data.country) {
-                const flags = countriesToFlags(data.country);
+                const flags = window.countriesToFlags ? window.countriesToFlags(data.country) : "";
                 metaHtml += `<p><strong>Country:</strong> <span class="country-flags">${flags}</span></p>`;
             }
             if (data.source)'''
@@ -36,7 +36,7 @@ for root, dirs, files in os.walk(texts_dir):
             # Add country check before source
             new_content = re.sub(
                 r'(\.catch\(\(\) => \{\}\);\s*\n\s*\}\s*\n\s*)(if \(data\.source\))',
-                r'\1if (data.country) {\n                const flags = countriesToFlags(data.country);\n                metaHtml += `<p><strong>Country:</strong> <span class="country-flags">${flags}</span></p>`;\n            }\n            \2',
+                r'\1if (data.country) {\n                const flags = window.countriesToFlags ? window.countriesToFlags(data.country) : "";\n                metaHtml += `<p><strong>Country:</strong> <span class="country-flags">${flags}</span></p>`;\n            }\n            \2',
                 content
             )
             

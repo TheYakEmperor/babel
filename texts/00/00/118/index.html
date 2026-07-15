@@ -288,7 +288,7 @@
                 });
             }
             if (data.country) {
-                const flags = countriesToFlags(data.country);
+                const flags = window.countriesToFlags ? window.countriesToFlags(data.country) : "";
                 metaHtml += `<p><strong>Country:</strong> ${flags}</p>`;
             }
             // Sources - look up from source.json for proper names
