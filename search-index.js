@@ -303150,6 +303150,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Rome",
+    "id": "rome",
+    "level": "provenance",
+    "url": "provenances/rome/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Qasr Ibrim",
     "id": "qasr-ibrim",
     "level": "provenance",

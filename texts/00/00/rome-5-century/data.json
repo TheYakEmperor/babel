@@ -1,0 +1,26 @@
+{
+  "id": "rome-5-century",
+  "provenances": [
+    "Rome"
+  ],
+  "groups": [
+    "Latin inscriptions"
+  ],
+  "date": "450",
+  "country": "IT",
+  "language": "lati1261",
+  "pages": [
+    {
+      "id": "1",
+      "label": "1",
+      "isBlank": true
+    }
+  ],
+  "blankPages": [
+    {
+      "label": "1",
+      "filename": "blank_1",
+      "isBlank": true
+    }
+  ]
+}
