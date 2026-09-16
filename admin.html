@@ -1331,7 +1331,7 @@
                         </div>
                         <div class="form-group">
                             <label>Transcription Text</label>
-                            <div class="rich-text-toolbar">
+                            <div class="rich-text-toolbar" onmousedown="saveRichTextSelection(event)">
                                 <button type="button" onclick="execRichCmd('bold')" title="Bold"><b>B</b></button>
                                 <button type="button" onclick="execRichCmd('italic')" title="Italic"><i>I</i></button>
                                 <button type="button" onclick="execRichCmd('underline')" title="Underline"><u>U</u></button>
@@ -1340,8 +1340,9 @@
                                 <button type="button" onclick="execRichCmd('superscript')" title="Superscript">x<sup>2</sup></button>
                                 <button type="button" onclick="execRichCmd('subscript')" title="Subscript">x<sub>2</sub></button>
                                 <div class="separator"></div>
-                                <select onchange="setFontSizePx(this.value); this.selectedIndex=0;" title="Font Size">
+                                <select onchange="setFontSizePx(this.value);" title="Font Size">
                                     <option value="">Size</option>
+                                    <option value="__mixed">Mixed</option>
                                     <option value="10">10px</option>
                                     <option value="11">11px</option>
                                     <option value="12">12px</option>
@@ -1359,8 +1360,9 @@
                                     <option value="64">64px</option>
                                     <option value="72">72px</option>
                                 </select>
-                                <select onchange="setFontFamily(this.value); this.selectedIndex=0;" title="Font Family">
+                                <select onchange="setFontFamily(this.value);" title="Font Family">
                                     <option value="">Font</option>
+                                    <option value="__mixed">Mixed</option>
                                     <option value="Junicode">Junicode</option>
                                     <option value="EB Garamond">EB Garamond</option>
                                     <option value="Source Han Sans">Source Han Sans</option>
@@ -1393,8 +1395,9 @@
                                         <option value="Source Han Serif TW">Serif TW</option>
                                     </optgroup>
                                 </select>
-                                <select onchange="setFontWeight(this.value); this.selectedIndex=0;" title="Font Weight">
+                                <select onchange="setFontWeight(this.value);" title="Font Weight">
                                     <option value="">Weight</option>
+                                    <option value="__mixed">Mixed</option>
                                     <option value="200">200</option>
                                     <option value="300">300</option>
                                     <option value="400">400</option>
@@ -1417,7 +1420,7 @@
                                 <div class="separator"></div>
                                 <button type="button" onclick="openTextRefModal()" title="Insert Link">🔗</button>
                             </div>
-                            <div class="rich-text-editor" id="region-text" contenteditable="true" data-placeholder="Enter the transcribed text..."></div>
+                            <div class="rich-text-editor" id="region-text" contenteditable="true" data-placeholder="Enter the transcribed text..." onmousedown="clearRichTextSelection()" onmouseup="saveRichTextSelection()" onkeyup="saveRichTextSelection()" oninput="saveRichTextSelection()"></div>
                         </div>
                         <button class="btn btn-primary" onclick="saveRegionText()">Update Region</button>
                     </div>
@@ -6059,6 +6062,8 @@
                 const region = regions[annotatorData.selectedRegion];
                 document.getElementById('region-title').value = region.title || '';
                 document.getElementById('region-text').innerHTML = region.text || '';
+                richTextSelection = null;
+                updateRichTextToolbar();
                 
                 // Populate works dropdown
                 const workSelect = document.getElementById('region-work');
@@ -6440,51 +6445,143 @@
             showStatus('Region text updated');
         }
         
+        let richTextSelection = null;
+
+        function clearRichTextSelection() {
+            richTextSelection = null;
+        }
+
+        function saveRichTextSelection(event) {
+            const editor = document.getElementById('region-text');
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+
+            const range = selection.getRangeAt(0);
+            if (!editor.contains(range.commonAncestorContainer)) return;
+
+            const startRange = document.createRange();
+            startRange.selectNodeContents(editor);
+            startRange.setEnd(range.startContainer, range.startOffset);
+            const endRange = document.createRange();
+            endRange.selectNodeContents(editor);
+            endRange.setEnd(range.endContainer, range.endOffset);
+            richTextSelection = {
+                start: startRange.toString().length,
+                end: endRange.toString().length
+            };
+            updateRichTextToolbar();
+        }
+
+        document.addEventListener('selectionchange', () => {
+            const editor = document.getElementById('region-text');
+            if (document.activeElement === editor) saveRichTextSelection();
+        });
+
+        function restoreRichTextSelection() {
+            const editor = document.getElementById('region-text');
+            editor.focus();
+
+            if (!richTextSelection) return false;
+
+            const selection = window.getSelection();
+            const range = document.createRange();
+            const walker = document.createTreeWalker(editor, NodeFilter.SHOW_TEXT);
+            let node;
+            let offset = 0;
+            let startPoint = null;
+            let endPoint = null;
+
+            while (node = walker.nextNode()) {
+                const nextOffset = offset + node.nodeValue.length;
+                if (!startPoint && richTextSelection.start <= nextOffset) {
+                    startPoint = { node, offset: richTextSelection.start - offset };
+                }
+                if (!endPoint && richTextSelection.end <= nextOffset) {
+                    endPoint = { node, offset: richTextSelection.end - offset };
+                    break;
+                }
+                offset = nextOffset;
+            }
+
+            if (!startPoint || !endPoint) {
+                richTextSelection = null;
+                return false;
+            }
+
+            range.setStart(startPoint.node, startPoint.offset);
+            range.setEnd(endPoint.node, endPoint.offset);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            return true;
+        }
+
+        function rememberCurrentRichTextSelection() {
+            saveRichTextSelection();
+        }
+
+        function updateRichTextToolbar() {
+            const editor = document.getElementById('region-text');
+            const selection = window.getSelection();
+            if (!selection.rangeCount || !editor.contains(selection.anchorNode)) return;
+
+            const range = selection.getRangeAt(0);
+            const values = {
+                fontFamily: new Set(),
+                fontSize: new Set(),
+                fontWeight: new Set()
+            };
+            const walker = document.createTreeWalker(editor, NodeFilter.SHOW_TEXT);
+            let node;
+            while (node = walker.nextNode()) {
+                if (!node.nodeValue || !range.intersectsNode(node)) continue;
+                const style = getComputedStyle(node.parentElement);
+                values.fontFamily.add(style.fontFamily.split(',')[0].trim().replace(/^['"]|['"]$/g, ''));
+                values.fontSize.add(String(Math.round(parseFloat(style.fontSize))));
+                values.fontWeight.add(style.fontWeight);
+            }
+
+            if (!values.fontFamily.size && selection.anchorNode) {
+                const style = getComputedStyle(selection.anchorNode.nodeType === Node.TEXT_NODE ? selection.anchorNode.parentElement : selection.anchorNode);
+                values.fontFamily.add(style.fontFamily.split(',')[0].trim().replace(/^['"]|['"]$/g, ''));
+                values.fontSize.add(String(Math.round(parseFloat(style.fontSize))));
+                values.fontWeight.add(style.fontWeight);
+            }
+
+            const setControlValue = (selector, valueSet) => {
+                const control = document.querySelector(selector);
+                if (!control) return;
+                const valuesList = [...valueSet];
+                if (valuesList.length === 1 && [...control.options].some(option => option.value === valuesList[0])) {
+                    control.value = valuesList[0];
+                } else if (valuesList.length > 1) {
+                    control.value = '__mixed';
+                } else {
+                    control.value = '';
+                }
+            };
+
+            setControlValue('select[title="Font Family"]', values.fontFamily);
+            setControlValue('select[title="Font Size"]', values.fontSize);
+            setControlValue('select[title="Font Weight"]', values.fontWeight);
+        }
+
         // Rich text editor command
         function execRichCmd(command, value = null) {
-            document.getElementById('region-text').focus();
+            restoreRichTextSelection();
             document.execCommand(command, false, value);
+            rememberCurrentRichTextSelection();
         }
         
         // Set font size in pixels using span wrapper
         function setFontSizePx(size) {
-            if (!size) return;
-            const editor = document.getElementById('region-text');
-            editor.focus();
-            
-            const selection = window.getSelection();
-            if (!selection.rangeCount) return;
-            
-            const range = selection.getRangeAt(0);
-            if (range.collapsed) return; // No text selected
-            
-            const span = document.createElement('span');
-            span.style.fontSize = size + 'px';
-            
-            try {
-                range.surroundContents(span);
-                selection.removeAllRanges();
-                const newRange = document.createRange();
-                newRange.selectNodeContents(span);
-                selection.addRange(newRange);
-            } catch (e) {
-                // If selection spans multiple elements, use execCommand as fallback
-                document.execCommand('fontSize', false, '7');
-                // Then find and update the font elements
-                const fonts = editor.querySelectorAll('font[size="7"]');
-                fonts.forEach(font => {
-                    const span = document.createElement('span');
-                    span.style.fontSize = size + 'px';
-                    span.innerHTML = font.innerHTML;
-                    font.replaceWith(span);
-                });
-            }
+            if (size === '__mixed') return;
+            applyInlineStyle('fontSize', size ? size + 'px' : '');
         }
 
         function applyInlineStyle(property, value) {
             if (!value) return;
             const editor = document.getElementById('region-text');
-            editor.focus();
+            if (!restoreRichTextSelection()) return;
 
             const selection = window.getSelection();
             if (!selection.rangeCount) return;
@@ -6494,20 +6591,31 @@
 
             const span = document.createElement('span');
             span.style[property] = value;
-            span.appendChild(range.extractContents());
+            const fragment = range.extractContents();
+            fragment.querySelectorAll('*').forEach(element => {
+                element.style[property] = '';
+                if (!element.getAttribute('style')) element.removeAttribute('style');
+            });
+            span.appendChild(fragment);
             range.insertNode(span);
+            editor.querySelectorAll('span').forEach(element => {
+                if (!element.textContent && !element.querySelector('img, br')) element.remove();
+            });
 
             selection.removeAllRanges();
             const newRange = document.createRange();
             newRange.selectNodeContents(span);
             selection.addRange(newRange);
+            saveRichTextSelection();
         }
 
         function setFontFamily(family) {
+            if (!family || family === '__mixed') return;
             applyInlineStyle('fontFamily', family);
         }
 
         function setFontWeight(weight) {
+            if (!weight || weight === '__mixed') return;
             applyInlineStyle('fontWeight', weight);
         }
         
