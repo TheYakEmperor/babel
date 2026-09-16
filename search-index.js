@@ -118251,6 +118251,14 @@ const LANGUAGE_INDEX = [
     ]
   },
   {
+    "name": "Japanese test",
+    "id": "jap17",
+    "level": "text",
+    "url": "texts/00/00/jap17/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Japanese-based pidgin",
     "id": "japa1257",
     "level": "family",
@@ -240009,6 +240017,14 @@ const LANGUAGE_INDEX = [
     "id": "shon1256",
     "level": "dialect",
     "url": "afro-asiatic/chadic/west-chadic/west-chadic-a/west-chadic-a2-3/west-chadic-a2/tangalic/nuclear-tangalic/tangale-kwami-kupto/tangale/shongom/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Shonky Shoo",
+    "id": "shonky-shoo",
+    "level": "author",
+    "url": "authors/shonky-shoo/index.html",
     "extinct": false,
     "alt": []
   },

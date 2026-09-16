@@ -1359,6 +1359,51 @@
                                     <option value="64">64px</option>
                                     <option value="72">72px</option>
                                 </select>
+                                <select onchange="setFontFamily(this.value); this.selectedIndex=0;" title="Font Family">
+                                    <option value="">Font</option>
+                                    <option value="Junicode">Junicode</option>
+                                    <option value="EB Garamond">EB Garamond</option>
+                                    <option value="Source Han Sans">Source Han Sans</option>
+                                    <option value="Source Han Serif">Source Han Serif</option>
+                                    <optgroup label="Source Han Sans variants">
+                                        <option value="Source Han Sans CN">Sans CN</option>
+                                        <option value="Source Han Sans HC">Sans HC</option>
+                                        <option value="Source Han Sans HK">Sans HK</option>
+                                        <option value="Source Han Sans JP">Sans JP</option>
+                                        <option value="Source Han Sans K">Sans K</option>
+                                        <option value="Source Han Sans KR">Sans KR</option>
+                                        <option value="Source Han Sans SC">Sans SC</option>
+                                        <option value="Source Han Sans TC">Sans TC</option>
+                                        <option value="Source Han Sans TW">Sans TW</option>
+                                        <option value="Source Han Sans HW">Sans HW</option>
+                                        <option value="Source Han Sans HWHC">Sans HWHC</option>
+                                        <option value="Source Han Sans HWK">Sans HWK</option>
+                                        <option value="Source Han Sans HWSC">Sans HWSC</option>
+                                        <option value="Source Han Sans HWTC">Sans HWTC</option>
+                                    </optgroup>
+                                    <optgroup label="Source Han Serif variants">
+                                        <option value="Source Han Serif CN">Serif CN</option>
+                                        <option value="Source Han Serif HC">Serif HC</option>
+                                        <option value="Source Han Serif HK">Serif HK</option>
+                                        <option value="Source Han Serif JP">Serif JP</option>
+                                        <option value="Source Han Serif K">Serif K</option>
+                                        <option value="Source Han Serif KR">Serif KR</option>
+                                        <option value="Source Han Serif SC">Serif SC</option>
+                                        <option value="Source Han Serif TC">Serif TC</option>
+                                        <option value="Source Han Serif TW">Serif TW</option>
+                                    </optgroup>
+                                </select>
+                                <select onchange="setFontWeight(this.value); this.selectedIndex=0;" title="Font Weight">
+                                    <option value="">Weight</option>
+                                    <option value="200">200</option>
+                                    <option value="300">300</option>
+                                    <option value="400">400</option>
+                                    <option value="500">500</option>
+                                    <option value="600">600</option>
+                                    <option value="700">700</option>
+                                    <option value="800">800</option>
+                                    <option value="900">900</option>
+                                </select>
                                 <div class="separator"></div>
                                 <button type="button" onclick="execRichCmd('justifyLeft')" title="Align Left">⫷</button>
                                 <button type="button" onclick="execRichCmd('justifyCenter')" title="Align Center"></button>
@@ -6434,6 +6479,36 @@
                     font.replaceWith(span);
                 });
             }
+        }
+
+        function applyInlineStyle(property, value) {
+            if (!value) return;
+            const editor = document.getElementById('region-text');
+            editor.focus();
+
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+
+            const range = selection.getRangeAt(0);
+            if (range.collapsed || !editor.contains(range.commonAncestorContainer)) return;
+
+            const span = document.createElement('span');
+            span.style[property] = value;
+            span.appendChild(range.extractContents());
+            range.insertNode(span);
+
+            selection.removeAllRanges();
+            const newRange = document.createRange();
+            newRange.selectNodeContents(span);
+            selection.addRange(newRange);
+        }
+
+        function setFontFamily(family) {
+            applyInlineStyle('fontFamily', family);
+        }
+
+        function setFontWeight(weight) {
+            applyInlineStyle('fontWeight', weight);
         }
         
         // =============================================================================

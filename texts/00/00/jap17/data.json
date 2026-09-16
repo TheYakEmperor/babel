@@ -1,0 +1,23 @@
+{
+  "id": "jap17",
+  "title": "Japanese test",
+  "description": "Stuff doing",
+  "author": "Shonky Shoo",
+  "date": "1578",
+  "country": "JP",
+  "language": "nucl1643",
+  "pages": [
+    {
+      "id": "1",
+      "label": "1",
+      "isBlank": true
+    }
+  ],
+  "blankPages": [
+    {
+      "label": "1",
+      "filename": "blank_1",
+      "isBlank": true
+    }
+  ]
+}

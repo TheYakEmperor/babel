@@ -18,6 +18,47 @@
     font-display: swap;
 }
 
+/* Source Han variable fonts used by transcription formatting */
+@font-face {
+    font-family: 'Source Han Sans';
+    src: url('assets/fonts/source-han-sans-vf.woff2') format('woff2');
+    font-weight: 200 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Source Han Serif';
+    src: url('assets/fonts/source-han-serif-vf.woff2') format('woff2');
+    font-weight: 200 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face { font-family: 'Source Han Sans HC'; src: url('assets/fonts/source-han/SourceHanSansHC-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans K'; src: url('assets/fonts/source-han/SourceHanSansK-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans SC'; src: url('assets/fonts/source-han/SourceHanSansSC-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans TC'; src: url('assets/fonts/source-han/SourceHanSansTC-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans HW'; src: url('assets/fonts/source-han/SourceHanSansHW-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans HWHC'; src: url('assets/fonts/source-han/SourceHanSansHWHC-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans HWK'; src: url('assets/fonts/source-han/SourceHanSansHWK-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans HWSC'; src: url('assets/fonts/source-han/SourceHanSansHWSC-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans HWTC'; src: url('assets/fonts/source-han/SourceHanSansHWTC-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans CN'; src: url('assets/fonts/source-han/SourceHanSansCN-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans HK'; src: url('assets/fonts/source-han/SourceHanSansHK-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans JP'; src: url('assets/fonts/source-han/SourceHanSansJP-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans KR'; src: url('assets/fonts/source-han/SourceHanSansKR-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Sans TW'; src: url('assets/fonts/source-han/SourceHanSansTW-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Serif HC'; src: url('assets/fonts/source-han/SourceHanSerifHC-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Serif K'; src: url('assets/fonts/source-han/SourceHanSerifK-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Serif SC'; src: url('assets/fonts/source-han/SourceHanSerifSC-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Serif TC'; src: url('assets/fonts/source-han/SourceHanSerifTC-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Serif CN'; src: url('assets/fonts/source-han/SourceHanSerifCN-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Serif HK'; src: url('assets/fonts/source-han/SourceHanSerifHK-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Serif JP'; src: url('assets/fonts/source-han/SourceHanSerifJP-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Serif KR'; src: url('assets/fonts/source-han/SourceHanSerifKR-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Source Han Serif TW'; src: url('assets/fonts/source-han/SourceHanSerifTW-VF.otf.woff2') format('woff2'); font-weight: 200 900; font-style: normal; font-display: swap; }
+
 /* ============================================================================
    RESET & BASE STYLES
    ============================================================================ */
