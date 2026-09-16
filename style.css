@@ -1389,6 +1389,9 @@ body.has-page-viewer .language-status {
     transform-origin: top left;
     width: 111.11%;
 }
+    #page-viewer + #page-title {
+        margin-top: 2rem;
+    }
 
 /* Transcription mode - match the visual spacing of normal page viewer */
 .page-viewer.transcription-mode {
@@ -2277,12 +2280,6 @@ body.viewer-fullscreen .search-container {
 
 .pv-popup-region:last-child {
     padding-bottom: 0;
-}
-
-/* Override pasted font-family that falls back to sans-serif/system fonts 
-   Force our loaded fonts so pasted content looks consistent */
-.pv-region-content * {
-    font-family: inherit !important;
 }
 
 /* Links in transcription content - gold color */

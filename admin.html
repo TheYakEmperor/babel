@@ -1398,14 +1398,14 @@
                                 <select onchange="setFontWeight(this.value);" title="Font Weight">
                                     <option value="">Weight</option>
                                     <option value="__mixed">Mixed</option>
-                                    <option value="200">200</option>
-                                    <option value="300">300</option>
-                                    <option value="400">400</option>
-                                    <option value="500">500</option>
-                                    <option value="600">600</option>
-                                    <option value="700">700</option>
-                                    <option value="800">800</option>
-                                    <option value="900">900</option>
+                                    <option value="200">ExtraLight</option>
+                                    <option value="300">Light</option>
+                                    <option value="400">Regular</option>
+                                    <option value="500">Medium</option>
+                                    <option value="600">SemiBold</option>
+                                    <option value="700">Bold</option>
+                                    <option value="800">ExtraBold</option>
+                                    <option value="900">Heavy</option>
                                 </select>
                                 <div class="separator"></div>
                                 <button type="button" onclick="execRichCmd('justifyLeft')" title="Align Left">⫷</button>
@@ -6519,6 +6519,51 @@
             saveRichTextSelection();
         }
 
+        function getWeightOptionsForFamily(family) {
+            if (family === 'EB Garamond') {
+                return [
+                    ['400', 'Regular'],
+                    ['500', 'Medium'],
+                    ['600', 'SemiBold'],
+                    ['700', 'Bold']
+                ];
+            }
+            if (family === 'Junicode') {
+                return [
+                    ['300', 'Light'],
+                    ['400', 'Regular'],
+                    ['500', 'Medium'],
+                    ['600', 'SemiBold'],
+                    ['700', 'Bold']
+                ];
+            }
+            return [
+                ['200', 'ExtraLight'],
+                ['300', 'Light'],
+                ['400', 'Regular'],
+                ['500', 'Medium'],
+                ['600', 'SemiBold'],
+                ['700', 'Bold'],
+                ['800', 'ExtraBold'],
+                ['900', 'Heavy']
+            ];
+        }
+
+        function updateWeightOptions(family) {
+            const control = document.querySelector('select[title="Font Weight"]');
+            if (!control) return;
+
+            const currentValue = control.value;
+            control.innerHTML = '<option value="">Weight</option><option value="__mixed">Mixed</option>';
+            getWeightOptionsForFamily(family).forEach(([value, label]) => {
+                control.add(new Option(label, value));
+            });
+
+            if ([...control.options].some(option => option.value === currentValue)) {
+                control.value = currentValue;
+            }
+        }
+
         function updateRichTextToolbar() {
             const editor = document.getElementById('region-text');
             const selection = window.getSelection();
@@ -6561,6 +6606,8 @@
             };
 
             setControlValue('select[title="Font Family"]', values.fontFamily);
+            const selectedFamily = values.fontFamily.size === 1 ? [...values.fontFamily][0] : '';
+            updateWeightOptions(selectedFamily);
             setControlValue('select[title="Font Size"]', values.fontSize);
             setControlValue('select[title="Font Weight"]', values.fontWeight);
         }
@@ -6611,6 +6658,7 @@
 
         function setFontFamily(family) {
             if (!family || family === '__mixed') return;
+            updateWeightOptions(family);
             applyInlineStyle('fontFamily', family);
         }
 
