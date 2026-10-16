@@ -70,6 +70,17 @@ function _initTextReaderInternal() {
         if (pageViewer.nextElementSibling !== pageTitle) {
             pageViewer.insertAdjacentElement('afterend', pageTitle);
         }
+
+        const updateTitleSpacing = () => {
+            const layoutHeight = pageViewer.offsetHeight;
+            pageTitle.style.marginTop = `${24 - (layoutHeight * 0.1)}px`;
+        };
+
+        updateTitleSpacing();
+        if (typeof ResizeObserver !== 'undefined') {
+            const titleSpacingObserver = new ResizeObserver(updateTitleSpacing);
+            titleSpacingObserver.observe(pageViewer);
+        }
     }
 
     moveTitleBelowPageViewer();

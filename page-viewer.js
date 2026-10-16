@@ -2,6 +2,10 @@
 // Backblaze B2 configuration for image hosting
 const B2_BASE_URL = 'https://babel-images.s3.us-east-005.backblazeb2.com';
 
+if (document.body) {
+    document.body.setAttribute('data-theme', localStorage.getItem('babel-theme') === 'dark' ? 'dark' : 'light');
+}
+
 function initPageViewer(pagesData) {
     const viewer = document.getElementById('page-viewer');
     const mainContainer = document.getElementById('pv-main');
@@ -44,6 +48,7 @@ function initPageViewer(pagesData) {
     let isDualMode = false;
     let isFullscreen = false;
     let isTranscriptionMode = false;
+    let isPdfTextMode = false;
     let transcriptionPanel = null;
     let refreshTranscriptionPanel = null;  // Function reference set later
     let pageWorksPanel = null;
@@ -748,8 +753,8 @@ function initPageViewer(pagesData) {
             showSingle(index);
         }
         
-        // Update transcription panel if in transcription mode
-        if (isTranscriptionMode && transcriptionPanel && refreshTranscriptionPanel) {
+        // Update the active text panel when the page changes.
+        if ((isTranscriptionMode || isPdfTextMode) && transcriptionPanel && refreshTranscriptionPanel) {
             refreshTranscriptionPanel();
         }
 
@@ -871,8 +876,8 @@ function initPageViewer(pagesData) {
             } else {
                 showSingle(i);
             }
-            // Update transcription panel if in transcription mode
-            if (isTranscriptionMode && transcriptionPanel && refreshTranscriptionPanel) {
+            // Update the active text panel when the page changes.
+            if ((isTranscriptionMode || isPdfTextMode) && transcriptionPanel && refreshTranscriptionPanel) {
                 refreshTranscriptionPanel();
             }
         });
@@ -944,8 +949,8 @@ function initPageViewer(pagesData) {
                 } else {
                     showSingle(idx);
                 }
-                // Update transcription panel if in transcription mode
-                if (isTranscriptionMode && transcriptionPanel && refreshTranscriptionPanel) {
+                // Update the active text panel when the page changes.
+                if ((isTranscriptionMode || isPdfTextMode) && transcriptionPanel && refreshTranscriptionPanel) {
                     refreshTranscriptionPanel();
                 }
                 return true;
@@ -1826,6 +1831,7 @@ function initPageViewer(pagesData) {
         textSelectBtn.textContent = 'Text Select';
         textSelectBtn.title = 'Toggle text selection mode';
         textSelectBtn.addEventListener('click', toggleTextSelectMode);
+        textSelectBtn.style.display = 'none';
         
         // Insert before dual toggle
         dualToggle.parentNode.insertBefore(textSelectBtn, dualToggle);
@@ -1940,6 +1946,27 @@ function initPageViewer(pagesData) {
                             pageLabel: page.label || page.id
                         });
                     }
+                }
+            }
+            return result;
+        }
+
+        function getCurrentPageTranscriptions() {
+            if (!pagesData) return [];
+            const result = [];
+            for (const idx of getCurrentVisiblePageIndices()) {
+                if (idx < 0 || idx >= images.length) continue;
+                const currentImage = images[idx];
+                const currentLabel = typeof currentImage === 'object' ? currentImage.label : getPageName(currentImage);
+                const page = pagesData.find(item => (item.label || item.id || '') === currentLabel);
+                if (page && page.transcription) {
+                    result.push({ pageLabel: currentLabel, html: page.transcription });
+                } else if (page && Array.isArray(page.regions)) {
+                    const legacyHtml = page.regions
+                        .filter(region => !region.isOcr && (region.text || region.content))
+                        .map(region => region.text || region.content)
+                        .join('<div><br></div>');
+                    if (legacyHtml) result.push({ pageLabel: currentLabel, html: legacyHtml });
                 }
             }
             return result;
@@ -2065,23 +2092,10 @@ function initPageViewer(pagesData) {
         // Populate transcription panel with text from current page(s)
         async function populateTranscriptionPanel() {
             if (!transcriptionPanel) return;
+            const pageTranscriptions = getCurrentPageTranscriptions();
+            const allRegions = [];
             
-            const rawOcrTexts = await getCurrentPageOcrText();
-            const ocrRegions = getCurrentPageOcrRegions();
-            const allRegions = getCurrentPageRegions();
-
-            // Prefer user-edited OCR region HTML; only fallback to raw OCR text if none exists.
-            const ocrTexts = ocrRegions.length > 0
-                ? ocrRegions.map(region => ({
-                    label: region.pageLabel || '',
-                    html: region.text || region.content || ''
-                }))
-                : rawOcrTexts.map(ocr => ({
-                    label: ocr.label || '',
-                    text: ocr.text || ''
-                }));
-            
-            if (ocrTexts.length === 0 && allRegions.length === 0) {
+            if (allRegions.length === 0 && pageTranscriptions.length === 0) {
                 transcriptionPanel.innerHTML = `
                     <div class="pv-transcription-empty">
                         <p>No transcription available for this page.</p>
@@ -2091,6 +2105,10 @@ function initPageViewer(pagesData) {
             }
             
             let html = '<div class="pv-transcription-content">';
+
+            pageTranscriptions.forEach(page => {
+                html += `<div class="pv-popup-region"><div class="pv-region-content">${page.html}</div></div>`;
+            });
             
             // Show annotation regions first (primary transcription source).
             if (allRegions.length > 0) {
@@ -2127,29 +2145,38 @@ function initPageViewer(pagesData) {
                 }
             }
 
-            // Show OCR text after annotations as a secondary reference.
-            if (ocrTexts.length > 0) {
-                if (allRegions.length > 0) {
-                    html += '<div class="pv-annotations-divider"><span>Raw OCR</span></div>';
-                }
-                for (const ocr of ocrTexts) {
-                    const labelHtml = ocr.label ? `<div class="pv-ocr-label">Page ${escapeHtmlPV(ocr.label)} - OCR Text</div>` : '';
-                    const bodyHtml = ocr.html !== undefined
-                        ? ocr.html
-                        : escapeHtmlPV(ocr.text || '');
-                    html += `
-                        <div class="pv-ocr-section">
-                            ${labelHtml}
-                            <div class="pv-ocr-text">${bodyHtml}</div>
-                        </div>
-                    `;
-                }
-            }
-            
             html += '</div>';
             transcriptionPanel.innerHTML = html;
             
             // Process text for dictionary feature
+            pvProcessTextForDictionary(transcriptionPanel);
+        }
+
+        async function populatePdfTextPanel() {
+            if (!transcriptionPanel) return;
+
+            const pdfTexts = await getCurrentPageOcrText();
+            if (pdfTexts.length === 0) {
+                transcriptionPanel.innerHTML = `
+                    <div class="pv-transcription-empty">
+                        <p>No PDF text available for this page.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<div class="pv-transcription-content">';
+            pdfTexts.forEach(pdf => {
+                const labelHtml = pdf.label ? `<div class="pv-ocr-label">Page ${escapeHtmlPV(pdf.label)} - PDF Text</div>` : '';
+                html += `
+                    <div class="pv-ocr-section">
+                        ${labelHtml}
+                        <div class="pv-ocr-text">${escapeHtmlPV(pdf.text || '')}</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            transcriptionPanel.innerHTML = html;
             pvProcessTextForDictionary(transcriptionPanel);
         }
         
@@ -2159,6 +2186,11 @@ function initPageViewer(pagesData) {
         
         // Toggle transcription mode
         function toggleTranscriptionMode() {
+            if (isPdfTextMode) {
+                isPdfTextMode = false;
+                const pdfTextBtn = document.getElementById('pv-pdf-text-toggle');
+                if (pdfTextBtn) pdfTextBtn.classList.remove('active');
+            }
             isTranscriptionMode = !isTranscriptionMode;
             
             const btn = document.getElementById('pv-transcription-toggle');
@@ -2179,6 +2211,7 @@ function initPageViewer(pagesData) {
                     transcriptionPanel = createTranscriptionPanel();
                 }
                 transcriptionPanel.style.display = 'block';
+                refreshTranscriptionPanel = populateTranscriptionPanel;
                 populateTranscriptionPanel();
                 
                 // Disable controls that don't apply (but keep nav buttons and thumbnails enabled)
@@ -2200,6 +2233,7 @@ function initPageViewer(pagesData) {
                 // Re-enable controls
                 dualToggle.disabled = false;
                 textSelectBtn.disabled = false;
+                refreshTranscriptionPanel = populateTranscriptionPanel;
                 zoomInBtn.disabled = false;
                 zoomOutBtn.disabled = false;
                 zoomResetBtn.disabled = false;
@@ -2218,6 +2252,50 @@ function initPageViewer(pagesData) {
         
         // Insert after text select button
         textSelectBtn.parentNode.insertBefore(transcriptionBtn, textSelectBtn.nextSibling);
+
+        const pdfTextBtn = document.createElement('button');
+        pdfTextBtn.id = 'pv-pdf-text-toggle';
+        pdfTextBtn.className = 'pv-view-toggle';
+        pdfTextBtn.textContent = 'PDF Text';
+        pdfTextBtn.title = 'View text extracted from the PDF';
+        pdfTextBtn.style.display = images.some(image => typeof image === 'object' && image.hasOcr) ? '' : 'none';
+        pdfTextBtn.addEventListener('click', () => {
+            if (isTranscriptionMode) {
+                isTranscriptionMode = false;
+                transcriptionBtn.classList.remove('active');
+            }
+
+            isPdfTextMode = !isPdfTextMode;
+            pdfTextBtn.classList.toggle('active', isPdfTextMode);
+            viewer.classList.toggle('transcription-mode', isPdfTextMode);
+            document.body.classList.toggle('viewer-transcription-mode', isPdfTextMode);
+
+            if (isPdfTextMode) {
+                mainContainer.style.display = 'none';
+                if (!transcriptionPanel) transcriptionPanel = createTranscriptionPanel();
+                transcriptionPanel.style.display = 'block';
+                refreshTranscriptionPanel = populatePdfTextPanel;
+                populatePdfTextPanel();
+                dualToggle.disabled = true;
+                textSelectBtn.disabled = true;
+                transcriptionBtn.disabled = true;
+                zoomInBtn.disabled = true;
+                zoomOutBtn.disabled = true;
+                zoomResetBtn.disabled = true;
+            } else {
+                mainContainer.style.display = '';
+                thumbContainer.style.display = '';
+                if (transcriptionPanel) transcriptionPanel.style.display = 'none';
+                dualToggle.disabled = false;
+                textSelectBtn.disabled = false;
+                transcriptionBtn.disabled = false;
+                zoomInBtn.disabled = false;
+                zoomOutBtn.disabled = false;
+                zoomResetBtn.disabled = false;
+                showImage(currentIndex);
+            }
+        });
+        transcriptionBtn.parentNode.insertBefore(pdfTextBtn, transcriptionBtn.nextSibling);
         
         // Create selection canvases for both image containers
         selectionCanvas1 = createSelectionCanvas(container1, mainImage, 'pv-selection-canvas-1', fn => resizeCanvas1 = fn);

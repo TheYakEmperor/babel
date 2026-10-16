@@ -57,20 +57,29 @@ def extract_text_info(text_dir):
                         if work_id and work_id not in works_seen:
                             works_seen.add(work_id)
                             info["works"].append({"id": work_id, "title": work_title})
-                    # Extract transcription text from page regions
+                    # Extract the canonical page transcription.
                     page_label = page.get("label", page.get("id", ""))
-                    for region in page.get("regions", []):
-                        region_text = region.get("text", "")
-                        if region_text:
-                            region_title = region.get("title", "")
-                            work_id = region.get("workId", "")
-                            info["content"].append({
-                                "type": "transcription",
-                                "page": str(page_label),
-                                "title": region_title,
-                                "workId": work_id,
-                                "text": clean_text(region_text)
-                            })
+                    transcription = page.get("transcription", "")
+                    if transcription:
+                        info["content"].append({
+                            "type": "transcription",
+                            "page": str(page_label),
+                            "title": "",
+                            "workId": "",
+                            "text": clean_text(transcription)
+                        })
+                    else:
+                        # Legacy fallback until every page has been migrated.
+                        for region in page.get("regions", []):
+                            region_text = region.get("text", "")
+                            if region_text:
+                                info["content"].append({
+                                    "type": "transcription",
+                                    "page": str(page_label),
+                                    "title": region.get("title", ""),
+                                    "workId": region.get("workId", ""),
+                                    "text": clean_text(region_text)
+                                })
         except Exception as e:
             print(f"  Error reading {data_json}: {e}")
     

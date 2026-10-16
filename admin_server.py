@@ -93,6 +93,14 @@ BASE_DIR = _SCRIPT_DIR
 class AdminHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(BASE_DIR), **kwargs)
+
+    def end_headers(self):
+        requested_path = self.path.split('?', 1)[0].lower()
+        if requested_path.endswith(('.html', '.css', '.js')):
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Expires', '0')
+        super().end_headers()
     
     def send_cors_headers(self):
         """Send CORS headers for cross-origin requests."""
@@ -185,6 +193,8 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
                 result = self.get_group(data)
             elif path == '/api/save-regions':
                 result = self.save_regions(data)
+            elif path == '/api/save-transcriptions':
+                result = self.save_transcriptions(data)
             elif path == '/api/save-page-order':
                 result = self.save_page_order(data)
             elif path == '/api/translate':
@@ -1225,6 +1235,108 @@ class AdminHandler(http.server.SimpleHTTPRequestHandler):
         
         return text_data
     
+    def save_transcriptions(self, data):
+        """Save one rich-text transcription per page, merging any legacy region text into it."""
+        text_id = data.get('textId')
+        transcriptions = data.get('transcriptions', {})
+        if not text_id:
+            raise ValueError('Text ID is required')
+        if not isinstance(transcriptions, dict):
+            raise ValueError('Transcriptions must be a page-label mapping')
+
+        legacy_regions = data.get('regions', {})
+        if not isinstance(legacy_regions, dict):
+            legacy_regions = {}
+
+        texts_base = BASE_DIR / 'texts' / '00' / '00'
+        text_dir = texts_base / text_id
+        if not text_dir.exists() or not (text_dir / 'data.json').exists():
+            text_dir = None
+            for candidate in texts_base.iterdir():
+                data_file = candidate / 'data.json'
+                if not candidate.is_dir() or not data_file.exists():
+                    continue
+                try:
+                    with open(data_file, 'r', encoding='utf-8') as f:
+                        if json.load(f).get('id') == text_id:
+                            text_dir = candidate
+                            break
+                except Exception:
+                    continue
+
+        if not text_dir:
+            raise ValueError(f'Text "{text_id}" not found')
+
+        data_path = text_dir / 'data.json'
+        with open(data_path, 'r', encoding='utf-8') as f:
+            text_data = json.load(f)
+
+        def merge_legacy_region_text(existing_html, regions_payload):
+            legacy_html = []
+            for region in regions_payload or []:
+                if not isinstance(region, dict):
+                    continue
+                content = region.get('text') or region.get('content') or ''
+                if content:
+                    legacy_html.append(content)
+            if not legacy_html:
+                return existing_html or ''
+
+            combined = '\n'.join(legacy_html)
+            if not existing_html or not str(existing_html).strip():
+                return combined
+
+            existing_text = str(existing_html).strip()
+            if combined in existing_text:
+                return existing_text
+
+            return f'{existing_text}<div><br></div>{combined}'
+
+        for page in text_data.setdefault('pages', []):
+            label = page.get('label') or page.get('id')
+            if label in transcriptions:
+                transcription = transcriptions[label]
+                if transcription is not None:
+                    page['transcription'] = transcription
+                else:
+                    page.pop('transcription', None)
+            elif label in legacy_regions:
+                merged = merge_legacy_region_text(page.get('transcription', ''), legacy_regions.get(label))
+                if merged:
+                    page['transcription'] = merged
+                else:
+                    page.pop('transcription', None)
+            else:
+                region_text = page.get('regions') or []
+                if region_text and not page.get('transcription'):
+                    merged = merge_legacy_region_text('', region_text)
+                    if merged:
+                        page['transcription'] = merged
+
+            page.pop('regions', None)
+
+        for label, transcription in transcriptions.items():
+            if not transcription:
+                continue
+            matched = False
+            for page in text_data.get('pages', []):
+                if (page.get('label') or page.get('id')) == label:
+                    page['transcription'] = transcription
+                    matched = True
+                    break
+            if not matched:
+                text_data.setdefault('pages', []).append({'id': label, 'label': label, 'transcription': transcription})
+
+        with open(data_path, 'w', encoding='utf-8') as f:
+            json.dump(text_data, f, indent=2, ensure_ascii=False)
+
+        try:
+            self.rebuild_indexes()
+        except Exception as exc:
+            print(f'Warning: index rebuild after transcription save failed: {exc}')
+
+        return {'success': True, 'message': 'Page transcriptions saved'}
+
     def save_regions(self, data):
         """Save transcription regions for a text's pages."""
         text_id = data.get('textId')

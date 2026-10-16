@@ -3,6 +3,43 @@ console.log('[search] search.js loaded');
 
 // === CONVERT TO STEPPED SEARCH BAR (runs immediately) ===
 (function() {
+    function applyTheme(themeName) {
+        const theme = themeName === 'dark' ? 'dark' : 'light';
+        document.body.setAttribute('data-theme', theme);
+        localStorage.setItem('babel-theme', theme);
+
+        const toggle = document.querySelector('.theme-toggle');
+        if (toggle) {
+            toggle.textContent = theme === 'dark' ? '\u2600' : '\u263E';
+            toggle.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+            toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        }
+    }
+
+    function ensureThemeToggle() {
+        const container = document.querySelector('.search-container');
+        if (!container) return;
+
+        let toggle = container.querySelector('.theme-toggle');
+        if (!toggle) {
+            toggle = document.createElement('button');
+            toggle.type = 'button';
+            toggle.className = 'theme-toggle';
+            toggle.setAttribute('aria-label', 'Toggle dark mode');
+            toggle.addEventListener('click', () => {
+                const nextTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                applyTheme(nextTheme);
+            });
+            container.appendChild(toggle);
+        }
+
+        const preferredTheme = localStorage.getItem('babel-theme') || 'light';
+        applyTheme(preferredTheme);
+    }
+
+    ensureThemeToggle();
+    document.addEventListener('DOMContentLoaded', ensureThemeToggle);
+
     // Get base path from existing relative links in the page
     function getBasePath() {
         // Check stylesheet link which is always present
@@ -50,6 +87,8 @@ console.log('[search] search.js loaded');
                 <a href="#" class="rainbow-btn" style="background:#800080; color:#fff;">Link-7</a>
             </div>
         `;
+
+        ensureThemeToggle();
         
         // Prevent browser scroll restoration and ensure page stays at top
         if ('scrollRestoration' in history) {

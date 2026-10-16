@@ -258,7 +258,7 @@
         /* Region Annotator Styles */
         .annotator-container {
             display: grid;
-            grid-template-columns: 150px 1fr 300px;
+            grid-template-columns: 150px 1fr;
             gap: 15px;
             height: calc(80vh - 150px);
             min-height: 500px;
@@ -462,6 +462,54 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+        }
+
+        .annotator-main .annotator-region-editor {
+            display: block !important;
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .annotator-main .annotator-region-editor {
+            display: flex !important;
+            flex-direction: column;
+        }
+
+        .annotator-main .annotator-region-editor .form-group:last-of-type {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+
+        .annotator-main .annotator-region-editor h5 {
+            font-size: 1.1em;
+        }
+
+        .annotator-main .annotator-region-editor #region-title,
+        .annotator-main .annotator-region-editor #region-work-group {
+            display: none;
+        }
+
+        .annotator-main .annotator-region-editor .rich-text-editor {
+            flex: 1;
+            min-height: 0;
+            max-height: none;
+            width: 100%;
+        }
+
+        .page-transcription-mode .annotator-canvas-wrapper,
+        .page-transcription-mode .annotator-regions-panel {
+            display: none;
+        }
+
+        .annotator-main.page-transcription-mode + .annotator-regions-panel {
+            display: none;
+        }
+
+        .annotator-main.page-transcription-mode {
+            grid-column: 2;
         }
         
         .annotator-canvas-wrapper img {
@@ -683,6 +731,84 @@
             content: attr(data-placeholder);
             color: #9ca3af;
             pointer-events: none;
+        }
+
+        body[data-theme="dark"] .admin-container,
+        body[data-theme="dark"] .admin-container h1,
+        body[data-theme="dark"] .admin-container h2,
+        body[data-theme="dark"] .admin-container h3,
+        body[data-theme="dark"] .admin-container h4,
+        body[data-theme="dark"] .admin-container label {
+            color: var(--site-text);
+        }
+
+        body[data-theme="dark"] .item-card,
+        body[data-theme="dark"] .form-section,
+        body[data-theme="dark"] .nested-item,
+        body[data-theme="dark"] .modal,
+        body[data-theme="dark"] .rich-text-editor,
+        body[data-theme="dark"] .auth-form input,
+        body[data-theme="dark"] .form-group input[type="text"],
+        body[data-theme="dark"] .form-group input[type="email"],
+        body[data-theme="dark"] .form-group input[type="password"],
+        body[data-theme="dark"] .form-group input[type="number"],
+        body[data-theme="dark"] .form-group select,
+        body[data-theme="dark"] .form-group textarea,
+        body[data-theme="dark"] .tag-input-container {
+            background: var(--page-surface);
+            color: var(--site-text);
+            border-color: var(--panel-border);
+        }
+
+        body[data-theme="dark"] .modal-header,
+        body[data-theme="dark"] .modal-footer,
+        body[data-theme="dark"] .auth-tabs {
+            border-color: var(--panel-border);
+        }
+
+        body[data-theme="dark"] .auth-tabs button,
+        body[data-theme="dark"] .modal-close,
+        body[data-theme="dark"] .user-info .username {
+            color: var(--site-text);
+        }
+
+        body[data-theme="dark"] .nested-list,
+        body[data-theme="dark"] .image-upload-zone,
+        body[data-theme="dark"] .rich-text-toolbar {
+            background: var(--panel-surface);
+            color: var(--site-text);
+            border-color: var(--panel-border);
+        }
+
+        body[data-theme="dark"] .rich-text-toolbar button,
+        body[data-theme="dark"] .rich-text-toolbar select,
+        body[data-theme="dark"] .btn-secondary,
+        body[data-theme="dark"] .add-nested-btn {
+            background: #252a31;
+            color: var(--site-text);
+            border-color: var(--panel-border);
+        }
+
+        body[data-theme="dark"] .rich-text-toolbar button:hover,
+        body[data-theme="dark"] .btn-secondary:hover,
+        body[data-theme="dark"] .add-nested-btn:hover {
+            background: #343b45;
+        }
+
+        body[data-theme="dark"] .tag {
+            background: #303740;
+            color: var(--site-text);
+        }
+
+        body[data-theme="dark"] .form-group label .hint,
+        body[data-theme="dark"] .item-card-info .meta {
+            color: var(--site-muted);
+        }
+
+        body[data-theme="dark"] .form-group input::placeholder,
+        body[data-theme="dark"] .form-group textarea::placeholder,
+        body[data-theme="dark"] .rich-text-editor:empty:before {
+            color: #8f99a5;
         }
     </style>
 </head>
@@ -1299,12 +1425,7 @@
                     <div class="annotator-toolbar">
                         <span id="annotator-page-label">Select a page</span>
                         <div class="annotator-tools">
-                            <button class="btn btn-secondary" onclick="changeAnnotatorZoom(-0.1)" title="Zoom out">−</button>
-                            <span id="annotator-zoom-level" style="min-width:52px;text-align:center;color:#e5e7eb;font-size:0.85em;">100%</span>
-                            <button class="btn btn-secondary" onclick="changeAnnotatorZoom(0.1)" title="Zoom in">+</button>
-                            <button class="btn btn-secondary" onclick="resetAnnotatorZoom()" title="Reset zoom">Reset</button>
-                            <button class="btn btn-primary" id="annotator-draw-btn" onclick="toggleDrawMode()">Draw Region</button>
-                            <button class="btn btn-secondary" onclick="deleteSelectedRegion()">Delete Selected</button>
+                                <span id="annotator-zoom-level" style="display:none;">100%</span>
                         </div>
                     </div>
                     <div class="annotator-canvas-wrapper" id="annotator-canvas-wrapper">
@@ -1318,9 +1439,9 @@
                     <div class="annotator-regions-list" id="annotator-regions"></div>
                     
                     <div class="annotator-region-editor" id="annotator-region-editor" style="display: none;">
-                        <h5>Edit Region</h5>
+                        <h5>Page Transcription</h5>
                         <div class="form-group">
-                            <label>Title (optional)</label>
+                            <label>Page title (optional)</label>
                             <input type="text" id="region-title" placeholder="e.g., Verse 1">
                         </div>
                         <div class="form-group" id="region-work-group" style="display: none;">
@@ -1330,7 +1451,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Transcription Text</label>
+                            <label>Transcription</label>
                             <div class="rich-text-toolbar" onmousedown="saveRichTextSelection(event)">
                                 <button type="button" onclick="execRichCmd('bold')" title="Bold"><b>B</b></button>
                                 <button type="button" onclick="execRichCmd('italic')" title="Italic"><i>I</i></button>
@@ -1422,14 +1543,14 @@
                             </div>
                             <div class="rich-text-editor" id="region-text" contenteditable="true" data-placeholder="Enter the transcribed text..." onmousedown="clearRichTextSelection()" onmouseup="saveRichTextSelection()" onkeyup="saveRichTextSelection()" oninput="saveRichTextSelection()"></div>
                         </div>
-                        <button class="btn btn-primary" onclick="saveRegionText()">Update Region</button>
+                        <button class="btn btn-primary" onclick="savePageTranscription()">Save Page Transcription</button>
                     </div>
                 </div>
             </div>
             
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeAnnotator()">Cancel</button>
-                <button class="btn btn-success" onclick="saveAllRegions()">Save All Regions</button>
+                <button class="btn btn-success" onclick="saveAllRegions()">Save All Transcriptions</button>
             </div>
         </div>
     </div>
@@ -1605,7 +1726,7 @@
     </div>
     
     <script src="search-index.js" defer></script>
-    <script src="search.js"></script>
+    <script src="search.js?v=20260917-theme"></script>
     <script>
         // Backblaze B2 configuration for image hosting
         const B2_BASE_URL = 'https://babel-images.s3.us-east-005.backblazeb2.com';
@@ -4634,6 +4755,7 @@
             textId: null,
             pages: [],          // Array of { label, imageUrl }
             regions: {},        // { pageLabel: [{ x, y, width, height, title, text, workId }] }
+            transcriptions: {}, // { pageLabel: rich HTML }
             works: [],          // Array of { id, title } flattened from text's works/subworks
             currentPage: null,
             selectedPages: new Set(),
@@ -4696,6 +4818,7 @@
             annotatorData.textId = textId;
             annotatorData.pages = [];
             annotatorData.regions = {};
+            annotatorData.transcriptions = {};
             annotatorData.works = [];
             annotatorData.currentPage = null;
             annotatorData.selectedRegion = null;
@@ -4710,6 +4833,9 @@
             document.getElementById('annotator-image').src = '';
             document.getElementById('annotator-regions').innerHTML = '';
             document.getElementById('annotator-region-editor').style.display = 'none';
+            document.querySelector('.annotator-main').classList.add('page-transcription-mode');
+            document.querySelector('.annotator-main').appendChild(document.getElementById('annotator-region-editor'));
+            document.querySelector('#annotator-region-editor h5').textContent = 'Page Transcription';
             updateAnnotatorZoomDisplay();
             
             // Load text data
@@ -4788,6 +4914,9 @@
                         if (page.regions && page.regions.length > 0) {
                             annotatorData.regions[label] = page.regions;
                         }
+                        if (page.transcription) {
+                            annotatorData.transcriptions[label] = page.transcription;
+                        }
                     });
                 }
                 
@@ -4810,6 +4939,17 @@
                             text: ocrHtml,
                             isOcr: true
                         });
+                    }
+                });
+
+                // Preserve every legacy annotation's contents in page order, and fold them into the page transcription.
+                annotatorData.pages.forEach(page => {
+                    const currentLabel = page.label;
+                    const legacyRegions = annotatorData.regions[currentLabel] || [];
+                    if (legacyRegions.length > 0) {
+                        mergeLegacyAnnotationTextIntoTranscription(currentLabel);
+                    } else if (!annotatorData.transcriptions[currentLabel]) {
+                        annotatorData.transcriptions[currentLabel] = '';
                     }
                 });
 
@@ -4842,12 +4982,41 @@
                 zoom: 1
             };
         }
+
+        function mergeLegacyAnnotationTextIntoTranscription(pageLabel) {
+            const regions = annotatorData.regions[pageLabel] || [];
+            const legacyHtml = regions
+                .filter(region => region && (region.text || region.content))
+                .map(region => region.text || region.content)
+                .join('<div><br></div>');
+
+            if (!legacyHtml) {
+                return annotatorData.transcriptions[pageLabel] || '';
+            }
+
+            const existing = annotatorData.transcriptions[pageLabel] || '';
+            if (!existing.trim()) {
+                annotatorData.transcriptions[pageLabel] = legacyHtml;
+                return legacyHtml;
+            }
+
+            const normalizedExisting = existing.replace(/\s*<div><br><\/div>\s*$/g, '');
+            const normalizedLegacy = legacyHtml.replace(/\s*<div><br><\/div>\s*$/g, '');
+            if (normalizedExisting.includes(normalizedLegacy)) {
+                annotatorData.transcriptions[pageLabel] = existing;
+                return existing;
+            }
+
+            const merged = `${normalizedExisting}${normalizedExisting.trim() ? '<div><br></div>' : ''}${normalizedLegacy}`;
+            annotatorData.transcriptions[pageLabel] = merged;
+            return merged;
+        }
         
         function renderAnnotatorPages() {
             const container = document.getElementById('annotator-pages');
             const selectedPages = annotatorData.selectedPages || new Set();
             container.innerHTML = annotatorData.pages.map((page, index) => {
-                const hasRegions = annotatorData.regions[page.label]?.length > 0;
+                const hasRegions = !!annotatorData.transcriptions[page.label];
                 const isActive = page.label === annotatorData.currentPage;
                 const isSelected = selectedPages.has(page.label);
                 const isBlank = page.isBlank;
@@ -5132,6 +5301,10 @@
             if (annotatorData.regions[oldLabel]) {
                 annotatorData.regions[newLabel] = annotatorData.regions[oldLabel];
                 delete annotatorData.regions[oldLabel];
+            }
+            if (Object.prototype.hasOwnProperty.call(annotatorData.transcriptions, oldLabel)) {
+                annotatorData.transcriptions[newLabel] = annotatorData.transcriptions[oldLabel];
+                delete annotatorData.transcriptions[oldLabel];
             }
             
             // Update current page if it was the renamed one
@@ -5836,6 +6009,9 @@
             if (!page) return;
             
             document.getElementById('annotator-page-label').textContent = `Page: ${pageLabel}`;
+            document.getElementById('region-title').value = '';
+            document.getElementById('region-text').innerHTML = annotatorData.transcriptions[pageLabel] || '';
+            document.getElementById('annotator-region-editor').style.display = 'block';
             
             const img = document.getElementById('annotator-image');
             const wrapper = document.getElementById('annotator-canvas-wrapper');
@@ -6022,6 +6198,12 @@
         }
         
         function renderAnnotatorRegions() {
+            const editor = document.getElementById('annotator-region-editor');
+            if (editor && document.querySelector('.annotator-main')?.contains(editor)) {
+                editor.style.display = 'block';
+                document.getElementById('region-text').innerHTML = annotatorData.transcriptions[annotatorData.currentPage] || '';
+                return;
+            }
             const container = document.getElementById('annotator-regions');
             const regions = annotatorData.regions[annotatorData.currentPage] || [];
             
@@ -6094,6 +6276,13 @@
         }
 
         function persistSelectedRegionEdits() {
+            if (!annotatorData.currentPage) return;
+
+            if (document.querySelector('.annotator-main')?.contains(document.getElementById('annotator-region-editor'))) {
+                annotatorData.transcriptions[annotatorData.currentPage] = document.getElementById('region-text').innerHTML;
+                mergeLegacyAnnotationTextIntoTranscription(annotatorData.currentPage);
+                return;
+            }
             if (annotatorData.selectedRegion === null) return;
 
             const regions = annotatorData.regions[annotatorData.currentPage];
@@ -6108,6 +6297,8 @@
             } else {
                 delete regions[annotatorData.selectedRegion].workId;
             }
+
+            mergeLegacyAnnotationTextIntoTranscription(annotatorData.currentPage);
         }
         
         // Region drag-and-drop reordering
@@ -6772,6 +6963,10 @@
         }
         
         function deleteSelectedRegion() {
+            if (document.querySelector('.annotator-main')?.contains(document.getElementById('annotator-region-editor'))) {
+                showStatus('Coordinate annotations have been removed. Edit the page transcription directly.', true);
+                return;
+            }
             if (annotatorData.selectedRegion === null) return;
             
             const regions = annotatorData.regions[annotatorData.currentPage];
@@ -6793,8 +6988,11 @@
         async function saveAllRegions() {
             if (!requireAuth()) return;
             try {
-                // Persist current rich-text editor state even if "Update Region" was not clicked.
                 persistSelectedRegionEdits();
+
+                Object.keys(annotatorData.regions || {}).forEach(pageLabel => {
+                    mergeLegacyAnnotationTextIntoTranscription(pageLabel);
+                });
 
                 // Save page order first if pages were reordered or blank pages added
                 if (annotatorData.pagesReordered) {
@@ -6809,23 +7007,22 @@
                     annotatorData.pagesReordered = false;
                 }
                 
-                // Persist all current regions, including OCR-tagged ones, so editor
-                // formatting (line breaks/alignment/font-size) is not lost.
-                const regionsForSave = {};
-                for (const [label, regs] of Object.entries(annotatorData.regions)) {
-                    regionsForSave[label] = regs;
-                    if (regionsForSave[label].length === 0) delete regionsForSave[label];
-                }
-                
-                await api('save-regions', {
+                await api('save-transcriptions', {
                     textId: annotatorData.textId,
-                    regions: regionsForSave
+                    transcriptions: annotatorData.transcriptions,
+                    regions: annotatorData.regions
                 });
-                showStatus('All regions saved successfully!');
+                showStatus('All page transcriptions saved successfully!');
                 closeAnnotator();
             } catch (e) {
-                showStatus('Error saving regions: ' + e.message, true);
+                showStatus('Error saving page transcriptions: ' + e.message, true);
             }
+        }
+
+        function savePageTranscription() {
+            persistSelectedRegionEdits();
+            renderAnnotatorPages();
+            showStatus('Page transcription updated. Save All Regions to write it to disk.');
         }
     </script>
 </body>

@@ -176951,6 +176951,14 @@ const LANGUAGE_INDEX = [
     "alt": []
   },
   {
+    "name": "Mohamed Farah Abdillahi",
+    "id": "mohamed-farah-abdillahi",
+    "level": "author",
+    "url": "authors/mohamed-farah-abdillahi/index.html",
+    "extinct": false,
+    "alt": []
+  },
+  {
     "name": "Mohave",
     "id": "moha1256",
     "level": "language",
@@ -239117,6 +239125,14 @@ const LANGUAGE_INDEX = [
     "id": "shec1234",
     "level": "dialect",
     "url": "sino-tibetan/brahmaputran/patkaian/north-patkaian/tangsa/pangwa-naga/northern-rangpang/shecyu-chamchang/",
+    "extinct": false,
+    "alt": []
+  },
+  {
+    "name": "Sheekooyin Fogaan Iyo Dhowa An Ba Leh",
+    "id": "sheekooyin-fogaan",
+    "level": "text",
+    "url": "texts/00/00/sheekooyin-fogaan/index.html",
     "extinct": false,
     "alt": []
   },
